@@ -1,0 +1,21 @@
+// import { getClient, getSubClient } from "~/lib/redis";
+
+// let started: boolean = false;
+
+// const ensureRedisSubscription = async () => {
+//   if (started) return;
+//   started = true;
+
+//   const client = await getClient();
+//   const subClient = await getSubClient();
+
+//   await subClient.subscribe("__keyspace@0__:products", async (event) => {
+//     if (event === "json.set" || event === "json.arrappend" || event === "set") {
+//       const latest = await client.json.get("products");
+
+//       console.log("Updated products:", latest);
+//     }
+//   });
+// };
+
+// export { ensureRedisSubscription };
