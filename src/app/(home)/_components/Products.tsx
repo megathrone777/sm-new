@@ -1,7 +1,7 @@
 import React from "react";
 
 const Products: React.FC = () => {
-  return <div>Products {products.length}</div>;
+  return <div>Products</div>;
 };
 
 export { Products };

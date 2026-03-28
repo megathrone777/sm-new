@@ -41,11 +41,12 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
-      API_TOKEN: string;
-      API_URL: string;
+      APP_KV_REST_API_READ_ONLY_TOKEN: string;
+      APP_KV_REST_API_TOKEN: string;
+      APP_KV_REST_API_URL: string;
+      APP_REDIS_URL: string;
       APP_URL: string;
       MAPY_CZ_API_KEY: string;
-      REDIS_URL: string;
     }
   }
 }

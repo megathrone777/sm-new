@@ -1,4 +1,4 @@
-import type cs from "~/dictionaries/cs.json";
+import type cs from "@/dictionaries/cs.json";
 
 export interface TUseTranslation {
   (): {

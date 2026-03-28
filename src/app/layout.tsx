@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
+import { RealTime } from "@/store";
 import { themeClass } from "@/theme";
 import "@/theme/global";
 
@@ -14,24 +15,26 @@ const RootLayout: React.FC<{
     lang="cs"
   >
     <body>
-      <div>
-        <ul style={{ columnGap: 10, display: "flex" }}>
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-          <li>
-            <Link href="/admin">Admin</Link>
-          </li>
-          <li>
-            <Link href="/cart">Cart</Link>
-          </li>
-          <li>
-            <Link href="/orders">Orders</Link>
-          </li>
-        </ul>
-      </div>
+      <RealTime>
+        <div>
+          <ul style={{ columnGap: 10, display: "flex" }}>
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/admin">Admin</Link>
+            </li>
+            <li>
+              <Link href="/cart">Cart</Link>
+            </li>
+            <li>
+              <Link href="/orders">Orders</Link>
+            </li>
+          </ul>
+        </div>
 
-      {children}
+        {children}
+      </RealTime>
     </body>
   </html>
 );

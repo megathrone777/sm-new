@@ -1,32 +1,33 @@
-import { getClient } from "~/lib";
+// import { redis } from "@/lib";
 
-const getGeneralInfo = async (): Promise<TGeneralInfo> => {
-  const initialInfo: TGeneralInfo = {
-    address: "",
-    businessName: "",
-    companyDetails: "",
-    contactItems: [],
-    email: "",
-    logo: "",
-    phone: "",
-    privacyPolicy: "",
-    termsOfUse: "",
-  };
+// const getGeneralInfo = async (): Promise<Record<string, TGeneralInfo>> => {
+//   const initialInfo: Record<string, TGeneralInfo> = {
+//     address: "",
+//     businessName: "",
+//     companyDetails: "",
+//     contactItems: [],
+//     email: "",
+//     logo: "",
+//     phone: "",
+//     privacyPolicy: "",
+//     termsOfUse: "",
+//   };
 
-  try {
-    const client = await getClient();
-    const generalInfo = (await client.hGetAll("generalInfo")) as unknown as TGeneralInfo;
+//   try {
+//     const generalInfo = await redis.hgetall<Record<string, TGeneralInfo>>("generalInfo");
 
-    if (generalInfo && !!Object.keys(generalInfo).length) {
-      return generalInfo;
-    }
+//     if (generalInfo && !!Object.keys(generalInfo).length) {
+//       return generalInfo;
+//     }
 
-    return initialInfo;
-  } catch (error) {
-    console.error("Cannot get products: ", error);
+//     return initialInfo;
+//   } catch (error) {
+//     console.error("Cannot get products: ", error);
 
-    return initialInfo;
-  }
-};
+//     return initialInfo;
+//   }
+// };
 
-export { getGeneralInfo };
+// export { getGeneralInfo };
+
+export const getGeneralInfo = async (): Promise<void> => {};

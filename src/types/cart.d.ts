@@ -38,7 +38,7 @@ declare global {
     type: TDelivery;
   }
 
-  export interface TDeliveryCondition {
+  interface TDeliveryCondition {
     amountCZK: number;
     distanceFrom: number;
     distanceTo: number;
@@ -49,11 +49,11 @@ declare global {
     title: string;
   }
 
-  export interface TSchedule {
+  interface TSchedule {
     lastTimeVicinityHidden: string;
   }
 
-  export interface TShopSettings {
+  interface TShopSettings {
     deliveryTimeOptions: string[];
     isAvailable: boolean;
     isOpened: boolean;
@@ -61,18 +61,18 @@ declare global {
     title: string;
   }
 
-  export interface TFeedback {
+  interface TFeedback {
     bgImage: string;
     buttonSendTitle: string;
     title: string;
   }
 
-  export interface TReview {
+  interface TReview {
     id: number;
     imageURL: string;
   }
 
-  export interface TCartErrors {
+  interface TCartErrors {
     address: null | string;
     deliveryTime: boolean;
     email: boolean;
@@ -89,41 +89,47 @@ declare global {
     updatedAt: number;
   }
 
-  export interface TOrder {
-    client: {
-      email: string;
-      name: string;
-      // phoneCountryCode: string;
-      // phoneNumber: string;
-    };
-    // additionals: [];
-    createdAt: number;
-    products: TProduct[];
-    updatedAt: number;
-    // cutleryAmountCZK: number;
-    // cutleryCount: number;
-    // deliveryAddress: string;
-    // deliveryAddressDistrict: string;
-    // deliveryAmountCZK: string;
-    // deliveryCoordinates: string;
-    // deliveryDistance: number;
-    // deliveryTime: null | string;
-    // deliveryType: string;
-    // district: string;
-    // id: number;
-    // items: [];
-    // itemsDiscountSuggestion: string;
-    // note: number;
-    // paymentType: string;
-    // possiblePickupDiscountCZK: number;
-    // promocode: string;
-    // promocodeDiscountAmountCZK: number;
-    // tipAmount: number;
-    // tipAmountCZK: number;
-    // totalAdditionalsAmountCZK: number;
-    // totalAmountCZK: number;
-    // totalItemsAmountCZK: string;
+  interface TOrder {
+    created_at: number;
+    email: string;
+    price: number;
   }
+
+  // export interface TOrder {
+  //   client: {
+  //     email: string;
+  //     name: string;
+  // phoneCountryCode: string;
+  // phoneNumber: string;
+  // };
+  // additionals: [];
+  // createdAt: number;
+  // products: TProduct[];
+  // updatedAt: number;
+  // cutleryAmountCZK: number;
+  // cutleryCount: number;
+  // deliveryAddress: string;
+  // deliveryAddressDistrict: string;
+  // deliveryAmountCZK: string;
+  // deliveryCoordinates: string;
+  // deliveryDistance: number;
+  // deliveryTime: null | string;
+  // deliveryType: string;
+  // district: string;
+  // id: number;
+  // items: [];
+  // itemsDiscountSuggestion: string;
+  // note: number;
+  // paymentType: string;
+  // possiblePickupDiscountCZK: number;
+  // promocode: string;
+  // promocodeDiscountAmountCZK: number;
+  // tipAmount: number;
+  // tipAmountCZK: number;
+  // totalAdditionalsAmountCZK: number;
+  // totalAmountCZK: number;
+  // totalItemsAmountCZK: string;
+  // }
 }
 
 export {};

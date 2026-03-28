@@ -1,4 +1,5 @@
-import cs from "~/dictionaries/cs.json";
+import cs from "@/dictionaries/cs.json";
+
 import type { TUseTranslation } from "./types";
 
 const useTranslation: TUseTranslation = () => ({
