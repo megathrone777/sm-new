@@ -4,6 +4,16 @@ declare global {
     type: string;
   }
 
+  interface TDeliveryCondition {
+    distanceFrom: number;
+    distanceTo: number;
+    id: number;
+    minimumOrderPrice: number;
+    price: number;
+    text: string;
+    title: string;
+  }
+
   interface TGeneralInfo {
     address: string;
     businessName: string;
@@ -30,7 +40,30 @@ declare global {
   }
 
   interface TPricingSetting {
-    cutleryPriceCZK: number;
+    cutleryPrice: number;
+  }
+
+  interface TSchedule {
+    lastTimeVicinityHidden: string;
+  }
+
+  interface TShopSettings {
+    deliveryTimeOptions: string[];
+    isAvailable: boolean;
+    isOpened: boolean;
+    text: string;
+    title: string;
+  }
+
+  interface TFeedback {
+    bgImage: string;
+    buttonSendTitle: string;
+    title: string;
+  }
+
+  interface TReview {
+    id: number;
+    imageUrl: string;
   }
 
   const fbq: (track: string, action: string, eventData: TFacebookEvent) => void;

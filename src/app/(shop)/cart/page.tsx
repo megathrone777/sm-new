@@ -1,38 +1,29 @@
 import React from "react";
 
-import { createOrder } from "@/app/actions";
+// import { seedCatalog } from "@/app/actions/seedCatalog";
+// import { getProductBySlug } from "@/helpers";
 
-const Page: React.FC = async () => (
-  <div>
-    <h1>Cart page</h1>
+const Page: React.FC = async () => {
+  // const product = await getProductBySlug("assorti-trend-3");
 
-    <form
-      action={createOrder}
-      style={{ marginBottom: 40 }}
-    >
-      <legend>New order</legend>
+  // console.log(product);
 
-      <div>
-        <input
-          name="email"
-          placeholder="E-mail"
-          type="email"
-        />
-      </div>
+  return (
+    <div>
+      <h1>Cart page</h1>
 
-      <div>
-        <input
-          name="price"
-          placeholder="Price (CZK)"
-          type="number"
-        />
-      </div>
+      <form
+        // action={seedCatalog}
+        style={{ marginBottom: 40 }}
+      >
+        <input type="hidden" />
 
-      <div>
-        <button type="submit">Create</button>
-      </div>
-    </form>
-  </div>
-);
+        <div>
+          <button type="submit">Create</button>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default Page;

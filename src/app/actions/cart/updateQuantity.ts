@@ -1,9 +1,9 @@
 "use server";
 const updateQuantity = async (
   id: TProduct["id"],
-  quantity: TProduct["quantity"],
+  // quantity: TProduct["quantity"],
 ): Promise<void> => {
-  console.log(id, quantity);
+  console.log(id);
   // const idx = cart.products.findIndex((p) => p.id === id);
   // if (idx === -1) return;
   // if (quantity <= 0) cart.products.splice(idx, 1);

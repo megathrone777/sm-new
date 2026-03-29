@@ -1,21 +1,8 @@
 declare global {
   interface TAdditional {
     id: number;
-    orderIndex: number;
-    priceCZK: number;
-    quantity: number;
-    title: string;
-    totalPrice: number;
-  }
-
-  interface TProductCategory {
-    id: number;
-    image: string;
-    isPromotionActive: boolean;
-    modifiersTitle: string;
-    products: TProduct[];
-    promotionDiscountAmount: number;
-    promotionForEveryXProducts: number;
+    price: number;
+    sortOrder: number;
     title: string;
   }
 
@@ -26,28 +13,49 @@ declare global {
 
   interface TModifier {
     id: number;
-    orderIndex: number;
-    priceMarkupCZK: number;
+    price: number;
     requiredSubModifier: boolean;
-    submodifiers: TSubmodifier[];
+    sortOrder: null | number;
+    subModifiers?: TSubmodifier[];
+    title: string;
+  }
+
+  interface TProductCategory {
+    fbCategoryId?: null | string;
+    googleCategoryId?: null | string;
+    id: number;
+    imageUrl: string;
+    isPromotionActive: boolean;
+    modifiersTitle?: null | string;
+    products: TProduct[];
+    promotionDiscountAmount: number;
+    promotionForEveryXProducts: number;
+    sortOrder: number;
     title: string;
   }
 
   interface TProduct {
-    allergens: string;
+    allergens: null | string;
+    categoryId: TProductCategory["id"];
     composition: string;
+    description: null | string;
+    fbCategoryId?: null | string;
+    fbDescription: null | string;
+    fbUpload: boolean;
     freeCutleryCount: number;
+    googleCategoryId?: null | string;
     id: number;
-    image: string;
+    imageUrl: string;
     isAvailable: boolean;
-    isMultipleModifiers: null | true;
+    isMultipleModifiers: boolean | null;
+    isTopProduct: boolean;
     modifiers: TModifier[];
-    modifiersTitle: string;
-    priceCZK: number;
-    quantity: number;
+    modifiersTitle: null | string;
+    price: number;
+    requiredCutlery: boolean;
     requiredModifier: boolean;
-    shortDescription: null | string;
     slug: string;
+    sortOrder: number;
     title: string;
     weight: string;
   }

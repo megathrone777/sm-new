@@ -1,6 +1,7 @@
-// export { getCart } from "./getCart";
-// export { getGeneralInfo } from "./getGeneralInfo";
-// export { getProductById } from "./getProductById";
-// export { getProducts } from "./getProducts";
+export { getCart } from "./getCart";
+export { getCategoriesWithProducts } from "./getCategoriesWithProducts";
+export { getOrCreateCartSessionId } from "./getOrCreateCartSessionId";
 export { getOrders } from "./getOrders";
-export { getSessionId } from "./getSessionId";
+export { getProductBySlug } from "./getProductBySlug";
+export { getProducts } from "./getProducts";
+export { updateProduct } from "./updateProduct";

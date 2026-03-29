@@ -1,8 +1,8 @@
-import type { LatLngExpression } from "leaflet";
+import type { LatLngExpression, LatLngLiteral } from "leaflet";
 import type { CountryCode } from "use-telephone";
 
 declare global {
-  type TDelivery = "delivery" | "pickup";
+  type TDeliveryType = "delivery" | "pickup";
 
   interface TPaymentInfo {
     change: 2000 | 5000 | null;
@@ -11,22 +11,22 @@ declare global {
 
   interface TTipsInfo {
     amount: number;
-    options: number[];
-    selected: number;
+    // options: number[];
+    // selected: number;
   }
 
-  interface TDeliveryInfo {
+  interface TClientInfo {
     address: string;
-    clientPosition: {
-      lat: number;
-      lng: number;
-    };
-    conditions: TDeliveryCondition[];
-    distanceInM: number;
     email: string;
     name: string;
     phone: string;
     phoneCountryCode: CountryCode;
+  }
+
+  interface TDeliveryInfo {
+    clientPosition: LatLngLiteral;
+    conditions: TDeliveryCondition[];
+    distanceInM: number;
     pickupLocation: {
       id: null | string;
       name: null | string;
@@ -34,42 +34,8 @@ declare global {
     };
     price: null | number;
     route: LatLngExpression[] | null;
-    time: TOption;
-    type: TDelivery;
-  }
-
-  interface TDeliveryCondition {
-    amountCZK: number;
-    distanceFrom: number;
-    distanceTo: number;
-    html: string;
-    id: number;
-    minimumOrderAmountCZK: number;
-    text: string;
-    title: string;
-  }
-
-  interface TSchedule {
-    lastTimeVicinityHidden: string;
-  }
-
-  interface TShopSettings {
-    deliveryTimeOptions: string[];
-    isAvailable: boolean;
-    isOpened: boolean;
-    text: string;
-    title: string;
-  }
-
-  interface TFeedback {
-    bgImage: string;
-    buttonSendTitle: string;
-    title: string;
-  }
-
-  interface TReview {
-    id: number;
-    imageURL: string;
+    time: TSelectOption;
+    type: TDeliveryType;
   }
 
   interface TCartErrors {
@@ -82,17 +48,24 @@ declare global {
     pickupAddress: boolean;
   }
 
-  interface TCart {
-    createdAt: number;
-    products: TProduct[];
+  interface TCartProduct extends TProduct {
+    quantity: number;
     totalPrice: number;
-    updatedAt: number;
   }
 
-  interface TOrder {
-    created_at: number;
-    email: string;
-    price: number;
+  interface TCart {
+    clientInfo: TClientInfo;
+    deliveryInfo: TDeliveryInfo;
+    note: string;
+    paymentInfo: TPaymentInfo;
+    products: TProduct[];
+    tipsInfo: TTipsInfo;
+    totalPrice: number;
+  }
+
+  interface TOrder extends TCart {
+    createdAt: number;
+    updatedAt: number;
   }
 
   // export interface TOrder {

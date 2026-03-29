@@ -1,9 +1,9 @@
 // "use server";
-// import { getCart, getProductById } from "~/helpers";
+// import { getCart, getProductBySlug } from "@/helpers";
 // import { save } from "./_save";
 
-// const addProduct = async (formData: FormData): Promise<{ success: boolean }> => {
-//   const id = formData.get("id");
+// const addProduct = async (formData: FormData): Promise<void> => {
+//   const id = formData.get("slug");
 //   const product = await getProductById(`${id}`);
 //   const cart = await getCart();
 

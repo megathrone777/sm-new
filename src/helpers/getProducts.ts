@@ -1,20 +1,14 @@
-// import { getClient } from "~/lib";
+import { redis } from "@/lib";
 
-// const getProducts = async (): Promise<TProduct[]> => {
-//   try {
-//     const client = await getClient();
-//     const products = await client.hGetAll("products");
+const getProducts = async (): Promise<TProduct[]> => {
+  const products = await redis.hgetall<Record<string, TProduct>>("products");
 
-//     if (products) {
-//       return Object.keys(products).map((id): TProduct => JSON.parse(products[id]));
-//     }
+  if (!products) return [];
 
-//     return [];
-//   } catch (error) {
-//     console.error("Cannot get products: ", error);
+  return Object.values(products).sort(
+    (productA: TProduct, productB: TProduct): number =>
+      (productA.sortOrder ?? 0) - (productB.sortOrder ?? 0),
+  );
+};
 
-//     return [];
-//   }
-// };
-
-// export { getProducts };
+export { getProducts };
