@@ -19,7 +19,12 @@ const getCategoriesWithProducts = async (): Promise<TProductCategory[]> => {
       id: 0,
       imageUrl: "/uploads/all_pr_352e3084a2_f2e3c82632_89967dca5a.jpg",
       isPromotionActive: false,
-      products: Object.values(products),
+      products: Object.values(products).map(
+        (product: TProduct): TProduct => ({
+          ...product,
+          categoryId: 0,
+        }),
+      ),
       promotionDiscountAmount: 0,
       promotionForEveryXProducts: 0,
       sortOrder: 0,

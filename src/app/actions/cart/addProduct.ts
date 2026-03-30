@@ -1,30 +1,32 @@
-// "use server";
-// import { getCart, getProductBySlug } from "@/helpers";
-// import { save } from "./_save";
+"use server";
+import { getCart, getProductBySlug } from "@/helpers";
 
-// const addProduct = async (formData: FormData): Promise<void> => {
-//   const id = formData.get("slug");
-//   const product = await getProductById(`${id}`);
-//   const cart = await getCart();
+const addProduct = async (formData: FormData): Promise<void> => {
+  const slug = formData.get("slug");
 
-//   if (cart && id && product) {
-//     const newCart: TCart = { ...cart };
-//     const foundIndex: number = newCart.products.findIndex(
-//       ({ id }: TProduct): boolean => id === product.id,
-//     );
+  if (slug) {
+    const product = await getProductBySlug(`${slug}`);
 
-//     if (foundIndex === -1) {
-//       newCart.products = [...newCart.products, { ...product, quantity: 1 }];
-//     } else {
-//       newCart.products[foundIndex].quantity += 1;
-//     }
+    if (product) {
+      const cart = await getCart();
+      const newCart: TCart = { ...cart };
+      const foundIndex: number = newCart.products.findIndex(
+        ({ id }: TProduct): boolean => id === product.id,
+      );
 
-//     await save(newCart);
+      if (foundIndex === -1) {
+        newCart.products = [...newCart.products, { ...product, quantity: 1 }];
+      } else {
+        newCart.products[foundIndex].quantity += 1;
+      }
 
-//     return { success: true };
-//   }
+      // await save(newCart);
 
-//   return { success: false };
-// };
+      return { success: true };
+    }
+  }
 
-// export { addProduct };
+  return { success: false };
+};
+
+export { addProduct };

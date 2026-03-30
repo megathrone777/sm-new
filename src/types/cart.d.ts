@@ -11,12 +11,10 @@ declare global {
 
   interface TTipsInfo {
     amount: number;
-    // options: number[];
-    // selected: number;
+    price: number;
   }
 
   interface TClientInfo {
-    address: string;
     email: string;
     name: string;
     phone: string;
@@ -24,11 +22,11 @@ declare global {
   }
 
   interface TDeliveryInfo {
+    address: string;
     clientPosition: LatLngLiteral;
     conditions: TDeliveryCondition[];
     distanceInM: number;
     pickupLocation: {
-      id: null | string;
       name: null | string;
       position: number[];
     };
@@ -48,17 +46,28 @@ declare global {
     pickupAddress: boolean;
   }
 
+  interface TCartAdditional extends TAdditional {
+    quantity: number;
+    totalPrice: number;
+  }
+
   interface TCartProduct extends TProduct {
+    isPromotionActive: boolean;
     quantity: number;
     totalPrice: number;
   }
 
   interface TCart {
+    additionals: TCartAdditional[];
     clientInfo: TClientInfo;
     deliveryInfo: TDeliveryInfo;
+    errors: TCartErrors;
     note: string;
     paymentInfo: TPaymentInfo;
-    products: TProduct[];
+    persons: number;
+    products: TCartProduct[];
+    promoCode: string;
+    promoDiscount: number;
     tipsInfo: TTipsInfo;
     totalPrice: number;
   }
@@ -75,9 +84,7 @@ declare global {
   // phoneCountryCode: string;
   // phoneNumber: string;
   // };
-  // additionals: [];
   // createdAt: number;
-  // products: TProduct[];
   // updatedAt: number;
   // cutleryAmountCZK: number;
   // cutleryCount: number;

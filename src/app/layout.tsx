@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { RealTime } from "@/store";
+import { RealTime } from "@/components";
 import { themeClass } from "@/theme";
 import "@/theme/global";
 

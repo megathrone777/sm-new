@@ -1,17 +1,18 @@
 import React from "react";
 
-// import { getCategoriesWithProducts } from "@/helpers";
+import { getCategoriesWithProducts } from "@/helpers";
+
+import { Products } from "./_components";
+
 import { wrapperClass } from "./page.css";
 
 const Page: React.FC = async () => {
-  // const categories = await getCategoriesWithProducts();
-
-  // console.log(categories);
+  const categories = await getCategoriesWithProducts();
 
   return (
     <div className={wrapperClass}>
       Home page
-      {/* <Products /> */}
+      <Products {...{ categories }} />
     </div>
   );
 };
