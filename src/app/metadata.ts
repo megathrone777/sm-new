@@ -41,7 +41,6 @@ const metadata: Metadata = {
     type: "website",
     url: publicURL,
   },
-
   title,
   twitter: {
     card: "summary_large_image",

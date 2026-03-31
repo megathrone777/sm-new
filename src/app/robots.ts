@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const isProduction: boolean = process.env.APP_ENV === "production";
+const isProduction: boolean = process.env.NODE_ENV === "production";
 
 const robots = (): MetadataRoute.Robots => {
   if (isProduction) {

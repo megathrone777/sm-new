@@ -15,7 +15,7 @@ declare global {
     id: number;
     price: number;
     requiredSubModifier: boolean;
-    sortOrder: null | number;
+    sortOrder: number;
     subModifiers?: TSubmodifier[];
     title: string;
   }

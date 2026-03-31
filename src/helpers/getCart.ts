@@ -1,11 +1,7 @@
-import { cacheTag } from "next/cache";
-
 import { getOrCreateCartSessionId } from "@/helpers";
 import { redis } from "@/lib";
 
 const getCart = async (): Promise<null | TCart> => {
-  "use cache";
-  cacheTag("cart");
   const sessionId = await getOrCreateCartSessionId();
 
   if (sessionId) {

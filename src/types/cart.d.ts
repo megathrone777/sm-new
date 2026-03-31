@@ -72,7 +72,7 @@ declare global {
     totalPrice: number;
   }
 
-  interface TOrder extends TCart {
+  interface TOrder {
     createdAt: number;
     updatedAt: number;
   }

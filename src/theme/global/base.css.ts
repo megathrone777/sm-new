@@ -5,6 +5,10 @@ globalStyle("html, body", {
   width: "100%",
 });
 
+globalStyle("html", {
+  scrollBehavior: "smooth",
+});
+
 globalStyle("body", {
   fontFamily: "var(--font-avenir)",
   MozOsxFontSmoothing: "grayscale",
@@ -36,10 +40,6 @@ globalStyle("object", {
 
 globalStyle("b", {
   fontWeight: 500,
-});
-
-globalStyle(".gm-style-cc, .pac-container::after", {
-  display: "none !important",
 });
 
 globalStyle(".leaflet-div-icon", {

@@ -4,22 +4,22 @@ const avenir = localFont({
   display: "block",
   src: [
     {
-      path: "./AvenirNext-Regular.woff",
+      path: "./AvenirNext-Regular.woff2",
       style: "normal",
       weight: "400",
     },
     {
-      path: "./AvenirNext-Demi.woff",
+      path: "./AvenirNext-Demi.woff2",
       style: "normal",
       weight: "500",
     },
     {
-      path: "./AvenirNext-Medium.woff",
+      path: "./AvenirNext-Medium.woff2",
       style: "normal",
       weight: "600",
     },
     {
-      path: "./AvenirNext-Bold.woff",
+      path: "./AvenirNext-Bold.woff2",
       style: "normal",
       weight: "700",
     },
@@ -29,14 +29,14 @@ const avenir = localFont({
 
 const franklin = localFont({
   display: "block",
-  src: "./Franklin-Gothic-Medium.ttf",
+  src: "./Franklin-Gothic-Medium.woff2",
   variable: "--font-franklin",
   weight: "500",
 });
 
 const akrobat = localFont({
   display: "block",
-  src: "./Akrobat-Black.otf",
+  src: "./Akrobat-Black.woff2",
   variable: "--font-akrobat",
   weight: "900",
 });

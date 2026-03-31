@@ -28,9 +28,9 @@ const Orders: React.FC<TProps> = ({ orders: initialOrders }) => {
       }}
     >
       {orders.map(
-        ({ email, price }: TOrder, index: number): React.ReactElement => (
+        ({ createdAt }: TOrder): React.ReactElement => (
           <div
-            key={`${email}-order`}
+            key={`${createdAt}-order`}
             style={{
               borderBottom: "3px solid black",
               display: "flex",
@@ -39,9 +39,7 @@ const Orders: React.FC<TProps> = ({ orders: initialOrders }) => {
               rowGap: 5,
             }}
           >
-            <span>Order #{index}</span>
-            <span>{email}</span>
-            <span>{price}CZK</span>
+            <span>Order #{createdAt}</span>
           </div>
         ),
       )}

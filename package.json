@@ -2,6 +2,7 @@
   "dependencies": {
     "@upstash/realtime": "^1.0.3",
     "@upstash/redis": "^1.37.0",
+    "@vanilla-extract/css-utils": "^0.1.6",
     "leaflet": "^1.9.4",
     "next": "16.2.1",
     "pg": "^8.20.0",

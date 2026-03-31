@@ -1,8 +1,8 @@
 import React from "react";
 
-const Layout: React.FC<{
-  children: React.ReactNode;
-}> = ({ children }) => (
+import type { TProps } from "./layout.types";
+
+const Layout: React.FC<TProps> = ({ children }) => (
   <>
     <h2>Orders layout</h2>
     <div>{children}</div>

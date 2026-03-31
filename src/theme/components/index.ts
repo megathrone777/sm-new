@@ -1,7 +1,4 @@
-// import { Container } from "./Container";
-
-// const Theme = {
-//   Container,
-// };
-
-// export { Theme };
+export { Burger } from "./Burger";
+export { Button } from "./Button";
+export { Container } from "./Container";
+export { Icon } from "./Icon";

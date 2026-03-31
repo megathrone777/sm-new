@@ -107,8 +107,6 @@ const config = defineConfig({
           },
         ],
         groups: [
-          // "side-effect",
-          // { newlinesBetween: 1 },
           "builtin",
           { newlinesBetween: 1 },
           "react",
@@ -169,8 +167,37 @@ const config = defineConfig({
             elementNamePattern: ["^:"],
             groupName: "pseudo",
           },
+          {
+            elementNamePattern: ["^@"],
+            groupName: "media",
+          },
+          {
+            elementNamePattern: ["^devices.mobile"],
+            groupName: "devices.mobile",
+          },
+          {
+            elementNamePattern: ["^devices.tablet"],
+            groupName: "devices.tablet",
+          },
+          {
+            elementNamePattern: ["^devices.desktop"],
+            groupName: "devices.desktop",
+          },
+          {
+            elementNamePattern: ["^devices.desktopLg"],
+            groupName: "devices.desktopLg",
+          },
         ],
-        groups: ["unknown", "current", "pseudo"],
+        groups: [
+          "unknown",
+          "current",
+          "pseudo",
+          "media",
+          "devices.mobile",
+          "devices.tablet",
+          "devices.desktop",
+          "devices.desktopLg",
+        ],
       },
     ],
 

@@ -1,32 +1,68 @@
 "use server";
-import { getCart, getProductBySlug } from "@/helpers";
+import { getCart } from "@/helpers";
+import { isEqual } from "@/utils";
 
-const addProduct = async (formData: FormData): Promise<void> => {
-  const slug = formData.get("slug");
+import { saveCart } from "./saveCart";
 
-  if (slug) {
-    const product = await getProductBySlug(`${slug}`);
+const initialCart: TCart = {
+  additionals: [],
+  clientInfo: {
+    email: "",
+    name: "",
+    phone: "",
+    phoneCountryCode: "CZ",
+  },
+  deliveryInfo: {
+    address: "",
+    clientPosition: { lat: 0, lng: 0 },
+    conditions: [],
+    distanceInM: 0,
+    pickupLocation: {
+      name: "Milíčova 471/25, Praha 3",
+      position: [50.0861328, 14.4518119],
+    },
+    price: null,
+    route: null,
+    time: { label: "Doručit teď", value: null },
+    type: "delivery",
+  },
+  errors: {
+    address: null,
+    deliveryTime: false,
+    email: false,
+    name: false,
+    persons: false,
+    phone: false,
+    pickupAddress: false,
+  },
+  note: "",
+  paymentInfo: { change: null, type: "cash" },
+  persons: 0,
+  products: [],
+  promoCode: "",
+  promoDiscount: 0,
+  tipsInfo: { amount: 0, price: 0 },
+  totalPrice: 0,
+};
 
-    if (product) {
-      const cart = await getCart();
-      const newCart: TCart = { ...cart };
-      const foundIndex: number = newCart.products.findIndex(
-        ({ id }: TProduct): boolean => id === product.id,
-      );
+const addProduct = async (newProduct: TCartProduct): Promise<void> => {
+  const cart = await getCart();
+  const newCart: TCart = cart ? { ...cart } : { ...initialCart };
+  const foundIndex: number = newCart.products.findIndex((product: TCartProduct): boolean =>
+    isEqual(newProduct, product),
+  );
 
-      if (foundIndex === -1) {
-        newCart.products = [...newCart.products, { ...product, quantity: 1 }];
-      } else {
-        newCart.products[foundIndex].quantity += 1;
-      }
-
-      // await save(newCart);
-
-      return { success: true };
-    }
+  if (foundIndex !== -1 && newCart.products[foundIndex]) {
+    newCart.products[foundIndex] = {
+      ...newCart.products[foundIndex],
+      quantity: newCart.products[foundIndex].quantity + 1,
+      totalPrice: newCart.products[foundIndex].totalPrice + newProduct.totalPrice,
+    };
+  } else {
+    newCart.products = [...newCart.products, newProduct];
   }
 
-  return { success: false };
+  await saveCart(newCart);
 };
 
 export { addProduct };
