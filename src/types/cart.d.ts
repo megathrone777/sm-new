@@ -51,8 +51,15 @@ declare global {
     totalPrice: number;
   }
 
+  interface TCartModifier extends TModifier {
+    subModifier?: {
+      id: number;
+      title: string;
+    };
+  }
+
   interface TCartProduct extends TProduct {
-    isPromotionActive: boolean;
+    modifiers: TCartModifier[];
     quantity: number;
     totalPrice: number;
   }

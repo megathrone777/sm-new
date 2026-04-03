@@ -2,9 +2,16 @@ import React from "react";
 import Link from "next/link";
 
 import { getCart } from "@/helpers";
-import { Icon } from "@/theme/components";
+import { Icon } from "@/ui";
 
-import { wrapperClass, layoutClass, linkClass, iconClass, amountClass } from "./Cart.css";
+import {
+  amountClass,
+  amountValueClass,
+  iconClass,
+  layoutClass,
+  linkClass,
+  wrapperClass,
+} from "./Cart.css";
 
 const Cart: React.FC = async () => {
   const cart = await getCart();
@@ -33,7 +40,9 @@ const Cart: React.FC = async () => {
           />
         </Link>
 
-        <p className={amountClass}>{getProductsTotal()}</p>
+        <p className={amountClass}>
+          <span className={amountValueClass}>{getProductsTotal()}</span>
+        </p>
       </div>
     </div>
   );

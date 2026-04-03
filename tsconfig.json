@@ -14,7 +14,8 @@
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/ui": ["./src/theme/components/index.ts"]
     },
     "plugins": [
       {

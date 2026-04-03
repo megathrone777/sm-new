@@ -1,15 +1,20 @@
 import React from "react";
 
-import { Cart, Header } from "./_components";
+import { getShopSettings } from "@/helpers";
 
-import type { TProps } from "./layout.types";
+import { Cart, Header, Schedule } from "./_components";
 
-const Layout: React.FC<TProps> = ({ children }) => (
-  <>
-    <Header />
-    <div>{children}</div>
-    <Cart />
-  </>
-);
+const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
+  const { contactItems, isOpened, logoUrl, phone, text, title } = await getShopSettings();
+
+  return (
+    <>
+      <Header {...{ logoUrl, phone }} />
+      {children}
+      <Cart />
+      <Schedule {...{ contactItems, isOpened, text, title }} />
+    </>
+  );
+};
 
 export default Layout;

@@ -1,30 +1,47 @@
 import React from "react";
 
-import { Item } from "./Item";
+import { getCategoriesWithProducts } from "@/helpers";
+import { Container } from "@/ui";
+
+import { ProductsItem } from "./ProductsItem";
+import { ProductsLayout } from "./ProductsLayout";
+
+import { wrapperClass } from "./Products.css";
 
 import type { TProps } from "./Products.types";
 
-const Products: React.FC<TProps> = ({ categories }) => (
-  <div>
-    {categories.map(({ id, products, title }) => (
-      <div key={`category-${id}`}>
-        <h2 style={{ fontWeight: "bold" }}>Category: {title}</h2>
+const Products: React.FC<TProps> = async ({ showAll, title }) => {
+  const categories = await getCategoriesWithProducts();
 
-        <div style={{ paddingLeft: 20 }}>
-          {products.map((product: TProduct): React.ReactElement => {
-            const { categoryId, slug } = product;
+  const renderedProducts = categories.reduce<Record<TProductCategory["id"], React.ReactNode[]>>(
+    (
+      accumulator,
+      { id, isPromotionActive, products, promotionDiscountAmount, promotionForEveryXProducts },
+    ) => ({
+      ...accumulator,
+      [id]: products.map(
+        (product: TProduct): React.ReactElement => (
+          <ProductsItem
+            key={`${product.id}-products-item`}
+            {...product}
+            {...{ isPromotionActive, promotionDiscountAmount, promotionForEveryXProducts }}
+          />
+        ),
+      ),
+    }),
+    {},
+  );
 
-            return (
-              <Item
-                key={`products-item-${id}-${categoryId}-${slug}`}
-                {...product}
-              />
-            );
-          })}
-        </div>
-      </div>
-    ))}
-  </div>
-);
+  return (
+    <div
+      className={wrapperClass}
+      id="products-section"
+    >
+      <Container>
+        <ProductsLayout {...{ categories, renderedProducts, showAll, title }} />
+      </Container>
+    </div>
+  );
+};
 
 export { Products };

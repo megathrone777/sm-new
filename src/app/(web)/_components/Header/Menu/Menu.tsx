@@ -4,8 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { useTranslation } from "@/hooks";
-import { Burger } from "@/theme/components";
-import { toKey } from "@/utils";
+import { Burger } from "@/ui";
 
 import {
   burgerClass,
@@ -25,24 +24,32 @@ const Menu: React.FC<TProps> = ({ phone }) => {
   const { t } = useTranslation();
   const menuItems = t<TMenuItem[]>("mainMenu");
 
-  const handleMenuToggle = (): void => {
-    toggleOpened(!isOpened);
+  const handleLinkClick = (): void => {
+    if (isOpened) {
+      document.body.removeAttribute("style");
+      toggleOpened(false);
+    }
   };
 
-  useEffect((): void => {
-    toggleOpened(false);
-    document.body.removeAttribute("style");
-  }, [pathname]);
+  const handleMenuToggle = (): void => {
+    toggleOpened(!isOpened);
 
-  useEffect((): void => {
     if (isOpened) {
-      document.body.style.overflow = "hidden";
+      document.body.removeAttribute("style");
 
       return;
     }
 
-    document.body.removeAttribute("style");
-  }, [isOpened]);
+    document.documentElement.scrollTop = 0;
+    document.body.style.height = "100vh";
+    document.body.style.overflow = "hidden";
+  };
+
+  useEffect((): void => {
+    if (isOpened) {
+      toggleOpened(false);
+    }
+  }, [pathname]);
 
   return (
     <div className={wrapperClass}>
@@ -62,10 +69,11 @@ const Menu: React.FC<TProps> = ({ phone }) => {
           <ul className={listClass}>
             {menuItems.map(
               ({ anchor, text }: TMenuItem): React.ReactElement => (
-                <li key={`menu-item-${toKey(anchor)}`}>
+                <li key={`menu-item-${anchor}`}>
                   <Link
                     className={linkClass[pathname === anchor ? "isActive" : "default"]}
                     href={anchor}
+                    onClick={handleLinkClick}
                   >
                     {text}
                   </Link>

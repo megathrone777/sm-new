@@ -9,18 +9,25 @@ export const wrapperClass = css(({ devices }) => ({
 }));
 
 export const layoutClass = cssVariants(
-  {
+  ({ devices }) => ({
     default: {
       opacity: 0,
-      visibility: "hidden",
+      pointerEvents: "none",
+
+      "@media": {
+        [devices.desktop]: {
+          opacity: 1,
+          pointerEvents: "auto",
+        },
+      },
     },
     isOpened: {
       opacity: 1,
-      visibility: "visible",
+      pointerEvents: "auto",
     },
-  },
+  }),
 
-  (visible, { colors, devices }) => [
+  (state, { colors, devices, easing }) => [
     {
       alignContent: "center",
       alignItems: "center",
@@ -30,32 +37,29 @@ export const layoutClass = cssVariants(
       height: "100dvh",
       inset: 0,
       justifyContent: "center",
+      minHeight: "100dvh",
       position: "absolute",
       rowGap: 30,
-      transitionDuration: ".2s",
-      transitionProperty: "opacity, visibility",
-      visibility: "hidden",
+      transition: `opacity .2s ${easing}`,
       width: "100%",
       zIndex: 10,
 
       "@media": {
         [devices.desktop]: {
+          backgroundColor: "transparent",
+          columnGap: 45,
           gridAutoFlow: "column",
-          height: "auto",
+          height: "100%",
+          minHeight: 0,
           position: "static",
         },
-      },
-    },
-    {
-      ...visible,
 
-      "@media": {
-        [devices.desktop]: {
-          opacity: 1,
-          visibility: "visible",
+        [devices.desktopXl]: {
+          columnGap: 100,
         },
       },
     },
+    state,
   ],
 );
 
@@ -67,8 +71,13 @@ export const listClass = css(({ devices }) => ({
 
   "@media": {
     [devices.desktop]: {
-      columnGap: 60,
+      columnGap: 40,
+      gridAutoFlow: "column",
       gridColumn: 1,
+    },
+
+    [devices.desktopLg]: {
+      columnGap: 60,
     },
   },
 }));
@@ -78,50 +87,31 @@ export const linkClass = cssVariants(
     default: "white",
     isActive: colors.red,
   }),
-  (color) => [
+  (color, { colors, devices, easing }) => [
     {
       fontSize: 28,
+      transition: `color .2s ${easing}`,
       whiteSpace: "nowrap",
+
+      ":hover": {
+        color: colors.red,
+      },
+
+      "@media": {
+        [devices.desktop]: {
+          fontSize: 18,
+        },
+
+        [devices.desktopLg]: {
+          fontSize: 20,
+        },
+      },
     },
     {
       color,
     },
   ],
 );
-
-// const itemDefaults = css(({ colors, devices }) => ({
-//   color: "white",
-//   cursor: "pointer",
-//   fontSize: rem(20),
-//   whiteSpace: "nowrap",
-
-//   "&.is-active": {
-//     color: colors.red,
-//   },
-
-//   ...hover({
-//     color: colors.red,
-//   }),
-
-//   [devices.desktop]: {
-//     fontSize: rem(18),
-//   },
-
-//   [devices.tablet]: {
-//     fontSize: rem(28),
-
-//     "@media (orientation: landscape)": {
-//       fontSize: rem(25),
-//     },
-//   },
-// }));
-
-// export const linkClass = css(
-//   {
-//     textDecoration: "none",
-//   },
-//   itemDefaults,
-// );
 
 export const contactClass = css(({ devices }) => ({
   "@media": {
@@ -131,52 +121,39 @@ export const contactClass = css(({ devices }) => ({
   },
 }));
 
-export const contactLinkClass = css(({ colors, fonts }) => ({
+export const contactLinkClass = css(({ colors, devices, fonts }) => ({
   color: colors.red,
   fontSize: 28,
   fontWeight: fonts.medium,
+
+  "@media": {
+    [devices.desktop]: {
+      color: "white",
+      fontSize: 18,
+      paddingLeft: 35,
+      position: "relative",
+
+      "&:hover::before": {
+        filter: "brightness(120%)",
+      },
+
+      "::before": {
+        background: "url('/images/header_contact_bg.png') left center/auto 80% no-repeat",
+        content: "''",
+        display: "inline-block",
+        height: 33,
+        left: 0,
+        position: "absolute",
+        top: -4,
+        width: 33,
+      },
+    },
+
+    [devices.desktopLg]: {
+      fontSize: 20,
+    },
+  },
 }));
-
-// export const StyledContactLink = styled.a(({ theme: { colors, devices, fonts, hover, rem } }) => ({
-//   color: "white",
-//   display: "block",
-//   fontSize: rem(20),
-//   fontWeight: fonts.medium,
-//   lineHeight: rem(34),
-//   paddingLeft: rem(35),
-//   position: "relative",
-//   textDecoration: "none",
-//   whiteSpace: "nowrap",
-
-//   [devices.desktop]: {
-//     fontSize: rem(18),
-//   },
-
-//   [devices.tablet]: {
-//     color: colors.red,
-//     fontSize: rem(28),
-//     paddingLeft: 0,
-//   },
-
-//   "&::before": {
-//     content: '""',
-//     background: 'url("/images/header_contact_bg.png") left center/auto 80% no-repeat',
-//     display: "inline-block",
-//     height: rem(33),
-//     left: 0,
-//     position: "absolute",
-//     top: rem(-4),
-//     width: rem(33),
-
-//     [devices.tablet]: {
-//       display: "none",
-//     },
-//   },
-
-//   ...hover({
-//     filter: "brightness(120%)",
-//   }),
-// }));
 
 export const burgerClass = css(({ devices }) => ({
   position: "relative",

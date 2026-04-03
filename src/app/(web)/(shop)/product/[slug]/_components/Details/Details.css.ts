@@ -18,11 +18,12 @@ export const wrapperClass = css(({ colors, devices }) => ({
 
 export const layoutClass = css(({ devices }) => ({
   display: "grid",
-  gridAutoFlow: "column",
+  gridAutoFlow: "row",
 
   "@media": {
     [devices.tablet]: {
-      gridAutoFlow: "row",
+      gridAutoFlow: "column",
+      gridTemplateColumns: "35% 1fr",
       marginInline: "auto",
       maxWidth: 1200,
     },
@@ -37,34 +38,27 @@ const columnClass = css(({ devices }) => ({
     [devices.mobile]: {
       marginInline: 20,
     },
+
+    [devices.tablet]: {
+      maxWidth: "50%",
+    },
   },
 }));
 
-export const columnLeftClass = css(({ devices }) => [
-  columnClass,
-  {
-    position: "relative",
+export const columnLeftClass = css([columnClass, {}]);
 
-    "@media": {
-      [devices.tablet]: {
-        maxWidth: "50%",
-      },
-    },
-  },
-]);
+export const columnRightClass = css([columnClass, {}]);
 
-export const columnRightClass = css(({ devices }) => [
-  columnClass,
-  {
-    position: "relative",
+export const modifiersHeadingClass = css({
+  marginBottom: 15,
+});
 
-    "@media": {
-      [devices.tablet]: {
-        maxWidth: "50%",
-      },
-    },
-  },
-]);
+export const modifiersTitleClass = css(({ fonts }) => ({
+  color: "black",
+  fontSize: 17,
+  fontWeight: fonts.medium,
+  marginRight: 10,
+}));
 
 // export const columnLeftClass = css(({ theme: { devices, rem } }) => ({
 //   flex: "0 1 35%",

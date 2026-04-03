@@ -1,18 +1,18 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
-  translate: "0 -7px",
+  transform: "translateY(-7px)",
   width: 72,
   zIndex: 40,
 
   "@media": {
     [devices.mobile]: {
-      translate: "0 -10px",
+      transform: "translateY(-10px)",
       width: 82,
     },
 
-    [devices.desktopLg]: {
-      translate: "0 -6px",
+    [devices.desktop]: {
+      transform: "translateY(15px)",
       width: 98,
     },
   },

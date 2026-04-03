@@ -2,8 +2,8 @@ import { css } from "@/theme";
 
 export const wrapperClass = css({
   alignItems: "center",
-  display: "flex",
-  flexDirection: "column",
+  display: "grid",
+  gridAutoFlow: "row",
   height: "100%",
   justifyContent: "center",
   paddingBlock: 30,

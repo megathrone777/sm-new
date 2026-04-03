@@ -9,19 +9,28 @@ export const wrapperClass = css(({ devices }) => ({
   height: 0,
   justifyContent: "end",
   paddingRight: 15,
+  pointerEvents: "none",
   position: "sticky",
   width: "100%",
   zIndex: 101,
 
   "@media": {
+    [devices.pointerCoarse]: {
+      bottom: `${calc("20px").add("env(safe-area-inset-bottom)")}`,
+    },
+
     [devices.mobile]: {
-      bottom: 40,
+      bottom: 30,
       paddingRight: 15,
     },
 
     [devices.desktop]: {
-      bottom: calc("100dvh").subtract("94px").toString(),
+      bottom: `${calc("100dvh").subtract("96px")}`,
       paddingRight: 30,
+    },
+
+    [devices.desktopXl]: {
+      paddingRight: 50,
     },
   },
 }));
@@ -35,8 +44,9 @@ export const layoutClass = css(({ colors, devices }) => ({
   display: "grid",
   height: 55,
   justifyContent: "stretch",
-  outline: `3px solid ${colors.red}`,
+  pointerEvents: "auto",
   position: "relative",
+  transform: "translate(-2px, -2px)",
   width: 55,
 
   "@media": {
@@ -56,7 +66,7 @@ export const linkClass = css({
   height: "100%",
   justifyContent: "center",
   overflow: "hidden",
-  textIndent: -9999,
+  verticalAlign: "middle",
   width: "100%",
 });
 
@@ -65,18 +75,44 @@ export const iconClass = css({
   height: 35,
 });
 
-export const amountClass = css(({ fonts }) => ({
+export const amountClass = css(({ devices }) => ({
+  alignContent: "center",
+  alignItems: "center",
   backgroundColor: "white",
   borderRadius: "50%",
   bottom: -5,
-  color: "black",
-  fontSize: 16,
-  fontWeight: fonts.bold,
-  minWidth: 25,
-  padding: 3,
+  display: "grid",
+  height: 21,
+  justifyContent: "center",
+  minWidth: 21,
   pointerEvents: "none",
   position: "absolute",
   right: -5,
-  textAlign: "center",
   userSelect: "none",
+  verticalAlign: "middle",
+
+  "@media": {
+    [devices.desktop]: {
+      height: 25,
+      minWidth: 25,
+      paddingInline: 3,
+    },
+  },
+}));
+
+export const amountValueClass = css(({ devices, fonts }) => ({
+  color: "black",
+  fontSize: 14,
+  fontWeight: fonts.bold,
+  lineHeight: 1,
+
+  "@media": {
+    [devices.pointerCoarse]: {
+      transform: "translateY(1px)",
+    },
+
+    [devices.mobile]: {
+      fontSize: 16,
+    },
+  },
 }));

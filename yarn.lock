@@ -1061,6 +1061,16 @@
     vite "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
     vite-node "^3.2.2 || ^5.0.0 || ^6.0.0"
 
+"@vanilla-extract/compiler@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@vanilla-extract/compiler/-/compiler-0.7.0.tgz#ce76c815b19c100d2d39cc8415dd3b8767b56c6b"
+  integrity sha512-rZQ40HVmsxfGLjoflwwsaUBLfpbpKDoZC19oiDA0FHq4LdrYtyVbFkc0MfqkNo/qBCvaZfsRezCqk0QQxCqZ8w==
+  dependencies:
+    "@vanilla-extract/css" "^1.20.1"
+    "@vanilla-extract/integration" "^8.0.9"
+    vite "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0"
+    vite-node "^3.2.2 || ^5.0.0 || ^6.0.0"
+
 "@vanilla-extract/css-utils@^0.1.6":
   version "0.1.6"
   resolved "https://registry.yarnpkg.com/@vanilla-extract/css-utils/-/css-utils-0.1.6.tgz#f83df9b8d30e65dae2c301c711546212e5246a53"
@@ -1075,6 +1085,23 @@
     "@vanilla-extract/private" "^1.0.9"
     css-what "^6.1.0"
     cssesc "^3.0.0"
+    csstype "^3.2.3"
+    dedent "^1.5.3"
+    deep-object-diff "^1.1.9"
+    deepmerge "^4.2.2"
+    lru-cache "^10.4.3"
+    media-query-parser "^2.0.2"
+    modern-ahocorasick "^1.0.0"
+    picocolors "^1.0.0"
+
+"@vanilla-extract/css@^1.20.1":
+  version "1.20.1"
+  resolved "https://registry.yarnpkg.com/@vanilla-extract/css/-/css-1.20.1.tgz#403ee77306105d1986db6c57222ead8b19fb8c79"
+  integrity sha512-5I9RNo5uZW9tsBnqrWzJqELegOqTHBrZyDFnES0gR9gJJHBB9dom1N0bwITM9tKwBcfKrTX4a6DHVeQdJ2ubQA==
+  dependencies:
+    "@emotion/hash" "^0.9.0"
+    "@vanilla-extract/private" "^1.0.9"
+    css-what "^6.1.0"
     csstype "^3.2.3"
     dedent "^1.5.3"
     deep-object-diff "^1.1.9"
@@ -1121,6 +1148,15 @@
   dependencies:
     "@swc/core" "^1.13.5"
     "@vanilla-extract/compiler" "^0.6.0"
+    "@vanilla-extract/integration" "^8.0.9"
+
+"@vanilla-extract/turbopack-plugin@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@vanilla-extract/turbopack-plugin/-/turbopack-plugin-0.1.3.tgz#2d3799731a81e4f4eebb93016c51bbb6c57ab776"
+  integrity sha512-ZTViI5/3xAviQ3aRzZMjYG50NIFVsXqvsavZF+rMxl/RYZQ42ufBT2jDRlScrIvig2V27ODESDEJRQcEX/u3+Q==
+  dependencies:
+    "@swc/core" "^1.13.5"
+    "@vanilla-extract/compiler" "^0.7.0"
     "@vanilla-extract/integration" "^8.0.9"
 
 "@vanilla-extract/webpack-plugin@^2.3.26":
@@ -2736,6 +2772,11 @@ punycode@^2.1.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.1.tgz#027422e2faec0b25e1549c3e1bd8309b9133b6e5"
   integrity sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==
+
+react-animate-height@^3.2.3:
+  version "3.2.3"
+  resolved "https://registry.yarnpkg.com/react-animate-height/-/react-animate-height-3.2.3.tgz#90929aadac1bd1851cb6a685acc105b50ccfda8c"
+  integrity sha512-R6DSvr7ud07oeCixScyvXWEMJY/Mt2+GyOWC1KMaRc69gOBw+SsCg4TJmrp4rKUM1hyd6p+YKw90brjPH93Y2A==
 
 react-dom@19.2.4:
   version "19.2.4"

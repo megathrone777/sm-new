@@ -34,7 +34,10 @@ declare global {
     title: string;
   }
 
-  interface TProduct {
+  interface TProduct extends Pick<
+    TProductCategory,
+    "isPromotionActive" | "promotionDiscountAmount" | "promotionForEveryXProducts"
+  > {
     allergens: null | string;
     categoryId: TProductCategory["id"];
     composition: string;

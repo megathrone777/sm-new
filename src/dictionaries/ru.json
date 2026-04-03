@@ -4,19 +4,19 @@
   "cartTitle": "Sushi Man | Корзина",
   "mainMenu": [
     {
-      "anchor": "about-section",
+      "anchor": "/#about-section",
       "text": "О нас"
     },
     {
-      "anchor": "products-section",
+      "anchor": "/#products-section",
       "text": "Меню"
     },
     {
-      "anchor": "delivery-section",
+      "anchor": "/#delivery-section",
       "text": "Доставка и оплата"
     },
     {
-      "anchor": "reviews-section",
+      "anchor": "/#reviews-section",
       "text": "Отзывы"
     }
   ],

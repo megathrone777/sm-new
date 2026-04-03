@@ -1,7 +1,9 @@
 export { getCart } from "./getCart";
 export { getCategoriesWithProducts } from "./getCategoriesWithProducts";
+export { getCategoryById } from "./getCategoryById";
 export { getOrCreateCartSessionId } from "./getOrCreateCartSessionId";
 export { getOrders } from "./getOrders";
 export { getProductBySlug } from "./getProductBySlug";
 export { getProducts } from "./getProducts";
+export { getShopSettings } from "./getShopSettings";
 export { updateProduct } from "./updateProduct";

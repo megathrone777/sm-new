@@ -1,24 +1,20 @@
 import React from "react";
 
-import { RealTime } from "@/components";
 import { themeClass } from "@/theme";
 import "@/theme/global";
 
 import { fonts } from "./fonts";
 
-import type { TProps } from "./layout.types";
-
-const RootLayout: React.FC<TProps> = ({ children }) => (
+const RootLayout: React.FC<LayoutProps<"/">> = ({ children }) => (
   <html
     className={`${fonts.avenir.variable} ${fonts.franklin.variable} ${fonts.akrobat.variable} ${themeClass}`}
     data-scroll-behavior="smooth"
     lang="cs"
   >
-    <body>
-      <RealTime>{children}</RealTime>
-    </body>
+    <body>{children}</body>
   </html>
 );
 
 export { metadata } from "./metadata";
+export { viewport } from "./viewport";
 export default RootLayout;

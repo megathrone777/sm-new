@@ -1,13 +1,14 @@
 import React from "react";
 
+import { Scroller } from "@/app/(web)/_components";
+
 import { Hero } from "./_components";
 
-const Layout: React.FC<{
-  children: React.ReactNode;
-}> = ({ children }) => (
+const Layout: React.FC<LayoutProps<"/">> = ({ children }) => (
   <>
     <Hero />
-    <div>{children}</div>
+    <Scroller />
+    {children}
   </>
 );
 

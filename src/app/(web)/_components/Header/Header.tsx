@@ -1,18 +1,23 @@
 import React from "react";
 
-import { Container } from "@/theme/components";
+import { Container } from "@/ui";
 
 import { Logo } from "./Logo";
 import { Menu } from "./Menu";
 
 import { wrapperClass, layoutClass } from "./Header.css";
 
-const Header: React.FC = () => (
-  <div className={wrapperClass}>
+import type { TProps } from "./Header.types";
+
+const Header: React.FC<TProps> = ({ logoUrl, phone }) => (
+  <div
+    className={wrapperClass}
+    id="header"
+  >
     <Container>
       <div className={layoutClass}>
-        <Logo imageUrl="/uploads/logo_img.svg" />
-        <Menu phone="+420 792 745 116" />
+        <Logo imageUrl={logoUrl} />
+        <Menu {...{ phone }} />
       </div>
     </Container>
   </div>

@@ -1,78 +1,102 @@
-// import React, { useEffect, useState } from "react";
-// import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import React from "react";
+// import { useSearchParams } from "next/navigation";
 
-// import { Item } from "./Item";
-// import { TProps } from "./types";
-// import { StyledHeading, StyledTitle, StyledList } from "./styled";
+import { Checkbox } from "@/ui";
 
-// const Modifiers: React.FC<TProps> = ({ modifiers, title, onUpdate }) => {
-//   const router = useRouter();
-//   const pathname = usePathname();
-//   const searchParams = useSearchParams();
-//   const [selectedModifiers, setSelectedModifiers] = useState<TSelectedModifier[]>([]);
+import { listClass, itemClass, priceClass } from "./Modifiers.css";
 
-//   const handleModifierAdd = (modifier: TSelectedModifier): void => {
-//     if (searchParams.get("action")) {
-//       router.replace(pathname, {
-//         scroll: false,
-//       });
-//     }
+import type { TProps } from "./Modifiers.types";
 
-//     setSelectedModifiers((prevModifiers: TSelectedModifier[]): TSelectedModifier[] => {
-//       const newModifiers = [...prevModifiers];
-//       const foundIndex: number = prevModifiers.findIndex(({ id }): boolean => id === modifier.id);
+const Modifiers: React.FC<TProps> = ({ modifiers }) => {
+  // const searchParams = useSearchParams();
 
-//       if (foundIndex !== -1) {
-//         newModifiers[foundIndex] = modifier;
+  // const handleModifierAdd = (modifier: TCartModifier): void => {
+  //   if (searchParams.get("action")) {
+  // router.replace<string>(pathname, {
+  //   scroll: false,
+  // });
+  // }
 
-//         return newModifiers;
-//       }
+  // setSelectedModifiers((prevModifiers: TSelectedModifier[]): TSelectedModifier[] => {
+  //   const newModifiers = [...prevModifiers];
+  //   const foundIndex: number = prevModifiers.findIndex(({ id }): boolean => id === modifier.id);
 
-//       return [...newModifiers, modifier];
-//     });
-//   };
+  //   if (foundIndex !== -1) {
+  //     newModifiers[foundIndex] = modifier;
 
-//   const handleModifierRemove = (modifierID: TModifier["id"]): void => {
-//     setSelectedModifiers((prevModifiers: TSelectedModifier[]): TSelectedModifier[] =>
-//       prevModifiers.filter(({ id }): boolean => id !== modifierID),
-//     );
-//   };
+  //     return newModifiers;
+  //   }
 
-//   useEffect((): void => {
-//     onUpdate(selectedModifiers);
-//   }, [selectedModifiers]);
+  //   return [...newModifiers, modifier];
+  // });
+  // };
 
-//   useEffect((): void => {
-//     if (searchParams.get("action")) {
-//       toast(title, {
-//         type: "error",
-//         toastId: `actionError-${title}`,
-//       });
-//     }
-//   }, [searchParams]);
+  // const handleModifierRemove = (modifierID: TModifier["id"]): void => {
+  //   setSelectedModifiers((prevModifiers: TSelectedModifier[]): TSelectedModifier[] =>
+  //     prevModifiers.filter(({ id }): boolean => id !== modifierID),
+  //   );
+  // };
 
-//   return (
-//     <div>
-//       <StyledHeading>
-//         <StyledTitle>{title}:</StyledTitle>
-//       </StyledHeading>
+  // useEffect((): void => {
+  //   onUpdate(selectedModifiers);
+  // }, [selectedModifiers]);
 
-//       {!!modifiers.length && (
-//         <StyledList className={modifiers.length > 8 ? "columns" : ""}>
-//           {modifiers.map(
-//             ({ id, ...rest }: TModifier, index: number): React.ReactElement => (
-//               <Item
-//                 key={`${id}-modifier`}
-//                 onAdd={handleModifierAdd}
-//                 onRemove={handleModifierRemove}
-//                 {...{ id, index, ...rest }}
-//               />
-//             ),
-//           )}
-//         </StyledList>
-//       )}
-//     </div>
-//   );
-// };
+  // useEffect((): void => {
+  //   if (searchParams.get("action")) {
+  // toast(title, {
+  //   type: "error",
+  //   toastId: `actionError-${title}`,
+  // });
+  //   }
+  // }, [searchParams]);
 
-// export { Modifiers };
+  return (
+    <div className={modifiers.length > 8 ? "columns" : ""}>
+      {modifiers.map(
+        ({ id, price, subModifiers, title }: TModifier): React.ReactElement => (
+          <div key={`${id}-modifier-item`}>
+            <Checkbox
+              id={`${id}-modifier`}
+              label={
+                <>
+                  {title}
+                  {price !== 0 && (
+                    <>
+                      {" "}
+                      + <span className={priceClass}>{price} Kč</span>
+                    </>
+                  )}
+                </>
+              }
+              type="checkbox"
+            />
+
+            {subModifiers && !!subModifiers.length && (
+              <ul className={listClass}>
+                {subModifiers.map(
+                  ({ id: subModifierID, title }: TSubmodifier): React.ReactElement => (
+                    <li
+                      className={itemClass}
+                      key={`${subModifierID}-${id}-submodifier`}
+                    >
+                      <Checkbox
+                        className="is-small"
+                        label={title}
+                        name={`${id}-submodifier`}
+                        template="small"
+                        type="radio"
+                        value={title}
+                      />
+                    </li>
+                  ),
+                )}
+              </ul>
+            )}
+          </div>
+        ),
+      )}
+    </div>
+  );
+};
+
+export { Modifiers };

@@ -187,6 +187,10 @@ const config = defineConfig({
             elementNamePattern: ["^devices.desktopLg"],
             groupName: "devices.desktopLg",
           },
+          {
+            elementNamePattern: ["^devices.desktopXl"],
+            groupName: "devices.desktopXl",
+          },
         ],
         groups: [
           "unknown",
@@ -197,6 +201,7 @@ const config = defineConfig({
           "devices.tablet",
           "devices.desktop",
           "devices.desktopLg",
+          "devices.desktopXl",
         ],
       },
     ],

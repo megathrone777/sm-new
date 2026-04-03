@@ -14,18 +14,6 @@ declare global {
     title: string;
   }
 
-  interface TGeneralInfo {
-    address: string;
-    businessName: string;
-    companyDetails: string;
-    contactItems: TContactLink[];
-    email: string;
-    logo: string;
-    phone: string;
-    privacyPolicy: string;
-    termsOfUse: string;
-  }
-
   interface TSelectOption {
     label: string;
     value: null | string;
@@ -48,9 +36,18 @@ declare global {
   }
 
   interface TShopSettings {
+    address: string;
+    businessName: string;
+    companyDetails: string;
+    contactItems: TContactLink[];
     deliveryTimeOptions: string[];
+    email: string;
     isAvailable: boolean;
     isOpened: boolean;
+    logoUrl: string;
+    phone: string;
+    privacyPolicy: string;
+    termsOfUse: string;
     text: string;
     title: string;
   }

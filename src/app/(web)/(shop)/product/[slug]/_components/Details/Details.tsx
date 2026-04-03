@@ -1,9 +1,10 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 
-import { cartActions } from "@/app/actions";
+// import { cartActions } from "@/app/actions";
 import { useTranslation } from "@/hooks";
-import { Button, Icon } from "@/theme/components";
+import { Button } from "@/ui";
+
+import { Modifiers } from "./Modifiers";
 
 import {
   buttonsLayoutClass,
@@ -16,11 +17,13 @@ import {
   itemPriceClass,
   itemTitleClass,
   layoutClass,
+  modifiersHeadingClass,
+  modifiersTitleClass,
   placeholderClass,
   titleClass,
-  wrapperClass,
   totalPriceClass,
   totalTitleClass,
+  wrapperClass,
 } from "./Details.css";
 
 import type { TProps } from "./Details.types";
@@ -30,91 +33,88 @@ const Details: React.FC<TProps> = (product) => {
     allergens,
     composition,
     description,
+    // id,
     imageUrl,
     isAvailable,
-    // isMultipleModifiers,
+    isMultipleModifiers,
+    // isPromotionActive,
     modifiers,
     modifiersTitle,
     price,
     // promotionDiscountAmount,
     // promotionForEveryXProducts,
-    // requiredModifier,
-    // shortDescription,
+    requiredModifier,
     title,
     weight,
   } = product;
+  // const [totalPrice, setTotalPrice] = useState<number>(price);
   const { t } = useTranslation();
-  const [totalPrice] = useState<number>(price);
   const titleModifiers: string = modifiersTitle || t("modifiers");
 
   console.log(titleModifiers);
 
-  // const handleModifiersUpdate = (modifiers: TSelectedModifier[]): void => {
-  //   const modifiersTotalPrice: number = modifiers.reduce(
-  //     (accumulator: number, { price }: TSelectedModifier): number => accumulator + price,
+  // const handleModifiersUpdate = (modifiers: TCartModifier[]): void => {
+  //   const modifiersTotalPrice: number = modifiers.reduce<number>(
+  //     (accumulator, { price }: TCartModifier) => accumulator + price,
   //     0,
   //   );
 
   //   setSelectedModifiers(modifiers);
-  //   setFinalPrice(modifiersTotalPrice + priceCZK);
+  //   setTotalPrice(modifiersTotalPrice + price);
   // };
 
-  const handleAddToCart = async (): Promise<void> => {
-    await cartActions.addProduct({
-      ...product,
-      isPromotionActive: false,
-      quantity: 1,
-      totalPrice,
-    });
-    // const fbEventData: TFacebookEvent = {
-    //   content_ids: [id],
-    //   content_type: "product",
-    //   currency: "CZK",
-    //   quantity: 1,
-    //   value: finalPrice,
-    // };
-    // if (!shopIsOpened) {
-    //   toggleModalOpened(true);
-    //   return;
-    // }
-    // if (requiredModifier && selectedModifiers.length === 0) {
-    //   toast(titleModifiers, { type: "error" });
-    //   return;
-    // }
-    // if (
-    //   selectedModifiers.some(
-    //     ({ requiredSubModifier, submodifier }: TSelectedModifier): boolean =>
-    //       requiredSubModifier && !submodifier,
-    //   )
-    // ) {
-    //   toast(titleModifiers, { type: "error" });
-    //   return;
-    // }
-    // if (window.fbq) {
-    //   window.fbq("track", "AddToCart", fbEventData);
-    // }
-    // dispatch(
-    //   addToCart({
-    //     freeCutleryCount,
-    //     id,
-    //     isPromotionActive,
-    //     modifiers: selectedModifiers,
-    //     picture,
-    //     price: +priceCZK,
-    //     promotionDiscountAmount,
-    //     promotionForEveryXProducts,
-    //     quantity: 1,
-    //     slug,
-    //     title,
-    //     totalPrice: finalPrice,
-    //     weight,
-    //   }),
-    // );
-    // toast(`${title} přidán do košíku`, {
-    //   type: "success",
-    // });
-    // setSelectedModifiers([]);
-  };
+  // const handleAddToCart = async (): Promise<void> => {
+  //   const fbEventData: TFacebookEvent = {
+  //     content_ids: [id],
+  //     content_type: "product",
+  //     currency: "CZK",
+  //     quantity: 1,
+  //     value: totalPrice,
+  //   };
+
+  //   if (!shopIsOpened) {
+  //     toggleModalOpened(true);
+  //     return;
+  //   }
+
+  //   if (requiredModifier && selectedModifiers.length === 0) {
+  //     toast(titleModifiers, { type: "error" });
+  //     alert(titleModifiers);
+
+  //     return;
+  //   }
+
+  //   if (
+  //     selectedModifiers.some(
+  //       ({ requiredSubModifier, subModifier }: TCartModifier): boolean =>
+  //         requiredSubModifier && !subModifier,
+  //     )
+  //   ) {
+  //     toast(titleModifiers, { type: "error" });
+  //     alert(titleModifiers);
+
+  //     return;
+  //   }
+
+  //   if (window.fbq) {
+  //     window.fbq("track", "AddToCart", fbEventData);
+  //   }
+
+  //   await cartActions.addProduct({
+  //     ...product,
+  //     isPromotionActive,
+  //     modifiers: selectedModifiers,
+  //     promotionDiscountAmount,
+  //     promotionForEveryXProducts,
+  //     quantity: 1,
+  //     totalPrice,
+  //   });
+
+  //   toast(`${title} přidán do košíku`, {
+  //     type: "success",
+  //   });
+  //   setSelectedModifiers([]);
+  // };
 
   // const handleModalToggle = (): void => {
   //   toggleModalOpened(!modalIsOpened);
@@ -122,11 +122,9 @@ const Details: React.FC<TProps> = (product) => {
 
   // useEffect((): void => {
   //   const fbEventData: TFacebookEvent = {
-  //     content_type: "product",
   //     content_ids: [id],
+  //     content_type: "product",
   //   };
-
-  //   console.log("ƒb view content:", fbEventData);
 
   //   if (window.fbq) {
   //     window.fbq("track", "ViewContent", fbEventData);
@@ -185,23 +183,19 @@ const Details: React.FC<TProps> = (product) => {
 
             {modifiers && !!modifiers.length && (
               <>
-                {/* {(isMultipleModifiers || isMultipleModifiers !== null) && (
-                  <Modifiers
-                    modifiers={modifiers.data}
-                    onUpdate={handleModifiersUpdate}
-                    title={titleModifiers}
-                  />
+                <div className={modifiersHeadingClass}>
+                  <p className={modifiersTitleClass}>{title}:</p>
+                </div>
+
+                {(isMultipleModifiers || isMultipleModifiers !== null) && (
+                  <Modifiers {...{ modifiers }} />
                 )}
 
                 {isMultipleModifiers === null && !requiredModifier && (
-                  <Modifiers
-                    modifiers={modifiers.data}
-                    onUpdate={handleModifiersUpdate}
-                    title={titleModifiers}
-                  />
+                  <Modifiers {...{ modifiers }} />
                 )}
 
-                {!isMultipleModifiers && requiredModifier && (
+                {/* {!isMultipleModifiers && requiredModifier && (
                   <ModifiersSingle
                     modifiers={modifiers.data}
                     onUpdate={handleModifiersUpdate}
@@ -213,18 +207,14 @@ const Details: React.FC<TProps> = (product) => {
 
             <p className={totalPriceClass}>
               <span className={totalTitleClass}>{t<string>("priceTotal")}:</span>
-              {totalPrice} Kč
+              {/* {totalPrice} Kč */}
             </p>
-
-            <div style={{ color: "red", height: 30 }}>
-              <Icon id="checkmark" />
-            </div>
           </div>
 
           {isAvailable ? (
             <div className={buttonsLayoutClass}>
               <Button
-                onClick={handleAddToCart}
+                // onClick={handleAddToCart}
                 type="button"
               >
                 {t<string>("addToCart")}

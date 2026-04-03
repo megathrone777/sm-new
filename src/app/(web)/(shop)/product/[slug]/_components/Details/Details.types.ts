@@ -1,1 +1,5 @@
-export type TProps = TProduct;
+export type TProps = TProduct &
+  Pick<
+    TProductCategory,
+    "isPromotionActive" | "promotionDiscountAmount" | "promotionForEveryXProducts"
+  >;

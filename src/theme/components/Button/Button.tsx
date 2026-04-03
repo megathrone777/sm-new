@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { buttonClass, linkClass } from "./Button.css";
+import { buttonClass, labelClass } from "./Button.css";
 
 import type { TProps } from "./Button.types";
 
@@ -17,16 +17,16 @@ const Button: React.FC<TProps> = ({
   href ? (
     <Link
       {...{ disabled, href, target }}
-      className={linkClass}
+      className={buttonClass}
     >
-      {children}
+      <span className={labelClass}>{children}</span>
     </Link>
   ) : (
     <button
       {...{ disabled, id, onClick, type }}
       className={buttonClass}
     >
-      {children}
+      <span className={labelClass}>{children}</span>
     </button>
   );
 
