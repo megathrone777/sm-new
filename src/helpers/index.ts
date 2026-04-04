@@ -1,9 +1,27 @@
-export { getCart } from "./getCart";
-export { getCategoriesWithProducts } from "./getCategoriesWithProducts";
-export { getCategoryById } from "./getCategoryById";
-export { getOrCreateCartSessionId } from "./getOrCreateCartSessionId";
-export { getOrders } from "./getOrders";
-export { getProductBySlug } from "./getProductBySlug";
-export { getProducts } from "./getProducts";
-export { getShopSettings } from "./getShopSettings";
-export { updateProduct } from "./updateProduct";
+import { getSession } from "./auth";
+import { getCart, getOrCreateSessionId } from "./cart";
+import { getCategories, getCategoryById, getProductBySlug, getProducts } from "./products";
+import { getOrders, getSettings } from "./shop";
+
+const authHelpers = {
+  getSession,
+};
+
+const cartHelpers = {
+  getCart,
+  getOrCreateSessionId,
+};
+
+const productsHelpers = {
+  getCategories,
+  getCategoryById,
+  getProductBySlug,
+  getProducts,
+};
+
+const shopHelpers = {
+  getOrders,
+  getSettings,
+};
+
+export { authHelpers, cartHelpers, productsHelpers, shopHelpers };

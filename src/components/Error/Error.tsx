@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 // import { ThemeComponent } from "~/theme";
 import { wrapperClass, titleClass, imageClass } from "./Error.css";
@@ -9,9 +10,10 @@ const Error: React.FC<TProps> = ({ title }) => (
   <div className={wrapperClass}>
     <h1 className={titleClass}>{title}</h1>
 
-    <img
+    <Image
       alt="Failed."
       className={imageClass}
+      fill
       src="/images/failed_img.png"
     />
 

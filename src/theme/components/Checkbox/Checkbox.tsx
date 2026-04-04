@@ -1,19 +1,20 @@
 import React, { useId } from "react";
 
-import { wrapperClass, labelClass } from "./Checkbox.css";
+import { Icon } from "@/ui";
+
+import { iconClass, layoutClass, inputClass, labelClass, wrapperClass } from "./Checkbox.css";
 
 import type { TProps } from "./Checkbox.types";
 
 const Checkbox: React.FC<TProps> = ({
   checked,
   className,
-  defaultChecked,
   disabled,
   hint,
   label,
   labelClassName,
-  labelImage,
   name,
+  onChange,
   template = "normal",
   type,
   value,
@@ -21,38 +22,35 @@ const Checkbox: React.FC<TProps> = ({
   const inputId = useId();
 
   return (
-    <div
-      className={`
-        ${wrapperClass[template]}
-        ${className}
-      `}
-    >
-      <input
-        {...{
-          checked,
-          className,
-          defaultChecked,
-          disabled,
-          name,
-          type,
-          value,
-        }}
-        id={inputId}
-      />
+    <div className={`${wrapperClass} ${className ? className : ""}`}>
+      <span className={layoutClass[template]}>
+        <input
+          {...{
+            checked,
+            disabled,
+            name,
+            onChange,
+            type,
+            value,
+          }}
+          className={inputClass}
+          id={inputId}
+        />
+
+        <Icon
+          className={iconClass[template]}
+          id="checkmark"
+        />
+      </span>
 
       <label
-        className={`
-          ${labelClass}
-          ${labelClassName ? labelClassName : ""}
-        `}
+        className={`${labelClass[template]} ${labelClassName ? labelClassName : ""}`}
         htmlFor={inputId}
       >
         <span>
           {label}
           {Boolean(hint) && <span>{hint}</span>}
         </span>
-
-        {labelImage}
       </label>
     </div>
   );

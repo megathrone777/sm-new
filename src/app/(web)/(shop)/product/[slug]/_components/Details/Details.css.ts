@@ -19,6 +19,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
 export const layoutClass = css(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
+  width: "100%",
 
   "@media": {
     [devices.tablet]: {
@@ -30,24 +31,15 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-const columnClass = css(({ devices }) => ({
-  marginInline: 10,
-  position: "relative",
+export const columnClass = css(({ devices }) => ({
+  paddingInline: 10,
 
   "@media": {
     [devices.mobile]: {
-      marginInline: 20,
-    },
-
-    [devices.tablet]: {
-      maxWidth: "50%",
+      paddingInline: 20,
     },
   },
 }));
-
-export const columnLeftClass = css([columnClass, {}]);
-
-export const columnRightClass = css([columnClass, {}]);
 
 export const modifiersHeadingClass = css({
   marginBottom: 15,
@@ -60,32 +52,6 @@ export const modifiersTitleClass = css(({ fonts }) => ({
   marginRight: 10,
 }));
 
-// export const columnLeftClass = css(({ theme: { devices, rem } }) => ({
-//   flex: "0 1 35%",
-//   maxWidth: "35%",
-//   position: "relative",
-
-//   [devices.mobile]: {
-//     flex: "0 1 auto",
-//     marginBottom: rem(30),
-//     maxWidth: "50%",
-//   },
-
-//   [devices.mobileSm]: {
-//     maxWidth: "100%",
-//   },
-// }));
-
-// export const StyledContentRight = styled(StyledContentColumn)(({ theme: { devices } }) => ({
-//   flex: "0 1 65%",
-//   maxWidth: "65%",
-
-//   [devices.mobile]: {
-//     flex: "0 1 auto",
-//     maxWidth: "100%",
-//   },
-// }));
-
 export const imageHolderClass = css({
   borderRadius: 15,
   boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
@@ -95,6 +61,7 @@ export const imageHolderClass = css({
 export const imageClass = css({
   objectFit: "cover",
   verticalAlign: "middle",
+  width: "100%",
 });
 
 export const contentClass = css({
@@ -129,29 +96,4 @@ export const itemTitleClass = css(({ fonts }) => ({
 export const placeholderClass = css(({ colors }) => ({
   color: colors.red,
   fontSize: 20,
-}));
-
-export const buttonsLayoutClass = css(({ devices }) => ({
-  textAlign: "right",
-
-  "@media": {
-    [devices.mobile]: {
-      textAlign: "center",
-    },
-  },
-}));
-
-export const totalPriceClass = css(({ colors, fonts }) => ({
-  color: colors.red,
-  fontSize: 22,
-  fontWeight: fonts.medium,
-  marginBottom: 20,
-  paddingTop: 15,
-}));
-
-export const totalTitleClass = css(({ fonts }) => ({
-  color: "black",
-  fontSize: 24,
-  fontWeight: fonts.medium,
-  marginRight: 10,
 }));

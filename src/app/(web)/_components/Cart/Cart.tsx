@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { getCart } from "@/helpers";
+import { cartHelpers } from "@/helpers";
 import { Icon } from "@/ui";
 
 import {
@@ -14,7 +14,7 @@ import {
 } from "./Cart.css";
 
 const Cart: React.FC = async () => {
-  const cart = await getCart();
+  const cart = await cartHelpers.getCart();
 
   const getProductsTotal = (): number => {
     if (cart && !!cart.products.length) {

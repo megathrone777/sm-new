@@ -4,3 +4,4 @@ export { Checkbox } from "./Checkbox";
 export { Container } from "./Container";
 export { Dialog } from "./Dialog";
 export { Icon } from "./Icon";
+export { Spinner } from "./Spinner";

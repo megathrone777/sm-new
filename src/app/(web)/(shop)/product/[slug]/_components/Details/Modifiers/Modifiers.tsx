@@ -1,100 +1,92 @@
-import React from "react";
-// import { useSearchParams } from "next/navigation";
+"use client";
+import React, { useState } from "react";
 
 import { Checkbox } from "@/ui";
 
-import { listClass, itemClass, priceClass } from "./Modifiers.css";
+import {
+  layoutClass,
+  priceClass,
+  priceHolderClass,
+  subListClass,
+  subModifiersClass,
+  subModifiersLayoutClass,
+  wrapperClass,
+} from "./Modifiers.css";
 
 import type { TProps } from "./Modifiers.types";
 
-const Modifiers: React.FC<TProps> = ({ modifiers }) => {
-  // const searchParams = useSearchParams();
+const Modifiers: React.FC<TProps> = ({ modifiers, requiredModifier }) => {
+  const [checkedIds, setCheckedIds] = useState<number[]>([]);
 
-  // const handleModifierAdd = (modifier: TCartModifier): void => {
-  //   if (searchParams.get("action")) {
-  // router.replace<string>(pathname, {
-  //   scroll: false,
-  // });
-  // }
-
-  // setSelectedModifiers((prevModifiers: TSelectedModifier[]): TSelectedModifier[] => {
-  //   const newModifiers = [...prevModifiers];
-  //   const foundIndex: number = prevModifiers.findIndex(({ id }): boolean => id === modifier.id);
-
-  //   if (foundIndex !== -1) {
-  //     newModifiers[foundIndex] = modifier;
-
-  //     return newModifiers;
-  //   }
-
-  //   return [...newModifiers, modifier];
-  // });
-  // };
-
-  // const handleModifierRemove = (modifierID: TModifier["id"]): void => {
-  //   setSelectedModifiers((prevModifiers: TSelectedModifier[]): TSelectedModifier[] =>
-  //     prevModifiers.filter(({ id }): boolean => id !== modifierID),
-  //   );
-  // };
-
-  // useEffect((): void => {
-  //   onUpdate(selectedModifiers);
-  // }, [selectedModifiers]);
-
-  // useEffect((): void => {
-  //   if (searchParams.get("action")) {
-  // toast(title, {
-  //   type: "error",
-  //   toastId: `actionError-${title}`,
-  // });
-  //   }
-  // }, [searchParams]);
+  const handleModifierChange = (id: number, checked: boolean): void => {
+    if (requiredModifier) {
+      setCheckedIds(checked ? [id] : []);
+    } else {
+      setCheckedIds((prevIds: number[]): number[] =>
+        checked ? [...prevIds, id] : prevIds.filter((prevId: number): boolean => prevId !== id),
+      );
+    }
+  };
 
   return (
-    <div className={modifiers.length > 8 ? "columns" : ""}>
-      {modifiers.map(
-        ({ id, price, subModifiers, title }: TModifier): React.ReactElement => (
-          <div key={`${id}-modifier-item`}>
+    <div className={wrapperClass[modifiers.length > 8 ? "2" : "1"]}>
+      {modifiers.map((modifier: TModifier): React.ReactElement => {
+        const { id, price, subModifiers, title } = modifier;
+        const isChecked = checkedIds.includes(id);
+
+        return (
+          <div
+            className={layoutClass}
+            key={`${id}-modifier-item`}
+          >
             <Checkbox
-              id={`${id}-modifier`}
               label={
                 <>
                   {title}
                   {price !== 0 && (
-                    <>
+                    <span className={priceHolderClass}>
                       {" "}
                       + <span className={priceClass}>{price} Kč</span>
-                    </>
+                    </span>
                   )}
                 </>
               }
-              type="checkbox"
+              name="modifier"
+              onChange={({ currentTarget }: React.SyntheticEvent<HTMLInputElement>): void => {
+                handleModifierChange(id, currentTarget.checked);
+              }}
+              type={requiredModifier ? "radio" : "checkbox"}
+              value={id}
             />
 
             {subModifiers && !!subModifiers.length && (
-              <ul className={listClass}>
-                {subModifiers.map(
-                  ({ id: subModifierID, title }: TSubmodifier): React.ReactElement => (
-                    <li
-                      className={itemClass}
-                      key={`${subModifierID}-${id}-submodifier`}
-                    >
-                      <Checkbox
-                        className="is-small"
-                        label={title}
-                        name={`${id}-submodifier`}
-                        template="small"
-                        type="radio"
-                        value={title}
-                      />
-                    </li>
-                  ),
-                )}
-              </ul>
+              <div className={subModifiersClass}>
+                <div className={subModifiersLayoutClass}>
+                  <ul
+                    className={subListClass}
+                    key={`${isChecked}-sub-list-${id}`}
+                  >
+                    {subModifiers.map(
+                      ({ id: subModifierId, title }: TSubmodifier): React.ReactElement => (
+                        <li key={`${subModifierId}-${id}-submodifier`}>
+                          <Checkbox
+                            className="is-small"
+                            label={title}
+                            name={`${id}-submodifier`}
+                            template="small"
+                            type="radio"
+                            value={subModifierId}
+                          />
+                        </li>
+                      ),
+                    )}
+                  </ul>
+                </div>
+              </div>
             )}
           </div>
-        ),
-      )}
+        );
+      })}
     </div>
   );
 };

@@ -1,3 +1,1 @@
-export interface TProps {
-  modifiers: TModifier[];
-}
+export type TProps = Pick<TProduct, "modifiers" | "requiredModifier">;

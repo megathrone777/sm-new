@@ -1,40 +1,50 @@
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
-// import { cartActions } from "@/app/actions";
+import { addToCart } from "@/app/(web)/_actions";
+
+import { imageClass, imageHolderClass } from "./ProductsItem.css";
+
 import type { TProps } from "./ProductsItem.types";
 
 const ProductsItem: React.FC<TProps> = (product) => {
-  const { imageUrl, slug, sortOrder, title } = product;
+  const { imageUrl, price, requiredModifier, slug, title } = product;
+
+  const formAction = async (): Promise<void> => {
+    "use server";
+    if (requiredModifier) {
+      redirect(`/product/${slug}?requiredModifier=true`);
+    }
+
+    await addToCart({
+      ...product,
+      quantity: 1,
+      totalPrice: price,
+    });
+  };
 
   return (
     <div style={{ border: "2px solid red" }}>
-      <img
-        alt={title}
-        src={`https://sushiman-office.cz${imageUrl}`}
-        style={{
-          display: "block",
-          height: 200,
-        }}
-      />
-
       <Link href={`/product/${slug}`}>
-        Product: {title} - ({sortOrder})
+        <div className={imageHolderClass}>
+          <Image
+            alt={title}
+            className={imageClass}
+            fill
+            src={`https://sushiman-office.cz${imageUrl}`}
+          />
+        </div>
+
+        <p>
+          Product: {title} - ({requiredModifier.toString()})
+        </p>
       </Link>
 
-      <button
-        // onClick={async (): Promise<void> => {
-        //   await cartActions.addProduct({
-        //     ...product,
-        //     isPromotionActive: false,
-        //     quantity: 1,
-        //     totalPrice: product.price,
-        //   });
-        // }}
-        type="button"
-      >
-        Add to cart
-      </button>
+      <form action={formAction}>
+        <button type="submit">Add to cart</button>
+      </form>
     </div>
   );
 };

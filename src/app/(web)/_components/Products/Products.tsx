@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getCategoriesWithProducts } from "@/helpers";
+import { productsHelpers } from "@/helpers";
 import { Container } from "@/ui";
 
 import { ProductsItem } from "./ProductsItem";
@@ -11,7 +11,7 @@ import { wrapperClass } from "./Products.css";
 import type { TProps } from "./Products.types";
 
 const Products: React.FC<TProps> = async ({ showAll, title }) => {
-  const categories = await getCategoriesWithProducts();
+  const categories = await productsHelpers.getCategories();
 
   const renderedProducts = categories.reduce<Record<TProductCategory["id"], React.ReactNode[]>>(
     (

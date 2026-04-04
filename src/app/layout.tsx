@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Toasts } from "@/components";
 import { themeClass } from "@/theme";
 import "@/theme/global";
 
@@ -11,7 +12,10 @@ const RootLayout: React.FC<LayoutProps<"/">> = ({ children }) => (
     data-scroll-behavior="smooth"
     lang="cs"
   >
-    <body>{children}</body>
+    <body>
+      {children}
+      <Toasts />
+    </body>
   </html>
 );
 

@@ -1,17 +1,8 @@
 declare global {
-  interface TContactLink {
-    link: string;
-    type: string;
-  }
-
-  interface TDeliveryCondition {
-    distanceFrom: number;
-    distanceTo: number;
-    id: number;
-    minimumOrderPrice: number;
-    price: number;
-    text: string;
-    title: string;
+  interface TUser {
+    login: string;
+    password: string;
+    role: "admin" | "cook";
   }
 
   interface TSelectOption {
@@ -19,48 +10,12 @@ declare global {
     value: null | string;
   }
 
-  interface TFacebookEvent {
+  interface TFacebookData {
     content_ids?: (number | string)[];
     content_type?: string;
     currency?: string;
     quantity?: number;
     value?: number | string;
-  }
-
-  interface TPricingSetting {
-    cutleryPrice: number;
-  }
-
-  interface TSchedule {
-    lastTimeVicinityHidden: string;
-  }
-
-  interface TShopSettings {
-    address: string;
-    businessName: string;
-    companyDetails: string;
-    contactItems: TContactLink[];
-    deliveryTimeOptions: string[];
-    email: string;
-    isAvailable: boolean;
-    isOpened: boolean;
-    logoUrl: string;
-    phone: string;
-    privacyPolicy: string;
-    termsOfUse: string;
-    text: string;
-    title: string;
-  }
-
-  interface TFeedback {
-    bgImage: string;
-    buttonSendTitle: string;
-    title: string;
-  }
-
-  interface TReview {
-    id: number;
-    imageUrl: string;
   }
 
   const fbq: (track: string, action: string, eventData: TFacebookEvent) => void;

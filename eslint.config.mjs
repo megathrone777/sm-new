@@ -172,6 +172,14 @@ const config = defineConfig({
             groupName: "media",
           },
           {
+            elementNamePattern: ["^devices.pointerCoarse"],
+            groupName: "devices.pointerCoarse",
+          },
+          {
+            elementNamePattern: ["\\$\\{devices\\.pointerCoarse\\}"],
+            groupName: "devices.mobileAndPointerCoarse",
+          },
+          {
             elementNamePattern: ["^devices.mobile"],
             groupName: "devices.mobile",
           },
@@ -197,6 +205,8 @@ const config = defineConfig({
           "current",
           "pseudo",
           "media",
+          "devices.pointerCoarse",
+          "devices.mobileAndPointerCoarse",
           "devices.mobile",
           "devices.tablet",
           "devices.desktop",
