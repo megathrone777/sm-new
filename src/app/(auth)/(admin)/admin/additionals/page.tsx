@@ -1,5 +1,5 @@
 import React from "react";
-import Form from "next/form";
+import Link from "next/link";
 
 import {
   createAdditional,
@@ -7,21 +7,38 @@ import {
   updateAdditional,
 } from "@/app/(auth)/(admin)/_actions";
 import { Header } from "@/app/(auth)/(admin)/_components";
+import { DeleteAlert, FormLayout } from "@/app/(auth)/_components";
 import { additionalsHelpers } from "@/helpers";
 import { Button, Input } from "@/ui";
 
-import { createFormClass, formClass, itemClass, listClass } from "./page.css";
+import { createFormClass, itemClass, itemFormClass, linkClass, listClass } from "./page.css";
 
-const Page: React.FC = async () => {
+const Page: React.FC<PageProps<"/admin/additionals">> = async ({ searchParams }) => {
+  const params = await searchParams;
+  const deleteId = Array.isArray(params.deleteId)
+    ? (params.deleteId[0] ?? null)
+    : (params.deleteId ?? null);
+  const deleteTitle = Array.isArray(params.deleteTitle)
+    ? (params.deleteTitle[0] ?? null)
+    : (params.deleteTitle ?? null);
   const additionals = await additionalsHelpers.getAdditionals();
 
   return (
     <>
       <Header title="Additionals" />
 
-      <Form
-        action={createAdditional}
+      {deleteId && (
+        <DeleteAlert
+          action={deleteAdditional}
+          deleteId={deleteId}
+          deleteTitle={deleteTitle}
+          href="/admin/additionals"
+        />
+      )}
+
+      <FormLayout
         className={createFormClass}
+        formAction={createAdditional}
       >
         <Input
           label="Title"
@@ -43,14 +60,7 @@ const Page: React.FC = async () => {
           name="sortOrder"
           type="number"
         />
-
-        <Button
-          template="small"
-          type="submit"
-        >
-          Add additional
-        </Button>
-      </Form>
+      </FormLayout>
 
       {!!additionals.length && (
         <div className={listClass}>
@@ -60,9 +70,9 @@ const Page: React.FC = async () => {
                 className={itemClass}
                 key={`additional-${id}`}
               >
-                <Form
-                  action={updateAdditional}
-                  className={formClass}
+                <FormLayout
+                  className={itemFormClass}
+                  formAction={updateAdditional}
                 >
                   <input
                     name="id"
@@ -90,29 +100,18 @@ const Page: React.FC = async () => {
                     name="sortOrder"
                     type="number"
                   />
+                </FormLayout>
 
+                <Link
+                  className={linkClass}
+                  href={`/admin/additionals?deleteId=${id}&deleteTitle=${encodeURIComponent(title)}`}
+                  scroll={false}
+                >
                   <Button
+                    iconId="trash"
                     template="small"
-                    type="submit"
-                  >
-                    Save
-                  </Button>
-                </Form>
-
-                <Form action={deleteAdditional}>
-                  <input
-                    name="id"
-                    type="hidden"
-                    value={id}
                   />
-
-                  <Button
-                    template="small"
-                    type="submit"
-                  >
-                    Delete
-                  </Button>
-                </Form>
+                </Link>
               </div>
             ),
           )}

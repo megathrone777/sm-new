@@ -32,3 +32,8 @@ export const createFormClass = css({
   rowGap: 20,
   width: 400,
 });
+
+export const linkClass = css({
+  display: "inline-block",
+  height: 38,
+});

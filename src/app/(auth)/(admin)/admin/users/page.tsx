@@ -1,21 +1,39 @@
 import React from "react";
 import Form from "next/form";
+import Link from "next/link";
 
 import { createUser, deleteUser, updateUser } from "@/app/(auth)/(admin)/_actions";
 import { Header } from "@/app/(auth)/(admin)/_components";
+import { DeleteAlert } from "@/app/(auth)/_components";
 import { authHelpers } from "@/helpers";
 import { Button, Input } from "@/ui";
 
 import { RoleSelect } from "./_components";
 
-import { createFormClass, formClass, itemClass, listClass } from "./page.css";
+import { createFormClass, formClass, itemClass, linkClass, listClass } from "./page.css";
 
-const Page: React.FC = async () => {
+const Page: React.FC<PageProps<"/admin/users">> = async ({ searchParams }) => {
+  const params = await searchParams;
+  const deleteId = Array.isArray(params.deleteId)
+    ? (params.deleteId[0] ?? null)
+    : (params.deleteId ?? null);
+  const deleteTitle = Array.isArray(params.deleteTitle)
+    ? (params.deleteTitle[0] ?? null)
+    : (params.deleteTitle ?? null);
   const users = await authHelpers.getUsers();
 
   return (
     <>
       <Header title="Users" />
+
+      {deleteId && (
+        <DeleteAlert
+          action={deleteUser}
+          deleteId={deleteId}
+          deleteTitle={deleteTitle}
+          href="/admin/users"
+        />
+      )}
 
       <Form
         action={createUser}
@@ -112,22 +130,18 @@ const Page: React.FC = async () => {
                 </Form>
 
                 {role !== "admin" ? (
-                  <Form action={deleteUser}>
-                    <input
-                      name="login"
-                      type="hidden"
-                      value={login}
-                    />
-
+                  <Link
+                    className={linkClass}
+                    href={`/admin/users?deleteId=${login}&deleteTitle=${encodeURIComponent(login)}`}
+                    scroll={false}
+                  >
                     <Button
+                      iconId="trash"
                       template="small"
-                      type="submit"
-                    >
-                      Delete
-                    </Button>
-                  </Form>
+                    />
+                  </Link>
                 ) : (
-                  <div style={{ minWidth: 65 }} />
+                  <div style={{ minWidth: 38 }} />
                 )}
               </div>
             ),

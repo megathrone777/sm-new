@@ -4,7 +4,7 @@ import Image from "next/image";
 
 import { Button } from "@/ui";
 
-import { wrapperClass } from "./ImageUploader.css";
+import { imageClass, wrapperClass } from "./ImageUploader.css";
 
 import type { TProps } from "./ImageUploader.types";
 
@@ -19,6 +19,12 @@ const ImageUploader: React.FC<TProps> = ({ initialUrl }) => {
     setPreviewUrl(URL.createObjectURL(file));
   };
 
+  const handleSelectClick = (): void => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  };
+
   return (
     <div className={wrapperClass}>
       <input
@@ -29,17 +35,17 @@ const ImageUploader: React.FC<TProps> = ({ initialUrl }) => {
 
       {previewUrl && (
         <Image
-          alt="Product preview."
+          alt="Image preview."
+          className={imageClass}
           height={160}
           loading="eager"
           src={previewUrl}
-          style={{ background: "#f5f5f5", borderRadius: 8, objectFit: "contain" }}
           width={160}
         />
       )}
 
       <Button
-        onClick={() => inputRef.current?.click()}
+        onClick={handleSelectClick}
         template="small"
         type="button"
       >

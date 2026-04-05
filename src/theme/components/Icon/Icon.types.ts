@@ -18,6 +18,7 @@ export type TIconID =
   | "point"
   | "profile"
   | "promo"
+  | "save"
   | "time"
   | "trash";
 

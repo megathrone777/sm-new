@@ -6,3 +6,8 @@ export const wrapperClass = css({
   justifyContent: "center",
   rowGap: 8,
 });
+
+export const imageClass = css({
+  borderRadius: 8,
+  objectFit: "contain",
+});

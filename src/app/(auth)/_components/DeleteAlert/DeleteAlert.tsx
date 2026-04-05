@@ -27,7 +27,7 @@ const DeleteAlert: React.FC<TProps> = ({ action, deleteId, deleteTitle, href }) 
     toast(message, { type });
 
     if (type === "success") {
-      router.push("/admin/products");
+      router.push(href);
     }
   }, [state]);
 

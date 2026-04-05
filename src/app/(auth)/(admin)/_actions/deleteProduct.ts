@@ -21,7 +21,6 @@ const deleteProduct = async (
 
   const slug = formData.get("id") as string;
   const title = formData.get("title");
-
   const product = await productsHelpers.getProductBySlug(slug);
 
   if (!product) {
@@ -31,12 +30,22 @@ const deleteProduct = async (
     };
   }
 
+  const category = await productsHelpers.getCategoryById(product.categoryId);
   const pipeline = redis.pipeline();
 
   pipeline.hdel("products", slug);
   pipeline.del(`${PRODUCTS_SEARCH_PREFIX}${product.id}`);
-  await pipeline.exec();
 
+  if (category) {
+    pipeline.hset("categories", {
+      [product.categoryId]: JSON.stringify({
+        ...category,
+        products: category.products.filter(({ id }: TProduct): boolean => id !== product.id),
+      }),
+    });
+  }
+
+  await pipeline.exec();
   revalidatePath("/admin/products");
 
   return {

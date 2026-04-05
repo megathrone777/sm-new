@@ -5,6 +5,7 @@ globalStyle("html, body", {
 });
 
 globalStyle("html", {
+  overflowY: "scroll",
   scrollBehavior: "smooth",
 });
 
