@@ -1,5 +1,5 @@
 import { getUser, getSession } from "./auth";
-import { getCart, getOrCreateSessionId } from "./cart";
+import { getCart, getSessionId } from "./cart";
 import { getModifierById, getModifiers } from "./modifiers";
 import { getCategories, getCategoryById, getProductBySlug, getProducts } from "./products";
 import { getOrders, getSettings } from "./shop";
@@ -12,7 +12,7 @@ const authHelpers = {
 
 const cartHelpers = {
   getCart,
-  getOrCreateSessionId,
+  getSessionId,
 };
 
 const modifiersHelpers = {

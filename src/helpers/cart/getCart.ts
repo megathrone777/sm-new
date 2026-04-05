@@ -1,9 +1,9 @@
 import { redis } from "@/lib";
 
-import { getOrCreateSessionId } from "./getOrCreateSessionId";
+import { getSessionId } from "./getSessionId";
 
 const getCart = async (): Promise<null | TCart> => {
-  const sessionId = await getOrCreateSessionId();
+  const sessionId = await getSessionId();
 
   if (sessionId) {
     const cart = await redis.hgetall<Record<string, TCart>>(sessionId);
