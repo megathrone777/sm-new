@@ -7,13 +7,11 @@ import { redis } from "@/lib";
 const ttlSeconds: number = 60 * 60 * 24 * 7;
 
 const saveCart = async (cart: TCart): Promise<void> => {
-  const sessionId = await cartHelpers.getSessionId();
+  const sessionId = await cartHelpers.getOrCreateSessionId();
 
-  if (sessionId) {
-    await redis.hset(sessionId, { [sessionId]: cart });
-    await redis.expire(sessionId, ttlSeconds);
-    refresh();
-  }
+  await redis.hset(sessionId, { [sessionId]: cart });
+  await redis.expire(sessionId, ttlSeconds);
+  refresh();
 };
 
 export { saveCart };

@@ -67,6 +67,8 @@ const addToCart = async (newProduct: TCartProduct): Promise<TCartResult> => {
     }
 
     await saveCart(newCart);
+
+    return validationResult;
   }
 
   return validationResult;

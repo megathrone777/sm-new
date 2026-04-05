@@ -1,4 +1,3 @@
-"use server";
 import { randomUUID } from "node:crypto";
 
 import { cookies } from "next/headers";
@@ -6,7 +5,7 @@ import { cookies } from "next/headers";
 const COOKIE_MAX_AGE: number = 60 * 60 * 24 * 7;
 const COOKIE_NAME: string = "sid";
 
-const createSessionId = async (): Promise<string> => {
+const getOrCreateSessionId = async (): Promise<string> => {
   const cookieStore = await cookies();
   const existingSessionId = cookieStore.get(COOKIE_NAME)?.value;
 
@@ -26,4 +25,4 @@ const createSessionId = async (): Promise<string> => {
   return `cart:${sessionId}`;
 };
 
-export { createSessionId };
+export { getOrCreateSessionId };
