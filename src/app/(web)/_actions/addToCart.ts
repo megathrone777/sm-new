@@ -46,7 +46,7 @@ const initialCart: TCart = {
   totalPrice: 0,
 };
 
-const addToCart = async (newProduct: TCartProduct): Promise<TCartResult> => {
+const addToCart = async (newProduct: TCartProduct): Promise<TActionResult> => {
   const cart = await cartHelpers.getCart();
   const newCart: TCart = cart ? { ...cart } : { ...initialCart };
   const validationResult = await validateNewProduct(newProduct);

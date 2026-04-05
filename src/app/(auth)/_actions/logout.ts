@@ -15,7 +15,7 @@ const logout = async (): Promise<void> => {
   }
 
   cookieStore.delete(COOKIE_NAME);
-  redirect("/login", "replace");
+  redirect("/", "replace");
 };
 
 export { logout };

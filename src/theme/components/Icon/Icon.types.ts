@@ -10,6 +10,7 @@ export type TIconID =
   | "email"
   | "exclamation"
   | "exclamation"
+  | "globe"
   | "minus"
   | "note"
   | "phone"

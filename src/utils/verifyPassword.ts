@@ -17,4 +17,4 @@ const verifyPassword = (password: string, storedHash: string, salt: string): boo
   }
 };
 
-export { verifyPassword };
+export { hashPassword, verifyPassword };

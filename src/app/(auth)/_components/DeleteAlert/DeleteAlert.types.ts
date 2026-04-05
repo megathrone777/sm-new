@@ -1,6 +1,6 @@
 export interface TProps {
-  action: (formData: FormData) => Promise<void>;
-  deleteId: string | string[] | undefined;
-  deleteTitle: string | string[] | undefined;
+  action: (_state: null | TActionResult, formData: FormData) => Promise<TActionResult>;
+  deleteId: null | string;
+  deleteTitle: null | string;
   href: __next_route_internal_types__.RouteImpl<string>;
 }

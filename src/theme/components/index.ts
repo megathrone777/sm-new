@@ -5,4 +5,5 @@ export { Container } from "./Container";
 export { Dialog } from "./Dialog";
 export { Icon, type TIconID } from "./Icon";
 export { Input } from "./Input";
+export { Selectbox } from "./Selectbox";
 export { Spinner } from "./Spinner";

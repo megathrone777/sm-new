@@ -1,13 +1,20 @@
-import { getUser, getSession } from "./auth";
+import { getAdditionalById, getAdditionals } from "./additionals";
+import { getUser, getSession, getUsers } from "./auth";
 import { getCart, getOrCreateSessionId, getSessionId } from "./cart";
 import { getModifierById, getModifiers } from "./modifiers";
 import { getCategories, getCategoryById, getProductBySlug, getProducts } from "./products";
 import { getOrders, getSettings } from "./shop";
 import { getSubmodifierById, getSubmodifiers } from "./submodifiers";
 
+const additionalsHelpers = {
+  getAdditionalById,
+  getAdditionals,
+};
+
 const authHelpers = {
   getSession,
   getUser,
+  getUsers,
 };
 
 const cartHelpers = {
@@ -39,6 +46,7 @@ const submodifiersHelpers = {
 };
 
 export {
+  additionalsHelpers,
   authHelpers,
   cartHelpers,
   modifiersHelpers,

@@ -11,6 +11,7 @@ export const viewBox: Record<TIconID, string> = {
   cross: "0 0 512 512",
   email: "0 0 512 512",
   exclamation: "0 0 512 512",
+  globe: "0 0 512 512",
   minus: "0 0 448 512",
   note: "0 0 512 512",
   phone: "0 0 320 512",

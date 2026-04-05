@@ -47,7 +47,7 @@ const ProductsList: React.FC = async () => {
                       className={imageClass}
                       fill
                       loading="eager"
-                      src={`https://sushiman-office.cz${imageUrl}`}
+                      src={imageUrl}
                     />
                   </div>
 
@@ -56,7 +56,7 @@ const ProductsList: React.FC = async () => {
                 </Link>
 
                 <Link
-                  href={`/admin/products?deleteId=${id}&deleteTitle=${encodeURIComponent(title)}`}
+                  href={`/admin/products?deleteId=${slug}&deleteTitle=${encodeURIComponent(title)}`}
                   scroll={false}
                 >
                   <Button

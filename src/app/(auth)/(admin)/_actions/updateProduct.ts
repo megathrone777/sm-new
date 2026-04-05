@@ -1,4 +1,7 @@
 "use server";
+import fs from "fs/promises";
+import path from "path";
+
 import { revalidatePath } from "next/cache";
 
 import { authHelpers, modifiersHelpers, productsHelpers } from "@/helpers";
@@ -6,17 +9,29 @@ import { redis } from "@/lib";
 
 const PRODUCTS_SEARCH_PREFIX = "product:";
 
-const updateProduct = async (formData: FormData): Promise<void> => {
+const updateProduct = async (
+  _state: null | TActionResult,
+  formData: FormData,
+): Promise<null | TActionResult> => {
   const session = await authHelpers.getSession();
 
-  if (!session || session.role !== "admin") throw new Error("Unauthorized");
+  if (!session || session.role !== "admin") {
+    return {
+      message: "Unauthorized",
+      type: "error",
+    };
+  }
 
   const slug = formData.get("slug") as string;
   const prevProduct = await productsHelpers.getProductBySlug(slug);
 
-  if (!prevProduct) throw new Error(`Product ${slug} not found`);
+  if (!prevProduct) {
+    return {
+      message: `Product ${slug} not found`,
+      type: "error",
+    };
+  }
 
-  // Hydrate selected modifiers from the modifiers table
   const modifierIds = formData.getAll("modifierIds").map(Number);
   const allModifiers = await modifiersHelpers.getModifiers();
   const modifiers = allModifiers.filter(({ id }) => modifierIds.includes(id));
@@ -26,6 +41,7 @@ const updateProduct = async (formData: FormData): Promise<void> => {
     allergens: (formData.get("allergens") as string) || null,
     composition: formData.get("composition") as string,
     description: (formData.get("description") as string) || null,
+    imageUrl: prevProduct.imageUrl,
     isAvailable: formData.get("isAvailable") === "on",
     modifiers,
     modifiersTitle: (formData.get("modifiersTitle") as string) || null,
@@ -35,20 +51,45 @@ const updateProduct = async (formData: FormData): Promise<void> => {
     weight: formData.get("weight") as string,
   };
 
+  const imageFile = formData.get("image") as File;
+
+  if (imageFile?.size) {
+    const ext = path.extname(imageFile.name) || ".jpg";
+    const filename = `${Date.now()}${ext}`;
+    const filePath = path.join(process.cwd(), "public", "uploads", "products", filename);
+
+    await fs.writeFile(filePath, Buffer.from(await imageFile.arrayBuffer()));
+
+    if (prevProduct.imageUrl) {
+      await fs.unlink(path.join(process.cwd(), "public", prevProduct.imageUrl)).catch(() => {});
+    }
+
+    newProduct.imageUrl = `/uploads/products/${filename}`;
+  }
+
   const categoryMoved = prevProduct.categoryId !== newProduct.categoryId;
   const [oldCategory, newCategory] = await Promise.all([
     productsHelpers.getCategoryById(prevProduct.categoryId),
     categoryMoved ? productsHelpers.getCategoryById(newProduct.categoryId) : Promise.resolve(null),
   ]);
 
-  if (!oldCategory) throw new Error(`Category ${prevProduct.categoryId} not found`);
-  if (categoryMoved && !newCategory) throw new Error(`Category ${newProduct.categoryId} not found`);
+  if (!oldCategory) {
+    return {
+      message: `Category ${prevProduct.categoryId} not found`,
+      type: "error",
+    };
+  }
+
+  if (categoryMoved && !newCategory) {
+    return {
+      message: `Category ${newProduct.categoryId} not found`,
+      type: "error",
+    };
+  }
 
   const pipeline = redis.pipeline();
 
   pipeline.hset("products", { [newProduct.slug]: JSON.stringify(newProduct) });
-
-  // Keep the search hash in sync
   pipeline.hset(`${PRODUCTS_SEARCH_PREFIX}${newProduct.id}`, {
     id: newProduct.id,
     imageUrl: newProduct.imageUrl,
@@ -85,6 +126,11 @@ const updateProduct = async (formData: FormData): Promise<void> => {
 
   revalidatePath(`/admin/product/${slug}`);
   revalidatePath("/admin/products");
+
+  return {
+    message: `Product "${newProduct.title}" updated`,
+    type: "success",
+  };
 };
 
 export { updateProduct };

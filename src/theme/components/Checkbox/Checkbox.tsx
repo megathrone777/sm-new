@@ -9,6 +9,7 @@ import type { TProps } from "./Checkbox.types";
 const Checkbox: React.FC<TProps> = ({
   checked,
   className,
+  defaultChecked,
   disabled,
   hint,
   label,
@@ -27,6 +28,7 @@ const Checkbox: React.FC<TProps> = ({
         <input
           {...{
             checked,
+            defaultChecked,
             disabled,
             name,
             onChange,

@@ -1,7 +1,5 @@
 import React from "react";
 
-import "@rc-component/select/assets/index.css";
-
 import { Toasts } from "@/components";
 import { themeClass } from "@/theme";
 import "@/theme/global";

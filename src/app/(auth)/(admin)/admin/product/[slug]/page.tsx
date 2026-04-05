@@ -1,14 +1,12 @@
 import React from "react";
-import Form from "next/form";
 
-import { updateProduct } from "@/app/(auth)/(admin)/_actions";
-import { Header } from "@/app/(auth)/(admin)/_components";
+import { Header, ImageUploader } from "@/app/(auth)/(admin)/_components";
 import { modifiersHelpers, productsHelpers } from "@/helpers";
-import { Button, Input } from "@/ui";
+import { Checkbox, Input } from "@/ui";
 
-import { ModifiersSelect } from "./_components/ModifiersSelect";
+import { FormLayout, ModifiersSelect } from "./_components";
 
-import { formFooterClass, formLayoutClass } from "./page.css";
+import { formLayoutClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) => {
   const { slug } = await params;
@@ -17,29 +15,14 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
     modifiersHelpers.getModifiers(),
   ]);
 
-  if (!product)
-    return (
-      <>
-        <p>Product not found</p>
-      </>
-    );
-
-  const assignedModifierIds = product.modifiers.map(({ id }) => String(id));
+  if (!product) return <p>Product not found</p>;
+  const assignedModifierIds = product.modifiers.map<string>(({ id }: TModifier) => `${id}`);
 
   return (
     <>
       <Header title={product.title} />
 
-      <Form action={updateProduct}>
-        <div className={formFooterClass}>
-          <Button
-            template="small"
-            type="submit"
-          >
-            Save
-          </Button>
-        </div>
-
+      <FormLayout>
         <input
           name="slug"
           type="hidden"
@@ -64,11 +47,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
           value={product.sortOrder}
         />
 
-        <input
-          name="imageUrl"
-          type="hidden"
-          value={product.imageUrl}
-        />
+        <ImageUploader initialUrl={product.imageUrl} />
 
         <div className={formLayoutClass}>
           <Input
@@ -120,39 +99,38 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
             type="text"
           />
 
-          <label>
-            <input
-              defaultChecked={product.isAvailable}
-              name="isAvailable"
-              type="checkbox"
-            />{" "}
-            <span>Available</span>
-          </label>
+          <Checkbox
+            defaultChecked={product.isAvailable}
+            label="Available"
+            name="isAvailable"
+            type="checkbox"
+          />
 
-          <label>
-            <input
-              defaultChecked={product.requiredModifier}
-              name="requiredModifier"
-              type="checkbox"
-            />{" "}
-            Required modifier
-          </label>
+          <Checkbox
+            defaultChecked={product.requiredModifier}
+            label="Required modifier"
+            name="requiredModifier"
+            type="checkbox"
+          />
 
           <input
             name="isTopProduct"
             type="hidden"
             value={String(product.isTopProduct)}
           />
+
           <input
             name="freeCutleryCount"
             type="hidden"
             value={product.freeCutleryCount}
           />
+
           <input
             name="requiredCutlery"
             type="hidden"
             value={String(product.requiredCutlery)}
           />
+
           <input
             name="fbUpload"
             type="hidden"
@@ -163,31 +141,37 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
             type="hidden"
             value={product.fbDescription ?? ""}
           />
+
           <input
             name="fbCategoryId"
             type="hidden"
             value={product.fbCategoryId ?? ""}
           />
+
           <input
             name="googleCategoryId"
             type="hidden"
             value={product.googleCategoryId ?? ""}
           />
+
           <input
             name="isMultipleModifiers"
             type="hidden"
             value={String(product.isMultipleModifiers)}
           />
+
           <input
             name="isPromotionActive"
             type="hidden"
             value={String(product.isPromotionActive)}
           />
+
           <input
             name="promotionDiscountAmount"
             type="hidden"
             value={product.promotionDiscountAmount}
           />
+
           <input
             name="promotionForEveryXProducts"
             type="hidden"
@@ -196,13 +180,13 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
 
           <ModifiersSelect
             defaultValue={assignedModifierIds}
-            options={modifiers.map(({ id, price, title }: TModifier) => ({
+            options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
               label: `${title}${price !== 0 ? ` +${price} Kč` : ""}`,
               value: String(id),
             }))}
           />
         </div>
-      </Form>
+      </FormLayout>
     </>
   );
 };

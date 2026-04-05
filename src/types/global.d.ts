@@ -1,4 +1,9 @@
 declare global {
+  interface TActionResult {
+    message: string;
+    type: "error" | "success";
+  }
+
   type TUserRole = "admin" | "cook";
 
   interface TUser {

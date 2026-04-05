@@ -6,14 +6,13 @@ export const headerClass = css(({ fonts }) => ({
   gridAutoFlow: "column",
   gridTemplateColumns: "repeat(4, 1fr) auto",
   justifyContent: "start",
-  marginBottom: 8,
+  marginBottom: 16,
   paddingLeft: 10,
 }));
 
 export const listClass = css({
   display: "grid",
   gridAutoFlow: "row",
-  rowGap: 5,
 });
 
 export const itemClass = css(({ colors }) => ({
@@ -23,7 +22,6 @@ export const itemClass = css(({ colors }) => ({
   display: "grid",
   gridAutoFlow: "column",
   gridTemplateColumns: "1fr auto",
-  paddingBottom: 5,
   paddingRight: 7,
 }));
 
@@ -35,6 +33,7 @@ export const linkClass = css(({ colors, fonts }) => ({
   gridAutoFlow: "column",
   gridTemplateColumns: "repeat(4, 1fr)",
   justifyContent: "start",
+  paddingBlock: 5,
   paddingLeft: 10,
 
   ":hover": {

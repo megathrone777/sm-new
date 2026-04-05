@@ -8,6 +8,7 @@ export const wrapperClass = css(({ colors }) => ({
   gridAutoFlow: "column",
   justifyContent: "space-between",
   marginBottom: 25,
+  minHeight: 58,
   paddingBlock: 10,
   position: "sticky",
   top: 80,

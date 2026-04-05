@@ -21,11 +21,11 @@ const ProductsSearch: React.FC = () => (
               >
                 <span className={imageHolderClass}>
                   <Image
-                    alt={title}
+                    alt="Product image"
                     className={imageClass}
                     fill
                     loading="eager"
-                    src={`https://sushiman-office.cz${imageUrl}`}
+                    src={imageUrl}
                   />
                 </span>
 

@@ -4,14 +4,14 @@ import Form from "next/form";
 import { createSubmodifier, deleteSubmodifier } from "@/app/(auth)/(admin)/_actions";
 import { Header } from "@/app/(auth)/(admin)/_components";
 import { submodifiersHelpers } from "@/helpers";
-import { Button, Container, Input } from "@/ui";
+import { Button, Input } from "@/ui";
 
 const Page: React.FC = async () => {
   const submodifiers = await submodifiersHelpers.getSubmodifiers();
 
   return (
-    <Container>
-      <Header title="Submodifiers" />
+    <>
+      <Header title="SubModifiers" />
 
       {!!submodifiers.length && (
         <table>
@@ -65,7 +65,7 @@ const Page: React.FC = async () => {
           Add submodifier
         </Button>
       </Form>
-    </Container>
+    </>
   );
 };
 

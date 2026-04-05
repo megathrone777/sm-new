@@ -3,7 +3,7 @@ const validateNewProduct = async ({
   modifiers,
   requiredModifier,
   title,
-}: TCartProduct): Promise<TCartResult> => {
+}: TCartProduct): Promise<TActionResult> => {
   if (requiredModifier && modifiers.length === 0) {
     return { message: "Zvolte modifikátory", type: "error" };
   }

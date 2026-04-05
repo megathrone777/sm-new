@@ -1,9 +1,15 @@
+export { createAdditional } from "./createAdditional";
 export { createModifier } from "./createModifier";
 export { createSubmodifier } from "./createSubmodifier";
+export { createUser } from "./createUser";
+export { deleteAdditional } from "./deleteAdditional";
 export { deleteModifier } from "./deleteModifier";
 export { deleteProduct } from "./deleteProduct";
 export { deleteSubmodifier } from "./deleteSubmodifier";
+export { deleteUser } from "./deleteUser";
 export { searchProducts } from "./searchProducts";
+export { updateAdditional } from "./updateAdditional";
 export { updateModifier } from "./updateModifier";
 export { updateProduct } from "./updateProduct";
 export { updateSubmodifier } from "./updateSubmodifier";
+export { updateUser } from "./updateUser";

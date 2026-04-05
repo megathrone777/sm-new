@@ -1,21 +1,48 @@
 "use server";
-import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers";
+import { authHelpers, productsHelpers } from "@/helpers";
 import { redis } from "@/lib";
 
-const deleteProduct = async (formData: FormData): Promise<void> => {
+const PRODUCTS_SEARCH_PREFIX = "product:";
+
+const deleteProduct = async (
+  _state: null | TActionResult,
+  formData: FormData,
+): Promise<TActionResult> => {
   const session = await authHelpers.getSession();
 
-  if (!session || session.role !== "admin") throw new Error("Unauthorized");
+  if (!session || session.role !== "admin") {
+    return {
+      message: "Unauthorized",
+      type: "error",
+    };
+  }
 
-  const id = formData.get("id") as string;
+  const slug = formData.get("id") as string;
+  const title = formData.get("title");
 
-  const title = formData.get("title") as string;
+  const product = await productsHelpers.getProductBySlug(slug);
 
-  await redis.hdel("products", id);
+  if (!product) {
+    return {
+      message: "Product not found",
+      type: "error",
+    };
+  }
 
-  redirect(`/admin/products?deleted=${encodeURIComponent(title)}`, "replace");
+  const pipeline = redis.pipeline();
+
+  pipeline.hdel("products", slug);
+  pipeline.del(`${PRODUCTS_SEARCH_PREFIX}${product.id}`);
+  await pipeline.exec();
+
+  revalidatePath("/admin/products");
+
+  return {
+    message: `"${title}" deleted successfully.`,
+    type: "success",
+  };
 };
 
 export { deleteProduct };

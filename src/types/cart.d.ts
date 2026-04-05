@@ -2,11 +2,6 @@ import type { LatLngExpression, LatLngLiteral } from "leaflet";
 import type { CountryCode } from "use-telephone";
 
 declare global {
-  interface TCartResult {
-    message: string;
-    type: "error" | "success";
-  }
-
   type TDeliveryType = "delivery" | "pickup";
 
   interface TPaymentInfo {

@@ -16,9 +16,9 @@ export const layoutClass = cssVariants(
       width: 25,
     },
     small: {
-      height: 20,
-      minWidth: 20,
-      width: 20,
+      height: 21,
+      minWidth: 21,
+      width: 21,
     },
   },
   (template, { colors }) => [
@@ -30,6 +30,7 @@ export const layoutClass = cssVariants(
       color: colors.red,
       display: "grid",
       justifyContent: "center",
+      overflow: "hidden",
       position: "relative",
     },
     template,
@@ -60,13 +61,17 @@ export const iconClass = cssVariants(
   (template) => [
     {
       display: "none",
+      insetInline: 0,
+      marginInline: "auto",
       pointerEvents: "none",
-      position: "relative",
+      position: "absolute",
       selectors: {
         [`${inputClass}:checked + &`]: {
           display: "block",
         },
       },
+      top: "50%",
+      transform: "translateY(-50%)",
       zIndex: 1,
     },
     template,
@@ -79,7 +84,7 @@ export const labelClass = cssVariants(
       lineHeight: "25px",
     },
     small: {
-      lineHeight: "20px",
+      lineHeight: "21px",
     },
   },
   (template, { fonts }) => [
