@@ -2,13 +2,13 @@ import React from "react";
 
 import { Header } from "@/app/(auth)/(admin)/_components";
 
-const Page: React.FC = () => {
-  return (
-    <>
-      <Header title="Categories" />
-      <div>q</div>
-    </>
-  );
-};
+import { CreateCategory } from "./_components";
+
+const Page: React.FC = () => (
+  <>
+    <Header title="Categories" />
+    <CreateCategory />
+  </>
+);
 
 export default Page;

@@ -30,21 +30,10 @@ const deleteProduct = async (
     };
   }
 
-  const category = await productsHelpers.getCategoryById(product.categoryId);
   const pipeline = redis.pipeline();
 
   pipeline.hdel("products", slug);
   pipeline.del(`${PRODUCTS_SEARCH_PREFIX}${product.id}`);
-
-  if (category) {
-    pipeline.hset("categories", {
-      [product.categoryId]: JSON.stringify({
-        ...category,
-        products: category.products.filter(({ id }: TProduct): boolean => id !== product.id),
-      }),
-    });
-  }
-
   await pipeline.exec();
   revalidatePath("/admin/products");
 

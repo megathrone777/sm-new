@@ -30,7 +30,7 @@ export const layoutClass = css(({ colors, fonts }) => ({
     opacity: 0,
     outline: "none",
     paddingBlock: 0,
-    paddingInline: 8,
+    paddingInline: 4,
     position: "absolute",
 
     ":focus": {
@@ -74,7 +74,7 @@ export const tagClass = css(({ fonts }) => ({
   fontSize: 14,
   fontWeight: fonts.medium,
   gridAutoFlow: "column",
-  paddingBlock: 4,
+  paddingBlock: 0,
   paddingInline: 6,
 }));
 
@@ -106,6 +106,27 @@ export const iconClass = css(({ colors }) => ({
   color: colors.red,
   height: 18,
   width: 18,
+}));
+
+export const searchWrapperClass = css(({ colors }) => ({
+  borderBottom: `1px solid ${colors.red}`,
+  padding: 6,
+}));
+
+export const searchInputClass = css(({ colors, fonts }) => ({
+  border: `1px solid ${colors.red}`,
+  borderRadius: 4,
+  fontFamily: "inherit",
+  fontSize: 14,
+  fontWeight: fonts.medium,
+  outline: "none",
+  paddingBlock: 4,
+  paddingInline: 8,
+  width: "100%",
+
+  ":focus": {
+    borderColor: colors.red,
+  },
 }));
 
 export const popupClass = css(({ colors, fonts }) => ({

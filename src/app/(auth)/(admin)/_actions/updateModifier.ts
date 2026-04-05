@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { authHelpers, modifiersHelpers, submodifiersHelpers } from "@/helpers";
 import { redis } from "@/lib";
 
+const MODIFIERS_SEARCH_PREFIX = "modifier:";
+
 const updateModifier = async (formData: FormData): Promise<void> => {
   const session = await authHelpers.getSession();
 
@@ -26,7 +28,12 @@ const updateModifier = async (formData: FormData): Promise<void> => {
   const subModifiers = allSubs.filter(({ id: sid }) => subModifierIds.includes(sid));
   const modifier: TModifier = { ...prev, price, requiredSubModifier, sortOrder, subModifiers, title };
 
-  await redis.hset("modifiers", { [id]: JSON.stringify(modifier) });
+  const pipeline = redis.pipeline();
+
+  pipeline.hset("modifiers", { [id]: JSON.stringify(modifier) });
+  pipeline.hset(`${MODIFIERS_SEARCH_PREFIX}${id}`, { id, price, title });
+
+  await pipeline.exec();
 
   revalidatePath("/admin/modifiers");
   revalidatePath(`/admin/modifier/${id}`);

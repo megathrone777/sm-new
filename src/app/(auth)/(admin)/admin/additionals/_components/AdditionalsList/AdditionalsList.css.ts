@@ -16,19 +16,10 @@ export const itemClass = css({
   paddingRight: 7,
 });
 
-export const createFormClass = css({
-  display: "grid",
-  gridAutoFlow: "row",
-  marginLeft: "auto",
-  paddingBottom: 40,
-  rowGap: 20,
-  width: 400,
-});
-
 export const itemFormClass = css({
   alignItems: "center",
   gridAutoFlow: "column",
-  gridTemplateColumns: "1fr 1fr 1fr auto",
+  gridTemplateColumns: "1fr 1fr 1fr",
 });
 
 export const linkClass = css({

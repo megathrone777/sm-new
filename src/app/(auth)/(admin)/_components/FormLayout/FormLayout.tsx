@@ -1,20 +1,26 @@
 "use client";
-import React, { useActionState, useEffect } from "react";
+import React, { useActionState, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Form from "next/form";
 
 import { Button } from "@/ui";
 
-import { wrapperClass, footerClass } from "./FormLayout.css";
+import { contentClass, footerClass, wrapperClass } from "./FormLayout.css";
 
 import type { TProps } from "./FormLayout.types";
 
-const FormLayout: React.FC<TProps> = ({ children, className, formAction }) => {
+const FormLayout: React.FC<TProps> = ({ children, className, formAction, layoutClassName }) => {
   const [state, action, pending] = useActionState(formAction, null);
+  const [submitKey, setSubmitKey] = useState(0);
 
   useEffect((): void => {
     if (!state) return;
     const { message, type } = state;
+
+    if (type === "success") {
+      (document.activeElement as HTMLElement)?.blur();
+      setSubmitKey((prevKey: number): number => prevKey + 1);
+    }
 
     toast(message, { type });
   }, [state]);
@@ -24,7 +30,12 @@ const FormLayout: React.FC<TProps> = ({ children, className, formAction }) => {
       {...{ action }}
       className={`${wrapperClass}${className ? ` ${className}` : ""}`}
     >
-      {children}
+      <div
+        className={`${contentClass}${layoutClassName ? ` ${layoutClassName}` : ""}`}
+        key={submitKey}
+      >
+        {children}
+      </div>
 
       <div className={footerClass}>
         <Button

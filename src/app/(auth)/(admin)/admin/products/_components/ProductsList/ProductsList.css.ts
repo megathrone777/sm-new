@@ -27,7 +27,7 @@ export const itemClass = css(({ colors }) => ({
 
 export const linkClass = css(({ colors, fonts }) => ({
   alignItems: "center",
-  color: colors.grayDarkest,
+  color: colors.black,
   display: "grid",
   fontWeight: fonts.medium,
   gridAutoFlow: "column",

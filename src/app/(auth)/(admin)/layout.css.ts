@@ -11,5 +11,6 @@ export const layoutClass = css({
 
 export const contentClass = css({
   minHeight: 600,
+  paddingBottom: 20,
   position: "relative",
 });

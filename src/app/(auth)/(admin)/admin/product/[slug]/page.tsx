@@ -2,27 +2,40 @@ import React from "react";
 
 import { updateProduct } from "@/app/(auth)/(admin)/_actions";
 import { Header, ImageUploader } from "@/app/(auth)/(admin)/_components";
-import { FormLayout } from "@/app/(auth)/_components";
+import { FormLayout } from "@/app/(auth)/(admin)/_components";
 import { modifiersHelpers, productsHelpers } from "@/helpers";
 import { Checkbox, Input } from "@/ui";
 
-import { ModifiersSelect } from "./_components";
+import { CategorySelect, ModifiersSelect } from "./_components";
+
+import { formClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) => {
   const { slug } = await params;
-  const [product, modifiers] = await Promise.all([
+  const [product, modifiers, categories] = await Promise.all([
     productsHelpers.getProductBySlug(slug),
     modifiersHelpers.getModifiers(),
+    productsHelpers.getCategories(),
   ]);
 
   if (!product) return <p>Product not found</p>;
+
   const assignedModifierIds = product.modifiers.map<string>(({ id }: TModifier) => `${id}`);
+  const categoryOptions = categories
+    .filter(({ id }: TProductCategory) => id !== 0)
+    .map<TSelectOption>(({ id, title }: TProductCategory) => ({
+      label: title,
+      value: `${id}`,
+    }));
 
   return (
     <>
-      <Header title={product.title} />
+      <Header title={`Product | ${product.title}`} />
 
-      <FormLayout formAction={updateProduct}>
+      <FormLayout
+        formAction={updateProduct}
+        layoutClassName={formClass}
+      >
         <input
           name="slug"
           type="hidden"
@@ -36,18 +49,18 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
         />
 
         <input
-          name="categoryId"
-          type="hidden"
-          value={product.categoryId}
-        />
-
-        <input
           name="sortOrder"
           type="hidden"
           value={product.sortOrder}
         />
 
         <ImageUploader initialUrl={product.imageUrl} />
+        <div />
+
+        <CategorySelect
+          defaultValue={product.categoryId}
+          options={categoryOptions}
+        />
 
         <Input
           defaultValue={product.title}
@@ -91,6 +104,13 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
           type="text"
         />
 
+        <Input
+          defaultValue={product.modifiersTitle ?? ""}
+          label="Modifiers title"
+          name="modifiersTitle"
+          type="text"
+        />
+
         <Checkbox
           defaultChecked={product.isAvailable}
           label="Available"
@@ -105,11 +125,12 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
           type="checkbox"
         />
 
-        <Input
-          defaultValue={product.modifiersTitle ?? ""}
-          label="Modifiers title"
-          name="modifiersTitle"
-          type="text"
+        <ModifiersSelect
+          defaultValue={assignedModifierIds}
+          options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
+            label: `${title}${price !== 0 ? ` +${price} Kč` : ""}`,
+            value: String(id),
+          }))}
         />
 
         <input
@@ -176,17 +197,10 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
           type="hidden"
           value={product.promotionForEveryXProducts}
         />
-
-        <ModifiersSelect
-          defaultValue={assignedModifierIds}
-          options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
-            label: `${title}${price !== 0 ? ` +${price} Kč` : ""}`,
-            value: String(id),
-          }))}
-        />
       </FormLayout>
     </>
   );
 };
 
+export { metadata } from "./metadata";
 export default Page;

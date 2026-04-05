@@ -7,6 +7,7 @@ export { deleteModifier } from "./deleteModifier";
 export { deleteProduct } from "./deleteProduct";
 export { deleteSubmodifier } from "./deleteSubmodifier";
 export { deleteUser } from "./deleteUser";
+export { searchModifiers } from "./searchModifiers";
 export { searchProducts } from "./searchProducts";
 export { updateAdditional } from "./updateAdditional";
 export { updateModifier } from "./updateModifier";

@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { deleteProduct } from "@/app/(auth)/(admin)/_actions";
+import { ListLayout } from "@/app/(auth)/(admin)/_components";
 import { productsHelpers } from "@/helpers";
 import { Button } from "@/ui";
 
@@ -18,7 +20,10 @@ const ProductsList: React.FC = async () => {
   const products = await productsHelpers.getProducts();
 
   return (
-    <>
+    <ListLayout
+      deleteAction={deleteProduct}
+      href="/admin/products"
+    >
       <div className={headerClass}>
         <p>ID</p>
         <p>Image</p>
@@ -69,7 +74,7 @@ const ProductsList: React.FC = async () => {
           )}
         </div>
       )}
-    </>
+    </ListLayout>
   );
 };
 

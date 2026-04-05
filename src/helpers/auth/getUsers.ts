@@ -5,7 +5,9 @@ const getUsers = async (): Promise<TUser[]> => {
 
   if (!users) return [];
 
-  return Object.values(users).map((u) => (typeof u === "string" ? JSON.parse(u) : u));
+  return Object.values(users).sort((userA: TUser, userB: TUser): number =>
+    userA.role.localeCompare(userB.role),
+  );
 };
 
 export { getUsers };

@@ -4,7 +4,7 @@ import Form from "next/form";
 import { updateModifier } from "@/app/(auth)/(admin)/_actions";
 import { Header } from "@/app/(auth)/(admin)/_components";
 import { modifiersHelpers, submodifiersHelpers } from "@/helpers";
-import { Button, Container, Input } from "@/ui";
+import { Button, Input } from "@/ui";
 
 const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => {
   const { id } = await params;
@@ -13,18 +13,12 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
     submodifiersHelpers.getSubmodifiers(),
   ]);
 
-  if (!modifier)
-    return (
-      <Container>
-        <p>Modifier not found</p>
-      </Container>
-    );
-
-  const assignedIds = (modifier.subModifiers ?? []).map(({ id: sid }) => sid);
+  if (!modifier) return <p>Modifier not found</p>;
+  const assignedIds = (modifier.subModifiers ?? []).map<number>(({ id: sid }) => sid);
 
   return (
-    <Container>
-      <Header title={modifier.title} />
+    <>
+      <Header title={`Modifier | ${modifier.title}`} />
 
       <Form action={updateModifier}>
         <input
@@ -87,7 +81,7 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
           Save
         </Button>
       </Form>
-    </Container>
+    </>
   );
 };
 

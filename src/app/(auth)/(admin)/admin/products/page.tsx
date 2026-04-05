@@ -2,18 +2,16 @@ import React, { Suspense } from "react";
 
 import { Header } from "@/app/(auth)/(admin)/_components";
 
-import { ListLayout, ProductsList, ProductsSearch } from "./_components";
+import { ProductsList, ProductsSearch } from "./_components";
 
-const Page: React.FC<PageProps<"/admin/products">> = async () => (
+const Page: React.FC<PageProps<"/admin/products">> = () => (
   <>
     <Header title="Products">
       <ProductsSearch />
     </Header>
 
     <Suspense>
-      <ListLayout>
-        <ProductsList />
-      </ListLayout>
+      <ProductsList />
     </Suspense>
   </>
 );
