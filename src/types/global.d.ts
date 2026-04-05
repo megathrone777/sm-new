@@ -1,8 +1,17 @@
 declare global {
+  type TUserRole = "admin" | "cook";
+
   interface TUser {
+    id: string;
     login: string;
-    password: string;
-    role: "admin" | "cook";
+    passwordHash: string;
+    role: TUserRole;
+    salt: string;
+  }
+
+  interface TSessionData {
+    role: TUserRole;
+    userId: TUser["id"];
   }
 
   interface TSelectOption {

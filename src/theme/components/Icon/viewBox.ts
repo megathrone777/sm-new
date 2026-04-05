@@ -19,4 +19,5 @@ export const viewBox: Record<TIconID, string> = {
   profile: "0 0 448 512",
   promo: "0 0 448 512",
   time: "0 0 512 512",
+  trash: "0 0 448 512",
 };

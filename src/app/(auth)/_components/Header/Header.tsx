@@ -1,23 +1,32 @@
 import React from "react";
+import Link from "next/link";
+
+import { logout } from "@/app/(auth)/_actions";
+import { Button } from "@/ui";
+
+import { linkClass, wrapperClass, imageClass } from "./Header.css";
 
 const Header: React.FC = () => (
-  <div
-    style={{
-      alignItems: "center",
-      display: "grid",
-      gridAutoFlow: "column",
-      justifyContent: "space-between",
-    }}
-  >
-    <img
-      alt="Logo."
-      src="/uploads/logo_img.svg"
-      style={{
-        height: 70,
-      }}
-    />
+  <div className={wrapperClass}>
+    <Link
+      className={linkClass}
+      href="/admin"
+    >
+      <img
+        alt="Logo."
+        className={imageClass}
+        src="/uploads/logo_img.svg"
+      />
+    </Link>
 
-    <button type="button">Logout</button>
+    <form action={logout}>
+      <Button
+        template="small"
+        type="submit"
+      >
+        Logout
+      </Button>
+    </form>
   </div>
 );
 

@@ -1,8 +1,8 @@
 import cs from "@/dictionaries/cs.json";
 
-import type { TUseTranslation } from "./types";
-
-const useTranslation: TUseTranslation = () => ({
+const useTranslation = (): {
+  t: <D extends (typeof cs)[keyof typeof cs]>(key: keyof typeof cs) => D;
+} => ({
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   t: (key) => cs[key],

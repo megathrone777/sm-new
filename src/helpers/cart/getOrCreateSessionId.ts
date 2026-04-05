@@ -18,7 +18,7 @@ const getOrCreateSessionId = async (): Promise<string> => {
     name: COOKIE_NAME,
     path: "/",
     sameSite: "lax",
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
     value: sessionId,
   });
 

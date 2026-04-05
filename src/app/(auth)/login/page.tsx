@@ -1,30 +1,32 @@
 import React from "react";
 import Form from "next/form";
 
-const Page: React.FC = () => {
-  return (
-    <>
-      <h1>Login page</h1>
+import { login } from "@/app/(auth)/_actions";
 
-      <Form action="#">
-        <div>
-          <input
-            name="login"
-            placeholder="Login"
-            type="text"
-          />
-        </div>
+const Page: React.FC = () => (
+  <>
+    <h1>Login</h1>
 
-        <div>
-          <input
-            name="password"
-            placeholder="Password"
-            type="password"
-          />
-        </div>
-      </Form>
-    </>
-  );
-};
+    <Form action={login}>
+      <div>
+        <input
+          name="login"
+          placeholder="Login"
+          type="text"
+        />
+      </div>
+
+      <div>
+        <input
+          name="password"
+          placeholder="Password"
+          type="password"
+        />
+      </div>
+
+      <button type="submit">Sign in</button>
+    </Form>
+  </>
+);
 
 export default Page;

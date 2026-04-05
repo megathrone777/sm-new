@@ -1,0 +1,1 @@
+export { DeleteAlert } from "./DeleteAlert";

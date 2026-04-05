@@ -17,7 +17,8 @@ export type TIconID =
   | "point"
   | "profile"
   | "promo"
-  | "time";
+  | "time"
+  | "trash";
 
 export interface TProps {
   className?: React.HTMLAttributes<HTMLElement>["className"];
