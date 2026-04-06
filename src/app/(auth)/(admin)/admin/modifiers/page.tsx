@@ -4,7 +4,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { CreateModifier, ModifiersList, ModifiersSearch } from "./_components";
 
-const Page: React.FC<PageProps<"/admin/modifiers">> = () => (
+const Page: React.FC<PageProps<"/admin/modifiers">> = async () => (
   <>
     <Header title="Modifiers">
       <ModifiersSearch />
@@ -18,5 +18,4 @@ const Page: React.FC<PageProps<"/admin/modifiers">> = () => (
   </>
 );
 
-export { metadata } from "./metadata";
 export default Page;

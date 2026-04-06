@@ -15,7 +15,7 @@ const spin = keyframes({
 export const wrapperClass = cssVariants(
   {
     normal: {
-      borderWidth: 10,
+      borderWidth: 8,
       height: 50,
       width: 50,
     },

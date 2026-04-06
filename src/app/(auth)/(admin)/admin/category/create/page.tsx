@@ -11,5 +11,4 @@ const Page: React.FC = () => (
   </>
 );
 
-export { metadata } from "./metadata";
 export default Page;

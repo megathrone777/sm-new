@@ -117,5 +117,4 @@ const Page: React.FC = async () => {
   );
 };
 
-export { metadata } from "./metadata";
 export default Page;

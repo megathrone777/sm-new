@@ -6,7 +6,7 @@ import { Button } from "@/ui";
 
 import { ProductsList, ProductsSearch } from "./_components";
 
-const Page: React.FC<PageProps<"/admin/products">> = () => (
+const Page: React.FC<PageProps<"/admin/products">> = async () => (
   <>
     <Header title="Products">
       <ProductsSearch />
@@ -25,5 +25,4 @@ const Page: React.FC<PageProps<"/admin/products">> = () => (
   </>
 );
 
-export { metadata } from "./metadata";
 export default Page;

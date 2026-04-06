@@ -6,7 +6,7 @@ import { Button } from "@/ui";
 
 import { CategoriesList } from "./_components";
 
-const Page: React.FC = () => (
+const Page: React.FC = async () => (
   <>
     <Header title="Categories">
       <Link href="/admin/category/create">
@@ -23,5 +23,4 @@ const Page: React.FC = () => (
   </>
 );
 
-export { metadata } from "./metadata";
 export default Page;

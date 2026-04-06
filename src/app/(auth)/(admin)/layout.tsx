@@ -20,4 +20,5 @@ const Layout: React.FC<LayoutProps<"/">> = ({ children }) => (
   </>
 );
 
+export { metadata } from "./metadata";
 export default Layout;

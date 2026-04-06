@@ -13,5 +13,4 @@ const getGreeting = (): string => {
 
 const Page: React.FC = () => <Header title={getGreeting()} />;
 
-export { metadata } from "./metadata";
 export default Page;

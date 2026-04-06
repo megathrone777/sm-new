@@ -205,5 +205,4 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
   );
 };
 
-export { metadata } from "./metadata";
 export default Page;

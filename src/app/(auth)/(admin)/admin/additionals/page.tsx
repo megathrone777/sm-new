@@ -15,5 +15,4 @@ const Page: React.FC<PageProps<"/admin/additionals">> = () => (
   </>
 );
 
-export { metadata } from "./metadata";
 export default Page;
