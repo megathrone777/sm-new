@@ -82,6 +82,7 @@ const Selectbox: React.FC<TProps> = ({ defaultValue, label, mode, onChange, opti
         }
         showAction={["click"]}
         showSearch={{
+          autoClearSearchValue: true,
           filterOption: (input: string, option) =>
             String(option?.label ?? "")
               .toLowerCase()

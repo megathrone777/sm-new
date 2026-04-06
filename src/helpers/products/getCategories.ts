@@ -23,9 +23,7 @@ const getCategories = async (): Promise<TProductCategory[]> => {
         ),
       }),
     )
-    .sort(
-      (a: TProductCategory, b: TProductCategory): number => a.sortOrder - b.sortOrder,
-    );
+    .sort((a: TProductCategory, b: TProductCategory): number => a.sortOrder - b.sortOrder);
 
   return [
     {
@@ -42,9 +40,7 @@ const getCategories = async (): Promise<TProductCategory[]> => {
       title: "Vše produkty",
     },
     ...categories,
-  ].sort(
-    (a: TProductCategory, b: TProductCategory): number => a.sortOrder - b.sortOrder,
-  );
+  ].sort((a: TProductCategory, b: TProductCategory): number => a.sortOrder - b.sortOrder);
 };
 
 export { getCategories };

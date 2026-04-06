@@ -4,7 +4,7 @@ export const headerClass = css(({ fonts }) => ({
   display: "grid",
   fontWeight: fonts.bold,
   gridAutoFlow: "column",
-  gridTemplateColumns: "repeat(4, 1fr) auto",
+  gridTemplateColumns: "repeat(5, 1fr) auto",
   justifyContent: "start",
   marginBottom: 16,
   paddingLeft: 10,
@@ -22,6 +22,7 @@ export const itemClass = css(({ colors }) => ({
   display: "grid",
   gridAutoFlow: "column",
   gridTemplateColumns: "1fr auto",
+  minHeight: 55,
   paddingRight: 7,
 }));
 
@@ -31,7 +32,7 @@ export const linkClass = css(({ colors, fonts }) => ({
   display: "grid",
   fontWeight: fonts.medium,
   gridAutoFlow: "column",
-  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateColumns: "repeat(5, 1fr)",
   height: "100%",
   justifyContent: "start",
   paddingBlock: 5,

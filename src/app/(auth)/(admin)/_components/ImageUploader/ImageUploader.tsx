@@ -37,10 +37,10 @@ const ImageUploader: React.FC<TProps> = ({ initialUrl }) => {
         <Image
           alt="Image preview."
           className={imageClass}
-          height={160}
+          height={200}
           loading="eager"
           src={previewUrl}
-          width={160}
+          width={200}
         />
       )}
 

@@ -85,4 +85,5 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
   );
 };
 
+export { metadata } from "./metadata";
 export default Page;

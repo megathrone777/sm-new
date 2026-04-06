@@ -1,1 +1,1 @@
-export { CreateCategory } from "./CreateCategory";
+export { CategoriesList } from "./CategoriesList";

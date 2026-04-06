@@ -1,12 +1,15 @@
 import React from "react";
 
 import { updateProduct } from "@/app/(auth)/(admin)/_actions";
-import { Header, ImageUploader } from "@/app/(auth)/(admin)/_components";
+import {
+  CategorySelect,
+  ModifiersSelect,
+  Header,
+  ImageUploader,
+} from "@/app/(auth)/(admin)/_components";
 import { FormLayout } from "@/app/(auth)/(admin)/_components";
 import { modifiersHelpers, productsHelpers } from "@/helpers";
 import { Checkbox, Input } from "@/ui";
-
-import { CategorySelect, ModifiersSelect } from "./_components";
 
 import { formClass } from "./page.css";
 
@@ -18,7 +21,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
     productsHelpers.getCategories(),
   ]);
 
-  if (!product) return <p>Product not found</p>;
+  if (!product) return <Header title="Product not found" />;
 
   const assignedModifierIds = product.modifiers.map<string>(({ id }: TModifier) => `${id}`);
   const categoryOptions = categories

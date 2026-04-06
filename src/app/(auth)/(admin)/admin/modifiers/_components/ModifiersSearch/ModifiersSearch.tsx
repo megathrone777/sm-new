@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 
@@ -14,7 +15,7 @@ const ModifiersSearch: React.FC = () => (
           <li key={`search-modifier-${id}`}>
             <Link
               className={linkClass}
-              href={`/admin/modifier/${id}` as __next_route_internal_types__.RouteImpl<string>}
+              href={`/admin/modifier/${id}`}
             >
               {title}
             </Link>

@@ -1,5 +1,8 @@
+export { CategorySelect } from "./CategorySelect";
 export { FormLayout } from "./FormLayout";
 export { Header } from "./Header";
 export { ImageUploader } from "./ImageUploader";
 export { ListLayout } from "./ListLayout";
+export { ModifiersSelect } from "./ModifiersSelect";
+export { ProductsSelect } from "./ProductsSelect";
 export { Sidebar } from "./Sidebar";

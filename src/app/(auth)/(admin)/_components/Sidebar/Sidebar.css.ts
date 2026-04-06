@@ -2,7 +2,7 @@ import { css, cssVariants } from "@/theme";
 
 export const wrapperClass = css({
   position: "sticky",
-  top: 98,
+  top: 108,
   zIndex: 100,
 });
 

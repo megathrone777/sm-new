@@ -6,20 +6,20 @@ import { Selectbox } from "@/ui";
 import type { TProps } from "./ProductsSelect.types";
 
 const ProductsSelect: React.FC<TProps> = ({ defaultValue, options }) => {
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<string[]>(defaultValue);
 
   return (
     <>
-      {/* {selected.map(
-        (id: string): React.ReactElement => (
+      {selected.map(
+        (slug: string): React.ReactElement => (
           <input
-            key={id}
-            name="subModifierIds"
+            key={slug}
+            name="productSlugs"
             type="hidden"
-            value={id}
+            value={slug}
           />
         ),
-      )} */}
+      )}
 
       <Selectbox
         {...{ defaultValue, options }}

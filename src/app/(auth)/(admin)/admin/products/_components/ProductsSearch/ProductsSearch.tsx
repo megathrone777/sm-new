@@ -17,7 +17,7 @@ const ProductsSearch: React.FC = () => (
             <li key={`search-product-${id}-${slug}`}>
               <Link
                 className={linkClass}
-                href={`/admin/product/${slug}` as __next_route_internal_types__.RouteImpl<string>}
+                href={`/admin/product/${slug}`}
               >
                 <span className={imageHolderClass}>
                   <Image
