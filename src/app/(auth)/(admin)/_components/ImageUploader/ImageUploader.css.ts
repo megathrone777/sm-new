@@ -9,5 +9,5 @@ export const wrapperClass = css({
 
 export const imageClass = css({
   borderRadius: 8,
-  objectFit: "contain",
+  objectFit: "cover",
 });

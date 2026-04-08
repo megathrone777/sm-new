@@ -12,9 +12,7 @@ import { Input } from "@/ui";
 
 import { formClass } from "./page.css";
 
-const Page: React.FC<PageProps<"/admin/category/[id]">> = async ({
-  params,
-}): Promise<React.ReactElement> => {
+const Page: React.FC<PageProps<"/admin/category/[id]">> = async ({ params }) => {
   const { id } = await params;
   const [category, allProducts] = await Promise.all([
     productsHelpers.getCategoryById(Number(id)),
@@ -48,10 +46,12 @@ const Page: React.FC<PageProps<"/admin/category/[id]">> = async ({
 
         <ImageUploader initialUrl={category.imageUrl} />
 
-        <ProductsSelect
-          defaultValue={assignedSlugs}
-          options={productOptions}
-        />
+        {category.sortOrder !== 0 && (
+          <ProductsSelect
+            defaultValue={assignedSlugs}
+            options={productOptions}
+          />
+        )}
 
         <Input
           defaultValue={category.title}
@@ -60,12 +60,14 @@ const Page: React.FC<PageProps<"/admin/category/[id]">> = async ({
           type="text"
         />
 
-        <Input
-          defaultValue={category.sortOrder}
-          label="Sort order"
-          name="sortOrder"
-          type="number"
-        />
+        {category.id !== 0 && (
+          <Input
+            defaultValue={category.sortOrder}
+            label="Sort order"
+            name="sortOrder"
+            type="number"
+          />
+        )}
       </FormLayout>
     </>
   );

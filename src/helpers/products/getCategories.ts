@@ -1,4 +1,5 @@
 import { redis } from "@/lib";
+import { sortByOrder } from "@/utils";
 
 const getCategories = async (): Promise<TProductCategory[]> => {
   const [categoriesMap, productsMap] = await Promise.all([
@@ -7,40 +8,40 @@ const getCategories = async (): Promise<TProductCategory[]> => {
   ]);
 
   if (!categoriesMap) return [];
+  const products = productsMap ? sortByOrder(Object.values(productsMap)) : [];
+  const allProducts = sortByOrder(Object.values(categoriesMap)).reduce<TProduct[]>(
+    (accumulator, category) => {
+      if (category.id === 0) {
+        return accumulator;
+      }
 
-  const allProducts = productsMap
-    ? Object.values(productsMap).sort(
-        (a: TProduct, b: TProduct): number => a.sortOrder - b.sortOrder,
-      )
-    : [];
+      return [
+        ...accumulator,
+        ...products.filter((product: TProduct): boolean => product.categoryId === category.id),
+      ];
+    },
+    [],
+  );
 
-  const categories = Object.values(categoriesMap)
-    .map(
-      (category: TProductCategory): TProductCategory => ({
+  const categories = Object.values(categoriesMap).map(
+    (category: TProductCategory): TProductCategory => {
+      if (category.sortOrder === 0) {
+        return {
+          ...category,
+          products: allProducts,
+        };
+      }
+
+      return {
         ...category,
-        products: allProducts.filter(
+        products: products.filter(
           (product: TProduct): boolean => product.categoryId === category.id,
         ),
-      }),
-    )
-    .sort((a: TProductCategory, b: TProductCategory): number => a.sortOrder - b.sortOrder);
-
-  return [
-    {
-      id: 0,
-      imageUrl: "/uploads/all_pr_352e3084a2_f2e3c82632_89967dca5a.jpg",
-      isPromotionActive: false,
-      products: categories.reduce<TProduct[]>(
-        (accumulator, { products }) => [...accumulator, ...products],
-        [],
-      ),
-      promotionDiscountAmount: 0,
-      promotionForEveryXProducts: 0,
-      sortOrder: -1,
-      title: "Vše produkty",
+      };
     },
-    ...categories,
-  ].sort((a: TProductCategory, b: TProductCategory): number => a.sortOrder - b.sortOrder);
+  );
+
+  return sortByOrder(categories);
 };
 
 export { getCategories };

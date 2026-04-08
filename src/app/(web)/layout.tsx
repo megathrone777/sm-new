@@ -2,7 +2,7 @@ import React from "react";
 
 import { authHelpers, shopHelpers } from "@/helpers";
 
-import { Admin, Cart, Header, Schedule } from "./_components";
+import { Admin, Cart, Footer, Header, Schedule } from "./_components";
 
 const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
   const authSession = await authHelpers.getSession();
@@ -12,6 +12,7 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
     <>
       <Header {...{ logoUrl, phone }} />
       {children}
+      <Footer />
       <Cart />
       {authSession && authSession.role === "admin" && <Admin />}
       <Schedule {...{ contactItems, isOpened, text, title }} />

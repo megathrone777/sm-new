@@ -2,13 +2,9 @@ import React from "react";
 
 import { Products } from "@/app/(web)/_components";
 
-const Page: React.FC = () => (
+const Page: React.FC<PageProps<"/">> = () => (
   <>
-    <Products
-      showAll
-      title="Menu"
-    />
-
+    <Products title="Menu" />
     <div id="reviews-section">Reviews</div>
   </>
 );

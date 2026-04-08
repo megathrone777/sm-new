@@ -1,4 +1,6 @@
 "use server";
+import { redirect } from "next/navigation";
+
 import { cartHelpers } from "@/helpers";
 import { isEqual } from "@/utils";
 
@@ -46,7 +48,16 @@ const initialCart: TCart = {
   totalPrice: 0,
 };
 
-const addToCart = async (newProduct: TCartProduct): Promise<TActionResult> => {
+const addToCart = async (
+  _state: null | TActionResult,
+  newProduct: TCartProduct,
+): Promise<TActionResult> => {
+  const { addedFromList, modifiers, requiredModifier } = newProduct;
+
+  if (addedFromList && requiredModifier && modifiers.length === 0) {
+    redirect(`/product/${newProduct.slug}?requiredModifier=true`);
+  }
+
   const cart = await cartHelpers.getCart();
   const newCart: TCart = cart ? { ...cart } : { ...initialCart };
   const validationResult = await validateNewProduct(newProduct);

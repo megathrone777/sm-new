@@ -1,5 +1,5 @@
 import React from "react";
 
-const Footer: React.FC = () => <div>Footer</div>;
+const Footer: React.FC = () => <div style={{ minHeight: 700 }}>Footer</div>;
 
 export { Footer };

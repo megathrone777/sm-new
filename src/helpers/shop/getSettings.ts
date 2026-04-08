@@ -28,6 +28,7 @@ const getSettings = async (): Promise<TShopSettings> => ({
   isOpened: true,
   lastTimeVicinityHidden: "21:00",
   logoUrl: "/uploads/logo_img.svg",
+  navigation: [],
   phone: "+420 792 745 116",
   privacyPolicy: "Zásady ochrany osobních údajů",
   termsOfUse: "Všeobecné obchodní podmínky",

@@ -3,7 +3,7 @@ import Form from "next/form";
 
 import { login } from "@/app/(auth)/_actions";
 
-const Page: React.FC = () => (
+const Page: React.FC<PageProps<"/login">> = () => (
   <>
     <h1>Login</h1>
 

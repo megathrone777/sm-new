@@ -4,7 +4,7 @@ import { shopHelpers } from "@/helpers";
 
 import { Orders } from "./_components";
 
-const Page: React.FC = async () => {
+const Page: React.FC<PageProps<"/orders">> = async () => {
   const orders = await shopHelpers.getOrders();
 
   return (

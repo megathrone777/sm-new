@@ -22,15 +22,11 @@ const createCategory = async (
   if (!title) return { message: "Title is required", type: "error" };
 
   const sortOrder = Number(formData.get("sortOrder") ?? 0);
-
   const existing = await productsHelpers.getCategories();
   const realCategories = existing.filter(({ id }) => id !== 0);
-  const id = realCategories.length
-    ? Math.max(...realCategories.map(({ id }) => id)) + 1
-    : 1;
+  const id = realCategories.length ? Math.max(...realCategories.map(({ id }) => id)) + 1 : 1;
 
   let imageUrl = "";
-
   const imageFile = formData.get("image") as File;
 
   if (imageFile?.size) {

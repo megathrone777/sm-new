@@ -51,6 +51,7 @@ const Input: React.FC<TProps> = ({
           autoComplete="off"
           className={inputClass[isError ? "isError" : "isDefault"]}
           id={inputId}
+          spellCheck="false"
           {...{
             defaultValue,
             disabled,

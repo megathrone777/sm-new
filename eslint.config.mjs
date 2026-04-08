@@ -180,6 +180,10 @@ const config = defineConfig({
             groupName: "devices.mobileAndPointerCoarse",
           },
           {
+            elementNamePattern: ["^devices.mobileXs"],
+            groupName: "devices.mobileXs",
+          },
+          {
             elementNamePattern: ["^devices.mobile"],
             groupName: "devices.mobile",
           },
@@ -207,6 +211,7 @@ const config = defineConfig({
           "media",
           "devices.pointerCoarse",
           "devices.mobileAndPointerCoarse",
+          "devices.mobileXs",
           "devices.mobile",
           "devices.tablet",
           "devices.desktop",

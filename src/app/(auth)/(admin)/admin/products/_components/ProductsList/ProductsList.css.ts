@@ -4,8 +4,8 @@ export const headerClass = css(({ fonts }) => ({
   display: "grid",
   fontWeight: fonts.bold,
   gridAutoFlow: "column",
-  gridTemplateColumns: "repeat(4, 1fr) auto",
-  justifyContent: "start",
+  gridTemplateColumns: "minmax(30px, auto) repeat(4, 1fr)",
+  justifyItems: "center",
   marginBottom: 16,
   paddingLeft: 10,
 }));
@@ -31,9 +31,9 @@ export const linkClass = css(({ colors, fonts }) => ({
   display: "grid",
   fontWeight: fonts.medium,
   gridAutoFlow: "column",
-  gridTemplateColumns: "repeat(4, 1fr)",
+  gridTemplateColumns: "minmax(30px, auto) repeat(4, 1fr)",
   height: "100%",
-  justifyContent: "start",
+  justifyItems: "center",
   paddingBlock: 5,
   paddingLeft: 10,
 

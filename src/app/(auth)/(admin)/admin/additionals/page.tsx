@@ -4,7 +4,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { AdditionalsList, CreateAdditional } from "./_components";
 
-const Page: React.FC<PageProps<"/admin/additionals">> = () => (
+const Page: React.FC<PageProps<"/admin/additionals">> = async () => (
   <>
     <Header title="Additionals" />
     <CreateAdditional />

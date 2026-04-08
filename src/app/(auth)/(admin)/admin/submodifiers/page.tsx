@@ -6,7 +6,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 import { submodifiersHelpers } from "@/helpers";
 import { Button, Input } from "@/ui";
 
-const Page: React.FC = async () => {
+const Page: React.FC<PageProps<"/admin/submodifiers">> = async () => {
   const submodifiers = await submodifiersHelpers.getSubmodifiers();
 
   return (

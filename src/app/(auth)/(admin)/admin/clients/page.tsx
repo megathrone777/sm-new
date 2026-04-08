@@ -1,6 +1,6 @@
 import React from "react";
 
-const Page: React.FC = () => {
+const Page: React.FC<PageProps<"/admin/clients">> = async () => {
   return <div>Clients</div>;
 };
 

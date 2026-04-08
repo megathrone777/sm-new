@@ -3,7 +3,7 @@ import React from "react";
 // import { seedCatalog } from "@/app/actions/seedCatalog";
 // import { getProductBySlug } from "@/helpers";
 
-const Page: React.FC = async () => {
+const Page: React.FC<PageProps<"/cart">> = () => {
   // const product = await getProductBySlug("assorti-trend-3");
 
   // console.log(product);

@@ -4,7 +4,7 @@ declare global {
     type: "error" | "success";
   }
 
-  type TUserRole = "admin" | "cook";
+  type TUserRole = "admin" | "cook" | "waiter";
 
   interface TUser {
     id: string;

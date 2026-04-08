@@ -11,6 +11,6 @@ const getGreeting = (): string => {
   return "Good evening";
 };
 
-const Page: React.FC = () => <Header title={getGreeting()} />;
+const Page: React.FC<PageProps<"/admin">> = () => <Header title={getGreeting()} />;
 
 export default Page;

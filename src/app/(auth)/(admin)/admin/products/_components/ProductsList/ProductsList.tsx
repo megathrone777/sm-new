@@ -28,6 +28,7 @@ const ProductsList: React.FC = async () => {
         <p>ID</p>
         <p>Image</p>
         <p>Title</p>
+        <p>Sort order</p>
         <p>Price (CZK)</p>
         <p>Actions</p>
       </div>
@@ -35,7 +36,7 @@ const ProductsList: React.FC = async () => {
       {!!products.length && (
         <div className={listClass}>
           {products.map(
-            ({ id, imageUrl, price, slug, title }): React.ReactElement => (
+            ({ id, imageUrl, price, slug, sortOrder, title }): React.ReactElement => (
               <div
                 className={itemClass}
                 key={`admin-product-item-${id}`}
@@ -57,6 +58,7 @@ const ProductsList: React.FC = async () => {
                   </div>
 
                   <p>{title}</p>
+                  <p>{sortOrder}</p>
                   <p>{price} (CZK)</p>
                 </Link>
 

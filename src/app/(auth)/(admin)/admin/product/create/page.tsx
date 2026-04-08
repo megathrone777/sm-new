@@ -13,7 +13,7 @@ import { Checkbox, Input } from "@/ui";
 
 import { formClass } from "./page.css";
 
-const Page: React.FC = async () => {
+const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
   const [modifiers, categories] = await Promise.all([
     modifiersHelpers.getModifiers(),
     productsHelpers.getCategories(),

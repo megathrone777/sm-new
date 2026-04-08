@@ -1,50 +1,63 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 
-import { addToCart } from "@/app/(web)/_actions";
+import { Submit } from "./Submit";
 
-import { imageClass, imageHolderClass } from "./ProductsItem.css";
+import {
+  actionsClass,
+  contentClass,
+  imageClass,
+  imageHolderClass,
+  textClass,
+  linkClass,
+  placeholderClass,
+  priceClass,
+  titleClass,
+  wrapperClass,
+} from "./ProductsItem.css";
 
 import type { TProps } from "./ProductsItem.types";
 
 const ProductsItem: React.FC<TProps> = (product) => {
-  const { imageUrl, price, requiredModifier, slug, title } = product;
-
-  const formAction = async (): Promise<void> => {
-    "use server";
-    if (requiredModifier) {
-      redirect(`/product/${slug}?requiredModifier=true`);
-    }
-
-    await addToCart({
-      ...product,
-      quantity: 1,
-      totalPrice: price,
-    });
-  };
+  const { composition, description, imageUrl, isAvailable, price, slug, title, weight } = product;
 
   return (
-    <div style={{ border: "2px solid red" }}>
-      <Link href={`/product/${slug}`}>
+    <div className={wrapperClass}>
+      <Link
+        className={linkClass}
+        href={`/product/${slug}`}
+      >
         <div className={imageHolderClass}>
           <Image
             alt={title}
             className={imageClass}
             fill
-            src={`https://sushiman-office.cz${imageUrl}`}
+            src={imageUrl}
           />
         </div>
 
-        <p>
-          Product: {title} - ({requiredModifier.toString()})
-        </p>
+        <div className={contentClass}>
+          <p className={titleClass}>{title}</p>
+          <p className={textClass}>{weight}</p>
+          {composition && <p className={textClass}>{composition}</p>}
+          {description && <p className={textClass}>{description}</p>}
+        </div>
       </Link>
 
-      <form action={formAction}>
-        <button type="submit">Add to cart</button>
-      </form>
+      <div className={actionsClass}>
+        <p className={priceClass}>{price} Kč</p>
+
+        {isAvailable ? (
+          <Submit {...product} />
+        ) : (
+          <p className={placeholderClass}>
+            Momentálně
+            <br />
+            nedostupný
+          </p>
+        )}
+      </div>
     </div>
   );
 };

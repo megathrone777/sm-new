@@ -1,8 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-import { titleClass } from "./ProductsLayout.css";
+import {
+  listClass,
+  tabButtonClass,
+  tabClass,
+  tabImageClass,
+  tabLabelClass,
+  tabsClass,
+  tabsListClass,
+  titleClass,
+} from "./ProductsLayout.css";
 
 import type { TProps } from "./ProductsLayout.types";
 
@@ -10,56 +20,64 @@ const ProductsLayout: React.FC<TProps> = ({ categories, renderedProducts, showAl
   const pathname = usePathname();
   const [categoryId, setCategoryId] = useState<number>(() => (showAll ? 0 : -1));
 
-  const handleCategoryClick = ({
-    currentTarget,
-  }: React.SyntheticEvent<HTMLButtonElement>): void => {
-    setCategoryId(+currentTarget.value);
-  };
+  const handleCategoryClick = useCallback(
+    ({ currentTarget }: React.SyntheticEvent<HTMLButtonElement>): void => {
+      const currentId = +currentTarget.value;
+      const newCategoryId: number = categoryId === currentId ? -1 : currentId;
 
-  // const filteredCategories = categories.filter(({ id }) => id !== categoryId);
+      if (categoryId === -1) {
+        document.getElementById("products-section")?.scrollIntoView();
+      }
 
-  // const renderProductsList = useMemo((): null | React.ReactElement => {
-  //   const activeCategory = categories.find(
-  //     ({ id }: TProductCategory): boolean => id === categoryId,
-  //   );
-
-  //   if (activeCategory) {
-  //     const { isPromotionActive, products, promotionDiscountAmount, promotionForEveryXProducts } =
-  //       activeCategory;
-
-  //     return (
-  //       <div style={{ display: "grid", gridAutoColumns: "minmax(30%, 1fr)", paddingLeft: 20 }}>
-  //         {products.map((product: TProduct) => {})}
-  //       </div>
-  //     );
-  //   }
-
-  //   return null;
-  // }, [categoryId]);
+      setCategoryId(newCategoryId);
+    },
+    [categories, categoryId],
+  );
 
   const activeCategory = categories.find(({ id }: TProductCategory): boolean => id === categoryId);
+  const hasActiveCategory = categoryId !== -1;
 
   return (
     <>
-      <h2 className={titleClass[pathname !== "/" ? "isSmall" : "isNormal"]}>{title}</h2>
+      <h2 className={titleClass[pathname === "/" ? "default" : "small"]}>{title}</h2>
 
-      <div>
-        {categories.map(({ id, title }) => (
-          <button
-            key={`products-category-item-${id}`}
-            onClick={handleCategoryClick}
-            style={{
-              backgroundColor: activeCategory?.id === id ? "yellowgreen" : "gray",
-            }}
-            type="button"
-            value={id}
-          >
-            {title}
-          </button>
-        ))}
+      <div className={tabsClass}>
+        {categories && !!categories && (
+          <ul className={tabsListClass[hasActiveCategory ? "collapsed" : "default"]}>
+            {categories.map<React.ReactElement>(({ id, imageUrl, title }: TProductCategory) => (
+              <li
+                className={
+                  activeCategory?.id === id
+                    ? tabClass["active"]
+                    : tabClass[hasActiveCategory ? "collapsed" : "default"]
+                }
+                key={`products-category-item-${id}`}
+              >
+                <button
+                  className={tabButtonClass}
+                  onClick={handleCategoryClick}
+                  type="button"
+                  value={id}
+                >
+                  <Image
+                    alt={title}
+                    className={tabImageClass}
+                    height={0}
+                    loading="eager"
+                    sizes="100vw"
+                    src={imageUrl}
+                    width={0}
+                  />
+
+                  <span className={tabLabelClass}>{title}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
-      {activeCategory && renderedProducts[activeCategory.id]}
+      <div className={listClass}>{activeCategory && renderedProducts[activeCategory.id]}</div>
     </>
   );
 };

@@ -38,6 +38,10 @@ const CreateUser: React.FC = () => (
           label: "Cook",
           value: "cook",
         },
+        {
+          label: "Waiter",
+          value: "waiter",
+        },
       ]}
     />
   </FormLayout>

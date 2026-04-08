@@ -1,4 +1,4 @@
-import { css } from "@/theme";
+import { css, cssVariants } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   backgroundImage: "url('/images/products_bg.jpg')",
@@ -17,3 +17,55 @@ export const wrapperClass = css(({ devices }) => ({
     },
   },
 }));
+
+export const layoutClass = css(({ devices }) => ({
+  display: "grid",
+  gridAutoFlow: "row",
+  rowGap: 15,
+
+  "@media": {
+    [devices.desktop]: {
+      rowGap: 20,
+    },
+  },
+}));
+
+export const titleClass = cssVariants(
+  ({ devices }) => ({
+    isNormal: {
+      fontSize: 25,
+      paddingLeft: 10,
+
+      "@media": {
+        [devices.tablet]: {
+          paddingLeft: 0,
+        },
+
+        [devices.desktop]: {
+          fontSize: 48,
+        },
+      },
+    },
+
+    isSmall: {
+      fontSize: 25,
+      paddingLeft: 10,
+
+      "@media": {
+        [devices.tablet]: {
+          paddingLeft: 0,
+        },
+
+        [devices.desktop]: {
+          fontSize: 40,
+        },
+      },
+    },
+  }),
+  (size, { fonts }) => [
+    {
+      fontWeight: fonts.bold,
+    },
+    size,
+  ],
+);

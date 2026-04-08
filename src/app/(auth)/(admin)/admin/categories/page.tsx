@@ -6,7 +6,7 @@ import { Button } from "@/ui";
 
 import { CategoriesList } from "./_components";
 
-const Page: React.FC = async () => (
+const Page: React.FC<PageProps<"/admin/categories">> = async () => (
   <>
     <Header title="Categories">
       <Link href="/admin/category/create">

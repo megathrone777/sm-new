@@ -6,7 +6,8 @@ const getProducts = async (): Promise<TProduct[]> => {
   if (!products) return [];
 
   return Object.values(products).sort(
-    (productA: TProduct, productB: TProduct): number => productA.id - productB.id,
+    (productA: TProduct, productB: TProduct): number =>
+      productA.sortOrder - productB.sortOrder || productA.id - productB.id,
   );
 };
 

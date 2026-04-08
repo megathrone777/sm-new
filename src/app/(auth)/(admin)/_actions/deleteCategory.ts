@@ -1,4 +1,7 @@
 "use server";
+import fs from "fs/promises";
+import path from "path";
+
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers";
@@ -17,8 +20,19 @@ const deleteCategory = async (
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
 
-  await redis.hdel("categories", id);
+  const raw = await redis.hget("categories", id);
 
+  if (raw) {
+    const category: TProductCategory = typeof raw === "string" ? JSON.parse(raw) : raw;
+
+    if (category.imageUrl) {
+      const filePath = path.join(process.cwd(), "public", category.imageUrl);
+
+      await fs.unlink(filePath).catch(() => {});
+    }
+  }
+
+  await redis.hdel("categories", id);
   revalidatePath("/admin/categories");
 
   return { message: `"${title}" deleted successfully.`, type: "success" };

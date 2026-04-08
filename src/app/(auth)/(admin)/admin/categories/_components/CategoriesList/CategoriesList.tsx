@@ -17,12 +17,7 @@ import {
 } from "./CategoriesList.css";
 
 const CategoriesList: React.FC = async () => {
-  const categories = (await productsHelpers.getCategories())
-    .filter(({ id }: TProductCategory): boolean => id !== 0)
-    .sort(
-      (categoryA: TProductCategory, categoryB: TProductCategory): number =>
-        categoryA.id - categoryB.id,
-    );
+  const categories = await productsHelpers.getCategories();
 
   return (
     <ListLayout
@@ -73,15 +68,19 @@ const CategoriesList: React.FC = async () => {
                   <p>{products.length}</p>
                 </Link>
 
-                <Link
-                  href={`/admin/categories?deleteId=${id}&deleteTitle=${encodeURIComponent(title)}`}
-                  scroll={false}
-                >
-                  <Button
-                    iconId="trash"
-                    template="small"
-                  />
-                </Link>
+                {id === 0 ? (
+                  <div style={{ minWidth: 38 }} />
+                ) : (
+                  <Link
+                    href={`/admin/categories?deleteId=${id}&deleteTitle=${encodeURIComponent(title)}`}
+                    scroll={false}
+                  >
+                    <Button
+                      iconId="trash"
+                      template="small"
+                    />
+                  </Link>
+                )}
               </div>
             ),
           )}

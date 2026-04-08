@@ -6,7 +6,7 @@ import { Container } from "@/ui";
 import { ProductsItem } from "./ProductsItem";
 import { ProductsLayout } from "./ProductsLayout";
 
-import { wrapperClass } from "./Products.css";
+import { layoutClass, wrapperClass } from "./Products.css";
 
 import type { TProps } from "./Products.types";
 
@@ -38,7 +38,9 @@ const Products: React.FC<TProps> = async ({ showAll, title }) => {
       id="products-section"
     >
       <Container>
-        <ProductsLayout {...{ categories, renderedProducts, showAll, title }} />
+        <div className={layoutClass}>
+          <ProductsLayout {...{ categories, renderedProducts, showAll, title }} />
+        </div>
       </Container>
     </div>
   );

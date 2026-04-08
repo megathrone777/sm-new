@@ -59,6 +59,7 @@ declare global {
   }
 
   interface TCartProduct extends TProduct {
+    addedFromList: boolean;
     modifiers: TCartModifier[];
     quantity: number;
     totalPrice: number;

@@ -62,6 +62,10 @@ const UsersList: React.FC = async () => {
                         label: "Cook",
                         value: "cook",
                       },
+                      {
+                        label: "Waiter",
+                        value: "waiter",
+                      },
                     ]}
                   />
                 </FormLayout>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { startTransition, useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
@@ -19,8 +19,9 @@ const DetailsForm: React.FC<TProps> = ({
   price,
   ...product
 }) => {
+  const [state, action, pending] = useActionState(addToCart, null);
   const [totalPrice, setTotalPrice] = useState<number>(price);
-  const [isSubmitting, toggleSubmitting] = useState<boolean>(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const pathname = usePathname() as __next_route_internal_types__.RouteImpl<string>;
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -68,41 +69,22 @@ const DetailsForm: React.FC<TProps> = ({
     setTotalPrice(newTotalPrice);
   };
 
-  const handleSubmit = async (event: React.SubmitEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const { currentTarget } = event;
-    const formData = new FormData(currentTarget);
+    const formData = new FormData(event.currentTarget);
     const selectedModifiers = collectSelectedModifiers(formData);
 
-    toggleSubmitting(true);
-
-    const { message, type } = await addToCart({
-      ...product,
-      modifiers: selectedModifiers,
-      modifiersTitle,
-      price,
-      quantity: 1,
-      totalPrice,
+    startTransition((): void => {
+      action({
+        ...product,
+        addedFromList: false,
+        modifiers: selectedModifiers,
+        modifiersTitle,
+        price,
+        quantity: 1,
+        totalPrice,
+      });
     });
-
-    toggleSubmitting(false);
-
-    if (type === "error") {
-      toast(message, {
-        type,
-      });
-
-      return;
-    }
-
-    if (type === "success") {
-      toast(message, {
-        type,
-      });
-      currentTarget.reset();
-
-      return;
-    }
   };
 
   useEffect((): void => {
@@ -115,10 +97,22 @@ const DetailsForm: React.FC<TProps> = ({
     }
   }, [searchParams]);
 
+  useEffect((): void => {
+    if (!state) return;
+    const { message, type } = state;
+
+    toast(message, { type });
+
+    if (type === "success") {
+      formRef.current?.reset();
+    }
+  }, [state]);
+
   return (
     <form
       onChange={handleFormChange}
       onSubmit={handleSubmit}
+      ref={formRef}
     >
       <input
         name="totalPrice"
@@ -135,13 +129,18 @@ const DetailsForm: React.FC<TProps> = ({
 
       <div className={footerClass}>
         <Button
-          disabled={isSubmitting}
+          disabled={pending}
           type="submit"
         >
-          {t<string>("addToCart")}
+          {pending ? (
+            <Spinner
+              color="white"
+              template="small"
+            />
+          ) : (
+            t<string>("addToCart")
+          )}
         </Button>
-
-        {isSubmitting && <Spinner template="small" />}
       </div>
     </form>
   );

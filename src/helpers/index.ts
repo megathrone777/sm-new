@@ -1,6 +1,6 @@
 import { getAdditionalById, getAdditionals } from "./additionals";
 import { getUser, getSession, getUsers } from "./auth";
-import { getCart, getOrCreateSessionId, getSessionId } from "./cart";
+import { getCart, getSessionIdAndCreateIfMissing, getSessionId } from "./cart";
 import { getModifierById, getModifiers } from "./modifiers";
 import { getCategories, getCategoryById, getProductBySlug, getProducts } from "./products";
 import { getOrders, getSettings } from "./shop";
@@ -19,8 +19,8 @@ const authHelpers = {
 
 const cartHelpers = {
   getCart,
-  getOrCreateSessionId,
   getSessionId,
+  getSessionIdAndCreateIfMissing,
 };
 
 const modifiersHelpers = {

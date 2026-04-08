@@ -1,4 +1,7 @@
 "use server";
+import fs from "fs/promises";
+import path from "path";
+
 import { revalidatePath } from "next/cache";
 
 import { authHelpers, productsHelpers } from "@/helpers";
@@ -28,6 +31,12 @@ const deleteProduct = async (
       message: "Product not found",
       type: "error",
     };
+  }
+
+  if (product.imageUrl) {
+    const filePath = path.join(process.cwd(), "public", product.imageUrl);
+
+    await fs.unlink(filePath).catch(() => {});
   }
 
   const pipeline = redis.pipeline();

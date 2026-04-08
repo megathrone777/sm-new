@@ -25,16 +25,14 @@ export const wrapperClass = cssVariants(
       width: 25,
     },
   },
-  (template, { colors }) => [
+  (template) => [
     {
       animationDuration: "0.5s",
       animationIterationCount: "infinite",
       animationName: spin,
       animationTimingFunction: "linear",
-      borderColor: colors.red,
       borderRadius: "50%",
       borderStyle: "solid",
-      borderTopColor: "transparent",
     },
     template,
   ],

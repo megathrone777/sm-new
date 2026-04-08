@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 const COOKIE_MAX_AGE: number = 60 * 60 * 24 * 7;
 const COOKIE_NAME: string = "sid";
 
-const getOrCreateSessionId = async (): Promise<string> => {
+const getSessionIdAndCreateIfMissing = async (): Promise<string> => {
   const cookieStore = await cookies();
   const existingSessionId = cookieStore.get(COOKIE_NAME)?.value;
 
@@ -25,4 +25,4 @@ const getOrCreateSessionId = async (): Promise<string> => {
   return `cart:${sessionId}`;
 };
 
-export { getOrCreateSessionId };
+export { getSessionIdAndCreateIfMissing };

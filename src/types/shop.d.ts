@@ -9,6 +9,11 @@ declare global {
     title: string;
   }
 
+  interface TNavItem {
+    href: string;
+    title: string;
+  }
+
   interface TContactLink {
     link: string;
     type: string;
@@ -26,6 +31,7 @@ declare global {
     isOpened: boolean;
     lastTimeVicinityHidden: string;
     logoUrl: string;
+    navigation: TNavItem[];
     phone: string;
     privacyPolicy: string;
     termsOfUse: string;
