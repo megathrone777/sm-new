@@ -40,8 +40,7 @@ const Menu: React.FC<TProps> = ({ phone }) => {
       return;
     }
 
-    document.documentElement.scrollTop = 0;
-    document.body.style.height = "100vh";
+    document.body.style.height = "100dvh";
     document.body.style.overflow = "hidden";
   };
 
