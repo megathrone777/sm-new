@@ -26,11 +26,13 @@ export const buttonClass = css(({ colors, devices, easing }) => ({
     outline: "none",
   },
 
-  ":hover": {
-    minWidth: 85,
-  },
-
   "@media": {
+    [devices.pointerFine]: {
+      ":hover": {
+        minWidth: 85,
+      },
+    },
+
     [devices.mobile]: {
       borderRadius: "5px 0 0 5px",
       height: 45,

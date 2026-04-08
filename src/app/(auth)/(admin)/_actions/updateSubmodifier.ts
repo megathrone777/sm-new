@@ -4,23 +4,46 @@ import { revalidatePath } from "next/cache";
 import { authHelpers, submodifiersHelpers } from "@/helpers";
 import { redis } from "@/lib";
 
-const updateSubmodifier = async (formData: FormData): Promise<void> => {
+const updateSubmodifier = async (
+  _state: null | TActionResult,
+  formData: FormData,
+): Promise<TActionResult> => {
   const session = await authHelpers.getSession();
 
-  if (!session || session.role !== "admin") throw new Error("Unauthorized");
+  if (!session || session.role !== "admin") {
+    return {
+      message: "Unauthorized",
+      type: "error",
+    };
+  }
 
   const id = Number(formData.get("id"));
+  const sortOrder = Number(formData.get("sortOrder") ?? 0);
   const title = (formData.get("title") as string).trim();
 
-  if (!title) throw new Error("Title is required");
+  if (!title) {
+    return {
+      message: "Title is required",
+      type: "error",
+    };
+  }
 
   const prev = await submodifiersHelpers.getSubmodifierById(id);
 
-  if (!prev) throw new Error(`Submodifier ${id} not found`);
+  if (!prev) {
+    return {
+      message: `Submodifier ${id} not found`,
+      type: "error",
+    };
+  }
 
-  await redis.hset("submodifiers", { [id]: JSON.stringify({ id, title }) });
-
+  await redis.hset("submodifiers", { [id]: JSON.stringify({ id, sortOrder, title }) });
   revalidatePath("/admin/submodifiers");
+
+  return {
+    message: `SubModifier ${title} successfully updated`,
+    type: "success",
+  };
 };
 
 export { updateSubmodifier };

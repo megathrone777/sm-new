@@ -51,12 +51,6 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
           value={product.id}
         />
 
-        <input
-          name="sortOrder"
-          type="hidden"
-          value={product.sortOrder}
-        />
-
         <ImageUploader initialUrl={product.imageUrl} />
         <div />
 
@@ -70,6 +64,13 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
           label="Title"
           name="title"
           type="text"
+        />
+
+        <Input
+          defaultValue={product.sortOrder}
+          label="Sort order"
+          name="sortOrder"
+          type="number"
         />
 
         <Input

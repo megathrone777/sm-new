@@ -8,6 +8,7 @@ declare global {
 
   interface TSubmodifier {
     id: number;
+    sortOrder: number;
     title: string;
   }
 

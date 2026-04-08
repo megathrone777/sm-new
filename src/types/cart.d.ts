@@ -1,27 +1,27 @@
 import type { LatLngExpression, LatLngLiteral } from "leaflet";
-import type { CountryCode } from "use-telephone";
 
 declare global {
   type TDeliveryType = "delivery" | "pickup";
+  type TPaymentType = "card" | "cardAfterDelivery" | "cash";
 
-  interface TPaymentInfo {
+  interface TPayment {
     change: 2000 | 5000 | null;
-    type: "card" | "cardAfterDelivery" | "cash";
+    type: TPaymentType;
   }
 
-  interface TTipsInfo {
+  interface TTips {
     amount: number;
     price: number;
   }
 
-  interface TClientInfo {
+  interface TClient {
     email: string;
+    id: number;
     name: string;
-    phone: string;
-    phoneCountryCode: CountryCode;
+    phoneNumber: string;
   }
 
-  interface TDeliveryInfo {
+  interface TDelivery {
     address: string;
     clientPosition: LatLngLiteral;
     conditions: TDeliveryCondition[];
@@ -33,6 +33,7 @@ declare global {
     price: null | number;
     route: LatLngExpression[] | null;
     time: TSelectOption;
+    title: string;
     type: TDeliveryType;
   }
 
@@ -67,57 +68,18 @@ declare global {
 
   interface TCart {
     additionals: TCartAdditional[];
-    clientInfo: TClientInfo;
-    deliveryInfo: TDeliveryInfo;
+    client: TClient;
+    delivery: TDelivery;
     errors: TCartErrors;
     note: string;
-    paymentInfo: TPaymentInfo;
+    payment: TPayment;
     persons: number;
     products: TCartProduct[];
     promoCode: string;
     promoDiscount: number;
-    tipsInfo: TTipsInfo;
+    tips: TTips;
     totalPrice: number;
   }
-
-  interface TOrder {
-    createdAt: number;
-    updatedAt: number;
-  }
-
-  // export interface TOrder {
-  //   client: {
-  //     email: string;
-  //     name: string;
-  // phoneCountryCode: string;
-  // phoneNumber: string;
-  // };
-  // createdAt: number;
-  // updatedAt: number;
-  // cutleryAmountCZK: number;
-  // cutleryCount: number;
-  // deliveryAddress: string;
-  // deliveryAddressDistrict: string;
-  // deliveryAmountCZK: string;
-  // deliveryCoordinates: string;
-  // deliveryDistance: number;
-  // deliveryTime: null | string;
-  // deliveryType: string;
-  // district: string;
-  // id: number;
-  // items: [];
-  // itemsDiscountSuggestion: string;
-  // note: number;
-  // paymentType: string;
-  // possiblePickupDiscountCZK: number;
-  // promocode: string;
-  // promocodeDiscountAmountCZK: number;
-  // tipAmount: number;
-  // tipAmountCZK: number;
-  // totalAdditionalsAmountCZK: number;
-  // totalAmountCZK: number;
-  // totalItemsAmountCZK: string;
-  // }
 }
 
 export {};

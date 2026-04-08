@@ -16,8 +16,15 @@ import {
   listClass,
 } from "./ProductsList.css";
 
-const ProductsList: React.FC = async () => {
-  const products = await productsHelpers.getProducts();
+interface TProps {
+  categoryId?: number;
+}
+
+const ProductsList: React.FC<TProps> = async ({ categoryId }) => {
+  const allProducts = await productsHelpers.getProducts();
+  const products = categoryId
+    ? allProducts.filter((p: TProduct): boolean => p.categoryId === categoryId)
+    : allProducts;
 
   return (
     <ListLayout

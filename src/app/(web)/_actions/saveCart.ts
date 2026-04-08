@@ -9,8 +9,10 @@ const ttlSeconds: number = 60 * 60 * 24 * 7;
 const saveCart = async (cart: TCart): Promise<void> => {
   const sessionId = await cartHelpers.getSessionIdAndCreateIfMissing();
 
-  await redis.hset(sessionId, { [sessionId]: cart });
-  await redis.expire(sessionId, ttlSeconds);
+  await Promise.all([
+    redis.hset(sessionId, { [sessionId]: cart }),
+    redis.expire(sessionId, ttlSeconds),
+  ]);
   refresh();
 };
 

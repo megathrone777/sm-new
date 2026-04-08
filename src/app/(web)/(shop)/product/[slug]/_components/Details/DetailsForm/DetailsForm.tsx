@@ -1,11 +1,11 @@
 "use client";
-import React, { startTransition, useActionState, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, startTransition } from "react";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
-import { addToCart, calculateProductPrice } from "@/app/(web)/_actions";
+import { addToCart, calculateProductPrice, validateNewProduct } from "@/app/(web)/_actions";
 import { useTranslation } from "@/hooks";
-import { Button, Spinner } from "@/ui";
+import { Button } from "@/ui";
 import { toKey } from "@/utils";
 
 import { footerClass, totalPriceClass, totalPriceValueClass } from "./DetailsForm.css";
@@ -19,7 +19,6 @@ const DetailsForm: React.FC<TProps> = ({
   price,
   ...product
 }) => {
-  const [state, action, pending] = useActionState(addToCart, null);
   const [totalPrice, setTotalPrice] = useState<number>(price);
   const formRef = useRef<HTMLFormElement>(null);
   const pathname = usePathname() as __next_route_internal_types__.RouteImpl<string>;
@@ -66,6 +65,7 @@ const DetailsForm: React.FC<TProps> = ({
     const selectedModifiers = collectSelectedModifiers(formData);
     const newTotalPrice = await calculateProductPrice(price, selectedModifiers);
 
+    removeRequiredParam();
     setTotalPrice(newTotalPrice);
   };
 
@@ -73,40 +73,36 @@ const DetailsForm: React.FC<TProps> = ({
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const selectedModifiers = collectSelectedModifiers(formData);
+    const newProduct: TCartProduct = {
+      ...product,
+      addedFromList: false,
+      modifiers: selectedModifiers,
+      modifiersTitle,
+      price,
+      quantity: 1,
+      totalPrice,
+    };
 
-    startTransition((): void => {
-      action({
-        ...product,
-        addedFromList: false,
-        modifiers: selectedModifiers,
-        modifiersTitle,
-        price,
-        quantity: 1,
-        totalPrice,
-      });
+    startTransition(async (): Promise<void> => {
+      const { message, type } = await validateNewProduct(newProduct);
+
+      toast(message, { type });
+
+      if (type === "success") {
+        formRef.current?.reset();
+        addToCart(null, newProduct);
+      }
     });
   };
 
   useEffect((): void => {
     if (searchParams.get("requiredModifier")) {
       toast(modifiersTitle, {
-        onClose: removeRequiredParam,
         toastId: toKey(`requiredModifier-toast-${modifiersTitle}`),
         type: "error",
       });
     }
   }, [searchParams]);
-
-  useEffect((): void => {
-    if (!state) return;
-    const { message, type } = state;
-
-    toast(message, { type });
-
-    if (type === "success") {
-      formRef.current?.reset();
-    }
-  }, [state]);
 
   return (
     <form
@@ -128,19 +124,7 @@ const DetailsForm: React.FC<TProps> = ({
       </p>
 
       <div className={footerClass}>
-        <Button
-          disabled={pending}
-          type="submit"
-        >
-          {pending ? (
-            <Spinner
-              color="white"
-              template="small"
-            />
-          ) : (
-            t<string>("addToCart")
-          )}
-        </Button>
+        <Button type="submit">{t<string>("addToCart")}</Button>
       </div>
     </form>
   );

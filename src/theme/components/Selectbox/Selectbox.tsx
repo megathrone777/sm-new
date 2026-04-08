@@ -18,7 +18,7 @@ import {
 
 import type { TProps } from "./Selectbox.types";
 
-const Selectbox: React.FC<TProps> = ({ defaultValue, label, mode, onChange, options }) => {
+const Selectbox: React.FC<TProps> = ({ defaultValue, label, mode, onChange, options, placeholder }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -45,7 +45,7 @@ const Selectbox: React.FC<TProps> = ({ defaultValue, label, mode, onChange, opti
       {label && <p className={labelClass}>{label}</p>}
 
       <Select
-        {...{ defaultValue, mode, onChange, options }}
+        {...{ defaultValue, mode, onChange, options, placeholder }}
         className={layoutClass}
         listItemHeight={22}
         maxTagTextLength={80}

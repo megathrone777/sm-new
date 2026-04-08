@@ -1,6 +1,4 @@
 "use server";
-import { redirect } from "next/navigation";
-
 import { cartHelpers } from "@/helpers";
 import { isEqual } from "@/utils";
 
@@ -52,17 +50,12 @@ const addToCart = async (
   _state: null | TActionResult,
   newProduct: TCartProduct,
 ): Promise<TActionResult> => {
-  const { addedFromList, modifiers, requiredModifier } = newProduct;
-
-  if (addedFromList && requiredModifier && modifiers.length === 0) {
-    redirect(`/product/${newProduct.slug}?requiredModifier=true`);
-  }
-
-  const cart = await cartHelpers.getCart();
-  const newCart: TCart = cart ? { ...cart } : { ...initialCart };
   const validationResult = await validateNewProduct(newProduct);
 
   if (validationResult.type === "success") {
+    const cart = await cartHelpers.getCart();
+    const newCart: TCart = cart ? { ...cart } : { ...initialCart };
+
     const foundIndex: number = newCart.products.findIndex((product: TCartProduct): boolean =>
       isEqual(newProduct, product),
     );
@@ -78,8 +71,6 @@ const addToCart = async (
     }
 
     await saveCart(newCart);
-
-    return validationResult;
   }
 
   return validationResult;

@@ -19,6 +19,19 @@ declare global {
     type: string;
   }
 
+  interface TPromoCode {
+    activatedAt: null | string;
+    appliedCount: null | number;
+    code: string;
+    discount: number;
+    id: number;
+    isActive: boolean;
+    isLimitedBySchedule: boolean;
+    orderIds: TOrder["id"][];
+    type: "oneTime" | "reusable";
+    usability: "permanent" | "temporary" | null;
+  }
+
   interface TShopSettings {
     address: string;
     businessName: string;

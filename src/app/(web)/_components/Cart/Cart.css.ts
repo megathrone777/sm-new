@@ -107,10 +107,6 @@ export const amountValueClass = css(({ devices, fonts }) => ({
   lineHeight: 1,
 
   "@media": {
-    [devices.pointerCoarse]: {
-      transform: "translateY(1px)",
-    },
-
     [devices.mobile]: {
       fontSize: 16,
     },

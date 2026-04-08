@@ -7,7 +7,7 @@ const getSubmodifiers = async (): Promise<TSubmodifier[]> => {
 
   return Object.values(submodifiers).sort(
     (subModifierA: TSubmodifier, subModifierB: TSubmodifier): number =>
-      subModifierA.id - subModifierB.id,
+      subModifierA.sortOrder - subModifierB.sortOrder,
   );
 };
 

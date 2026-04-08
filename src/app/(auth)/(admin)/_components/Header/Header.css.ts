@@ -28,4 +28,5 @@ export const layoutClass = css({
   columnGap: 40,
   display: "grid",
   gridAutoFlow: "column",
+  gridTemplateColumns: "max-content"
 });

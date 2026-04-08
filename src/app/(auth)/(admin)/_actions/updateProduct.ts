@@ -48,6 +48,7 @@ const updateProduct = async (
     modifiersTitle: (formData.get("modifiersTitle") as string) || null,
     price: Number(formData.get("price")),
     requiredModifier: formData.get("requiredModifier") === "on",
+    sortOrder: Number(formData.get("sortOrder")),
     title: formData.get("title") as string,
     weight: formData.get("weight") as string,
   };
