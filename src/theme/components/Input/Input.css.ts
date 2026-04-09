@@ -44,12 +44,16 @@ export const inputClass = cssVariants(
       fontFamily: "inherit",
       fontSize: 16,
       fontWeight: fonts.medium,
-      gridColumn: "1fr",
       height: "100%",
       width: "100%",
 
       ":-webkit-autofill": {
         boxShadow: "0 0 0 1000px white inset",
+      },
+
+      ":disabled": {
+        cursor: "not-allowed",
+        opacity: 0.7,
       },
 
       ":focus": {

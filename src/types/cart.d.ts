@@ -16,7 +16,6 @@ declare global {
 
   interface TClient {
     email: string;
-    id: number;
     name: string;
     phoneNumber: string;
   }

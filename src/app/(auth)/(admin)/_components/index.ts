@@ -6,3 +6,4 @@ export { ListLayout } from "./ListLayout";
 export { ModifiersSelect } from "./ModifiersSelect";
 export { ProductsSelect } from "./ProductsSelect";
 export { Sidebar } from "./Sidebar";
+export { SubModifiersSelect } from "./SubModifiersSelect";

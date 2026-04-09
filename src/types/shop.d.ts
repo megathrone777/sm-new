@@ -20,8 +20,8 @@ declare global {
   }
 
   interface TPromoCode {
-    activatedAt: null | string;
-    appliedCount: null | number;
+    activatedAt: string;
+    appliedCount: number;
     code: string;
     discount: number;
     id: number;
@@ -29,7 +29,7 @@ declare global {
     isLimitedBySchedule: boolean;
     orderIds: TOrder["id"][];
     type: "oneTime" | "reusable";
-    usability: "permanent" | "temporary" | null;
+    usability: "" | "permanent" | "temporary";
   }
 
   interface TShopSettings {
@@ -42,7 +42,7 @@ declare global {
     email: string;
     isAvailable: boolean;
     isOpened: boolean;
-    lastTimeVicinityHidden: string;
+    lastTimeForPickup: string;
     logoUrl: string;
     navigation: TNavItem[];
     phone: string;

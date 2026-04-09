@@ -7,13 +7,12 @@ import { validateNewProduct } from "./validateNewProduct";
 
 const initialCart: TCart = {
   additionals: [],
-  clientInfo: {
+  client: {
     email: "",
     name: "",
-    phone: "",
-    phoneCountryCode: "CZ",
+    phoneNumber: "",
   },
-  deliveryInfo: {
+  delivery: {
     address: "",
     clientPosition: { lat: 0, lng: 0 },
     conditions: [],
@@ -25,6 +24,7 @@ const initialCart: TCart = {
     price: null,
     route: null,
     time: { label: "Doručit teď", value: null },
+    title: "",
     type: "delivery",
   },
   errors: {
@@ -37,12 +37,12 @@ const initialCart: TCart = {
     pickupAddress: false,
   },
   note: "",
-  paymentInfo: { change: null, type: "cash" },
+  payment: { change: null, type: "cash" },
   persons: 0,
   products: [],
   promoCode: "",
   promoDiscount: 0,
-  tipsInfo: { amount: 0, price: 0 },
+  tips: { amount: 0, price: 0 },
   totalPrice: 0,
 };
 

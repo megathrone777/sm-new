@@ -1,7 +1,13 @@
 import React from "react";
 
+import { Header } from "@/app/(auth)/(admin)/_components";
+
 const Page: React.FC<PageProps<"/admin/settings">> = async () => {
-  return <div>Settings</div>;
+  return (
+    <>
+      <Header title="Settings" />
+    </>
+  );
 };
 
 export default Page;

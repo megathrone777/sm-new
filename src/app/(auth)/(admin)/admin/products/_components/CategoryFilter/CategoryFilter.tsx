@@ -28,9 +28,9 @@ const CategoryFilter: React.FC<TProps> = ({ options }) => {
 
   return (
     <CategorySelect
+      {...{ options }}
       defaultValue={categoryId}
       onChange={handleChange}
-      options={options}
       placeholder="All categories"
     />
   );

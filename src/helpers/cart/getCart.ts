@@ -9,14 +9,14 @@ const getCart = async (): Promise<null | TCart> => {
     const cart = await redis.hgetall<Record<string, TCart>>(sessionId);
 
     if (cart && cart[sessionId] && !!Object.keys(cart).length) {
-      const { additionals, deliveryInfo, products, ...restCart } = cart[sessionId];
+      const { additionals, delivery, products, ...restCart } = cart[sessionId];
 
       const getProductsPrice = (): number => {
-        const productsPrice: number = products.reduce(
+        const productsPrice: number = products.reduce<number>(
           (accumulator: number, { totalPrice }: TCartProduct): number => accumulator + totalPrice,
           0,
         );
-        const additionalsPrice: number = additionals.reduce(
+        const additionalsPrice: number = additionals.reduce<number>(
           (accumulator: number, { totalPrice }: TCartAdditional): number =>
             accumulator + totalPrice,
           0,
@@ -26,7 +26,7 @@ const getCart = async (): Promise<null | TCart> => {
       };
 
       const getDeliveryDiscount = (): number => {
-        if (getProductsPrice() > 500 && deliveryInfo.type === "pickup") {
+        if (getProductsPrice() > 500 && delivery.type === "pickup") {
           return 50;
         }
 
@@ -34,8 +34,8 @@ const getCart = async (): Promise<null | TCart> => {
       };
 
       const getDeliveryPrice = (): number => {
-        if (deliveryInfo.price && deliveryInfo.type === "delivery") {
-          return deliveryInfo.price;
+        if (delivery.price && delivery.type === "delivery") {
+          return delivery.price;
         }
 
         return 0;
@@ -46,7 +46,7 @@ const getCart = async (): Promise<null | TCart> => {
       return {
         ...restCart,
         additionals,
-        deliveryInfo,
+        delivery,
         products,
         totalPrice,
       };

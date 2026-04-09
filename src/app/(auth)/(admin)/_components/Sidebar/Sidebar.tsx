@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { toKey } from "@/utils";
 
-import { itemClass, linkClass, wrapperClass } from "./Sidebar.css";
+import { dividerClass, itemClass, linkClass, wrapperClass } from "./Sidebar.css";
 
 import type { TMenuItem } from "./Sidebar.types";
 
@@ -42,12 +42,23 @@ const Sidebar: React.FC = () => {
       label: "Clients",
     },
     {
-      href: "/admin/settings",
-      label: "Shop settings",
+      href: "/admin/promocodes",
+      label: "PromoCodes",
     },
     {
       href: "/admin/users",
       label: "Users",
+    },
+    {
+      href: "/admin/settings",
+      label: "Settings",
+    },
+  ];
+
+  const menuItems2: TMenuItem[] = [
+    {
+      href: "/admin/navigation",
+      label: "Navigation",
     },
   ];
 
@@ -59,6 +70,26 @@ const Sidebar: React.FC = () => {
             <li
               className={itemClass}
               key={`admin-menu-item-${toKey(label)}`}
+            >
+              <Link
+                {...{ href }}
+                className={linkClass[pathname === href ? "isActive" : "default"]}
+              >
+                {label}
+              </Link>
+            </li>
+          ),
+        )}
+      </ul>
+
+      <hr className={dividerClass} />
+
+      <ul>
+        {menuItems2.map(
+          ({ href, label }: TMenuItem): React.ReactElement => (
+            <li
+              className={itemClass}
+              key={`admin-menu-item2-${toKey(label)}`}
             >
               <Link
                 {...{ href }}

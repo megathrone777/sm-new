@@ -1,11 +1,11 @@
 import React from "react";
 
-import { shopHelpers } from "@/helpers";
+import { ordersHelpers } from "@/helpers";
 
 import { Orders } from "./_components";
 
 const Page: React.FC<PageProps<"/orders">> = async () => {
-  const orders = await shopHelpers.getOrders();
+  const orders = await ordersHelpers.getOrders();
 
   return (
     <div>

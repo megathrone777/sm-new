@@ -5,14 +5,15 @@ import { Selectbox } from "@/ui";
 
 import { wrapperClass } from "./CategorySelect.css";
 
-interface TProps {
-  defaultValue: number;
-  onChange?: (value: number) => void;
-  options: TSelectOption[];
-  placeholder?: string;
-}
+import type { TProps } from "./CategorySelect.types";
 
-const CategorySelect: React.FC<TProps> = ({ defaultValue, onChange, options, placeholder }) => {
+const CategorySelect: React.FC<TProps> = ({
+  defaultValue,
+  label,
+  onChange,
+  options,
+  placeholder,
+}) => {
   const [categoryId, setCategoryId] = useState<number>(defaultValue);
 
   const handleChange = (value: number): void => {
@@ -29,7 +30,7 @@ const CategorySelect: React.FC<TProps> = ({ defaultValue, onChange, options, pla
       />
 
       <Selectbox
-        {...{ options, placeholder }}
+        {...{ label, options, placeholder }}
         defaultValue={defaultValue ? `${defaultValue}` : undefined}
         onChange={handleChange}
       />

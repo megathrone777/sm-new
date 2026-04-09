@@ -6,7 +6,7 @@ import { useRealtime } from "@/hooks";
 import type { TProps } from "./Orders.types";
 
 const Orders: React.FC<TProps> = ({ orders: initialOrders }) => {
-  const [orders, setOrders] = useState<TOrder[]>(initialOrders);
+  const [orders] = useState<TOrder[]>(initialOrders);
 
   useRealtime({
     events: ["notification.newOrder"],
@@ -14,7 +14,7 @@ const Orders: React.FC<TProps> = ({ orders: initialOrders }) => {
       console.log(`Received ${event}:`, data);
 
       if (data) {
-        setOrders((prevOrders: TOrder[]): TOrder[] => [...prevOrders, data]);
+        // setOrders((prevOrders: TOrder[]): TOrder[] => [...prevOrders, data]);
       }
     },
   });

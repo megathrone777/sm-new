@@ -25,7 +25,7 @@ declare global {
     deliveryCoordinates: string;
     deliveryDistance: number;
     deliveryPrice: number;
-    deliveryTime: null | string;
+    deliveryTime: string;
     deliveryTitle: string;
     deliveryType: TDeliveryType;
     id: number;

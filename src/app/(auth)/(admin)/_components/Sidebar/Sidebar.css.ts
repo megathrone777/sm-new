@@ -43,3 +43,12 @@ export const linkClass = cssVariants(
     },
   ],
 );
+
+export const dividerClass = css(({ colors }) => ({
+  backgroundColor: colors.red,
+  border: "none",
+  display: "block",
+  height: 3,
+  marginBlock: 8,
+  padding: 0,
+}));

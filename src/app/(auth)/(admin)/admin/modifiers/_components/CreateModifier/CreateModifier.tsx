@@ -1,11 +1,9 @@
 import React from "react";
 
 import { createModifier } from "@/app/(auth)/(admin)/_actions";
-import { FormLayout } from "@/app/(auth)/(admin)/_components";
+import { FormLayout, SubModifiersSelect } from "@/app/(auth)/(admin)/_components";
 import { submodifiersHelpers } from "@/helpers";
 import { Checkbox, Input } from "@/ui";
-
-import { SubModifiersSelect } from "./SubModifiersSelect";
 
 import { wrapperClass } from "./CreateModifier.css";
 

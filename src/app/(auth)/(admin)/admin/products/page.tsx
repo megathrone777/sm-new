@@ -13,7 +13,7 @@ const Page: React.FC<PageProps<"/admin/products">> = async ({ searchParams }) =>
 
   const categories = await productsHelpers.getCategories();
   const options: TSelectOption[] = [
-    { label: "All", value: "" },
+    { label: "All categories", value: "" },
     ...categories
       .filter(({ sortOrder }): boolean => sortOrder !== 0)
       .map(({ id, title }): TSelectOption => ({ label: title, value: `${id}` })),

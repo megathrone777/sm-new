@@ -26,7 +26,7 @@ const getSettings = async (): Promise<TShopSettings> => ({
   email: "sushimanprague@gmail.com",
   isAvailable: true,
   isOpened: true,
-  lastTimeVicinityHidden: "21:00",
+  lastTimeForPickup: "21:00",
   logoUrl: "/uploads/logo_img.svg",
   navigation: [],
   phone: "+420 792 745 116",

@@ -56,6 +56,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
 
         <CategorySelect
           defaultValue={product.categoryId}
+          label="Category"
           options={categoryOptions}
         />
 

@@ -108,6 +108,16 @@ export const iconClass = css(({ colors }) => ({
   width: 18,
 }));
 
+export const suffixClass = css(({ colors }) => ({
+  color: colors.black,
+  height: 18,
+  position: "absolute",
+  right: 6,
+  top: "50%",
+  transform: "translateY(-50%) rotate(180deg)",
+  width: 18,
+}));
+
 export const searchWrapperClass = css(({ colors }) => ({
   borderBottom: `1px solid ${colors.red}`,
   padding: 6,

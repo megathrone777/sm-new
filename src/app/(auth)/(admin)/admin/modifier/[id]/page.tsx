@@ -1,10 +1,11 @@
 import React from "react";
-import Form from "next/form";
 
 import { updateModifier } from "@/app/(auth)/(admin)/_actions";
-import { Header } from "@/app/(auth)/(admin)/_components";
+import { FormLayout, Header, SubModifiersSelect } from "@/app/(auth)/(admin)/_components";
 import { modifiersHelpers, submodifiersHelpers } from "@/helpers";
-import { Button, Input } from "@/ui";
+import { Checkbox, Input } from "@/ui";
+
+import { formClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => {
   const { id } = await params;
@@ -14,13 +15,18 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
   ]);
 
   if (!modifier) return <p>Modifier not found</p>;
-  const assignedIds = (modifier.subModifiers ?? []).map<number>(({ id: sid }) => sid);
+  const assignedIds = (modifier.subModifiers ?? []).map<string>(
+    ({ id: submodifierId }) => `${submodifierId}`,
+  );
 
   return (
     <>
       <Header title={`Modifier | ${modifier.title}`} />
 
-      <Form action={updateModifier}>
+      <FormLayout
+        formAction={updateModifier}
+        layoutClassName={formClass}
+      >
         <input
           name="id"
           type="hidden"
@@ -48,39 +54,23 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
           type="number"
         />
 
-        <label>
-          <input
-            defaultChecked={modifier.requiredSubModifier}
-            name="requiredSubModifier"
-            type="checkbox"
-          />{" "}
-          Required submodifier
-        </label>
+        <Checkbox
+          defaultChecked={modifier.requiredSubModifier}
+          label="Required submodifier"
+          name="requiredSubModifier"
+          type="checkbox"
+        />
 
-        {!!submodifiers.length && (
-          <fieldset>
-            <legend>Submodifiers</legend>
-            {submodifiers.map(({ id: sid, title }: TSubmodifier) => (
-              <label key={`modifier-sub-${sid}`}>
-                <input
-                  defaultChecked={assignedIds.includes(sid)}
-                  name="subModifierIds"
-                  type="checkbox"
-                  value={sid}
-                />{" "}
-                {title}
-              </label>
-            ))}
-          </fieldset>
+        {submodifiers && !!submodifiers.length && (
+          <SubModifiersSelect
+            defaultValue={assignedIds}
+            options={submodifiers.map<TSelectOption>(({ id, title }: TSubmodifier) => ({
+              label: title,
+              value: `${id}`,
+            }))}
+          />
         )}
-
-        <Button
-          template="small"
-          type="submit"
-        >
-          Save
-        </Button>
-      </Form>
+      </FormLayout>
     </>
   );
 };

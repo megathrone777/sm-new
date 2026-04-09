@@ -19,7 +19,6 @@ const deleteCategory = async (
 
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
-
   const raw = await redis.hget("categories", id);
 
   if (raw) {

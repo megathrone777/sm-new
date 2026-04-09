@@ -12,13 +12,21 @@ import {
   popupClass,
   searchInputClass,
   searchWrapperClass,
+  suffixClass,
   tagClass,
   wrapperClass,
 } from "./Selectbox.css";
 
 import type { TProps } from "./Selectbox.types";
 
-const Selectbox: React.FC<TProps> = ({ defaultValue, label, mode, onChange, options, placeholder }) => {
+const Selectbox: React.FC<TProps> = ({
+  defaultValue,
+  label,
+  mode,
+  onChange,
+  options,
+  placeholder,
+}) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -90,6 +98,12 @@ const Selectbox: React.FC<TProps> = ({ defaultValue, label, mode, onChange, opti
           onSearch: setSearchValue,
           searchValue,
         }}
+        suffix={
+          <Icon
+            className={suffixClass}
+            id="arrow"
+          />
+        }
         tagRender={({ label, onClose }): React.ReactElement => (
           <div className={tagClass}>
             <span>{label}</span>

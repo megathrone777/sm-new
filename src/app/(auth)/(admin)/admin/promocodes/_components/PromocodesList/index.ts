@@ -1,0 +1,1 @@
+export { PromocodesList } from "./PromocodesList";
