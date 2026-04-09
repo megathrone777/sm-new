@@ -20,7 +20,8 @@ export const wrapperClass = css({
 export const layoutClass = css(({ devices }) => ({
   alignContent: "end",
   display: "grid",
-  height: "100dvh",
+  // height: "100dvh",
+  height: "-webkit-fill-available",
   justifyContent: "start",
   paddingBottom: 80,
   paddingLeft: 20,
