@@ -12,7 +12,7 @@ globalStyle("html", {
 
 globalStyle("body", {
   fontFamily: "var(--font-avenir)",
-  min-height: "-webkit-fill-available",
+  minHeight: "-webkit-fill-available",
   MozOsxFontSmoothing: "grayscale",
   WebkitFontSmoothing: "antialiased",
 });
