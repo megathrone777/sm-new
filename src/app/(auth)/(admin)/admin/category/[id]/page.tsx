@@ -7,7 +7,7 @@ import {
   ImageUploader,
   ProductsSelect,
 } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers";
+import { productsHelpers } from "@/helpers/products";
 import { Input } from "@/ui";
 
 import { formClass } from "./page.css";

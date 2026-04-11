@@ -1,3 +1,4 @@
+import { shopHelpers } from "@/helpers/shop";
 import { redis } from "@/lib";
 
 import { getSessionId } from "./getSessionId";
@@ -7,9 +8,46 @@ const getCart = async (): Promise<null | TCart> => {
 
   if (sessionId) {
     const cart = await redis.hgetall<Record<string, TCart>>(sessionId);
+    const { cutleryPrice } = await shopHelpers.getSettings();
 
     if (cart && cart[sessionId] && !!Object.keys(cart).length) {
-      const { additionals, delivery, products, ...restCart } = cart[sessionId];
+      const { additionals, cutleryCount, delivery, products, promoDiscount, ...cartRest } =
+        cart[sessionId];
+
+      const getCategoryDiscount = (): number => {
+        const productsWithDiscount: TCartProduct[] = products.filter(
+          ({ isPromotionActive }: TCartProduct): boolean => Boolean(isPromotionActive),
+        );
+        const productsWithDiscountQuantity: number = productsWithDiscount.reduce<number>(
+          (accumulator, { quantity }: TCartProduct): number => accumulator + quantity,
+          0,
+        );
+
+        if (productsWithDiscount && !!productsWithDiscount.length && productsWithDiscount[0]) {
+          const { promotionDiscountAmount, promotionForEveryXProducts } = productsWithDiscount[0];
+
+          return (
+            Math.floor(productsWithDiscountQuantity / promotionForEveryXProducts) *
+            promotionDiscountAmount
+          );
+        }
+
+        return 0;
+      };
+
+      const getCutleryPrice = (): number => {
+        const freeCutleryQuantity: number = products.reduce(
+          (accumulator: number, { freeCutleryCount, quantity }: TCartProduct): number =>
+            accumulator + freeCutleryCount * quantity,
+          0,
+        );
+
+        if (cutleryCount > freeCutleryQuantity) {
+          return (cutleryCount - freeCutleryQuantity) * cutleryPrice;
+        }
+
+        return 0;
+      };
 
       const getProductsPrice = (): number => {
         const productsPrice: number = products.reduce<number>(
@@ -41,13 +79,26 @@ const getCart = async (): Promise<null | TCart> => {
         return 0;
       };
 
-      const totalPrice: number = getProductsPrice() + getDeliveryPrice() - getDeliveryDiscount();
+      const totalPrice: number =
+        getProductsPrice() +
+        getDeliveryPrice() +
+        getCutleryPrice() -
+        getCategoryDiscount() -
+        getDeliveryDiscount() -
+        promoDiscount;
 
       return {
-        ...restCart,
+        ...cartRest,
         additionals,
-        delivery,
+        categoryDiscount: getCategoryDiscount(),
+        cutleryCount,
+        cutleryPrice: getCutleryPrice(),
+        delivery: {
+          ...delivery,
+          price: getDeliveryPrice(),
+        },
         products,
+        promoDiscount,
         totalPrice,
       };
     }

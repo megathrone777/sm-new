@@ -21,7 +21,7 @@ export const layoutClass = cssVariants(
         },
       },
     },
-    isOpened: {
+    opened: {
       opacity: 1,
       pointerEvents: "auto",
     },
@@ -84,8 +84,8 @@ export const listClass = css(({ devices }) => ({
 
 export const linkClass = cssVariants(
   ({ colors }) => ({
+    active: colors.red,
     default: "white",
-    isActive: colors.red,
   }),
   (color, { colors, devices, easing }) => [
     {
@@ -107,9 +107,7 @@ export const linkClass = cssVariants(
         },
       },
     },
-    {
-      color,
-    },
+    { color },
   ],
 );
 

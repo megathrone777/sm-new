@@ -9,7 +9,7 @@ import { wrapperClass, layoutClass } from "./Header.css";
 
 import type { TProps } from "./Header.types";
 
-const Header: React.FC<TProps> = ({ logoUrl, phone }) => (
+const Header: React.FC<TProps> = ({ logoUrl, navigation, phone }) => (
   <div
     className={wrapperClass}
     id="header"
@@ -17,7 +17,13 @@ const Header: React.FC<TProps> = ({ logoUrl, phone }) => (
     <Container>
       <div className={layoutClass}>
         <Logo imageUrl={logoUrl} />
-        <Menu {...{ phone }} />
+
+        {navigation && !!navigation.length && (
+          <Menu
+            {...{ phone }}
+            items={navigation}
+          />
+        )}
       </div>
     </Container>
   </div>

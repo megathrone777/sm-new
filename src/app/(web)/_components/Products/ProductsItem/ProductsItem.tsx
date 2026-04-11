@@ -2,6 +2,8 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { useTranslation } from "@/hooks";
+
 import { Submit } from "./Submit";
 
 import {
@@ -20,6 +22,7 @@ import {
 import type { TProps } from "./ProductsItem.types";
 
 const ProductsItem: React.FC<TProps> = (product) => {
+  const { t } = useTranslation();
   const { composition, description, imageUrl, isAvailable, price, slug, title, weight } = product;
 
   return (
@@ -32,8 +35,11 @@ const ProductsItem: React.FC<TProps> = (product) => {
           <Image
             alt={title}
             className={imageClass}
-            fill
+            height={0}
+            loading="eager"
+            sizes="100vw"
             src={imageUrl}
+            width={0}
           />
         </div>
 
@@ -46,7 +52,9 @@ const ProductsItem: React.FC<TProps> = (product) => {
       </Link>
 
       <div className={actionsClass}>
-        <p className={priceClass}>{price} Kč</p>
+        <p className={priceClass}>
+          {price} {t<string>("currency")}
+        </p>
 
         {isAvailable ? (
           <Submit {...product} />

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { useTranslation } from "@/hooks";
 import { Burger } from "@/ui";
 
 import {
@@ -16,15 +15,13 @@ import {
   wrapperClass,
 } from "./Menu.css";
 
-import type { TMenuItem, TProps } from "./Menu.types";
+import type { TProps } from "./Menu.types";
 
-const Menu: React.FC<TProps> = ({ phone }) => {
+const Menu: React.FC<TProps> = ({ items, phone }) => {
   const pathname = usePathname();
   const [isOpened, toggleOpened] = useState<boolean>(false);
-  const { t } = useTranslation();
-  const menuItems = t<TMenuItem[]>("mainMenu");
 
-  const handleLinkClick = (): void => {
+  const handleNagigate = (): void => {
     if (isOpened) {
       document.body.removeAttribute("style");
       toggleOpened(false);
@@ -52,7 +49,7 @@ const Menu: React.FC<TProps> = ({ phone }) => {
 
   return (
     <div className={wrapperClass}>
-      <div className={layoutClass[isOpened ? "isOpened" : "default"]}>
+      <div className={layoutClass[isOpened ? "opened" : "default"]}>
         <p className={contactClass}>
           {phone && (
             <a
@@ -64,23 +61,19 @@ const Menu: React.FC<TProps> = ({ phone }) => {
           )}
         </p>
 
-        {menuItems && !!menuItems.length && (
-          <ul className={listClass}>
-            {menuItems.map(
-              ({ anchor, text }: TMenuItem): React.ReactElement => (
-                <li key={`menu-item-${anchor}`}>
-                  <Link
-                    className={linkClass[pathname === anchor ? "isActive" : "default"]}
-                    href={anchor}
-                    onClick={handleLinkClick}
-                  >
-                    {text}
-                  </Link>
-                </li>
-              ),
-            )}
-          </ul>
-        )}
+        <ul className={listClass}>
+          {items.map<React.ReactElement>(({ href, title }: TNavItem) => (
+            <li key={`menu-item-${href}`}>
+              <Link
+                {...{ href }}
+                className={linkClass[pathname === href ? "active" : "default"]}
+                onNavigate={handleNagigate}
+              >
+                {title}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <Burger

@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import Link from "next/link";
 
 import { Header } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers";
+import { productsHelpers } from "@/helpers/products";
 import { Button } from "@/ui";
 
 import { CategoryFilter, ProductsList, ProductsSearch } from "./_components";

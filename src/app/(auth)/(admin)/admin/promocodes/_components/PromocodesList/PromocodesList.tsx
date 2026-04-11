@@ -3,7 +3,8 @@ import Link from "next/link";
 
 import { activatePromocode, deletePromocode, updatePromocode } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { promocodesHelpers } from "@/helpers";
+import { promocodesHelpers } from "@/helpers/promocodes";
+import { useTranslation } from "@/hooks";
 import { Button, Input } from "@/ui";
 
 import {
@@ -132,6 +133,7 @@ const PromocodesList: React.FC = async () => {
 
 const PromoOrders: React.FC<{ code: string }> = async ({ code }) => {
   const orders = await promocodesHelpers.getOrdersByPromocode(code);
+  const { t } = useTranslation();
 
   if (!orders.length) return null;
 
@@ -140,7 +142,8 @@ const PromoOrders: React.FC<{ code: string }> = async ({ code }) => {
       Orders using {code} ({orders.length}):&nbsp;
       {orders.map(({ clientPhoneNumber, createdAt, id, totalPrice }: TOrder) => (
         <span key={`promo-order-${id}`}>
-          #{id} ({clientPhoneNumber}, {totalPrice} Kč, {new Date(createdAt).toLocaleDateString()}
+          #{id} ({clientPhoneNumber}, {totalPrice} {t<string>("currency")},{" "}
+          {new Date(createdAt).toLocaleDateString()}
           )&nbsp;
         </span>
       ))}

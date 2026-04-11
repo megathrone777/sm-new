@@ -2,7 +2,14 @@ import React, { useId } from "react";
 
 import { Icon } from "@/ui";
 
-import { iconClass, layoutClass, inputClass, labelClass, wrapperClass } from "./Checkbox.css";
+import {
+  hintClass,
+  iconClass,
+  inputClass,
+  labelClass,
+  layoutClass,
+  wrapperClass,
+} from "./Checkbox.css";
 
 import type { TProps } from "./Checkbox.types";
 
@@ -51,7 +58,7 @@ const Checkbox: React.FC<TProps> = ({
       >
         <span>
           {label}
-          {Boolean(hint) && <span>{hint}</span>}
+          {Boolean(hint) && <span className={hintClass}>{hint}</span>}
         </span>
       </label>
     </div>

@@ -4,7 +4,7 @@ import path from "path";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
 import { redis } from "@/lib";
 
 const deleteCategory = async (

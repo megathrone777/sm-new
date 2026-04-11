@@ -1,7 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { additionalsHelpers, authHelpers } from "@/helpers";
+import { additionalsHelpers } from "@/helpers/additionals";
+import { authHelpers } from "@/helpers/auth";
 import { redis } from "@/lib";
 
 const updateAdditional = async (

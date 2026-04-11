@@ -10,6 +10,7 @@ export const layoutClass = css(({ colors }) => ({
   display: "grid",
   gridAutoFlow: "column",
   height: 36,
+  justifyContent: "start",
 }));
 
 export const labelClass = css(({ fonts }) => ({
@@ -22,13 +23,13 @@ export const labelClass = css(({ fonts }) => ({
 
 export const inputClass = cssVariants(
   ({ colors }) => ({
-    isDefault: {
+    default: {
       "::placeholder": {
         color: colors.grayDarker,
       },
     },
 
-    isError: {
+    error: {
       "::placeholder": {
         color: colors.red,
       },
@@ -64,6 +65,14 @@ export const inputClass = cssVariants(
   ],
 );
 
+export const iconHolderClass = css({
+  alignItems: "center",
+  display: "grid",
+  justifyContent: "center",
+  minWidth: 30,
+  width: 30,
+});
+
 export const iconClass = css(({ colors }) => ({
   color: colors.red,
   minWidth: 18,
@@ -74,6 +83,7 @@ export const errorIconClass = css(({ colors }) => ({
   color: colors.red,
   display: "block",
   height: 20,
+  marginLeft: 4,
   minWidth: 20,
   width: 20,
 }));

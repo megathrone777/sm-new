@@ -10,13 +10,13 @@ declare global {
   }
 
   interface TNavItem {
-    href: string;
+    href: __next_route_internal_types__.RouteImpl<string>;
     title: string;
   }
 
   interface TContactLink {
     link: string;
-    type: string;
+    type: "instagram" | "phone" | "telegram" | "viber" | "whatsapp";
   }
 
   interface TPromoCode {
@@ -34,10 +34,13 @@ declare global {
 
   interface TShopSettings {
     address: string;
+    allergeny: string;
+    allergenyUrl: string;
     businessName: string;
     companyDetails: string;
     contactItems: TContactLink[];
     cutleryPrice: number;
+    deliveryConditions: TDeliveryCondition[];
     deliveryTimeOptions: string[];
     email: string;
     isAvailable: boolean;

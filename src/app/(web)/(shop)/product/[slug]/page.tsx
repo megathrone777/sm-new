@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Products } from "@/app/(web)/_components";
-import { productsHelpers } from "@/helpers";
+import { productsHelpers } from "@/helpers/products";
 
 import { Details } from "./_components";
 

@@ -13,7 +13,7 @@ export const layoutClass = css(({ colors, fonts }) => ({
     gridAutoFlow: "row",
     justifyContent: "start",
     lineHeight: "26px",
-    minHeight: 32,
+    minHeight: 34,
     paddingInline: 4,
     paddingTop: 4,
   },
@@ -26,7 +26,7 @@ export const layoutClass = css(({ colors, fonts }) => ({
     cursor: "pointer",
     inset: 0,
     margin: 0,
-    minHeight: 32,
+    minHeight: 34,
     opacity: 0,
     outline: "none",
     paddingBlock: 0,
@@ -40,14 +40,15 @@ export const layoutClass = css(({ colors, fonts }) => ({
   },
 
   backgroundColor: "white",
-  border: `2px solid ${colors.red}`,
-  borderRadius: 6,
+  borderBottom: `2px solid ${colors.red}`,
   color: "black",
+  display: "grid",
   fontFamily: "inherit",
   fontSize: 16,
   fontWeight: fonts.medium,
+  gridAutoFlow: "column",
   height: "100%",
-  minHeight: 32,
+  minHeight: 34,
   position: "relative",
   width: "100%",
 }));
@@ -108,38 +109,53 @@ export const iconClass = css(({ colors }) => ({
   width: 18,
 }));
 
-export const suffixClass = css(({ colors }) => ({
-  color: colors.black,
-  height: 18,
+export const suffixClass = css(({ colors, easing }) => ({
+  color: colors.red,
+  cursor: "pointer",
+  height: 21,
   position: "absolute",
-  right: 6,
+  right: 8,
+  selectors: {
+    ".rc-select-open &": {
+      rotate: "180deg",
+    },
+  },
   top: "50%",
-  transform: "translateY(-50%) rotate(180deg)",
-  width: 18,
+  transform: "translateY(-50%)",
+  transformOrigin: "center top",
+  transition: `rotate .2s ${easing}`,
+  width: 21,
 }));
 
 export const searchWrapperClass = css(({ colors }) => ({
-  borderBottom: `1px solid ${colors.red}`,
+  borderBottom: `2px solid ${colors.red}`,
   padding: 6,
 }));
 
-export const searchInputClass = css(({ colors, fonts }) => ({
-  border: `1px solid ${colors.red}`,
+export const searchInputClass = css(({ fonts }) => ({
+  border: "none",
   borderRadius: 4,
   fontFamily: "inherit",
-  fontSize: 14,
+  fontSize: 16,
   fontWeight: fonts.medium,
   outline: "none",
-  paddingBlock: 4,
+  paddingBlock: 0,
   paddingInline: 8,
   width: "100%",
 
   ":focus": {
-    borderColor: colors.red,
+    outline: "none",
   },
 }));
 
 export const popupClass = css(({ colors, fonts }) => ({
+  ".rc-select-item-empty": {
+    fontSize: 15,
+    fontWeight: fonts.medium,
+    paddingBlock: 4,
+    textAlign: "center",
+  },
+
   ".rc-select-item-option": {
     alignItems: "center",
     cursor: "pointer",
@@ -167,6 +183,10 @@ export const popupClass = css(({ colors, fonts }) => ({
 
   ".rc-select-item-option-content": {
     paddingLeft: 8,
+
+    ":hover": {
+      backgroundColor: "transparent",
+    },
   },
 
   ".rc-select-item-option .rc-select-item-option-state": {
@@ -194,6 +214,6 @@ export const popupClass = css(({ colors, fonts }) => ({
   zIndex: 100,
 
   "&.rc-select-dropdown-hidden": {
-    display: "none",
+    opacity: 0,
   },
 }));

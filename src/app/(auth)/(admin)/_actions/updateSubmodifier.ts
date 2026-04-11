@@ -1,7 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers, submodifiersHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
+import { submodifiersHelpers } from "@/helpers/submodifiers";
 import { redis } from "@/lib";
 
 const updateSubmodifier = async (

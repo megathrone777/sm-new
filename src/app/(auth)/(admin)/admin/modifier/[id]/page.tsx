@@ -2,7 +2,9 @@ import React from "react";
 
 import { updateModifier } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, Header, SubModifiersSelect } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers, submodifiersHelpers } from "@/helpers";
+import { modifiersHelpers } from "@/helpers/modifiers";
+import { submodifiersHelpers } from "@/helpers/submodifiers";
+import { useTranslation } from "@/hooks";
 import { Checkbox, Input } from "@/ui";
 
 import { formClass } from "./page.css";
@@ -13,6 +15,7 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
     modifiersHelpers.getModifierById(Number(id)),
     submodifiersHelpers.getSubmodifiers(),
   ]);
+  const { t } = useTranslation();
 
   if (!modifier) return <p>Modifier not found</p>;
   const assignedIds = (modifier.subModifiers ?? []).map<string>(
@@ -42,7 +45,7 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
 
         <Input
           defaultValue={modifier.price}
-          label="Price (Kč)"
+          label={`Price (${t<string>("currency")})`}
           name="price"
           type="number"
         />

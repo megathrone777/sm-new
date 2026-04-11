@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { deleteSubmodifier, updateSubmodifier } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { submodifiersHelpers } from "@/helpers";
+import { submodifiersHelpers } from "@/helpers/submodifiers";
 import { Button, Input } from "@/ui";
 
 import { itemClass, itemFormClass, listClass, linkClass } from "./SubModifiersList.css";

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { deleteModifier } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers } from "@/helpers";
+import { modifiersHelpers } from "@/helpers/modifiers";
 import { Button } from "@/ui";
 
 import { headerClass, itemClass, linkClass, listClass } from "./ModifiersList.css";

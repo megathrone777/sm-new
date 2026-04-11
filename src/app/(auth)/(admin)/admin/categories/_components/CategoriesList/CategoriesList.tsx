@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { deleteCategory } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers";
+import { productsHelpers } from "@/helpers/products";
 import { Button } from "@/ui";
 
 import {

@@ -5,6 +5,7 @@ import { Icon } from "@/ui";
 import {
   errorIconClass,
   iconClass,
+  iconHolderClass,
   inputClass,
   labelClass,
   layoutClass,
@@ -39,17 +40,30 @@ const Input: React.FC<TProps> = ({
         </label>
       )}
 
-      <div className={layoutClass}>
+      <div
+        className={layoutClass}
+        style={{
+          gridTemplateColumns: iconId
+            ? isError
+              ? "auto 1fr auto"
+              : "auto 1fr"
+            : isError
+              ? "1fr auto"
+              : "1fr",
+        }}
+      >
         {iconId && (
-          <Icon
-            className={iconClass}
-            id={iconId}
-          />
+          <div className={iconHolderClass}>
+            <Icon
+              className={iconClass}
+              id={iconId}
+            />
+          </div>
         )}
 
         <input
           autoComplete="off"
-          className={inputClass[isError ? "isError" : "isDefault"]}
+          className={inputClass[isError ? "error" : "default"]}
           id={inputId}
           spellCheck="false"
           {...{

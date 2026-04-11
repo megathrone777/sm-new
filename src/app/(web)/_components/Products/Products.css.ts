@@ -21,11 +21,11 @@ export const wrapperClass = css(({ devices }) => ({
 export const layoutClass = css(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
-  rowGap: 15,
+  rowGap: 12,
 
   "@media": {
     [devices.desktop]: {
-      rowGap: 20,
+      rowGap: 15,
     },
   },
 }));

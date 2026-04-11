@@ -9,7 +9,6 @@ import {
   tabClass,
   tabImageClass,
   tabLabelClass,
-  tabsClass,
   tabsListClass,
   titleClass,
 } from "./ProductsLayout.css";
@@ -41,7 +40,7 @@ const ProductsLayout: React.FC<TProps> = ({ categories, renderedProducts, showAl
     <>
       <h2 className={titleClass[pathname === "/" ? "default" : "small"]}>{title}</h2>
 
-      <div className={tabsClass}>
+      <div>
         {categories && !!categories && (
           <ul className={tabsListClass[hasActiveCategory ? "collapsed" : "default"]}>
             {categories.map<React.ReactElement>(({ id, imageUrl, title }: TProductCategory) => (

@@ -1,7 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers, promocodesHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
+import { promocodesHelpers } from "@/helpers/promocodes";
 import { redis } from "@/lib";
 
 const createPromocode = async (

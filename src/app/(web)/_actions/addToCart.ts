@@ -1,5 +1,5 @@
 "use server";
-import { cartHelpers } from "@/helpers";
+import { cartHelpers } from "@/helpers/cart";
 import { isEqual } from "@/utils";
 
 import { saveCart } from "./saveCart";
@@ -7,11 +7,14 @@ import { validateNewProduct } from "./validateNewProduct";
 
 const initialCart: TCart = {
   additionals: [],
+  categoryDiscount: 0,
   client: {
     email: "",
     name: "",
-    phoneNumber: "",
+    phoneNumber: "420",
   },
+  cutleryCount: 0,
+  cutleryPrice: 0,
   delivery: {
     address: "",
     clientPosition: { lat: 0, lng: 0 },
@@ -25,20 +28,12 @@ const initialCart: TCart = {
     route: null,
     time: { label: "Doručit teď", value: null },
     title: "",
-    type: "delivery",
+    // type: "delivery" TODO
+    type: "pickup",
   },
-  errors: {
-    address: null,
-    deliveryTime: false,
-    email: false,
-    name: false,
-    persons: false,
-    phone: false,
-    pickupAddress: false,
-  },
+  errors: [],
   note: "",
   payment: { change: null, type: "cash" },
-  persons: 0,
   products: [],
   promoCode: "",
   promoDiscount: 0,
@@ -56,8 +51,14 @@ const addToCart = async (
     const cart = await cartHelpers.getCart();
     const newCart: TCart = cart ? { ...cart } : { ...initialCart };
 
+    const toComparable = ({
+      quantity: _,
+      totalPrice: __,
+      ...rest
+    }: TCartProduct): Omit<TCartProduct, "quantity" | "totalPrice"> => rest;
+
     const foundIndex: number = newCart.products.findIndex((product: TCartProduct): boolean =>
-      isEqual(newProduct, product),
+      isEqual(toComparable(newProduct), toComparable(product)),
     );
 
     if (foundIndex !== -1 && newCart.products[foundIndex]) {

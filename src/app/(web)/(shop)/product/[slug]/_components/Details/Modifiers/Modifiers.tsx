@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
+import { useTranslation } from "@/hooks";
 import { Checkbox } from "@/ui";
 
 import {
@@ -17,6 +18,7 @@ import type { TProps } from "./Modifiers.types";
 
 const Modifiers: React.FC<TProps> = ({ modifiers, requiredModifier }) => {
   const [checkedIds, setCheckedIds] = useState<number[]>([]);
+  const { t } = useTranslation();
 
   const handleModifierChange = (id: number, checked: boolean): void => {
     if (requiredModifier) {
@@ -46,7 +48,10 @@ const Modifiers: React.FC<TProps> = ({ modifiers, requiredModifier }) => {
                   {price !== 0 && (
                     <span className={priceHolderClass}>
                       {" "}
-                      + <span className={priceClass}>{price} Kč</span>
+                      +{" "}
+                      <span className={priceClass}>
+                        {price} {t<string>("currency")}
+                      </span>
                     </span>
                   )}
                 </>

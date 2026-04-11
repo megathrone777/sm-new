@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { deleteOrder } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { ordersHelpers } from "@/helpers";
+import { ordersHelpers } from "@/helpers/orders";
 import { Button } from "@/ui";
 
 import { headerClass, itemClass, linkClass, listClass } from "./OrdersList.css";

@@ -33,8 +33,6 @@ export const titleClass = cssVariants(
   ],
 );
 
-export const tabsClass = css({});
-
 export const tabsListClass = cssVariants(
   ({ devices }) => ({
     collapsed: {

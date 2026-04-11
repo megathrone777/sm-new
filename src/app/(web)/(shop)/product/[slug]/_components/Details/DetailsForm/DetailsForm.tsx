@@ -75,7 +75,6 @@ const DetailsForm: React.FC<TProps> = ({
     const selectedModifiers = collectSelectedModifiers(formData);
     const newProduct: TCartProduct = {
       ...product,
-      addedFromList: false,
       modifiers: selectedModifiers,
       modifiersTitle,
       price,
@@ -120,7 +119,7 @@ const DetailsForm: React.FC<TProps> = ({
 
       <p className={totalPriceClass}>
         <span className={totalPriceValueClass}>{t<string>("priceTotal")}:</span>
-        {totalPrice} Kč
+        {totalPrice} {t<string>("currency")}
       </p>
 
       <div className={footerClass}>

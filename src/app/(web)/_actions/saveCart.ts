@@ -1,7 +1,7 @@
 "use server";
 import { refresh } from "next/cache";
 
-import { cartHelpers } from "@/helpers";
+import { cartHelpers } from "@/helpers/cart";
 import { redis } from "@/lib";
 
 const ttlSeconds: number = 60 * 60 * 24 * 7;

@@ -1,3 +1,7 @@
-export { getCart } from "./getCart";
-export { getSessionId } from "./getSessionId";
-export { getSessionIdAndCreateIfMissing } from "./getSessionIdAndCreateIfMissing";
+import { getCart } from "./getCart";
+import { getSessionId } from "./getSessionId";
+import { getSessionIdAndCreateIfMissing } from "./getSessionIdAndCreateIfMissing";
+
+const cartHelpers = { getCart, getSessionId, getSessionIdAndCreateIfMissing };
+
+export { cartHelpers };

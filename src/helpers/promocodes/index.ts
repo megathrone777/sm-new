@@ -1,4 +1,8 @@
-export { getOrdersByPromocode } from "./getOrdersByPromocode";
-export { getPromocodeByCode } from "./getPromocodeByCode";
-export { getPromocodes } from "./getPromocodes";
-export { isPromocodeActive } from "./isPromocodeActive";
+import { getOrdersByPromocode } from "./getOrdersByPromocode";
+import { getPromocodeByCode } from "./getPromocodeByCode";
+import { getPromocodes } from "./getPromocodes";
+import { isPromocodeActive } from "./isPromocodeActive";
+
+const promocodesHelpers = { getOrdersByPromocode, getPromocodeByCode, getPromocodes, isPromocodeActive };
+
+export { promocodesHelpers };

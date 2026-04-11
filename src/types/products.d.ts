@@ -56,6 +56,8 @@ declare global {
     modifiers: TModifier[];
     modifiersTitle: null | string;
     price: number;
+    promotionDiscountAmount: number;
+    promotionForEveryXProducts: number;
     requiredCutlery: boolean;
     requiredModifier: boolean;
     slug: string;

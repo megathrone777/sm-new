@@ -1,4 +1,8 @@
-export { getCategories } from "./getCategories";
-export { getCategoryById } from "./getCategoryById";
-export { getProductBySlug } from "./getProductBySlug";
-export { getProducts } from "./getProducts";
+import { getCategories } from "./getCategories";
+import { getCategoryById } from "./getCategoryById";
+import { getProductBySlug } from "./getProductBySlug";
+import { getProducts } from "./getProducts";
+
+const productsHelpers = { getCategories, getCategoryById, getProductBySlug, getProducts };
+
+export { productsHelpers };

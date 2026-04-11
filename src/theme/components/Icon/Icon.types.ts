@@ -1,5 +1,6 @@
 export type TIconID =
   | "address"
+  | "angle"
   | "arrow"
   | "buy"
   | "cart"

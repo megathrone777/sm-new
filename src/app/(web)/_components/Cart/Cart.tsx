@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-import { cartHelpers } from "@/helpers";
+import { cartHelpers } from "@/helpers/cart";
 import { Icon } from "@/ui";
 
 import {

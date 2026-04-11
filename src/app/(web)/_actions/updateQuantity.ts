@@ -1,20 +1,37 @@
 "use server";
-const updateQuantity = async (
-  id: TProduct["id"],
-  // quantity: TProduct["quantity"],
-): Promise<void> => {
-  console.log(id);
-  // const idx = cart.products.findIndex((p) => p.id === id);
-  // if (idx === -1) return;
-  // if (quantity <= 0) cart.products.splice(idx, 1);
-  // else cart.products[idx].quantity = quantity;
-  //   const { id, quantity } = await req.json();
-  //   const sid = getOrCreateSessionId();
-  //   const key = `cart:${sid}`;
-  //   const cart = await ensureCart(key);
+import { cartHelpers } from "@/helpers/cart";
 
-  //   setQuantity(cart, id, quantity);
-  //   await saveCart(key, cart);
+import { saveCart } from "./saveCart";
+
+const updateQuantity = async (index: number, type: "decrease" | "increase"): Promise<void> => {
+  const cart = await cartHelpers.getCart();
+
+  if (!cart) return;
+  const newCart: TCart = { ...cart, products: [...cart.products] };
+  const product = newCart.products[index];
+
+  if (!product) return;
+  const unitPrice = product.totalPrice / product.quantity;
+
+  if (type === "decrease") {
+    if (product.quantity <= 1) {
+      newCart.products.splice(index, 1);
+    } else {
+      newCart.products[index] = {
+        ...product,
+        quantity: product.quantity - 1,
+        totalPrice: product.totalPrice - unitPrice,
+      };
+    }
+  } else {
+    newCart.products[index] = {
+      ...product,
+      quantity: product.quantity + 1,
+      totalPrice: product.totalPrice + unitPrice,
+    };
+  }
+
+  await saveCart(newCart);
 };
 
 export { updateQuantity };

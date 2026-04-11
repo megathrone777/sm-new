@@ -2,11 +2,14 @@ import { css } from "@/theme";
 
 export const listClass = css({
   display: "grid",
-  gridAutoFlow: "row",
+  gridTemplateColumns: "max-content 1px max-content 1px max-content",
   rowGap: 4,
 });
 
 export const itemClass = css({
+  display: "grid",
+  gridColumn: "1 / -1",
+  gridTemplateColumns: "subgrid",
   height: 31,
 });
 
@@ -15,11 +18,11 @@ export const linkClass = css(({ colors }) => ({
   borderRadius: 6,
   color: colors.black,
   columnGap: 10,
-  display: "inline-grid",
-  gridAutoFlow: "column",
-  gridTemplateColumns: "repeat(3, 1fr)",
+  display: "grid",
+  gridColumn: "1 / -1",
+  gridTemplateColumns: "subgrid",
   height: "100%",
-  justifyItems: "start",
+  justifyItems: "center",
   paddingInline: 6,
   userSelect: "auto",
   whiteSpace: "nowrap",
@@ -29,7 +32,14 @@ export const linkClass = css(({ colors }) => ({
   },
 }));
 
+export const textClass = css({
+  display: "inline-block",
+  paddingInline: 6,
+});
+
 export const phoneClass = css(({ fonts }) => ({
+  display: "inline-block",
   fontWeight: fonts.bold,
+  paddingInline: 6,
   whiteSpace: "nowrap",
 }));

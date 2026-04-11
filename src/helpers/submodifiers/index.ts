@@ -1,2 +1,6 @@
-export { getSubmodifierById } from "./getSubmodifierById";
-export { getSubmodifiers } from "./getSubmodifiers";
+import { getSubmodifierById } from "./getSubmodifierById";
+import { getSubmodifiers } from "./getSubmodifiers";
+
+const submodifiersHelpers = { getSubmodifierById, getSubmodifiers };
+
+export { submodifiersHelpers };

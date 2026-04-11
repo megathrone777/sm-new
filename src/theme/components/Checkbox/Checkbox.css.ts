@@ -96,3 +96,10 @@ export const labelClass = cssVariants(
     template,
   ],
 );
+
+export const hintClass = css(({ colors, fonts }) => ({
+  color: colors.red,
+  display: "inline-block",
+  fontWeight: fonts.bold,
+  paddingLeft: 3,
+}));

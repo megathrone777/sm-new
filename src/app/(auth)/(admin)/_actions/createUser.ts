@@ -3,7 +3,7 @@ import crypto from "crypto";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
 import { redis } from "@/lib";
 import { hashPassword } from "@/utils";
 

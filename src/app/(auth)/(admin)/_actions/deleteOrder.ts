@@ -1,7 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers, ordersHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
+import { ordersHelpers } from "@/helpers/orders";
 import { redis } from "@/lib";
 
 const deleteOrder = async (

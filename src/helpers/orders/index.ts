@@ -1,3 +1,7 @@
-export { getOrderById } from "./getOrderById";
-export { getOrders } from "./getOrders";
-export { getOrdersByPhone } from "./getOrdersByPhone";
+import { getOrderById } from "./getOrderById";
+import { getOrders } from "./getOrders";
+import { getOrdersByPhone } from "./getOrdersByPhone";
+
+const ordersHelpers = { getOrderById, getOrders, getOrdersByPhone };
+
+export { ordersHelpers };

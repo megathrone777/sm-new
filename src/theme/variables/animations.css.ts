@@ -13,6 +13,20 @@ const animations = {
     },
   }),
 
+  fadeInDown: keyframes({
+    from: {
+      opacity: 0,
+      pointerEvents: "none",
+      transform: "translate3d(0, -4px, 0)",
+    },
+
+    to: {
+      opacity: 1,
+      pointerEvents: "auto",
+      transform: "translate3d(0, 0, 0)",
+    },
+  }),
+
   fadeInUp: keyframes({
     from: {
       opacity: 0,

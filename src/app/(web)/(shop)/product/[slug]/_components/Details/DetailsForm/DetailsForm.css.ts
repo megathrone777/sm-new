@@ -1,12 +1,18 @@
 import { css } from "@/theme";
 
-export const footerClass = css({
+export const footerClass = css(({ devices }) => ({
   alignItems: "center",
   columnGap: 10,
   display: "grid",
   gridAutoFlow: "column",
-  justifyContent: "start",
-});
+  justifyContent: "end",
+
+  "@media": {
+    [devices.mobile]: {
+      justifyContent: "start",
+    },
+  },
+}));
 
 export const totalPriceClass = css(({ colors, fonts }) => ({
   color: colors.red,

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { deleteUser, updateUser } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { authHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
 import { Button, Input } from "@/ui";
 
 import { RoleSelect } from "../RoleSelect";

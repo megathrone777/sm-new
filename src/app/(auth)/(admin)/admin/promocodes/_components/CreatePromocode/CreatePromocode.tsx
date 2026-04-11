@@ -14,7 +14,7 @@ const CreatePromocode: React.FC = () => (
     <Input
       label="Code"
       name="code"
-      placeholder="SUMMER20"
+      placeholder="CODE"
       type="text"
     />
 

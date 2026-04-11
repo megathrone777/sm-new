@@ -1,6 +1,6 @@
 import React from "react";
 
-import { productsHelpers } from "@/helpers";
+import { productsHelpers } from "@/helpers/products";
 import { Container } from "@/ui";
 
 import { ProductsItem } from "./ProductsItem";

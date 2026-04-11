@@ -1,21 +1,49 @@
 import React from "react";
 
-import { authHelpers, shopHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
+import { shopHelpers } from "@/helpers/shop";
 
-import { Admin, Cart, Footer, Header, Schedule } from "./_components";
+import { Admin, Cart, Controls, Footer, Header } from "./_components";
 
 const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
   const authSession = await authHelpers.getSession();
-  const { contactItems, isOpened, logoUrl, phone, text, title } = await shopHelpers.getSettings();
+  const {
+    address,
+    allergeny,
+    allergenyUrl,
+    businessName,
+    contactItems,
+    email,
+    isOpened,
+    logoUrl,
+    navigation,
+    phone,
+    text,
+    title,
+  } = await shopHelpers.getSettings();
 
   return (
     <>
-      <Header {...{ logoUrl, phone }} />
+      <Header {...{ logoUrl, navigation, phone }} />
       {children}
-      <Footer />
+
+      <Footer
+        {...{
+          address,
+          allergeny,
+          allergenyUrl,
+          businessName,
+          contactItems,
+          email,
+          logoUrl,
+          navigation,
+          phone,
+        }}
+      />
+
       <Cart />
       {authSession && authSession.role === "admin" && <Admin />}
-      <Schedule {...{ contactItems, isOpened, text, title }} />
+      <Controls {...{ contactItems, isOpened, text, title }} />
     </>
   );
 };

@@ -72,6 +72,7 @@ export const imageHolderClass = css(({ devices }) => ({
 }));
 
 export const imageClass = css(({ easing }) => ({
+  height: "100%",
   objectFit: "cover",
   selectors: {
     [`${imageHolderClass}:hover > &`]: {
@@ -79,6 +80,7 @@ export const imageClass = css(({ easing }) => ({
     },
   },
   transition: `transform .5s ${easing}`,
+  width: "100%",
 }));
 
 export const contentClass = css(({ devices }) => ({

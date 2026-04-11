@@ -4,7 +4,7 @@ import crypto from "crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { authHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
 import { redis } from "@/lib";
 import { verifyPassword } from "@/utils";
 

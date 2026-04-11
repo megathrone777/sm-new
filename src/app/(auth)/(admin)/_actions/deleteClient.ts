@@ -1,23 +1,30 @@
 "use server";
-import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
-import { authHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
 import { redis } from "@/lib";
 
-const deleteClient = async (
-  _state: null | TActionResult,
-  formData: FormData,
-): Promise<TActionResult> => {
+import type { FlatIndexSchema } from "@upstash/redis";
+
+const CLIENT_SEARCH_INDEX = "idx:clients";
+
+const CLIENT_SEARCH_SCHEMA = {
+  email: "TEXT",
+  name: "TEXT",
+  phoneNumber: "TEXT",
+} as const satisfies FlatIndexSchema;
+
+const deleteClient = async (formData: FormData): Promise<void> => {
   const session = await authHelpers.getSession();
 
   if (!session || session.role !== "admin") {
-    return { message: "Unauthorized", type: "error" };
+    console.error("Unauthorized");
   }
 
   const phoneNumber = (formData.get("phoneNumber") as string).trim();
 
   if (!phoneNumber) {
-    return { message: "Phone number is required", type: "error" };
+    console.error("Phone number is required");
   }
 
   const pipeline = redis.pipeline();
@@ -26,9 +33,13 @@ const deleteClient = async (
   pipeline.zrem("clients", phoneNumber);
   await pipeline.exec();
 
-  revalidatePath("/admin/clients");
+  const index = redis.search.index({
+    name: CLIENT_SEARCH_INDEX,
+    schema: CLIENT_SEARCH_SCHEMA,
+  });
 
-  return { message: `Client ${phoneNumber} successfully deleted`, type: "success" };
+  await index.waitIndexing();
+  redirect("/admin/clients");
 };
 
 export { deleteClient };

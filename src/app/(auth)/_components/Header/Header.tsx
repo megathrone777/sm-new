@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import { logout } from "@/app/(auth)/_actions";
+import { shopHelpers } from "@/helpers/shop";
 import { Button, Icon } from "@/ui";
 
 import {
@@ -13,56 +14,60 @@ import {
   wrapperClass,
 } from "./Header.css";
 
-const Header: React.FC = () => (
-  <div className={wrapperClass}>
-    <Link
-      className={linkClass}
-      href="/admin"
-    >
-      <img
-        alt="Logo."
-        className={imageClass}
-        src="/uploads/logo_img.svg"
-      />
-    </Link>
+const Header: React.FC = async () => {
+  const { logoUrl } = await shopHelpers.getSettings();
 
-    <div className={sideClass}>
+  return (
+    <div className={wrapperClass}>
       <Link
-        className={goLinkClass}
-        href="/"
-        target="_blank"
+        className={linkClass}
+        href="/admin"
       >
-        <Icon
-          className={iconClass}
-          id="globe"
+        <img
+          alt="Sushi man."
+          className={imageClass}
+          src={logoUrl}
         />
-
-        <span>Go To Web</span>
       </Link>
 
-      <Link
-        className={goLinkClass}
-        href="/orders"
-        target="_blank"
-      >
-        <Icon
-          className={iconClass}
-          id="buy"
-        />
-
-        <span>Orders</span>
-      </Link>
-
-      <form action={logout}>
-        <Button
-          template="small"
-          type="submit"
+      <div className={sideClass}>
+        <Link
+          className={goLinkClass}
+          href="/"
+          target="_blank"
         >
-          Logout
-        </Button>
-      </form>
+          <Icon
+            className={iconClass}
+            id="globe"
+          />
+
+          <span>Go To Web</span>
+        </Link>
+
+        <Link
+          className={goLinkClass}
+          href="/orders"
+          target="_blank"
+        >
+          <Icon
+            className={iconClass}
+            id="buy"
+          />
+
+          <span>Orders</span>
+        </Link>
+
+        <form action={logout}>
+          <Button
+            template="small"
+            type="submit"
+          >
+            Logout
+          </Button>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export { Header };

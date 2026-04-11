@@ -3,6 +3,16 @@ import type { LatLngExpression, LatLngLiteral } from "leaflet";
 declare global {
   type TDeliveryType = "delivery" | "pickup";
   type TPaymentType = "card" | "cardAfterDelivery" | "cash";
+  type TCartErrorType =
+    | "addressRange"
+    | "cutleryCount"
+    | "delivery"
+    | "deliveryTime"
+    | "email"
+    | "name"
+    | "phone"
+    | "pickup"
+    | "streetNumber";
 
   interface TPayment {
     change: 2000 | 5000 | null;
@@ -36,14 +46,9 @@ declare global {
     type: TDeliveryType;
   }
 
-  interface TCartErrors {
-    address: null | string;
-    deliveryTime: boolean;
-    email: boolean;
-    name: boolean;
-    persons: boolean;
-    phone: boolean;
-    pickupAddress: boolean;
+  interface TCartError {
+    message: string;
+    type: TCartErrorType;
   }
 
   interface TCartAdditional extends TAdditional {
@@ -59,7 +64,6 @@ declare global {
   }
 
   interface TCartProduct extends TProduct {
-    addedFromList: boolean;
     modifiers: TCartModifier[];
     quantity: number;
     totalPrice: number;
@@ -67,12 +71,14 @@ declare global {
 
   interface TCart {
     additionals: TCartAdditional[];
+    categoryDiscount: number;
     client: TClient;
+    cutleryCount: number;
+    cutleryPrice: number;
     delivery: TDelivery;
-    errors: TCartErrors;
+    errors: TCartError[];
     note: string;
     payment: TPayment;
-    persons: number;
     products: TCartProduct[];
     promoCode: string;
     promoDiscount: number;

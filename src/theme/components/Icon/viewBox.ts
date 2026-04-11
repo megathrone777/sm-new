@@ -2,6 +2,7 @@ import type { TIconID } from "./Icon.types";
 
 export const viewBox: Record<TIconID, string> = {
   address: "0 0 384 512",
+  angle: "0 0 20 20",
   arrow: "0 0 448 512",
   buy: "0 0 24 24",
   cart: "0 0 24 24",

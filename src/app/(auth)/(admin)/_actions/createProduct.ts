@@ -5,7 +5,9 @@ import path from "path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { authHelpers, modifiersHelpers, productsHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
+import { modifiersHelpers } from "@/helpers/modifiers";
+import { productsHelpers } from "@/helpers/products";
 import { redis } from "@/lib";
 import { slugify } from "@/utils";
 

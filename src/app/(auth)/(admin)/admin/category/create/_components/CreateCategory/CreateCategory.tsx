@@ -2,7 +2,7 @@ import React from "react";
 
 import { createCategory } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ImageUploader, ProductsSelect } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers";
+import { productsHelpers } from "@/helpers/products";
 import { Input } from "@/ui";
 
 import { wrapperClass } from "./CreateCategory.css";

@@ -14,7 +14,6 @@ const Submit: React.FC<TProps> = (product) => {
   const formAction = (): void => {
     const newProduct: TCartProduct = {
       ...product,
-      addedFromList: true,
       modifiers: [],
       quantity: 1,
       totalPrice: product.price,

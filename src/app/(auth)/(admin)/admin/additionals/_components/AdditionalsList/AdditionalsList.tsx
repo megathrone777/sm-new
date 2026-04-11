@@ -3,13 +3,15 @@ import Link from "next/link";
 
 import { deleteAdditional, updateAdditional } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { additionalsHelpers } from "@/helpers";
+import { additionalsHelpers } from "@/helpers/additionals";
+import { useTranslation } from "@/hooks";
 import { Button, Input } from "@/ui";
 
 import { itemClass, itemFormClass, linkClass, listClass } from "./AdditionalsList.css";
 
 const AdditionalsList: React.FC = async () => {
   const additionals = await additionalsHelpers.getAdditionals();
+  const { t } = useTranslation();
 
   return (
     <ListLayout
@@ -44,7 +46,7 @@ const AdditionalsList: React.FC = async () => {
 
                   <Input
                     defaultValue={price}
-                    label="Price (Kč)"
+                    label={`Price (${t<string>("currency")})`}
                     name="price"
                     type="number"
                   />

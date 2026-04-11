@@ -1,12 +1,13 @@
 import React from "react";
+import Image from "next/image";
 
 import { useTranslation } from "@/hooks";
+import { Container } from "@/ui";
 
 import { DetailsForm } from "./DetailsForm";
 import { Modifiers } from "./Modifiers";
 
 import {
-  columnClass,
   contentClass,
   imageClass,
   imageHolderClass,
@@ -38,76 +39,77 @@ const Details: React.FC<TProps> = (product) => {
     weight,
   } = product;
   const { t } = useTranslation();
-  const titleModifiers: string = modifiersTitle || t("modifiers");
+  const titleModifiers: string = modifiersTitle || t<string>("modifiers");
 
   return (
     <div className={wrapperClass}>
-      <div className={layoutClass}>
-        <div className={columnClass}>
+      <Container>
+        <div className={layoutClass}>
           <div className={imageHolderClass}>
-            <img
+            <Image
               alt={title}
               className={imageClass}
-              src={`https://sushiman-office.cz${imageUrl}`}
+              height={600}
+              src={imageUrl}
+              width={380}
             />
           </div>
-        </div>
 
-        <div className={columnClass}>
-          <h2 className={titleClass}>{title}</h2>
+          <div>
+            <h2 className={titleClass}>{title}</h2>
 
-          <div className={contentClass}>
-            {composition && (
-              <p className={itemClass}>
-                <span className={itemTitleClass}>Složení:</span>
-                {composition}
+            <div className={contentClass}>
+              {composition && (
+                <p className={itemClass}>
+                  <span className={itemTitleClass}>Složení:</span>
+                  {composition}
+                </p>
+              )}
+
+              {description && !!description.length && (
+                <p className={itemClass}>
+                  <span className={itemTitleClass}>Doplňky:</span>
+                  {description}
+                </p>
+              )}
+
+              {allergens && (
+                <p className={itemClass}>
+                  <span className={itemTitleClass}>Allergeny:</span>
+                  {allergens}
+                </p>
+              )}
+
+              {weight && (
+                <p className={itemClass}>
+                  <span className={itemTitleClass}>{t<string>("quantity")}:</span>
+                  {weight}
+                </p>
+              )}
+
+              <p className={itemPriceClass}>
+                <span className={itemTitleClass}>{t<string>("price")}:</span>
+                {price} {t<string>("currency")}
               </p>
-            )}
 
-            {description && !!description.length && (
-              <p className={itemClass}>
-                <span className={itemTitleClass}>Doplňky:</span>
-                {description}
-              </p>
-            )}
+              <div className={modifiersHeadingClass}>
+                <p className={modifiersTitleClass}>{titleModifiers}:</p>
+              </div>
 
-            {allergens && (
-              <p className={itemClass}>
-                <span className={itemTitleClass}>Allergeny:</span>
-                {allergens}
-              </p>
-            )}
-
-            {weight && (
-              <p className={itemClass}>
-                <span className={itemTitleClass}>{t<string>("quantity")}:</span>
-                {weight}
-              </p>
-            )}
-
-            <p className={itemPriceClass}>
-              <span className={itemTitleClass}>{t<string>("price")}:</span>
-              {price} Kč
-            </p>
-
-            <div className={modifiersHeadingClass}>
-              <p className={modifiersTitleClass}>{titleModifiers}:</p>
+              {isAvailable ? (
+                <DetailsForm
+                  {...product}
+                  modifiersTitle={titleModifiers}
+                >
+                  <Modifiers {...{ modifiers, requiredModifier }} />
+                </DetailsForm>
+              ) : (
+                <p className={placeholderClass}>Momentálně nedostupný</p>
+              )}
             </div>
-
-            {isAvailable ? (
-              <DetailsForm
-                {...product}
-                modifiersTitle={titleModifiers}
-              >
-                <Modifiers {...{ modifiers, requiredModifier }} />
-              </DetailsForm>
-            ) : (
-              <p className={placeholderClass}>Momentálně nedostupný</p>
-            )}
           </div>
-        </div>
 
-        {/* {modalIsOpened && (
+          {/* {modalIsOpened && (
             <Modal
               onClose={handleModalToggle}
               shopIsOpened={shopIsOpened}
@@ -116,7 +118,8 @@ const Details: React.FC<TProps> = (product) => {
               {...{ contactItems }}
             />
           )} */}
-      </div>
+        </div>
+      </Container>
     </div>
   );
 };

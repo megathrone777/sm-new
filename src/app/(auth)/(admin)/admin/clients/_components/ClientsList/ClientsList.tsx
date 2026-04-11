@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { deleteClient } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { clientsHelpers } from "@/helpers";
+import { clientsHelpers } from "@/helpers/clients";
 import { Button } from "@/ui";
 
 import { headerClass, listClass, linkClass, itemClass } from "./ClientsList.css";

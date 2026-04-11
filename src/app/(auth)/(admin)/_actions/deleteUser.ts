@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
 import { redis } from "@/lib";
 
 const deleteUser = async (

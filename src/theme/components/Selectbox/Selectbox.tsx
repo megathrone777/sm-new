@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import Select from "@rc-component/select";
 
 import { Icon } from "@/ui";
@@ -21,12 +21,16 @@ import type { TProps } from "./Selectbox.types";
 
 const Selectbox: React.FC<TProps> = ({
   defaultValue,
+  id,
   label,
   mode,
   onChange,
+  optionRender,
   options,
   placeholder,
+  style,
 }) => {
+  const inputId = useId();
   const [searchValue, setSearchValue] = useState<string>("");
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -53,9 +57,8 @@ const Selectbox: React.FC<TProps> = ({
       {label && <p className={labelClass}>{label}</p>}
 
       <Select
-        {...{ defaultValue, mode, onChange, options, placeholder }}
+        {...{ defaultValue, id, mode, onChange, optionRender, options, placeholder, style }}
         className={layoutClass}
-        listItemHeight={22}
         maxTagTextLength={80}
         menuItemSelectedIcon={
           <Icon
@@ -63,17 +66,21 @@ const Selectbox: React.FC<TProps> = ({
             id="checkmark"
           />
         }
+        notFoundContent="Nenalezeno"
         onPopupVisibleChange={handleDropdownVisibleChange}
         popupClassName={popupClass}
         popupRender={(menu): React.ReactElement => (
           <>
             <div className={searchWrapperClass}>
               <input
+                autoComplete="off"
                 className={searchInputClass}
+                name={`search-input-selectbox-${inputId}`}
                 onChange={handleInputChange}
                 onMouseDown={handleMouseDown}
                 placeholder="Search..."
                 ref={searchRef}
+                spellCheck="false"
                 type="text"
                 value={searchValue}
               />
@@ -101,7 +108,7 @@ const Selectbox: React.FC<TProps> = ({
         suffix={
           <Icon
             className={suffixClass}
-            id="arrow"
+            id="angle"
           />
         }
         tagRender={({ label, onClose }): React.ReactElement => (

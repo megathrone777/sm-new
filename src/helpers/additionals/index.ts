@@ -1,2 +1,6 @@
-export { getAdditionalById } from "./getAdditionalById";
-export { getAdditionals } from "./getAdditionals";
+import { getAdditionalById } from "./getAdditionalById";
+import { getAdditionals } from "./getAdditionals";
+
+const additionalsHelpers = { getAdditionalById, getAdditionals };
+
+export { additionalsHelpers };

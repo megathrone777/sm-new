@@ -8,7 +8,9 @@ import {
   ImageUploader,
 } from "@/app/(auth)/(admin)/_components";
 import { FormLayout } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers, productsHelpers } from "@/helpers";
+import { modifiersHelpers } from "@/helpers/modifiers";
+import { productsHelpers } from "@/helpers/products";
+import { useTranslation } from "@/hooks";
 import { Checkbox, Input } from "@/ui";
 
 import { formClass } from "./page.css";
@@ -20,6 +22,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
     modifiersHelpers.getModifiers(),
     productsHelpers.getCategories(),
   ]);
+  const { t } = useTranslation();
 
   if (!product) return <Header title="Product not found" />;
 
@@ -76,7 +79,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
 
         <Input
           defaultValue={product.price}
-          label="Price (Kč)"
+          label={`Price (${t<string>("currency")})`}
           name="price"
           type="number"
         />
@@ -133,7 +136,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
         <ModifiersSelect
           defaultValue={assignedModifierIds}
           options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
-            label: `${title}${price !== 0 ? ` +${price} Kč` : ""}`,
+            label: `${title}${price !== 0 ? ` +${price} ${t<string>("currency")}` : ""}`,
             value: String(id),
           }))}
         />

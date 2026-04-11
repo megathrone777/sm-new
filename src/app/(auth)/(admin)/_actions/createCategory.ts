@@ -4,7 +4,8 @@ import path from "path";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers, productsHelpers } from "@/helpers";
+import { authHelpers } from "@/helpers/auth";
+import { productsHelpers } from "@/helpers/products";
 import { redis } from "@/lib";
 
 const createCategory = async (

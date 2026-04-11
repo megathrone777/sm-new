@@ -1,16 +1,25 @@
 "use server";
-const removeFromCart = async (productId: TProduct["id"]): Promise<void> => {
-  console.log(productId);
-  // const idx = cart.products.findIndex((p) => p.id === productId);
-  // if (idx !== -1) cart.products.splice(idx, 1);
-  //   const { id } = await req.json();
-  //   const sid = getOrCreateSessionId();
-  //   const key = `cart:${sid}`;
 
-  //   const cart = await ensureCart(key);
+import { cartHelpers } from "@/helpers/cart";
 
-  //   removeItem(cart, id);
-  //   await saveCart(key, cart);
+import { clearCart } from "./clearCart";
+import { saveCart } from "./saveCart";
+
+const removeFromCart = async (index: number): Promise<void> => {
+  const cart = await cartHelpers.getCart();
+
+  if (!cart) return;
+  const newCart: TCart = { ...cart, products: [...cart.products] };
+
+  newCart.products.splice(index, 1);
+
+  if (newCart.products.length === 0) {
+    await clearCart();
+
+    return;
+  }
+
+  await saveCart(newCart);
 };
 
 export { removeFromCart };

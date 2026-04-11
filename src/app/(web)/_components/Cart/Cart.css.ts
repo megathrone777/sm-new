@@ -82,33 +82,27 @@ export const amountClass = css(({ devices }) => ({
   borderRadius: "50%",
   bottom: -5,
   display: "grid",
-  height: 21,
+  height: 20,
   justifyContent: "center",
-  minWidth: 21,
+  minWidth: 20,
+  overflow: "hidden",
   pointerEvents: "none",
   position: "absolute",
   right: -5,
   userSelect: "none",
-  verticalAlign: "middle",
 
   "@media": {
     [devices.desktop]: {
-      height: 25,
-      minWidth: 25,
+      height: 24,
+      minWidth: 24,
       paddingInline: 3,
     },
   },
 }));
 
-export const amountValueClass = css(({ devices, fonts }) => ({
-  color: "black",
-  fontSize: 14,
+export const amountValueClass = css(({ colors, fonts }) => ({
+  color: colors.black,
+  fontSize: 15,
   fontWeight: fonts.bold,
-  lineHeight: 1,
-
-  "@media": {
-    [devices.mobile]: {
-      fontSize: 16,
-    },
-  },
+  lineHeight: "normal",
 }));

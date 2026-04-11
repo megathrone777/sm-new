@@ -1,1 +1,1 @@
-export type TProps = Pick<TShopSettings, "logoUrl" | "phone">;
+export type TProps = Pick<TShopSettings, "logoUrl" | "navigation" | "phone">;

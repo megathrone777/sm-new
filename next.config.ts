@@ -3,7 +3,7 @@ import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 import type { NextConfig } from "next";
 
 const withVanillaExtract = createVanillaExtractPlugin({
-  unstable_turbopack: { mode: "on" },
+  unstable_turbopack: { mode: "auto" },
 });
 
 const config: NextConfig = {
@@ -12,7 +12,6 @@ const config: NextConfig = {
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     dangerouslyAllowSVG: true,
-    unoptimized: true,
   },
   reactStrictMode: false,
   // redirects: async () => [

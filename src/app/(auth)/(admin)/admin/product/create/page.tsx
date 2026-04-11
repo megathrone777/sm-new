@@ -8,7 +8,9 @@ import {
   ImageUploader,
   ModifiersSelect,
 } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers, productsHelpers } from "@/helpers";
+import { modifiersHelpers } from "@/helpers/modifiers";
+import { productsHelpers } from "@/helpers/products";
+import { useTranslation } from "@/hooks";
 import { Checkbox, Input } from "@/ui";
 
 import { formClass } from "./page.css";
@@ -18,6 +20,7 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
     modifiersHelpers.getModifiers(),
     productsHelpers.getCategories(),
   ]);
+  const { t } = useTranslation();
 
   const categoryOptions = categories
     .filter(({ id }: TProductCategory) => id !== 0)
@@ -52,7 +55,7 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
 
         <Input
           defaultValue="0"
-          label="Price (Kč)"
+          label={`Price (${t<string>("currency")})`}
           name="price"
           type="number"
         />
@@ -108,7 +111,7 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
         <ModifiersSelect
           defaultValue={[]}
           options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
-            label: `${title}${price !== 0 ? ` +${price} Kč` : ""}`,
+            label: `${title}${price !== 0 ? ` +${price} ${t<string>("currency")}` : ""}`,
             value: String(id),
           }))}
         />

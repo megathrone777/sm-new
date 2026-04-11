@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Header } from "@/app/(auth)/(admin)/_components";
-import { ordersHelpers } from "@/helpers";
+import { ordersHelpers } from "@/helpers/orders";
 import { Input } from "@/ui";
 
 import { formClass } from "./page.css";

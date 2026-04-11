@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ordersHelpers } from "@/helpers";
+import { ordersHelpers } from "@/helpers/orders";
 
 import { Orders } from "./_components";
 

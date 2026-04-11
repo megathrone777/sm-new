@@ -17,26 +17,19 @@ export const wrapperClass = css(({ colors, devices }) => ({
 }));
 
 export const layoutClass = css(({ devices }) => ({
+  alignItems: "start",
   display: "grid",
   gridAutoFlow: "row",
+  rowGap: 30,
   width: "100%",
 
   "@media": {
     [devices.tablet]: {
+      columnGap: 40,
       gridAutoFlow: "column",
       gridTemplateColumns: "35% 1fr",
       marginInline: "auto",
       maxWidth: 1200,
-    },
-  },
-}));
-
-export const columnClass = css(({ devices }) => ({
-  paddingInline: 10,
-
-  "@media": {
-    [devices.mobile]: {
-      paddingInline: 20,
     },
   },
 }));
@@ -52,13 +45,25 @@ export const modifiersTitleClass = css(({ fonts }) => ({
   marginRight: 10,
 }));
 
-export const imageHolderClass = css({
+export const imageHolderClass = css(({ devices }) => ({
   borderRadius: 15,
   boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
   overflow: "hidden",
-});
+  position: "relative",
+
+  "@media": {
+    [devices.mobile]: {
+      maxWidth: 380,
+    },
+
+    [devices.tablet]: {
+      maxWidth: "none",
+    },
+  },
+}));
 
 export const imageClass = css({
+  height: "auto",
   objectFit: "cover",
   verticalAlign: "middle",
   width: "100%",
@@ -68,10 +73,17 @@ export const contentClass = css({
   marginBottom: 40,
 });
 
-export const titleClass = css(({ fonts }) => ({
-  fontSize: 40,
+export const titleClass = css(({ devices, fonts }) => ({
+  fontSize: 36,
   fontWeight: fonts.medium,
-  marginBottom: 20,
+  marginBottom: 10,
+
+  "@media": {
+    [devices.tablet]: {
+      fontSize: 40,
+      marginBottom: 20,
+    },
+  },
 }));
 
 export const itemClass = css({
