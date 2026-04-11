@@ -5,12 +5,14 @@ globalStyle("html, body", {
 });
 
 globalStyle("html", {
+  height: "-webkit-fill-available",
   overflowY: "scroll",
   scrollBehavior: "smooth",
 });
 
 globalStyle("body", {
   fontFamily: "var(--font-avenir)",
+  minHeight: "-webkit-fill-available",
   MozOsxFontSmoothing: "grayscale",
   WebkitFontSmoothing: "antialiased",
 });
