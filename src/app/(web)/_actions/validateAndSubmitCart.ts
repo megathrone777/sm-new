@@ -2,6 +2,7 @@
 import moment from "moment";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { after } from "next/server";
 
 import { cartHelpers } from "@/helpers/cart";
 import { ordersHelpers } from "@/helpers/orders";
@@ -181,18 +182,20 @@ const validateAndSubmitCart = async (): Promise<void> => {
     totalProductsPrice,
   };
 
-  await Promise.all([
-    redis.hset(`order:${id}`, order as unknown as Record<string, unknown>),
-    redis.zadd("orders", { member: String(id), score: id }),
-    redis.zadd(`orders:phone:${client.phoneNumber}`, { member: String(id), score: id }),
-    redis.hset(`client:${client.phoneNumber}`, {
-      email: client.email,
-      name: client.name,
-      phoneNumber: client.phoneNumber,
-    }),
-    redis.zadd("clients", { member: client.phoneNumber, score: Date.now() }),
-  ]);
+  after(async () => {
+    await Promise.all([
+      redis.zadd("orders", { member: String(id), score: id }),
+      redis.zadd(`orders:phone:${client.phoneNumber}`, { member: String(id), score: id }),
+      redis.hset(`client:${client.phoneNumber}`, {
+        email: client.email,
+        name: client.name,
+        phoneNumber: client.phoneNumber,
+      }),
+      redis.zadd("clients", { member: client.phoneNumber, score: Date.now() }),
+    ]);
+  });
 
+  await redis.hset(`order:${id}`, order as unknown as Record<string, unknown>);
   redirect(`/orderConfirmed/${id}`);
 };
 
