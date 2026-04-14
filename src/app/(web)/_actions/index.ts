@@ -5,6 +5,7 @@ export { saveCart } from "./saveCart";
 export { updateAdditionalQuantity } from "./updateAdditionalQuantity";
 export { updateClient } from "./updateClient";
 export { updateCutleryQuantity } from "./updateCutleryQuantity";
+export { updatePhone } from "./updatePhone";
 export { updateQuantity } from "./updateQuantity";
 export { validateAndSubmitCart } from "./validateAndSubmitCart";
 export { validateNewProduct } from "./validateNewProduct";

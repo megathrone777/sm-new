@@ -88,6 +88,20 @@ export const layoutClass = css(({ colors }) => ({
   width: 30,
 }));
 
+export const errorIconClass = css(({ colors }) => ({
+  color: colors.red,
+  display: "block",
+  height: 20,
+  marginLeft: 4,
+  minWidth: 20,
+  selectors: {
+    [`${inputWrapperClass}:focus-within &`]: {
+      display: "none",
+    },
+  },
+  width: 20,
+}));
+
 export const optionClass = css({
   paddingBlock: 0,
   paddingRight: 8,

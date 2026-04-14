@@ -85,5 +85,10 @@ export const errorIconClass = css(({ colors }) => ({
   height: 20,
   marginLeft: 4,
   minWidth: 20,
+  selectors: {
+    [`${layoutClass}:focus-within &`]: {
+      display: "none",
+    },
+  },
   width: 20,
 }));

@@ -10,28 +10,34 @@ import { layoutClass, wrapperClass } from "./Client.css";
 
 import type { TProps } from "./Client.types";
 
-const Client: React.FC<TProps> = ({ errors, phoneNumber }) => (
+const Client: React.FC<TProps> = ({ email, errors, name, phoneNumber }) => (
   <div className={wrapperClass}>
-    <FormLayout>
-      <div className={layoutClass}>
-        <Input
-          iconId="profile"
-          isError={Boolean(errors.name)}
-          name="name"
-          type="text"
-        />
+    <FormLayout {...{ errors }}>
+      <Input
+        defaultValue={name}
+        iconId="profile"
+        isError={Boolean(errors.name)}
+        name="name"
+        type="text"
+      />
 
-        <Input
-          iconId="email"
-          isError={Boolean(errors.email)}
-          name="email"
-          type="email"
-        />
-
-        <Phone {...{ phoneNumber }} />
-        <History {...{ phoneNumber }} />
-      </div>
+      <Input
+        defaultValue={email}
+        iconId="email"
+        isError={Boolean(errors.email)}
+        name="email"
+        type="email"
+      />
     </FormLayout>
+
+    <div className={layoutClass}>
+      <Phone
+        isError={Boolean(errors.phone)}
+        {...{ phoneNumber }}
+      />
+
+      <History {...{ phoneNumber }} />
+    </div>
   </div>
 );
 

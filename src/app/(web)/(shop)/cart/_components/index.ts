@@ -1,4 +1,5 @@
 export { Additionals } from "./Additionals";
+export { Client } from "./Client";
 export { Cutlery } from "./Cutlery";
 export { Delivery } from "./Delivery";
 export { DeliveryType } from "./DeliveryType";

@@ -1,1 +1,3 @@
-export type TProps = Pick<TClient, "phoneNumber">;
+export type TProps = Pick<TClient, "phoneNumber"> & {
+  isError?: boolean;
+};

@@ -1,12 +1,15 @@
 "use client";
-import React, { useId, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import Select from "@rc-component/select";
 import { countries, getCountryFlag, useTelephone, type CountryCode } from "use-telephone";
 
-// import { updateClient } from "@/app/(web)/_actions";
+import { updatePhone } from "@/app/(web)/_actions";
+import { Icon } from "@/ui";
+
 import { Option, type TOption } from "./Option";
 
 import {
+  errorIconClass,
   inputClass,
   inputWrapperClass,
   layoutClass,
@@ -17,7 +20,7 @@ import {
 
 import type { TProps } from "./Phone.types";
 
-const Phone: React.FC<TProps> = ({ phoneNumber }) => {
+const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   const inputId = useId();
   const [searchValue, setSearchValue] = useState<string>("");
   const [countrySelected, setCountrySelected] = useState(false);
@@ -67,19 +70,11 @@ const Phone: React.FC<TProps> = ({ phoneNumber }) => {
     telephone.onChange(event);
   };
 
-  const handleInputErrorReset = (): void => {
-    // dispatch(
-    //   setCartErrors({
-    //     phone: false,
-    //   }),
-    // );
-  };
-
   useEffect((): void => {
     if (!telephone.valid || !telephone.parsed) return;
-    // const { number } = telephone.parsed;
+    const { number } = telephone.parsed;
 
-    // savePhoneToCart(number);
+    updatePhone(number);
   }, [telephone.valid]);
 
   useLayoutEffect((): void => {
@@ -89,85 +84,89 @@ const Phone: React.FC<TProps> = ({ phoneNumber }) => {
   }, []);
 
   return (
-    <div style={{ display: "grid", gridAutoFlow: "column" }}>
-      <div className={inputWrapperClass}>
-        <Select
-          className={layoutClass}
-          id="phone-select"
-          labelRender={({ value }) => (
-            <span style={{ display: "block", height: 15, width: 20 }}>
-              <img
-                alt="Country flag."
-                src={getCountryFlag(value as CountryCode)}
-                style={{
-                  display: "block",
-                  width: "100%",
-                }}
-              />
-            </span>
-          )}
-          menuItemSelectedIcon={null}
-          notFoundContent="Nenalezeno"
-          onChange={handleCountryChange}
-          onPopupVisibleChange={handleDropdownVisibleChange}
-          optionRender={({ label, value }): React.ReactElement => (
-            <Option
-              {...{ label }}
-              value={value as CountryCode}
+    <div
+      className={inputWrapperClass}
+      style={{ gridTemplateColumns: Boolean(isError) ? "auto 1fr auto" : "auto 1fr" }}
+    >
+      <Select
+        className={layoutClass}
+        id="phone-select"
+        labelRender={({ value }) => (
+          <span style={{ display: "block", height: 15, width: 20 }}>
+            <img
+              alt="Country flag."
+              src={getCountryFlag(value as CountryCode)}
+              style={{
+                display: "block",
+                width: "100%",
+              }}
             />
-          )}
-          options={getOptions()}
-          popupClassName={popupClass}
-          popupRender={(menu): React.ReactElement => (
-            <>
-              <div className={searchWrapperClass}>
-                <input
-                  autoComplete="off"
-                  className={searchInputClass}
-                  name={`search-input-selectbox-${inputId}`}
-                  onChange={handleInputChange}
-                  onMouseDown={handleMouseDown}
-                  placeholder="Search..."
-                  ref={searchRef}
-                  spellCheck="false"
-                  type="text"
-                  value={searchValue}
-                />
-              </div>
+          </span>
+        )}
+        menuItemSelectedIcon={null}
+        notFoundContent="Nenalezeno"
+        onChange={handleCountryChange}
+        onPopupVisibleChange={handleDropdownVisibleChange}
+        optionRender={({ label, value }): React.ReactElement => (
+          <Option
+            {...{ label }}
+            value={value as CountryCode}
+          />
+        )}
+        options={getOptions()}
+        popupClassName={popupClass}
+        popupRender={(menu): React.ReactElement => (
+          <>
+            <div className={searchWrapperClass}>
+              <input
+                autoComplete="off"
+                className={searchInputClass}
+                name={`search-input-selectbox-${inputId}`}
+                onChange={handleInputChange}
+                onMouseDown={handleMouseDown}
+                placeholder="Search..."
+                ref={searchRef}
+                spellCheck="false"
+                type="text"
+                value={searchValue}
+              />
+            </div>
 
-              {menu}
-            </>
-          )}
-          showAction={["click"]}
-          showSearch={{
-            autoClearSearchValue: true,
-            filterOption: (input: string, option) =>
-              String(option?.label ?? "")
-                .toLowerCase()
-                .includes(input.toLowerCase()),
-            onSearch: setSearchValue,
-            searchValue,
-          }}
-          value={
-            !countrySelected && telephone.country === "AF" && !phoneNumber
-              ? "CZ"
-              : telephone.country
-          }
-        />
+            {menu}
+          </>
+        )}
+        showAction={["click"]}
+        showSearch={{
+          autoClearSearchValue: true,
+          filterOption: (input: string, option) =>
+            String(option?.label ?? "")
+              .toLowerCase()
+              .includes(input.toLowerCase()),
+          onSearch: setSearchValue,
+          searchValue,
+        }}
+        value={
+          !countrySelected && telephone.country === "AF" && !phoneNumber ? "CZ" : telephone.country
+        }
+      />
 
-        <input
-          autoComplete="off"
-          // hasError={errors.phone}
-          className={inputClass["default"]}
-          maxLength={telephone.country === "CZ" ? 16 : 100}
-          name="phone"
-          onChange={handlePhoneChange}
-          onFocus={handleInputErrorReset}
-          spellCheck="false"
-          type="tel"
-          value={telephone.parsed?.number}
+      <input
+        autoComplete="off"
+        className={inputClass[Boolean(isError) ? "error" : "default"]}
+        maxLength={telephone.country === "CZ" ? 16 : 100}
+        name="phone"
+        onChange={handlePhoneChange}
+        spellCheck="false"
+        type="tel"
+        value={telephone.value}
+      />
+
+      {Boolean(isError) && (
+        <Icon
+          className={errorIconClass}
+          id="exclamation"
         />
-      </div>
+      )}
     </div>
   );
 };

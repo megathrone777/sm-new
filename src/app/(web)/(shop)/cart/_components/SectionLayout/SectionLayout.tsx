@@ -22,13 +22,12 @@ const SectionLayout: React.FC<TProps> = ({
   title,
 }) => {
   useEffect((): void => {
-    console.log(error);
     if (error) {
       toast(error, {
         type: "error",
       });
     }
-  }, [error]);
+  }, []);
 
   return (
     <div

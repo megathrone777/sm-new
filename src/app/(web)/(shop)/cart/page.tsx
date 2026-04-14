@@ -8,6 +8,7 @@ import { Container } from "@/ui";
 
 import {
   Additionals,
+  Client,
   Cutlery,
   Delivery,
   DeliveryType,
@@ -33,6 +34,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
       const {
         additionals: cartAdditionals,
         categoryDiscount,
+        client,
         cutlery,
         delivery,
         errors,
@@ -67,6 +69,15 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <DeliveryType
                 {...{ totalPrice }}
                 type={delivery.type}
+              />
+
+              <Client
+                {...client}
+                errors={{
+                  email: errors.email,
+                  name: errors.name,
+                  phone: errors.phone,
+                }}
               />
 
               <Delivery {...delivery} />

@@ -9,16 +9,23 @@ const updateClient = async (formData: FormData): Promise<void> => {
   const cart = await cartHelpers.getCart();
 
   if (!cart) return;
+  const name = String(formData.get("name") ?? "");
+  const email = String(formData.get("email") ?? "");
 
   await saveCart({
     ...cart,
     client: {
       ...cart.client,
-      ...client,
+      email,
+      name,
+    },
+    errors: {
+      ...cart.errors,
+      email: undefined,
+      name: undefined,
     },
   });
   revalidatePath("/cart");
-  // revalidatePath(`/archived-orders/${phoneNumber.replace("+", "")}`);
 };
 
 export { updateClient };
