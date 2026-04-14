@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useActionState } from "react";
 import Form from "next/form";
 // import { toast } from "react-toastify";
 // import { useRouter } from "next/navigation";
@@ -14,7 +15,7 @@ import { priceClass, wrapperClass } from "./Submit.css";
 import type { TProps } from "./Submit.types";
 
 const Submit: React.FC<TProps> = ({ totalPrice }) => {
-  // const [state, action, pending] = useActionState(formAction, null);
+  const [_, action, pending] = useActionState(validateAndSubmitCart, null);
   const { t } = useTranslation();
 
   // const submitOrder = (): void => {
@@ -127,14 +128,19 @@ const Submit: React.FC<TProps> = ({ totalPrice }) => {
 
   return (
     <Form
-      action={validateAndSubmitCart}
+      {...{ action }}
       className={wrapperClass}
     >
       <p className={priceClass}>
         {t<string>("priceTotal")}: {totalPrice} {t<string>("currency")}
       </p>
 
-      <Button type="submit">{t<string>("goToPay")}</Button>
+      <Button
+        disabled={pending}
+        type="submit"
+      >
+        {t<string>("goToPay")}
+      </Button>
     </Form>
   );
 };
