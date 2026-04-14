@@ -1,14 +1,8 @@
 "use client";
-import React from "react";
+import { notFound } from "next/navigation";
 
-import { Error } from "@/components";
+import type React from "react";
 
-const GlobalError: React.FC = () => (
-  <html>
-    <body>
-      <Error title="Something went wrong" />
-    </body>
-  </html>
-);
+const GlobalError: React.FC = () => notFound();
 
 export default GlobalError;

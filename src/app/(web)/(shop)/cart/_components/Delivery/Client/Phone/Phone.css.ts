@@ -9,21 +9,16 @@ export const inputWrapperClass = css(({ colors }) => ({
   gridTemplateColumns: "auto 1fr",
   height: 36,
   justifyContent: "start",
-  paddingLeft: 3,
 }));
 
 export const inputClass = cssVariants(
   ({ colors }) => ({
     default: {
-      "::placeholder": {
-        color: colors.grayDarker,
-      },
+      color: "black",
     },
 
     error: {
-      "::placeholder": {
-        color: colors.red,
-      },
+      color: colors.red,
     },
   }),
   (template, { fonts }) => [
@@ -32,7 +27,6 @@ export const inputClass = cssVariants(
       backgroundColor: "white",
       border: "none",
       borderRadius: 0,
-      color: "black",
       fontFamily: "inherit",
       fontSize: 16,
       fontWeight: fonts.medium,
@@ -57,3 +51,137 @@ export const inputClass = cssVariants(
     template,
   ],
 );
+
+export const layoutClass = css(({ colors }) => ({
+  ".rc-select-content": {
+    alignItems: "center",
+    display: "grid",
+    minHeight: "100%",
+    paddingTop: 0,
+  },
+
+  ".rc-select-input": {
+    background: "transparent",
+    border: "none",
+    borderColor: colors.red,
+    borderRadius: 8,
+    cursor: "pointer",
+    inset: 0,
+    margin: 0,
+    minHeight: 17,
+    opacity: 0,
+    outline: "none",
+    padding: 0,
+    position: "absolute",
+
+    ":focus": {
+      borderColor: colors.red,
+      outline: "none",
+    },
+  },
+
+  alignItems: "center",
+  display: "grid",
+  height: "100%",
+  justifyContent: "center",
+  position: "relative",
+  width: 30,
+}));
+
+export const optionClass = css({
+  paddingBlock: 0,
+  paddingRight: 8,
+});
+
+export const searchWrapperClass = css(({ colors }) => ({
+  borderBottom: `2px solid ${colors.red}`,
+  padding: 6,
+}));
+
+export const searchInputClass = css(({ fonts }) => ({
+  border: "none",
+  borderRadius: 4,
+  fontFamily: "inherit",
+  fontSize: 16,
+  fontWeight: fonts.medium,
+  outline: "none",
+  paddingBlock: 0,
+  paddingInline: 8,
+  width: "100%",
+
+  ":focus": {
+    outline: "none",
+  },
+}));
+
+export const popupClass = css(({ colors, fonts }) => ({
+  ".rc-select-item-empty": {
+    fontSize: 15,
+    fontWeight: fonts.medium,
+    paddingBlock: 4,
+    textAlign: "center",
+  },
+
+  ".rc-select-item-option": {
+    alignItems: "center",
+    cursor: "pointer",
+    display: "grid",
+    fontSize: 15,
+    fontWeight: fonts.bold,
+    gridAutoFlow: "column",
+    justifySelf: "start",
+    lineHeight: "38px",
+    overflow: "hidden",
+    paddingBlock: 0,
+    position: "relative",
+    userSelect: "none",
+    whiteSpace: "nowrap",
+    width: "100%",
+
+    "&.rc-select-item-option-selected": {
+      backgroundColor: "rgba(0, 0, 0, .1)",
+    },
+
+    ":hover": {
+      backgroundColor: "rgba(0, 0, 0, .1)",
+    },
+  },
+
+  ".rc-select-item-option-content": {
+    paddingLeft: 8,
+
+    ":hover": {
+      backgroundColor: "transparent",
+    },
+  },
+
+  ".rc-select-item-option .rc-select-item-option-state": {
+    alignItems: "center",
+    display: "grid",
+    justifyContent: "center",
+    pointerEvents: "none",
+    position: "absolute",
+    right: 16,
+    top: "50%",
+    transform: "translateY(-50%)",
+  },
+
+  ".rc-select-selection-item-remove": {
+    cursor: "pointer",
+    height: 18,
+    width: 18,
+  },
+
+  backgroundColor: "white",
+  border: `2px solid ${colors.red}`,
+  borderRadius: 6,
+  minWidth: 280,
+  overflow: "hidden",
+  position: "absolute",
+  width: 280,
+  zIndex: 100,
+
+  "&.rc-select-dropdown-hidden": {
+    opacity: 0,
+  },
+}));

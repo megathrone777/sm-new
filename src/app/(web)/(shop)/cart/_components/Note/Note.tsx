@@ -20,6 +20,7 @@ const Note: React.FC = () => {
         <textarea
           className={textareaClass}
           maxLength={250}
+          name="note"
           placeholder="Pokud si přejete vynechat sezam nebo pálivou omáčku, tak stačí napsat sem..."
         />
       </div>

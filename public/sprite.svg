@@ -29,6 +29,20 @@
     0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z" fill="currentColor"></path>
   </symbol>
 
+  <symbol
+    fill="none"
+    id="historyIcon"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+    <path d="M3 3v5h5" />
+    <path d="M12 7v5l4 2" />
+  </symbol>
+
   <symbol id="saveIcon" viewBox="0 0 448 512">
     <path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-242.7c0-17-6.7-33.3-18.7-45.3L352
       50.7C340 38.7 323.7 32 306.7 32L64 32zm32 96c0-17.7 14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32

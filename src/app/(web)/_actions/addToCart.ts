@@ -11,7 +11,7 @@ const initialCart: TCart = {
   client: {
     email: "",
     name: "",
-    phoneNumber: "420",
+    phoneNumber: "",
   },
   cutleryCount: 0,
   cutleryPrice: 0,

@@ -10,8 +10,6 @@ const Page: React.FC<PageProps<"/admin/order/[id]">> = async ({ params }) => {
   const { id } = await params;
   const order = await ordersHelpers.getOrderById(id);
 
-  console.log(order);
-
   if (!order) {
     return <Header title={`Order #${id} not found`} />;
   }

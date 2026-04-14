@@ -85,10 +85,7 @@ const validateCart = async ({
     errors.push({ message: "Vyplňte Email", type: "email" });
   }
 
-  if (
-    !client.phoneNumber ||
-    !`+${client.phoneNumber}`.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im)
-  ) {
+  if (!client.phoneNumber || !`+${client.phoneNumber}`.match(/^\+\d{7,15}$/)) {
     errors.push({
       message: "Vyplňte telefonní číslo ve formátu (+xxx xxx xxx xxx)",
       type: "phone",

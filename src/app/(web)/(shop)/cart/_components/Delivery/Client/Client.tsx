@@ -2,62 +2,32 @@ import React from "react";
 
 import { Input } from "@/ui";
 
+import { History } from "./History";
 import { Phone } from "./Phone";
 
-import { wrapperClass } from "./Client.css";
+import { phoneWrapperClass, wrapperClass } from "./Client.css";
 
 import type { TProps } from "./Client.types";
 
-const Client: React.FC<TProps> = ({ phoneNumber }) => {
-  console.log(phoneNumber);
-  // const handleInputChange = ({ currentTarget }: React.SyntheticEvent<HTMLInputElement>): void => {
-  //   const { name, value } = currentTarget;
+const Client: React.FC<TProps> = ({ phoneNumber }) => (
+  <div className={wrapperClass}>
+    <Input
+      iconId="profile"
+      name="name"
+      type="text"
+    />
 
-  //   dispatch(
-  //     setDeliveryInfo({
-  //       [name]: value,
-  //     }),
-  //   );
-  // };
+    <Input
+      iconId="email"
+      name="email"
+      type="email"
+    />
 
-  // const handleInputErrorsReset = ({
-  //   currentTarget,
-  // }: React.SyntheticEvent<HTMLInputElement>): void => {
-  //   const { name } = currentTarget;
-
-  //   dispatch(
-  //     setCartErrors({
-  //       [name]: false,
-  //     }),
-  //   );
-  // };
-
-  return (
-    <form
-      action="#"
-      className={wrapperClass}
-    >
-      <Input
-        iconId="profile"
-        name="name"
-        // onChange={handleInputChange}
-        // onFocus={handleInputErrorsReset}
-        // placeholder={errors.name ? "Vyplňte jméno" : t<string>("name")}
-        type="text"
-      />
-
-      <Input
-        iconId="email"
-        name="email"
-        // onChange={handleInputChange}
-        // onFocus={handleInputErrorsReset}
-        // placeholder={errors.email ? "Vyplňte e-mail" : t<string>("email")}
-        type="email"
-      />
-
+    <div className={phoneWrapperClass}>
       <Phone {...{ phoneNumber }} />
-    </form>
-  );
-};
+      <History {...{ phoneNumber }} />
+    </div>
+  </div>
+);
 
 export { Client };

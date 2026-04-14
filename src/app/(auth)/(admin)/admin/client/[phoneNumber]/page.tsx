@@ -44,7 +44,7 @@ const Page: React.FC<PageProps<"/admin/client/[phoneNumber]">> = async ({
             <p className={confirmTextClass}>Delete &ldquo;{deleteTitle ?? deleteId}&rdquo;?</p>
 
             <div className={confirmActionsClass}>
-              <Form action={deleteClient}>
+              <Form action={(formData) => deleteClient(null, formData)}>
                 <input
                   name="phoneNumber"
                   type="hidden"

@@ -16,14 +16,22 @@ const Button: React.FC<TProps> = ({
   onClick,
   target,
   template = "normal",
+  title,
   type = "button",
 }) =>
   href ? (
     <Link
-      {...{ disabled, href, target }}
+      {...{ disabled, href, target, title }}
       className={buttonClass[template]}
     >
-      {children}
+      {iconId ? (
+        <Icon
+          className={iconClass}
+          id={iconId}
+        />
+      ) : (
+        children
+      )}
     </Link>
   ) : (
     <button

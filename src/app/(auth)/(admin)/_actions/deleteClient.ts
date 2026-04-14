@@ -14,17 +14,26 @@ const CLIENT_SEARCH_SCHEMA = {
   phoneNumber: "TEXT",
 } as const satisfies FlatIndexSchema;
 
-const deleteClient = async (formData: FormData): Promise<void> => {
+const deleteClient = async (
+  _state: null | TActionResult,
+  formData: FormData,
+): Promise<TActionResult> => {
   const session = await authHelpers.getSession();
 
   if (!session || session.role !== "admin") {
-    console.error("Unauthorized");
+    return {
+      message: "Unauthorized",
+      type: "error",
+    };
   }
 
   const phoneNumber = (formData.get("phoneNumber") as string).trim();
 
   if (!phoneNumber) {
-    console.error("Phone number is required");
+    return {
+      message: "Phone number is required",
+      type: "error",
+    };
   }
 
   const pipeline = redis.pipeline();

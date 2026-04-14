@@ -1,12 +1,18 @@
 import { css, cssVariants } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = css(({ devices }) => ({
   alignItems: "start",
-  columnGap: 10,
+  columnGap: 7,
   display: "grid",
   gridAutoFlow: "column",
   justifyContent: "start",
-});
+
+  "@media": {
+    [devices.mobileXs]: {
+      columnGap: 10,
+    },
+  },
+}));
 
 export const layoutClass = cssVariants(
   {

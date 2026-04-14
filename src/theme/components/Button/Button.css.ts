@@ -25,8 +25,8 @@ export const buttonClass = cssVariants(
     },
     small: {
       fontSize: 16,
-      height: 38,
-      minWidth: 38,
+      height: 36,
+      minWidth: 36,
       paddingInline: 8,
     },
   }),

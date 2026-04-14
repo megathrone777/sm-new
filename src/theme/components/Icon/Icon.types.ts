@@ -12,6 +12,7 @@ export type TIconID =
   | "exclamation"
   | "exclamation"
   | "globe"
+  | "history"
   | "minus"
   | "note"
   | "phone"

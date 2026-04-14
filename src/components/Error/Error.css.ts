@@ -6,6 +6,7 @@ export const wrapperClass = css({
   gridAutoFlow: "row",
   height: "100%",
   justifyContent: "center",
+  justifyItems: "center",
   paddingBlock: 30,
 });
 
@@ -17,6 +18,7 @@ export const titleClass = css(({ fonts }) => ({
 }));
 
 export const imageClass = css({
-  height: "auto",
+  height: 360,
   marginBottom: 30,
+  width: "auto",
 });

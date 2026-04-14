@@ -1,7 +1,10 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css(({}) => ({
-  padding: "5px 10px",
+  alignItems: "center",
+  display: "grid",
+  gridAutoFlow: "column",
+  justifyContent: "start",
   verticalAlign: "middle",
 
   // [devices.tablet]: {

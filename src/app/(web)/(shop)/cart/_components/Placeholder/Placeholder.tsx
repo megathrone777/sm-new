@@ -18,6 +18,7 @@ const Placeholder: React.FC = () => {
           alt="Sushi man"
           className={imageClass}
           height={0}
+          preload
           sizes="100vw"
           src="/images/failed_img.png"
           width={0}
