@@ -3,8 +3,7 @@ import React, { useId, useEffect, useLayoutEffect, useRef, useState } from "reac
 import Select from "@rc-component/select";
 import { countries, getCountryFlag, useTelephone, type CountryCode } from "use-telephone";
 
-import { savePhoneToCart } from "@/app/(web)/_actions";
-
+// import { updateClient } from "@/app/(web)/_actions";
 import { Option, type TOption } from "./Option";
 
 import {
@@ -78,9 +77,9 @@ const Phone: React.FC<TProps> = ({ phoneNumber }) => {
 
   useEffect((): void => {
     if (!telephone.valid || !telephone.parsed) return;
-    const { number } = telephone.parsed;
+    // const { number } = telephone.parsed;
 
-    savePhoneToCart(number);
+    // savePhoneToCart(number);
   }, [telephone.valid]);
 
   useLayoutEffect((): void => {
@@ -166,7 +165,7 @@ const Phone: React.FC<TProps> = ({ phoneNumber }) => {
           onFocus={handleInputErrorReset}
           spellCheck="false"
           type="tel"
-          value={telephone.value}
+          value={telephone.parsed?.number}
         />
       </div>
     </div>

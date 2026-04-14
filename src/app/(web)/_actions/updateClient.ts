@@ -5,7 +5,7 @@ import { cartHelpers } from "@/helpers/cart";
 
 import { saveCart } from "./saveCart";
 
-const savePhoneToCart = async (phoneNumber: string): Promise<void> => {
+const updateClient = async (formData: FormData): Promise<void> => {
   const cart = await cartHelpers.getCart();
 
   if (!cart) return;
@@ -14,10 +14,11 @@ const savePhoneToCart = async (phoneNumber: string): Promise<void> => {
     ...cart,
     client: {
       ...cart.client,
-      phoneNumber,
+      ...client,
     },
   });
-  revalidatePath(`/archived-orders/${phoneNumber.replace("+", "")}`);
+  revalidatePath("/cart");
+  // revalidatePath(`/archived-orders/${phoneNumber.replace("+", "")}`);
 };
 
-export { savePhoneToCart };
+export { updateClient };

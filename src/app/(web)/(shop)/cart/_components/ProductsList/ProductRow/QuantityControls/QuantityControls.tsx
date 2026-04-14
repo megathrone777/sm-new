@@ -15,8 +15,13 @@ import {
 
 import type { TProps } from "./QuantityControls.types";
 
-const QuantityControls: React.FC<TProps> = ({ index, onRemove, quantity, totalPrice }) => {
-  const [optimisticQuantity, setOptimisticQuantity] = useOptimistic<number>(quantity);
+const QuantityControls: React.FC<TProps> = ({
+  index,
+  onRemove,
+  quantity: initialQuantity,
+  totalPrice,
+}) => {
+  const [quantity, setQuantity] = useOptimistic<number>(initialQuantity);
   const { t } = useTranslation();
 
   const handleQuantityClick = ({
@@ -26,11 +31,11 @@ const QuantityControls: React.FC<TProps> = ({ index, onRemove, quantity, totalPr
 
     startTransition(async (): Promise<void> => {
       if (type === "decrease") {
-        setOptimisticQuantity((quantity: number): number => Math.max(0, quantity - 1));
+        setQuantity((prevQuantity: number): number => Math.max(1, prevQuantity - 1));
       }
 
       if (type === "increase") {
-        setOptimisticQuantity((quantity: number) => quantity + 1);
+        setQuantity((prevQuantity: number) => prevQuantity + 1);
       }
 
       await updateQuantity(index, type);
@@ -42,12 +47,13 @@ const QuantityControls: React.FC<TProps> = ({ index, onRemove, quantity, totalPr
       <div className={quantityClass}>
         <QuantityButton
           decrease
+          disabled={quantity === 1}
           onClick={handleQuantityClick}
           type="button"
           value="decrease"
         />
 
-        <p className={quantityAmountClass}>{optimisticQuantity}</p>
+        <p className={quantityAmountClass}>{quantity}</p>
 
         <QuantityButton
           onClick={handleQuantityClick}

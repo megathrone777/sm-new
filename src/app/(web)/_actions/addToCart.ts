@@ -1,4 +1,6 @@
 "use server";
+import { revalidatePath } from "next/cache";
+
 import { cartHelpers } from "@/helpers/cart";
 import { isEqual } from "@/utils";
 
@@ -13,17 +15,19 @@ const initialCart: TCart = {
     name: "",
     phoneNumber: "",
   },
-  cutleryCount: 0,
-  cutleryPrice: 0,
+  cutlery: {
+    quantity: 0,
+    totalPrice: 0,
+  },
   delivery: {
     address: "",
-    clientPosition: { lat: 0, lng: 0 },
     conditions: [],
     distanceInM: 0,
     pickupLocation: {
       name: "Milíčova 471/25, Praha 3",
       position: [50.0861328, 14.4518119],
     },
+    position: { lat: 0, lng: 0 },
     price: null,
     route: null,
     time: { label: "Doručit teď", value: null },
@@ -31,13 +35,15 @@ const initialCart: TCart = {
     // type: "delivery" TODO
     type: "pickup",
   },
-  errors: [],
+  errors: {},
   note: "",
   payment: { change: null, type: "cash" },
   products: [],
-  promoCode: "",
-  promoDiscount: 0,
-  tips: { amount: 0, price: 0 },
+  promo: {
+    code: "",
+    discount: 0,
+  },
+  tips: { percentage: 0, price: 0 },
   totalPrice: 0,
 };
 
@@ -72,6 +78,7 @@ const addToCart = async (
     }
 
     await saveCart(newCart);
+    revalidatePath("/", "layout");
   }
 
   return validationResult;

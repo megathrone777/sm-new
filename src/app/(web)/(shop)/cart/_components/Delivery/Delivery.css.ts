@@ -11,9 +11,3 @@ export const wrapperClass = css(({ devices }) => ({
     },
   },
 }));
-
-export const layoutClass = css({
-  display: "grid",
-  gridAutoFlow: "row",
-  rowGap: 20,
-});

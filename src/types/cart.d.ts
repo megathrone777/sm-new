@@ -4,8 +4,9 @@ declare global {
   type TDeliveryType = "delivery" | "pickup";
   type TPaymentType = "card" | "cardAfterDelivery" | "cash";
   type TCartErrorType =
+    | "addressFormat"
     | "addressRange"
-    | "cutleryCount"
+    | "cutlery"
     | "delivery"
     | "deliveryTime"
     | "email"
@@ -13,16 +14,6 @@ declare global {
     | "phone"
     | "pickup"
     | "streetNumber";
-
-  interface TPayment {
-    change: 2000 | 5000 | null;
-    type: TPaymentType;
-  }
-
-  interface TTips {
-    amount: number;
-    price: number;
-  }
 
   interface TClient {
     email: string;
@@ -32,23 +23,18 @@ declare global {
 
   interface TDelivery {
     address: string;
-    clientPosition: LatLngLiteral;
     conditions: TDeliveryCondition[];
     distanceInM: number;
     pickupLocation: {
       name: null | string;
       position: number[];
     };
+    position: LatLngLiteral;
     price: null | number;
     route: LatLngExpression[] | null;
     time: TSelectOption;
     title: string;
     type: TDeliveryType;
-  }
-
-  interface TCartError {
-    message: string;
-    type: TCartErrorType;
   }
 
   interface TCartAdditional extends TAdditional {
@@ -73,16 +59,26 @@ declare global {
     additionals: TCartAdditional[];
     categoryDiscount: number;
     client: TClient;
-    cutleryCount: number;
-    cutleryPrice: number;
+    cutlery: {
+      quantity: number;
+      totalPrice: number;
+    };
     delivery: TDelivery;
-    errors: TCartError[];
+    errors: Partial<Record<TCartErrorType, string>>;
     note: string;
-    payment: TPayment;
+    payment: {
+      change: 2000 | 5000 | null;
+      type: TPaymentType;
+    };
     products: TCartProduct[];
-    promoCode: string;
-    promoDiscount: number;
-    tips: TTips;
+    promo: {
+      code: string;
+      discount: number;
+    };
+    tips: {
+      percentage: number;
+      price: number;
+    };
     totalPrice: number;
   }
 }

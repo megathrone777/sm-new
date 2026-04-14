@@ -4,11 +4,11 @@ import React from "react";
 import { useTranslation } from "@/hooks";
 import { Checkbox } from "@/ui";
 
-import { labelClass, wrapperClass } from "./TypeSwitcher.css";
+import { labelClass, wrapperClass } from "./DeliveryType.css";
 
-import type { TProps } from "./TypeSwitcher.types";
+import type { TProps } from "./DeliveryType.types";
 
-const TypeSwitcher: React.FC<TProps> = ({ totalPrice, type }) => {
+const DeliveryType: React.FC<TProps> = ({ totalPrice, type }) => {
   const { t } = useTranslation();
 
   const checkPickupDiscount = (): number => {
@@ -51,4 +51,4 @@ const TypeSwitcher: React.FC<TProps> = ({ totalPrice, type }) => {
   );
 };
 
-export { TypeSwitcher };
+export { DeliveryType };

@@ -10,11 +10,13 @@ import {
   Additionals,
   Cutlery,
   Delivery,
+  DeliveryType,
   Note,
   Placeholder,
   ProductsList,
   Queue,
   SectionLayout,
+  Submit,
 } from "./_components";
 
 import { layoutClass, wrapperClass } from "./page.css";
@@ -31,8 +33,9 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
       const {
         additionals: cartAdditionals,
         categoryDiscount,
-        client,
+        cutlery,
         delivery,
+        errors,
         products,
         totalPrice,
       } = cart;
@@ -48,34 +51,32 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
 
           <div className={layoutClass}>
             <SectionLayout
+              error={errors.cutlery}
               gridArea="cutlery"
+              id="cart-cutlery"
               title={t<string>("cutleryQuantity")}
             >
-              <Cutlery
-                cutleryCount={cart.cutleryCount}
-                cutleryPrice={cart.cutleryPrice}
-              />
+              <Cutlery {...cutlery} />
             </SectionLayout>
 
             <SectionLayout
+              error={errors.delivery}
               gridArea="delivery"
               title={t<string>("delivery")}
             >
-              <Delivery
-                {...delivery}
-                {...client}
+              <DeliveryType
                 {...{ totalPrice }}
+                type={delivery.type}
               />
+
+              <Delivery {...delivery} />
             </SectionLayout>
 
             <SectionLayout
               gridArea="additionals"
               title={t<string>("addMore")}
             >
-              <Additionals
-                additionals={additionals}
-                cartAdditionals={cartAdditionals}
-              />
+              <Additionals {...{ additionals, cartAdditionals }} />
             </SectionLayout>
 
             <SectionLayout
@@ -85,9 +86,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <Note />
             </SectionLayout>
 
-            <p>
-              Konečná cena: {totalPrice} {t<string>("currency")}
-            </p>
+            <Submit {...{ totalPrice }} />
           </div>
         </>
       );

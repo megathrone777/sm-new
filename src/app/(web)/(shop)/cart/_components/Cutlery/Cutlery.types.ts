@@ -1,4 +1,1 @@
-export interface TProps {
-  cutleryCount: number;
-  cutleryPrice: number;
-}
+export type TProps = TCart["cutlery"];

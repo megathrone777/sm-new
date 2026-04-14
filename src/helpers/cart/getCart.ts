@@ -11,8 +11,7 @@ const getCart = async (): Promise<null | TCart> => {
     const { cutleryPrice } = await shopHelpers.getSettings();
 
     if (cart && cart[sessionId] && !!Object.keys(cart).length) {
-      const { additionals, cutleryCount, delivery, products, promoDiscount, ...cartRest } =
-        cart[sessionId];
+      const { additionals, cutlery, delivery, products, promo, ...cartRest } = cart[sessionId];
 
       const getCategoryDiscount = (): number => {
         const productsWithDiscount: TCartProduct[] = products.filter(
@@ -42,8 +41,8 @@ const getCart = async (): Promise<null | TCart> => {
           0,
         );
 
-        if (cutleryCount > freeCutleryQuantity) {
-          return (cutleryCount - freeCutleryQuantity) * cutleryPrice;
+        if (cutlery.quantity > freeCutleryQuantity) {
+          return (cutlery.quantity - freeCutleryQuantity) * cutleryPrice;
         }
 
         return 0;
@@ -85,20 +84,22 @@ const getCart = async (): Promise<null | TCart> => {
         getCutleryPrice() -
         getCategoryDiscount() -
         getDeliveryDiscount() -
-        promoDiscount;
+        promo.discount;
 
       return {
         ...cartRest,
         additionals,
         categoryDiscount: getCategoryDiscount(),
-        cutleryCount,
-        cutleryPrice: getCutleryPrice(),
+        cutlery: {
+          ...cutlery,
+          totalPrice: getCutleryPrice(),
+        },
         delivery: {
           ...delivery,
           price: getDeliveryPrice(),
         },
         products,
-        promoDiscount,
+        promo,
         totalPrice,
       };
     }

@@ -1,20 +1,21 @@
 import React from "react";
-// import { getCountryCallingCode } from "libphonenumber-js";
+import Form from "next/form";
 // import { toast } from "react-toastify";
 // import { useRouter } from "next/navigation";
 // import moment from "moment";
 // import { scroller } from "react-scroll";
 
+import { validateAndSubmitCart } from "@/app/(web)/_actions";
 import { useTranslation } from "@/hooks";
 import { Button } from "@/ui";
 
-import { wrapperClass } from "./Submit.css";
+import { priceClass, wrapperClass } from "./Submit.css";
 
-import type { TProps } from "./types";
+import type { TProps } from "./Submit.types";
 
-const Submit: React.FC<TProps> = () => {
+const Submit: React.FC<TProps> = ({ totalPrice }) => {
+  // const [state, action, pending] = useActionState(formAction, null);
   const { t } = useTranslation();
-  // const router = useRouter();
 
   // const submitOrder = (): void => {
   //   toggleLoading(true);
@@ -125,14 +126,16 @@ const Submit: React.FC<TProps> = () => {
   // };
 
   return (
-    <div className={wrapperClass}>
-      <Button
-        // disabled={pending}
-        type="button"
-      >
-        {t<string>("goToPay")}
-      </Button>
-    </div>
+    <Form
+      action={validateAndSubmitCart}
+      className={wrapperClass}
+    >
+      <p className={priceClass}>
+        {t<string>("priceTotal")}: {totalPrice} {t<string>("currency")}
+      </p>
+
+      <Button type="submit">{t<string>("goToPay")}</Button>
+    </Form>
   );
 };
 

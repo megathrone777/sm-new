@@ -6,7 +6,7 @@ export const wrapperClass = css({
   rowGap: 20,
 });
 
-export const phoneWrapperClass = css({
+export const layoutClass = css({
   alignItems: "center",
   columnGap: 10,
   display: "grid",

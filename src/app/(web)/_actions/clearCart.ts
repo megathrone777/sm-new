@@ -1,5 +1,5 @@
 "use server";
-import { refresh } from "next/cache";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 import { cartHelpers } from "@/helpers/cart";
@@ -15,7 +15,7 @@ const clearCart = async (): Promise<void> => {
     const cookieStore = await cookies();
 
     cookieStore.delete(COOKIE_NAME);
-    refresh();
+    revalidatePath("/", "layout");
   }
 };
 

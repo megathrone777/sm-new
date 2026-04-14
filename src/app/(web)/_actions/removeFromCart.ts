@@ -1,4 +1,5 @@
 "use server";
+import { revalidatePath } from "next/cache";
 
 import { cartHelpers } from "@/helpers/cart";
 
@@ -20,6 +21,7 @@ const removeFromCart = async (index: number): Promise<void> => {
   }
 
   await saveCart(newCart);
+  revalidatePath("/cart");
 };
 
 export { removeFromCart };

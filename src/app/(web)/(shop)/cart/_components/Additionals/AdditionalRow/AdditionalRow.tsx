@@ -21,7 +21,7 @@ const AdditionalRow: React.FC<TProps> = ({ onUpdate, price, quantity, title }) =
 
       <div>
         <p className={priceClass}>
-          {price} {t<string>("currency")}
+          {price * quantity} {t<string>("currency")}
         </p>
       </div>
     </div>

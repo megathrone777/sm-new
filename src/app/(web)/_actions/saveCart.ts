@@ -1,6 +1,4 @@
 "use server";
-import { refresh } from "next/cache";
-
 import { cartHelpers } from "@/helpers/cart";
 import { redis } from "@/lib";
 
@@ -13,7 +11,6 @@ const saveCart = async (cart: TCart): Promise<void> => {
     redis.hset(sessionId, { [sessionId]: cart }),
     redis.expire(sessionId, ttlSeconds),
   ]);
-  refresh();
 };
 
 export { saveCart };

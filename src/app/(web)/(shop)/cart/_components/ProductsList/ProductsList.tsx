@@ -10,25 +10,24 @@ import { wrapperClass, discountClass, labelClass } from "./ProductsList.css";
 
 import type { TProps } from "./ProductsList.types";
 
-const ProductsList: React.FC<TProps> = ({ categoryDiscount, products }) => {
-  const [optimisticProducts, optimisticRemove] = useOptimistic(
-    products,
+const ProductsList: React.FC<TProps> = ({ categoryDiscount, products: initialProducts }) => {
+  const [products, removeProduct] = useOptimistic(
+    initialProducts,
     (state: TCartProduct[], index: number): TCartProduct[] =>
-      state.filter((_, i): boolean => i !== index),
+      state.filter((_, productIndex: number): boolean => productIndex !== index),
   );
   const { t } = useTranslation();
 
   const handleRemove = (index: number): void => {
     startTransition(async (): Promise<void> => {
-      optimisticRemove(index);
+      removeProduct(index);
       await removeFromCart(index);
     });
   };
 
-  const productsWithDiscount: TCartProduct[] = optimisticProducts.filter(
+  const productsWithDiscount: TCartProduct[] = products.filter(
     ({ isPromotionActive }: TCartProduct): boolean => isPromotionActive,
   );
-
   const productsWithDiscountQuantity: number = productsWithDiscount.reduce(
     (accumulator: number, { quantity }: TCartProduct): number => accumulator + quantity,
     0,
@@ -67,7 +66,7 @@ const ProductsList: React.FC<TProps> = ({ categoryDiscount, products }) => {
 
   return (
     <div className={wrapperClass}>
-      {optimisticProducts.map(
+      {products.map(
         ({ id, title, ...rest }: TCartProduct, index: number): React.ReactElement => (
           <ProductRow
             key={`${id}-${crypto.randomUUID()}`}
