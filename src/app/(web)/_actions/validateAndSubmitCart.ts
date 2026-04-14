@@ -13,7 +13,10 @@ import { isMissedStreetNumber } from "@/utils";
 import { saveCart } from "./saveCart";
 
 const validateAndSubmitCart = async (): Promise<void> => {
-  const cart = await cartHelpers.getCart();
+  const [cart, { deliveryConditions, lastTimeForPickup }] = await Promise.all([
+    cartHelpers.getCart(),
+    shopHelpers.getSettings(),
+  ]);
 
   if (!cart) return;
 
@@ -29,7 +32,6 @@ const validateAndSubmitCart = async (): Promise<void> => {
     tips,
     totalPrice,
   } = cart;
-  const { deliveryConditions, lastTimeForPickup } = await shopHelpers.getSettings();
   const errors: TCart["errors"] = {};
 
   const isEmailValid = (email: string): null | RegExpMatchArray => {
@@ -125,8 +127,6 @@ const validateAndSubmitCart = async (): Promise<void> => {
   }
 
   // Create order
-  const existingOrders = await ordersHelpers.getOrdersByPhone(client.phoneNumber);
-
   const freeCutleryQuantity = products.reduce(
     (acc, { freeCutleryCount, quantity }) => acc + freeCutleryCount * quantity,
     0,
@@ -136,7 +136,10 @@ const validateAndSubmitCart = async (): Promise<void> => {
   const totalProductsPrice = products.reduce((acc, p) => acc + p.totalPrice, 0);
   const totalAdditionalsPrice = additionals.reduce((acc, a) => acc + a.totalPrice, 0);
 
-  const [maxExistingId] = await redis.zrange("orders", 0, 0, { rev: true });
+  const [existingOrders, [maxExistingId]] = await Promise.all([
+    ordersHelpers.getOrdersByPhone(client.phoneNumber),
+    redis.zrange("orders", 0, 0, { rev: true }),
+  ]);
 
   if (maxExistingId) {
     await redis.set("orders:counter", Number(maxExistingId), { nx: true });
@@ -192,7 +195,9 @@ const validateAndSubmitCart = async (): Promise<void> => {
         phoneNumber: client.phoneNumber,
       }),
       redis.zadd("clients", { member: client.phoneNumber, score: Date.now() }),
-      realtime.channel("notification").emit("notification.newOrder", { createdAt: Date.now(), updatedAt: Date.now() }),
+      realtime
+        .channel("notification")
+        .emit("notification.newOrder", { createdAt: Date.now(), updatedAt: Date.now() }),
     ]);
   });
 
