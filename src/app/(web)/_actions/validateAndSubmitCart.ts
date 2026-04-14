@@ -7,7 +7,7 @@ import { after } from "next/server";
 import { cartHelpers } from "@/helpers/cart";
 import { ordersHelpers } from "@/helpers/orders";
 import { shopHelpers } from "@/helpers/shop";
-import { redis } from "@/lib";
+import { realtime, redis } from "@/lib";
 import { isMissedStreetNumber } from "@/utils";
 
 import { saveCart } from "./saveCart";
@@ -192,6 +192,7 @@ const validateAndSubmitCart = async (): Promise<void> => {
         phoneNumber: client.phoneNumber,
       }),
       redis.zadd("clients", { member: client.phoneNumber, score: Date.now() }),
+      realtime.channel("notification").emit("notification.newOrder", { createdAt: Date.now(), updatedAt: Date.now() }),
     ]);
   });
 

@@ -9,6 +9,7 @@ const Orders: React.FC<TProps> = ({ orders: initialOrders }) => {
   const [orders] = useState<TOrder[]>(initialOrders);
 
   useRealtime({
+    channels: ["notification"],
     events: ["notification.newOrder"],
     onData: ({ data, event }) => {
       console.log(`Received ${event}:`, data);
