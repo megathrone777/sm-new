@@ -45,7 +45,7 @@ const validateAndSubmitCart = async (): Promise<void> => {
   const checkVicinityOpened = (): boolean => {
     const format: string = "hh:mm";
     const currentTime = moment(moment(), format);
-    const startTime = moment("04:00", format);
+    const startTime = moment("01:00", format);
     const lastTime = moment(lastTimeForPickup, format);
 
     return currentTime.isBetween(startTime, lastTime);
