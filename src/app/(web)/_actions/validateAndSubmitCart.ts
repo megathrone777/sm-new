@@ -51,11 +51,15 @@ const validateAndSubmitCart = async (): Promise<void> => {
     return currentTime.isBetween(startTime, lastTime);
   };
 
+  console.log(checkVicinityOpened());
+
+/*
   if (delivery.type === "pickup" && !checkVicinityOpened()) {
     errors.pickup = `Po času ${moment(lastTimeForPickup, "HH:mm").format(
       "HH:mm",
     )}, vyzvednutí je možné jenom na provozovně Milicova 25, Praha 3`;
   }
+*/
 
   if (delivery.type === "delivery") {
     const relatedConditions = deliveryConditions.find(
