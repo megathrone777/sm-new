@@ -6,7 +6,7 @@ import { useTranslation } from "@/hooks";
 
 import { AdditionalRow } from "./AdditionalRow";
 
-import { wrapperClass } from "./Additionals.css";
+import { listClass, wrapperClass } from "./Additionals.css";
 
 import type { TProps } from "./Additionals.types";
 
@@ -27,15 +27,16 @@ const Additionals: React.FC<TProps> = ({ additionals, cartAdditionals }) => {
       state: TCartAdditional[],
       { id, type }: { id: number; type: "decrease" | "increase" },
     ): TCartAdditional[] =>
-      state.map((item: TCartAdditional): TCartAdditional =>
-        item.id !== id
-          ? item
-          : {
-              ...item,
-              quantity: type === "increase" ? item.quantity + 1 : Math.max(0, item.quantity - 1),
-              totalPrice:
-                type === "increase" ? item.totalPrice + item.price : item.totalPrice - item.price,
-            },
+      state.map(
+        (item: TCartAdditional): TCartAdditional =>
+          item.id !== id
+            ? item
+            : {
+                ...item,
+                quantity: type === "increase" ? item.quantity + 1 : Math.max(0, item.quantity - 1),
+                totalPrice:
+                  type === "increase" ? item.totalPrice + item.price : item.totalPrice - item.price,
+              },
       ),
   );
 
@@ -50,11 +51,9 @@ const Additionals: React.FC<TProps> = ({ additionals, cartAdditionals }) => {
     <div className={wrapperClass}>
       {!!additionals.length && (
         <>
-          <div>
-            <p>{t<string>("priceIncluded")}</p>
-          </div>
+          <p>{t<string>("priceIncluded")}</p>
 
-          <div>
+          <div className={listClass}>
             {optimisticAdditionals.map<React.ReactElement>(
               ({ id, ...rest }: TCartAdditional): React.ReactElement => (
                 <AdditionalRow

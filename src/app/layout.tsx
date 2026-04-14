@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RealTime, Toasts } from "@/components";
+import { Toasts } from "@/components";
 import { themeClass } from "@/theme";
 import "@/theme/global";
 
@@ -13,7 +13,7 @@ const RootLayout: React.FC<LayoutProps<"/">> = ({ children }) => (
     lang="cs"
   >
     <body>
-      <RealTime>{children}</RealTime>
+      {children}
       <Toasts />
     </body>
   </html>

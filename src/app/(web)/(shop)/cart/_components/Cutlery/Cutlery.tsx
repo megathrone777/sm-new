@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 
 import { updateCutleryQuantity } from "@/app/(web)/_actions";
 import { useTranslation } from "@/hooks";
-import { QuantityButton } from "@/ui";
+import { Icon, QuantityButton } from "@/ui";
 
 import {
+  errorIconClass,
   nameClass,
   priceClass,
   quantityAmountClass,
@@ -17,7 +18,7 @@ import {
 
 import type { TProps } from "./Cutlery.types";
 
-const Cutlery: React.FC<TProps> = ({ quantity: initialQuantity, totalPrice }) => {
+const Cutlery: React.FC<TProps> = ({ isError, quantity: initialQuantity, totalPrice }) => {
   const [quantity, setQuantity] = useOptimistic(
     initialQuantity,
     (state: number, type: "decrease" | "increase"): number =>
@@ -53,14 +54,22 @@ const Cutlery: React.FC<TProps> = ({ quantity: initialQuantity, totalPrice }) =>
     <div className={wrapperClass}>
       <p>{t<string>("cutleryDescription")}</p>
 
-      <div className={layoutClass}>
-        <div>
-          <p className={nameClass.default}>Příbory</p>
-        </div>
+      <div className={layoutClass[isError ? "error" : "default"]}>
+        <p className={nameClass}>
+          {isError && (
+            <Icon
+              className={errorIconClass}
+              id="exclamation"
+            />
+          )}
+
+          <span>Příbory</span>
+        </p>
 
         <div className={quantityClass}>
           <QuantityButton
             decrease
+            disabled={quantity === 0}
             onClick={handleQuantityClick}
             type="button"
             value="decrease"
@@ -73,11 +82,11 @@ const Cutlery: React.FC<TProps> = ({ quantity: initialQuantity, totalPrice }) =>
             type="button"
             value="increase"
           />
-
-          <p className={priceClass}>
-            {totalPrice > 0 ? `${totalPrice} ${t<string>("currency")}` : ""}
-          </p>
         </div>
+
+        <p className={priceClass}>
+          {totalPrice > 0 ? `${totalPrice} ${t<string>("currency")}` : ""}
+        </p>
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
-  alignContent: "center",
-  alignItems: "center",
+  alignItems: "start",
   columnGap: 12,
   display: "grid",
   gridAutoFlow: "column",
   justifyContent: "center",
-  paddingBlock: 8,
+  minHeight: 55,
+  paddingTop: 8,
 
   "@media": {
     [devices.mobile]: {

@@ -1,1 +1,3 @@
-export type TProps = TCart["cutlery"];
+export type TProps = {
+  isError?: boolean;
+} & TCart["cutlery"];

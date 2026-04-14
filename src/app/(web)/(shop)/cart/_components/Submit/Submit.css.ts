@@ -1,12 +1,18 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = css(({ devices }) => ({
   display: "grid",
-  gridArea: "submit",
   gridAutoFlow: "row",
-  justifyContent: "flex-end",
+  justifyContent: "end",
+  justifyItems: "end",
   rowGap: 22,
-});
+
+  "@media": {
+    [devices.desktop]: {
+      gridArea: "submit",
+    },
+  },
+}));
 
 export const priceClass = css(({ fonts }) => ({
   fontSize: 20,

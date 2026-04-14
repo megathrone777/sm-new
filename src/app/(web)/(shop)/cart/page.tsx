@@ -42,6 +42,8 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
         totalPrice,
       } = cart;
 
+      console.log(errors.cutlery);
+
       return (
         <>
           <SectionLayout
@@ -58,7 +60,10 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               id="cart-cutlery"
               title={t<string>("cutleryQuantity")}
             >
-              <Cutlery {...cutlery} />
+              <Cutlery
+                {...cutlery}
+                isError={Boolean(errors.cutlery)}
+              />
             </SectionLayout>
 
             <SectionLayout

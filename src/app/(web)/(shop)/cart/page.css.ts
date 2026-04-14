@@ -2,7 +2,7 @@ import { css } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   minHeight: 570,
-  paddingTop: 15,
+  paddingBlock: "15px 40px",
 
   "@media": {
     [devices.mobile]: {

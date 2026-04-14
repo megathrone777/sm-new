@@ -1,12 +1,10 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = css(() => ({
   alignItems: "center",
   display: "inline-grid",
   gridAutoFlow: "column",
-  marginRight: 15,
-  position: "relative",
-});
+}));
 
 export const quantityClass = css(({ fonts }) => ({
   fontSize: 18,

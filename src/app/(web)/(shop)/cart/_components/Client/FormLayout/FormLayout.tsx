@@ -1,9 +1,12 @@
 "use client";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
+import Form from "next/form";
 
 import { updateClient } from "@/app/(web)/_actions";
 import { useDebouncedCallback } from "@/hooks";
+
+import { wrapperClass } from "./FormLayout.css";
 
 import type { TProps } from "./FormLayout.types";
 
@@ -18,12 +21,16 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
     },
   );
 
-  const handleChange = ({ currentTarget }: React.ChangeEvent<HTMLFormElement>): void => {
+  const handleChange = ({ currentTarget }: React.SyntheticEvent<HTMLFormElement>): void => {
     const formData = new FormData(currentTarget);
     const name = String(formData.get("name") ?? "");
     const email = String(formData.get("email") ?? "");
 
     debouncedUpdate(name, email);
+  };
+
+  const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>): void => {
+    event.preventDefault();
   };
 
   useEffect((): void => {
@@ -37,13 +44,14 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
   }, []);
 
   return (
-    <form
+    <Form
       action="#"
+      className={wrapperClass}
       onChange={handleChange}
-      onSubmit={(event) => event.preventDefault()}
+      onSubmit={handleSubmit}
     >
       {children}
-    </form>
+    </Form>
   );
 };
 

@@ -13,17 +13,12 @@ const AdditionalRow: React.FC<TProps> = ({ onUpdate, price, quantity, title }) =
 
   return (
     <div className={wrapperClass}>
-      <div>
-        <p className={nameClass}>{title}</p>
-      </div>
-
+      <p className={nameClass}>{title}</p>
       <QuantityControls {...{ onUpdate, quantity }} />
 
-      <div>
-        <p className={priceClass}>
-          {price * quantity} {t<string>("currency")}
-        </p>
-      </div>
+      <p className={priceClass}>
+        {price * quantity} {t<string>("currency")}
+      </p>
     </div>
   );
 };
