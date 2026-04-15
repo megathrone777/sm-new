@@ -30,7 +30,7 @@ declare global {
     deliveryType: TDeliveryType;
     id: number;
     note: string;
-    onlinePaymentStatus: TOnlinePaymentStatus;
+    onlinePaymentStatus: null | TOnlinePaymentStatus;
     paymentType: TPaymentType;
     products: TOrderProduct[];
     promocode: string;

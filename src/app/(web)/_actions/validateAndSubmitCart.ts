@@ -5,7 +5,6 @@ import { redirect } from "next/navigation";
 import { after } from "next/server";
 
 import { cartHelpers } from "@/helpers/cart";
-import { ordersHelpers } from "@/helpers/orders";
 import { shopHelpers } from "@/helpers/shop";
 import { realtime, redis } from "@/lib";
 import { isMissedStreetNumber } from "@/utils";
@@ -45,21 +44,17 @@ const validateAndSubmitCart = async (): Promise<void> => {
   const checkVicinityOpened = (): boolean => {
     const format: string = "hh:mm";
     const currentTime = moment(moment(), format);
-    const startTime = moment("01:00", format);
+    const startTime = moment("11:00", format);
     const lastTime = moment(lastTimeForPickup, format);
 
     return currentTime.isBetween(startTime, lastTime);
   };
 
-  console.log(checkVicinityOpened());
-
-  /*
   if (delivery.type === "pickup" && !checkVicinityOpened()) {
     errors.pickup = `Po času ${moment(lastTimeForPickup, "HH:mm").format(
       "HH:mm",
     )}, vyzvednutí je možné jenom na provozovně Milicova 25, Praha 3`;
   }
-  */
 
   if (delivery.type === "delivery") {
     const relatedConditions = deliveryConditions.find(
@@ -131,25 +126,27 @@ const validateAndSubmitCart = async (): Promise<void> => {
   }
 
   // Create order
-  const freeCutleryQuantity = products.reduce(
-    (acc, { freeCutleryCount, quantity }) => acc + freeCutleryCount * quantity,
+  const freeCutleryQuantity = products.reduce<number>(
+    (accumulator, { freeCutleryCount, quantity }: TCartProduct) =>
+      accumulator + freeCutleryCount * quantity,
     0,
   );
-  const cutleryCountToPay = Math.max(0, cutlery.quantity - freeCutleryQuantity);
-
-  const totalProductsPrice = products.reduce((acc, p) => acc + p.totalPrice, 0);
+  const cutleryCountToPay: number = Math.max(0, cutlery.quantity - freeCutleryQuantity);
+  const totalProductsPrice: number = products.reduce((acc, p) => acc + p.totalPrice, 0);
   const totalAdditionalsPrice = additionals.reduce((acc, a) => acc + a.totalPrice, 0);
 
-  const [existingOrders, [maxExistingId]] = await Promise.all([
-    ordersHelpers.getOrdersByPhone(client.phoneNumber),
-    redis.zrange("orders", 0, 0, { rev: true }),
-  ]);
+  const pipeline = redis.pipeline();
+  // const [existingOrders, [maxExistingId]] = await Promise.all([
+  //   pipeline.zrange(`orders:phone:${client.phoneNumber}`, 0, -1);
+  //   redis.zrange("orders", 0, 0, { rev: true }),
+  // ]);
 
-  if (maxExistingId) {
-    await redis.set("orders:counter", Number(maxExistingId), { nx: true });
-  }
+  pipeline.zrange(`orders:phone:${client.phoneNumber}`, 0, -1);
+  pipeline.incr("orders:counter");
 
-  const id = await redis.incr("orders:counter");
+  const [existingOrders, id] = await pipeline.exec<[TOrder[], number]>();
+
+  // const id = await redis.incr("orders:counter");
 
   const order: TOrder = {
     clientEmail: client.email,
@@ -175,9 +172,9 @@ const validateAndSubmitCart = async (): Promise<void> => {
     deliveryType: delivery.type,
     id,
     note,
-    onlinePaymentStatus: "" as TOnlinePaymentStatus,
+    onlinePaymentStatus: null,
     paymentType: payment.type,
-    products: products as TOrderProduct[],
+    products,
     promocode: promo.code,
     promocodeDiscountPrice: promo.discount,
     status: "new",
@@ -189,23 +186,28 @@ const validateAndSubmitCart = async (): Promise<void> => {
     totalProductsPrice,
   };
 
+  await redis.hset<TOrder>(`order:${id}`, order as unknown as Record<TOrder["id"], TOrder>);
+
   after(async () => {
+    const afterPipeline = redis.pipeline();
+
+    afterPipeline.zadd("orders", { member: String(id), score: id });
+    afterPipeline.zadd(`orders:phone:${client.phoneNumber}`, { member: String(id), score: id });
+    afterPipeline.hset(`client:${client.phoneNumber}`, {
+      email: client.email,
+      name: client.name,
+      phoneNumber: client.phoneNumber,
+    });
+    afterPipeline.zadd("clients", { member: client.phoneNumber, score: Date.now() });
+
     await Promise.all([
-      redis.zadd("orders", { member: String(id), score: id }),
-      redis.zadd(`orders:phone:${client.phoneNumber}`, { member: String(id), score: id }),
-      redis.hset(`client:${client.phoneNumber}`, {
-        email: client.email,
-        name: client.name,
-        phoneNumber: client.phoneNumber,
-      }),
-      redis.zadd("clients", { member: client.phoneNumber, score: Date.now() }),
+      afterPipeline.exec(),
       realtime
         .channel("notification")
         .emit("notification.newOrder", { createdAt: Date.now(), updatedAt: Date.now() }),
     ]);
   });
 
-  await redis.hset(`order:${id}`, order as unknown as Record<string, unknown>);
   redirect(`/orderConfirmed/${id}`);
 };
 

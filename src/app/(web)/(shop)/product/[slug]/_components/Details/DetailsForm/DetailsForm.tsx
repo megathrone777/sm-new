@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState, startTransition } from "react";
 import { toast } from "react-toastify";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
-import { addToCart, calculateProductPrice, validateNewProduct } from "@/app/(web)/_actions";
+import { addToCart, validateNewProduct } from "@/app/(web)/_actions";
+import { cartHelpers } from "@/helpers/cart";
 import { useTranslation } from "@/hooks";
 import { Button } from "@/ui";
 import { toKey } from "@/utils";
@@ -63,7 +64,7 @@ const DetailsForm: React.FC<TProps> = ({
   }: React.SyntheticEvent<HTMLFormElement>): Promise<void> => {
     const formData = new FormData(currentTarget);
     const selectedModifiers = collectSelectedModifiers(formData);
-    const newTotalPrice = await calculateProductPrice(price, selectedModifiers);
+    const newTotalPrice = cartHelpers.getProductPrice(price, selectedModifiers);
 
     removeRequiredParam();
     setTotalPrice(newTotalPrice);
