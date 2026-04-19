@@ -15,7 +15,7 @@ const updatePhone = async (phoneNumber: string): Promise<void> => {
     ...cart,
     client: {
       ...cart.client,
-      phoneNumber: isPhoneValid ? phoneNumber : cart.client.phoneNumber,
+      phoneNumber: isPhoneValid ? phoneNumber.replace("+", "") : cart.client.phoneNumber,
     },
     errors: {
       ...cart.errors,

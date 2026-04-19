@@ -93,7 +93,7 @@ const validateAndSubmitCart = async (): Promise<void> => {
     errors.email = "Vyplňte Email";
   }
 
-  if (!client.phoneNumber || !/^\+\d{7,15}$/.test(client.phoneNumber)) {
+  if (!client.phoneNumber || !/^\d{7,15}$/.test(client.phoneNumber)) {
     errors.phone = "Vyplňte telefonní číslo ve formátu (+xxx xxx xxx xxx)";
   }
 
@@ -125,29 +125,27 @@ const validateAndSubmitCart = async (): Promise<void> => {
     redirect("/cart#cart-cutlery", "replace");
   }
 
-  // Create order
   const freeCutleryQuantity = products.reduce<number>(
     (accumulator, { freeCutleryCount, quantity }: TCartProduct) =>
       accumulator + freeCutleryCount * quantity,
     0,
   );
   const cutleryCountToPay: number = Math.max(0, cutlery.quantity - freeCutleryQuantity);
-  const totalProductsPrice: number = products.reduce((acc, p) => acc + p.totalPrice, 0);
-  const totalAdditionalsPrice = additionals.reduce((acc, a) => acc + a.totalPrice, 0);
+  const totalProductsPrice: number = products.reduce<number>(
+    (accumulator, { totalPrice }: TCartProduct) => accumulator + totalPrice,
+    0,
+  );
+  const totalAdditionalsPrice: number = additionals.reduce<number>(
+    (accumulator, { totalPrice }: TCartAdditional) => accumulator + totalPrice,
+    0,
+  );
 
   const pipeline = redis.pipeline();
-  // const [existingOrders, [maxExistingId]] = await Promise.all([
-  //   pipeline.zrange(`orders:phone:${client.phoneNumber}`, 0, -1);
-  //   redis.zrange("orders", 0, 0, { rev: true }),
-  // ]);
 
-  pipeline.zrange(`orders:phone:${client.phoneNumber}`, 0, -1);
+  pipeline.zrange(`orders:phone:+${client.phoneNumber}`, 0, -1);
   pipeline.incr("orders:counter");
 
   const [existingOrders, id] = await pipeline.exec<[TOrder[], number]>();
-
-  // const id = await redis.incr("orders:counter");
-
   const order: TOrder = {
     clientEmail: client.email,
     clientName: client.name,
@@ -186,20 +184,17 @@ const validateAndSubmitCart = async (): Promise<void> => {
     totalProductsPrice,
   };
 
-  await redis.hset<TOrder>(`order:${id}`, order as unknown as Record<TOrder["id"], TOrder>);
-
   after(async () => {
     const afterPipeline = redis.pipeline();
 
-    afterPipeline.zadd("orders", { member: String(id), score: id });
-    afterPipeline.zadd(`orders:phone:${client.phoneNumber}`, { member: String(id), score: id });
-    afterPipeline.hset(`client:${client.phoneNumber}`, {
+    afterPipeline.zadd("orders", { member: `${id}`, score: id });
+    afterPipeline.zadd(`orders:phone:+${client.phoneNumber}`, { member: `${id}`, score: id });
+    afterPipeline.hset(`client:+${client.phoneNumber}`, {
       email: client.email,
       name: client.name,
-      phoneNumber: client.phoneNumber,
+      phoneNumber: `+${client.phoneNumber}`,
     });
-    afterPipeline.zadd("clients", { member: client.phoneNumber, score: Date.now() });
-
+    afterPipeline.zadd("clients", { member: `+${client.phoneNumber}`, score: Date.now() });
     await Promise.all([
       afterPipeline.exec(),
       realtime
@@ -207,7 +202,7 @@ const validateAndSubmitCart = async (): Promise<void> => {
         .emit("notification.newOrder", { createdAt: Date.now(), updatedAt: Date.now() }),
     ]);
   });
-
+  await redis.hset<TOrder>(`order:${id}`, order as unknown as Record<TOrder["id"], TOrder>);
   redirect(`/orderConfirmed/${id}`);
 };
 
