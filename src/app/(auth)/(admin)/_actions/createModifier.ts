@@ -2,11 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { modifiersHelpers } from "@/helpers/modifiers";
-import { submodifiersHelpers } from "@/helpers/submodifiers";
-import { redis } from "@/lib";
-
-const MODIFIERS_SEARCH_PREFIX = "modifier:";
+import { modifiersStore, redis } from "@/store";
 
 const createModifier = async (
   _state: null | TActionResult,
@@ -33,20 +29,18 @@ const createModifier = async (
   const sortOrder = Number(formData.get("sortOrder") ?? 0);
   const requiredSubModifier = formData.get("requiredSubModifier") === "on";
   const subModifierIds = formData.getAll("subModifierIds").map(Number);
-  const [existing, allSubs] = await Promise.all([
-    modifiersHelpers.getModifiers(),
-    submodifiersHelpers.getSubmodifiers(),
-  ]);
+  const [existingMap, subsMap] = await redis
+    .pipeline()
+    .hgetall<Record<string, TModifier>>("modifiers")
+    .hgetall<Record<string, TSubmodifier>>("submodifiers")
+    .exec<[null | Record<string, TModifier>, null | Record<string, TSubmodifier>]>();
+
+  const existing = existingMap ? Object.values(existingMap) : [];
+  const allSubs = subsMap ? Object.values(subsMap) : [];
   const id = existing.length ? Math.max(...existing.map<number>(({ id }) => id)) + 1 : 1;
   const subModifiers = allSubs.filter(({ id: sid }) => subModifierIds.includes(sid));
-  const modifier: TModifier = { id, price, requiredSubModifier, sortOrder, subModifiers, title };
 
-  const pipeline = redis.pipeline();
-
-  pipeline.hset("modifiers", { [id]: JSON.stringify(modifier) });
-  pipeline.hset(`${MODIFIERS_SEARCH_PREFIX}${id}`, { id, price, title });
-
-  await pipeline.exec();
+  await modifiersStore.set({ id, price, requiredSubModifier, sortOrder, subModifiers, title });
   revalidatePath("/admin/modifiers");
 
   return {

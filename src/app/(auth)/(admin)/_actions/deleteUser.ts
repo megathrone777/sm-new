@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { usersStore } from "@/store";
 
 const deleteUser = async (
   _state: null | TActionResult,
@@ -19,7 +19,7 @@ const deleteUser = async (
   if (!user) throw new Error(`User "${login}" not found`);
   if (user.role === "admin") throw new Error("Cannot delete admin users");
 
-  await redis.hdel("users", login);
+  await usersStore.delete(login);
 
   revalidatePath("/admin/users");
 

@@ -20,8 +20,8 @@ const updateQuantity = async (index: number, type: "decrease" | "increase"): Pro
 
     if (!cart) return;
 
-    const newCart: TCart = { ...cart, products: [...cart.products] };
-    const product = newCart.products[index];
+    const products = [...cart.products];
+    const product = products[index];
 
     if (!product) return;
 
@@ -29,23 +29,23 @@ const updateQuantity = async (index: number, type: "decrease" | "increase"): Pro
 
     if (type === "decrease") {
       if (product.quantity <= 1) {
-        newCart.products.splice(index, 1);
+        products.splice(index, 1);
       } else {
-        newCart.products[index] = {
+        products[index] = {
           ...product,
           quantity: product.quantity - 1,
           totalPrice: product.totalPrice - unitPrice,
         };
       }
     } else {
-      newCart.products[index] = {
+      products[index] = {
         ...product,
         quantity: product.quantity + 1,
         totalPrice: product.totalPrice + unitPrice,
       };
     }
 
-    await saveCart(newCart);
+    await saveCart({ products });
     revalidatePath("/cart");
   } finally {
     await release(sessionId);

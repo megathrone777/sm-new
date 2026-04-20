@@ -34,5 +34,5 @@ const cssVariants = <Map extends Record<string, ComplexStyleRule | string>>(
   return styleVariants(resolvedMap, (value) => mapFn(value as Map[keyof Map], themeVars));
 };
 
-export { css, cssVariants };
+export { css, cssVariants, devices, vars };
 export { themeClass } from "./theme.css";

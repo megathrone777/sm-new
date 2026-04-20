@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { ordersHelpers } from "@/helpers/orders";
-import { redis } from "@/lib";
+import { ordersStore } from "@/store";
 
 const updateOrder = async (
   _state: null | TActionResult,
@@ -31,12 +31,7 @@ const updateOrder = async (
     return { message: `Order #${id} not found`, type: "error" };
   }
 
-  await redis.hset(`order:${id}`, {
-    courier,
-    deliveryTime,
-    note,
-    status,
-  });
+  await ordersStore.update(id, { courier, deliveryTime, note, status });
 
   revalidatePath("/admin/orders");
   revalidatePath(`/admin/order/${id}`);

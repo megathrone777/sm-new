@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { cartHelpers } from "@/helpers/cart";
+import { cartStore } from "@/store";
 import { isEqual } from "@/utils";
 
 import { saveCart } from "./saveCart";
@@ -52,32 +53,45 @@ const addToCart = async (
   newProduct: TCartProduct,
 ): Promise<TActionResult> => {
   const validationResult = await validateNewProduct(newProduct);
+  const sessionId = await cartHelpers.getSessionIdAndCreateIfMissing();
+
+  if (!sessionId) {
+    return {
+      message: "Unauthorized",
+      type: "error",
+    };
+  }
+
+  const cart = await cartStore.get(sessionId);
 
   if (validationResult.type === "success") {
-    const cart = await cartHelpers.getCart();
-    const newCart: TCart = cart ? { ...cart } : { ...initialCart };
-
-    const toComparable = ({
-      quantity: _,
-      totalPrice: __,
-      ...rest
-    }: TCartProduct): Omit<TCartProduct, "quantity" | "totalPrice"> => rest;
-
-    const foundIndex: number = newCart.products.findIndex((product: TCartProduct): boolean =>
-      isEqual(toComparable(newProduct), toComparable(product)),
-    );
-
-    if (foundIndex !== -1 && newCart.products[foundIndex]) {
-      newCart.products[foundIndex] = {
-        ...newCart.products[foundIndex],
-        quantity: newCart.products[foundIndex].quantity + 1,
-        totalPrice: newCart.products[foundIndex].totalPrice + newProduct.totalPrice,
-      };
+    if (!cart) {
+      await saveCart({ ...initialCart, products: [newProduct] });
     } else {
-      newCart.products = [...newCart.products, newProduct];
-    }
+      const toComparable = ({
+        quantity: _,
+        totalPrice: __,
+        ...rest
+      }: TCartProduct): Omit<TCartProduct, "quantity" | "totalPrice"> => rest;
 
-    await saveCart(newCart);
+      const foundIndex: number = cart.products.findIndex((product: TCartProduct): boolean =>
+        isEqual(toComparable(newProduct), toComparable(product)),
+      );
+      const products = [...cart.products];
+      const existing = products[foundIndex];
+
+      if (existing) {
+        products[foundIndex] = {
+          ...existing,
+          quantity: existing.quantity + 1,
+          totalPrice: existing.totalPrice + newProduct.totalPrice,
+        };
+      } else {
+        products.push(newProduct);
+      }
+
+      await saveCart({ products });
+    }
     revalidatePath("/", "layout");
   }
 

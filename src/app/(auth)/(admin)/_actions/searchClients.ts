@@ -1,5 +1,5 @@
 "use server";
-import { redis } from "@/lib";
+import { redis } from "@/store";
 
 import type { FlatIndexSchema } from "@upstash/redis";
 

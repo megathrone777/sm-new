@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { productsHelpers } from "@/helpers/products";
-import { redis } from "@/lib";
+import { redis } from "@/store";
 
 const updateCategory = async (
   _state: null | TActionResult,

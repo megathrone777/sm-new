@@ -1,9 +1,6 @@
-import { redis } from "@/lib";
+import { clientsStore } from "@/store";
 
-const getClientByPhone = async (phoneNumber: string): Promise<null | TClient> => {
-  const client = (await redis.hgetall(`client:${phoneNumber}`)) as unknown as TClient;
-
-  return client;
-};
+const getClientByPhone = (phoneNumber: string): Promise<null | TClient> =>
+  clientsStore.getByPhone(phoneNumber);
 
 export { getClientByPhone };

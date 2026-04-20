@@ -1,6 +1,6 @@
 "use server";
 import { ordersHelpers } from "@/helpers/orders";
-import { redis } from "@/lib";
+import { redis } from "@/store";
 
 import type { FlatIndexSchema } from "@upstash/redis";
 

@@ -1,9 +1,5 @@
-import { redis } from "@/lib";
+import { additionalsStore } from "@/store";
 
-const getAdditionalById = async (id: number): Promise<null | TAdditional> => {
-  const additional = await redis.hget<TAdditional>("additionals", `${id}`);
-
-  return additional ?? null;
-};
+const getAdditionalById = (id: number): Promise<null | TAdditional> => additionalsStore.getById(id);
 
 export { getAdditionalById };

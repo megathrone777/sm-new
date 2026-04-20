@@ -5,7 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { sessionsStore } from "@/store";
 import { verifyPassword } from "@/utils";
 
 const COOKIE_NAME = "session";
@@ -14,7 +14,7 @@ const SESSION_TTL = 60 * 60 * 24 * 30;
 const createSession = async (data: TSessionData): Promise<void> => {
   const sessionId = crypto.randomBytes(32).toString("hex");
 
-  await redis.set(`session:${sessionId}`, JSON.stringify(data), { ex: SESSION_TTL });
+  await sessionsStore.set(sessionId, data, SESSION_TTL);
   const cookieStore = await cookies();
 
   cookieStore.set(COOKIE_NAME, sessionId, {

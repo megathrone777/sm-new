@@ -1,5 +1,5 @@
 import { shopHelpers } from "@/helpers/shop";
-import { redis } from "@/lib";
+import { store } from "@/store";
 
 import { getSessionId } from "./getSessionId";
 
@@ -7,11 +7,11 @@ const getCart = async (): Promise<null | TCart> => {
   const sessionId = await getSessionId();
 
   if (sessionId) {
-    const cart = await redis.hgetall<Record<string, TCart>>(sessionId);
+    const cart = await store.cart.get(sessionId);
     const { cutleryPrice } = await shopHelpers.getSettings();
 
-    if (cart && cart[sessionId] && !!Object.keys(cart).length) {
-      const { additionals, cutlery, delivery, products, promo, ...cartRest } = cart[sessionId];
+    if (cart) {
+      const { additionals, cutlery, delivery, products, promo, ...cartRest } = cart;
 
       const getCategoryDiscount = (): number => {
         const productsWithDiscount: TCartProduct[] = products.filter(

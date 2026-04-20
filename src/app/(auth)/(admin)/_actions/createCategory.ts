@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { productsHelpers } from "@/helpers/products";
-import { redis } from "@/lib";
+import { categoriesStore } from "@/store";
 
 const createCategory = async (
   _state: null | TActionResult,
@@ -50,7 +50,7 @@ const createCategory = async (
     title,
   };
 
-  await redis.hset("categories", { [id]: JSON.stringify(category) });
+  await categoriesStore.set(category);
 
   revalidatePath("/admin/categories");
 

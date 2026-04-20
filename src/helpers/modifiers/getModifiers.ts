@@ -1,14 +1,5 @@
-import { redis } from "@/lib";
+import { modifiersStore } from "@/store";
 
-const getModifiers = async (): Promise<TModifier[]> => {
-  const modifiers = await redis.hgetall<Record<string, TModifier>>("modifiers");
-
-  if (!modifiers) return [];
-
-  return Object.values(modifiers).sort(
-    (modifierA: TModifier, modifierB: TModifier): number =>
-      modifierA.sortOrder - modifierB.sortOrder,
-  );
-};
+const getModifiers = (): Promise<TModifier[]> => modifiersStore.getAll();
 
 export { getModifiers };

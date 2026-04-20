@@ -1,9 +1,5 @@
-import { redis } from "@/lib";
+import { modifiersStore } from "@/store";
 
-const getModifierById = async (id: number): Promise<null | TModifier> => {
-  const modifier = await redis.hget<TModifier>("modifiers", `${id}`);
-
-  return modifier ?? null;
-};
+const getModifierById = (id: number): Promise<null | TModifier> => modifiersStore.getById(id);
 
 export { getModifierById };

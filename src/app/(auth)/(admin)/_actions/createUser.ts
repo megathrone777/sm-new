@@ -4,7 +4,7 @@ import crypto from "crypto";
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { usersStore } from "@/store";
 import { hashPassword } from "@/utils";
 
 const createUser = async (
@@ -55,15 +55,14 @@ const createUser = async (
   }
 
   const { hash, salt } = hashPassword(password);
-  const user: TUser = {
+
+  await usersStore.set({
     id: crypto.randomUUID(),
     login,
     passwordHash: hash,
     role,
     salt,
-  };
-
-  await redis.hset("users", { [login]: JSON.stringify(user) });
+  });
   revalidatePath("/admin/users");
 
   return {

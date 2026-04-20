@@ -10,17 +10,17 @@ const removeFromCart = async (index: number): Promise<void> => {
   const cart = await cartHelpers.getCart();
 
   if (!cart) return;
-  const newCart: TCart = { ...cart, products: [...cart.products] };
+  const products = [...cart.products];
 
-  newCart.products.splice(index, 1);
+  products.splice(index, 1);
 
-  if (newCart.products.length === 0) {
+  if (products.length === 0) {
     await clearCart();
 
     return;
   }
 
-  await saveCart(newCart);
+  await saveCart({ products });
   revalidatePath("/cart");
 };
 

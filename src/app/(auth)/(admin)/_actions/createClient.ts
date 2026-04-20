@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { clientsStore } from "@/store";
 
 const createClient = async (
   _state: null | TActionResult,
@@ -22,18 +22,11 @@ const createClient = async (
     return { message: "Phone number and name are required", type: "error" };
   }
 
-  const exists = await redis.exists(`client:${phoneNumber}`);
-
-  if (exists) {
+  if (await clientsStore.exists(phoneNumber)) {
     return { message: `Client with phone ${phoneNumber} already exists`, type: "error" };
   }
 
-  const pipeline = redis.pipeline();
-  const now = Date.now();
-
-  pipeline.hset(`client:${phoneNumber}`, { email, name, phoneNumber });
-  pipeline.zadd("clients", { member: phoneNumber, score: now });
-  await pipeline.exec();
+  await clientsStore.set({ email, name, phoneNumber });
   revalidatePath("/admin/clients");
 
   return { message: `Client ${name} successfully created`, type: "success" };

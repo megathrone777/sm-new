@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { additionalsStore } from "@/store";
 
 const deleteAdditional = async (
   _state: null | TActionResult,
@@ -15,7 +15,7 @@ const deleteAdditional = async (
   const id = formData.get("id");
   const title = formData.get("title");
 
-  await redis.hdel("additionals", `${id}`);
+  await additionalsStore.delete(String(id));
 
   revalidatePath("/admin/additionals");
 

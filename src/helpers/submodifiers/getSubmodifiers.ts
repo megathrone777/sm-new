@@ -1,14 +1,5 @@
-import { redis } from "@/lib";
+import { submodifiersStore } from "@/store";
 
-const getSubmodifiers = async (): Promise<TSubmodifier[]> => {
-  const submodifiers = await redis.hgetall<Record<string, TSubmodifier>>("submodifiers");
-
-  if (!submodifiers) return [];
-
-  return Object.values(submodifiers).sort(
-    (subModifierA: TSubmodifier, subModifierB: TSubmodifier): number =>
-      subModifierA.sortOrder - subModifierB.sortOrder,
-  );
-};
+const getSubmodifiers = (): Promise<TSubmodifier[]> => submodifiersStore.getAll();
 
 export { getSubmodifiers };

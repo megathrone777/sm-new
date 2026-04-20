@@ -1,9 +1,8 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { additionalsHelpers } from "@/helpers/additionals";
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { additionalsStore } from "@/store";
 
 const updateAdditional = async (
   _state: null | TActionResult,
@@ -22,12 +21,11 @@ const updateAdditional = async (
   const title = (formData.get("title") as string).trim();
   const price = Number(formData.get("price") ?? 0);
   const sortOrder = Number(formData.get("sortOrder") ?? 0);
-  const prev = await additionalsHelpers.getAdditionalById(id);
+  const prev = await additionalsStore.getById(id);
 
   if (!prev) throw new Error(`Additional ${id} not found`);
-  const additional: TAdditional = { ...prev, price, sortOrder, title };
 
-  await redis.hset("additionals", { [id]: JSON.stringify(additional) });
+  await additionalsStore.set({ ...prev, price, sortOrder, title });
 
   revalidatePath("/admin/additionals");
 

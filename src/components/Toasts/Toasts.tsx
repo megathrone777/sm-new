@@ -10,7 +10,7 @@ import {
 
 import { Icon } from "@/ui";
 
-import { closeButtonClass, containerClass, iconClass, toastClass } from "./Toasts.css";
+import { closeButtonClass, iconClass, wrapperClass } from "./Toasts.css";
 
 const Toasts: React.FC = () => {
   const slideTransition = cssTransition({
@@ -23,7 +23,7 @@ const Toasts: React.FC = () => {
   return (
     <ToastContainer
       autoClose={3500}
-      className={containerClass}
+      className={wrapperClass}
       closeButton={({ closeToast }: CloseButtonProps): React.ReactElement => (
         <button
           className={closeButtonClass}
@@ -45,7 +45,6 @@ const Toasts: React.FC = () => {
       newestOnTop
       pauseOnHover
       position="bottom-right"
-      toastClassName={toastClass}
       transition={slideTransition}
     />
   );

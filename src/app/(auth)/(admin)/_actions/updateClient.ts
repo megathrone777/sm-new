@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { clientsStore } from "@/store";
 
 const updateClient = async (
   _state: null | TActionResult,
@@ -22,7 +22,7 @@ const updateClient = async (
     return { message: "Phone number and name are required", type: "error" };
   }
 
-  await redis.hset(`client:${phoneNumber}`, { email, name, phoneNumber });
+  await clientsStore.update({ email, name, phoneNumber });
   revalidatePath("/admin/clients");
 
   return { message: `Client ${name} successfully updated`, type: "success" };

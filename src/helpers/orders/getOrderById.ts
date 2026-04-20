@@ -1,9 +1,5 @@
-import { redis } from "@/lib";
+import { ordersStore } from "@/store";
 
-const getOrderById = async (id: number | string): Promise<null | TOrder> => {
-  const order = (await redis.hgetall(`order:${id}`)) as unknown as TOrder;
-
-  return order;
-};
+const getOrderById = (id: number | string): Promise<null | TOrder> => ordersStore.getById(id);
 
 export { getOrderById };

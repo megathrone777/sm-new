@@ -2,7 +2,7 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { redis } from "@/lib";
+import { sessionsStore } from "@/store";
 
 const COOKIE_NAME = "session";
 
@@ -11,7 +11,7 @@ const logout = async (): Promise<void> => {
   const sessionId = cookieStore.get(COOKIE_NAME)?.value;
 
   if (sessionId) {
-    await redis.del(`session:${sessionId}`);
+    await sessionsStore.delete(sessionId);
   }
 
   cookieStore.delete(COOKIE_NAME);

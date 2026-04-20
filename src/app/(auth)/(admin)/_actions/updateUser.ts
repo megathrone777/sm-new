@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { usersStore } from "@/store";
 import { hashPassword } from "@/utils";
 
 const updateUser = async (
@@ -39,12 +39,9 @@ const updateUser = async (
   const updated: TUser = { ...prevUser, ...passwordFields, login: newLogin, role };
 
   if (newLogin !== currentLogin) {
-    await Promise.all([
-      redis.hdel("users", currentLogin),
-      redis.hset("users", { [newLogin]: JSON.stringify(updated) }),
-    ]);
+    await usersStore.rename(currentLogin, updated);
   } else {
-    await redis.hset("users", { [newLogin]: JSON.stringify(updated) });
+    await usersStore.set(updated);
   }
 
   revalidatePath("/admin/users");

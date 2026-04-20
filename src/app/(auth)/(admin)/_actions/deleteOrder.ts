@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { ordersHelpers } from "@/helpers/orders";
-import { redis } from "@/lib";
+import { ordersStore } from "@/store";
 
 const deleteOrder = async (
   _state: null | TActionResult,
@@ -27,20 +27,7 @@ const deleteOrder = async (
     return { message: `Order #${id} not found`, type: "error" };
   }
 
-  const pipeline = redis.pipeline();
-
-  pipeline.del(`order:${id}`);
-  pipeline.zrem("orders", id);
-
-  if (order.clientPhoneNumber) {
-    pipeline.zrem(`orders:phone:${order.clientPhoneNumber}`, id);
-  }
-
-  if (order.promocode) {
-    pipeline.zrem(`promocode:${order.promocode}:orders`, id);
-  }
-
-  await pipeline.exec();
+  await ordersStore.delete(id, order);
   revalidatePath("/admin/orders");
 
   return { message: `Order #${id} successfully deleted`, type: "success" };

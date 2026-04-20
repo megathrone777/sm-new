@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { redis } from "@/lib/redis";
+import { sessionsStore } from "@/store";
 
 const COOKIE_NAME = "session";
 
@@ -8,11 +8,8 @@ const getSession = async ({ cookies }: NextRequest): Promise<null | TSessionData
   const sessionId = cookies.get(COOKIE_NAME)?.value;
 
   if (!sessionId) return null;
-  const session = await redis.get<TSessionData>(`session:${sessionId}`);
 
-  if (!session) return null;
-
-  return typeof session === "string" ? JSON.parse(session) : session;
+  return sessionsStore.get(sessionId);
 };
 
 export const proxy = async (request: NextRequest): Promise<NextResponse> => {

@@ -12,7 +12,6 @@ const updatePhone = async (phoneNumber: string): Promise<void> => {
   const isPhoneValid = /^\+\d{7,15}$/.test(phoneNumber);
 
   await saveCart({
-    ...cart,
     client: {
       ...cart.client,
       phoneNumber: isPhoneValid ? phoneNumber.replace("+", "") : cart.client.phoneNumber,

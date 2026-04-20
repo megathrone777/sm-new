@@ -7,9 +7,7 @@ import { revalidatePath } from "next/cache";
 import { authHelpers } from "@/helpers/auth";
 import { modifiersHelpers } from "@/helpers/modifiers";
 import { productsHelpers } from "@/helpers/products";
-import { redis } from "@/lib";
-
-const PRODUCTS_SEARCH_PREFIX = "product:";
+import { productsStore } from "@/store";
 
 const updateProduct = async (
   _state: null | TActionResult,
@@ -71,18 +69,7 @@ const updateProduct = async (
     newProduct.imageUrl = `/uploads/products/${filename}`;
   }
 
-  const pipeline = redis.pipeline();
-
-  pipeline.hset("products", { [newProduct.slug]: JSON.stringify(newProduct) });
-  pipeline.hset(`${PRODUCTS_SEARCH_PREFIX}${newProduct.id}`, {
-    id: newProduct.id,
-    imageUrl: newProduct.imageUrl,
-    price: newProduct.price,
-    slug: newProduct.slug,
-    title: newProduct.title,
-  });
-
-  await pipeline.exec();
+  await productsStore.set(newProduct);
 
   revalidatePath(`/admin/product/${slug}`);
 

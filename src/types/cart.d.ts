@@ -3,6 +3,7 @@ import type { LatLngExpression, LatLngLiteral } from "leaflet";
 declare global {
   type TDeliveryType = "delivery" | "pickup";
   type TPaymentType = "card" | "cardAfterDelivery" | "cash";
+
   type TCartErrorType =
     | "addressFormat"
     | "addressRange"

@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { promocodesHelpers } from "@/helpers/promocodes";
-import { redis } from "@/lib";
+import { promocodesStore } from "@/store";
 
 /**
  * Schedules or immediately activates a promocode.
@@ -33,7 +33,7 @@ const activatePromocode = async (
     return { message: `Promocode ${code} not found`, type: "error" };
   }
 
-  await redis.hset(`promocode:${code}`, {
+  await promocodesStore.update(code, {
     activatedAt: activatedAt ?? "",
     isActive: "1",
   });

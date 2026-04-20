@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { submodifiersStore } from "@/store";
 
 const deleteSubmodifier = async (
   _state: null | TActionResult,
@@ -19,7 +19,7 @@ const deleteSubmodifier = async (
 
   const id = formData.get("id") as string;
 
-  await redis.hdel("submodifiers", id);
+  await submodifiersStore.delete(id);
   revalidatePath("/admin/submodifiers");
   revalidatePath("/admin/modifiers");
 

@@ -1,9 +1,7 @@
-import { redis } from "@/lib";
+import { promocodesStore } from "@/store";
 
-const getPromocodeByCode = async (code: string): Promise<null | Record<string, TPromoCode>> => {
-  const promocode = await redis.hgetall<Record<string, TPromoCode>>(`promocode:${code}`);
-
-  return promocode;
-};
+const getPromocodeByCode = (
+  code: string,
+): Promise<null | Record<string, TPromoCode>> => promocodesStore.getByCode(code);
 
 export { getPromocodeByCode };

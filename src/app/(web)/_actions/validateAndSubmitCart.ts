@@ -6,7 +6,7 @@ import { after } from "next/server";
 
 import { cartHelpers } from "@/helpers/cart";
 import { shopHelpers } from "@/helpers/shop";
-import { realtime, redis } from "@/lib";
+import { ordersStore, realtime } from "@/store";
 import { isMissedStreetNumber } from "@/utils";
 
 import { saveCart } from "./saveCart";
@@ -117,10 +117,7 @@ const validateAndSubmitCart = async (): Promise<void> => {
   }
 
   if (!!Object.keys(errors).length) {
-    await saveCart({
-      ...cart,
-      errors,
-    });
+    await saveCart({ errors });
     revalidatePath("/cart");
     redirect("/cart#cart-cutlery", "replace");
   }
@@ -140,16 +137,13 @@ const validateAndSubmitCart = async (): Promise<void> => {
     0,
   );
 
-  const pipeline = redis.pipeline();
-
-  pipeline.zrange(`orders:phone:+${client.phoneNumber}`, 0, -1);
-  pipeline.incr("orders:counter");
-
-  const [existingOrders, id] = await pipeline.exec<[TOrder[], number]>();
+  const clientPhoneNumber = `+${client.phoneNumber}`;
+  const { existingOrderIds, id } =
+    await ordersStore.listExistingOrderIdsByPhoneAndAllocateNextId(clientPhoneNumber);
   const order: TOrder = {
     clientEmail: client.email,
     clientName: client.name,
-    clientOrdersCount: existingOrders.length + 1,
+    clientOrdersCount: existingOrderIds.length + 1,
     clientPhoneNumber: client.phoneNumber,
     comgateProcessedAt: "",
     comgateTransId: "",
@@ -185,24 +179,14 @@ const validateAndSubmitCart = async (): Promise<void> => {
   };
 
   after(async () => {
-    const afterPipeline = redis.pipeline();
-
-    afterPipeline.zadd("orders", { member: `${id}`, score: id });
-    afterPipeline.zadd(`orders:phone:+${client.phoneNumber}`, { member: `${id}`, score: id });
-    afterPipeline.hset(`client:+${client.phoneNumber}`, {
-      email: client.email,
-      name: client.name,
-      phoneNumber: `+${client.phoneNumber}`,
-    });
-    afterPipeline.zadd("clients", { member: `+${client.phoneNumber}`, score: Date.now() });
     await Promise.all([
-      afterPipeline.exec(),
+      ordersStore.registerNewOrder({ ...order, clientPhoneNumber }),
       realtime
         .channel("notification")
         .emit("notification.newOrder", { createdAt: Date.now(), updatedAt: Date.now() }),
     ]);
   });
-  await redis.hset<TOrder>(`order:${id}`, order as unknown as Record<TOrder["id"], TOrder>);
+  await ordersStore.set(order);
   redirect(`/orderConfirmed/${id}`);
 };
 

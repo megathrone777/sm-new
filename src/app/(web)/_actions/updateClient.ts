@@ -13,7 +13,6 @@ const updateClient = async (formData: FormData): Promise<void> => {
   const email = String(formData.get("email") ?? "");
 
   await saveCart({
-    ...cart,
     client: {
       ...cart.client,
       email,

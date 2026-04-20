@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { promocodesStore } from "@/store";
 
 const deletePromocode = async (
   _state: null | TActionResult,
@@ -20,12 +20,7 @@ const deletePromocode = async (
     return { message: "Code is required", type: "error" };
   }
 
-  const pipeline = redis.pipeline();
-
-  pipeline.del(`promocode:${code}`);
-  pipeline.del(`promocode:${code}:orders`);
-  pipeline.zrem("promocodes", code);
-  await pipeline.exec();
+  await promocodesStore.delete(code);
 
   revalidatePath("/admin/promocodes");
 

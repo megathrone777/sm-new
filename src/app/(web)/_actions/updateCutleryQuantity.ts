@@ -24,7 +24,6 @@ const updateCutleryQuantity = async (type: "decrease" | "increase"): Promise<voi
       type === "increase" ? cart.cutlery.quantity + 1 : Math.max(0, cart.cutlery.quantity - 1);
 
     await saveCart({
-      ...cart,
       cutlery: {
         ...cart.cutlery,
         quantity,

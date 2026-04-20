@@ -6,9 +6,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { productsHelpers } from "@/helpers/products";
-import { redis } from "@/lib";
-
-const PRODUCTS_SEARCH_PREFIX = "product:";
+import { productsStore } from "@/store";
 
 const deleteProduct = async (
   _state: null | TActionResult,
@@ -40,11 +38,7 @@ const deleteProduct = async (
     await fs.unlink(filePath).catch(() => {});
   }
 
-  const pipeline = redis.pipeline();
-
-  pipeline.hdel("products", slug);
-  pipeline.del(`${PRODUCTS_SEARCH_PREFIX}${product.id}`);
-  await pipeline.exec();
+  await productsStore.delete(slug, product.id);
   revalidatePath("/admin/products");
 
   return {

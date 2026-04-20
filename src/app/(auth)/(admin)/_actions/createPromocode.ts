@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { promocodesHelpers } from "@/helpers/promocodes";
-import { redis } from "@/lib";
+import { promocodesStore } from "@/store";
 
 const createPromocode = async (
   _state: null | TActionResult,
@@ -43,21 +43,7 @@ const createPromocode = async (
     usability: "",
   };
 
-  const pipeline = redis.pipeline();
-
-  pipeline.hset(`promocode:${code}`, {
-    activatedAt: promocode.activatedAt ?? "",
-    appliedCount: promocode.appliedCount,
-    code: promocode.code,
-    discount: promocode.discount,
-    id: promocode.id,
-    isActive: promocode.isActive ? "1" : "0",
-    isLimitedBySchedule: "0",
-    type: promocode.type,
-    usability: promocode.usability ?? "",
-  });
-  pipeline.zadd("promocodes", { member: code, score: Date.now() });
-  await pipeline.exec();
+  await promocodesStore.set(promocode);
 
   revalidatePath("/admin/promocodes");
 

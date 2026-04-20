@@ -8,10 +8,8 @@ import { redirect } from "next/navigation";
 import { authHelpers } from "@/helpers/auth";
 import { modifiersHelpers } from "@/helpers/modifiers";
 import { productsHelpers } from "@/helpers/products";
-import { redis } from "@/lib";
+import { productsStore } from "@/store";
 import { slugify } from "@/utils";
-
-const PRODUCTS_SEARCH_PREFIX = "product:";
 
 const createProduct = async (
   _state: null | TActionResult,
@@ -105,18 +103,7 @@ const createProduct = async (
     product.imageUrl = `/uploads/products/${filename}`;
   }
 
-  const pipeline = redis.pipeline();
-
-  pipeline.hset("products", { [slug]: JSON.stringify(product) });
-  pipeline.hset(`${PRODUCTS_SEARCH_PREFIX}${id}`, {
-    id,
-    imageUrl: product.imageUrl,
-    price,
-    slug,
-    title,
-  });
-
-  await pipeline.exec();
+  await productsStore.set(product);
 
   revalidatePath("/admin/products");
   redirect(`/admin/product/${slug}`);

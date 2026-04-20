@@ -2,9 +2,7 @@
 import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
-
-const MODIFIERS_SEARCH_PREFIX = "modifier:";
+import { modifiersStore } from "@/store";
 
 const deleteModifier = async (
   _state: null | TActionResult,
@@ -21,11 +19,8 @@ const deleteModifier = async (
 
   const id = formData.get("id") as string;
   const title = (formData.get("title") as string).trim();
-  const pipeline = redis.pipeline();
 
-  pipeline.hdel("modifiers", id);
-  pipeline.del(`${MODIFIERS_SEARCH_PREFIX}${id}`);
-  await pipeline.exec();
+  await modifiersStore.delete(id);
   revalidatePath("/admin/modifiers");
 
   return {

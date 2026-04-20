@@ -2,7 +2,7 @@
 import { redirect } from "next/navigation";
 
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { clientsStore, redis } from "@/store";
 
 import type { FlatIndexSchema } from "@upstash/redis";
 
@@ -36,11 +36,7 @@ const deleteClient = async (
     };
   }
 
-  const pipeline = redis.pipeline();
-
-  pipeline.del(`client:${phoneNumber}`);
-  pipeline.zrem("clients", phoneNumber);
-  await pipeline.exec();
+  await clientsStore.delete(phoneNumber);
 
   const index = redis.search.index({
     name: CLIENT_SEARCH_INDEX,

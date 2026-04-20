@@ -1,11 +1,6 @@
-import { redis } from "@/lib";
+import { productsStore } from "@/store";
 
-const getProductBySlug = async (slug: string): Promise<null | TProduct> => {
-  const product = await redis.hget<TProduct>("products", slug);
-
-  if (product) return product;
-
-  return null;
-};
+const getProductBySlug = (slug: string): Promise<null | TProduct> =>
+  productsStore.getBySlug(slug);
 
 export { getProductBySlug };

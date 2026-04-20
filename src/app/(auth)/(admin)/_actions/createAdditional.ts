@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { additionalsHelpers } from "@/helpers/additionals";
 import { authHelpers } from "@/helpers/auth";
-import { redis } from "@/lib";
+import { additionalsStore } from "@/store";
 
 const createAdditional = async (
   _state: null | TActionResult,
@@ -31,9 +31,8 @@ const createAdditional = async (
   const sortOrder = Number(formData.get("sortOrder") ?? 0);
   const existing = await additionalsHelpers.getAdditionals();
   const id = existing.length ? Math.max(...existing.map<number>(({ id }) => id)) + 1 : 1;
-  const additional: TAdditional = { id, price, sortOrder, title };
 
-  await redis.hset("additionals", { [id]: JSON.stringify(additional) });
+  await additionalsStore.set({ id, price, sortOrder, title });
   revalidatePath("/admin/additionals");
 
   return {

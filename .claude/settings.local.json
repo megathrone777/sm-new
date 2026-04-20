@@ -3,7 +3,8 @@
     "allow": [
       "Bash(xargs grep:*)",
       "Bash(xargs cat:*)",
-      "Bash(curl -sL \"https://raw.githubusercontent.com/vercel/next.js/canary/docs/01-app/02-guides/backend-for-frontend.mdx\")"
+      "Bash(curl -sL \"https://raw.githubusercontent.com/vercel/next.js/canary/docs/01-app/02-guides/backend-for-frontend.mdx\")",
+      "Bash(npx tsc *)"
     ]
   }
 }

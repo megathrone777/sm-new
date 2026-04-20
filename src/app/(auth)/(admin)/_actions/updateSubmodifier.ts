@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 
 import { authHelpers } from "@/helpers/auth";
 import { submodifiersHelpers } from "@/helpers/submodifiers";
-import { redis } from "@/lib";
+import { submodifiersStore } from "@/store";
 
 const updateSubmodifier = async (
   _state: null | TActionResult,
@@ -38,7 +38,7 @@ const updateSubmodifier = async (
     };
   }
 
-  await redis.hset("submodifiers", { [id]: JSON.stringify({ id, sortOrder, title }) });
+  await submodifiersStore.set({ id, sortOrder, title });
   revalidatePath("/admin/submodifiers");
 
   return {
