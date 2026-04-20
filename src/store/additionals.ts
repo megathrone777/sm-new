@@ -1,9 +1,13 @@
-import { redis } from "./redis";
+import { redis } from "./";
 
 const HASH = "additionals";
 
-const additionalsStore = {
-  delete: async (id: TAdditional["id"] | string): Promise<void> => {
+const additionals = {
+  create: async (additional: TAdditional): Promise<void> => {
+    await redis.hset(HASH, { [additional.id]: JSON.stringify(additional) });
+  },
+
+  delete: async (id: string | TAdditional["id"]): Promise<void> => {
     await redis.hdel(HASH, String(id));
   },
 
@@ -20,10 +24,6 @@ const additionalsStore = {
   getById: async (id: TAdditional["id"]): Promise<null | TAdditional> => {
     return (await redis.hget<TAdditional>(HASH, String(id))) ?? null;
   },
-
-  set: async (additional: TAdditional): Promise<void> => {
-    await redis.hset(HASH, { [additional.id]: JSON.stringify(additional) });
-  },
 };
 
-export { additionalsStore };
+export { additionals };
