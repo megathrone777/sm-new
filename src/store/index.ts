@@ -1,4 +1,6 @@
-import { additionalsStore } from "./additionals";
+import { Redis } from "@upstash/redis";
+
+import { additionals } from "./additionals";
 import { cartStore } from "./cart";
 import { categoriesStore } from "./categories";
 import { clientsStore } from "./clients";
@@ -6,28 +8,31 @@ import { modifiersStore } from "./modifiers";
 import { ordersStore } from "./orders";
 import { productsStore } from "./products";
 import { promocodesStore } from "./promocodes";
-import { redis } from "./redis";
 import { sessionsStore } from "./sessions";
 import { submodifiersStore } from "./submodifiers";
 import { usersStore } from "./users";
 
+const redis = new Redis({
+  token: process.env.APP_KV_REST_API_TOKEN,
+  url: process.env.APP_KV_REST_API_URL,
+});
+
 const store = {
-  additionals: additionalsStore,
-  cart: cartStore,
-  categories: categoriesStore,
-  clients: clientsStore,
-  modifiers: modifiersStore,
-  orders: ordersStore,
-  products: productsStore,
+  additionals,
+  cart,
+  categories,
+  clients,
+  modifiers,
+  orders,
+  products,
   promocodes: promocodesStore,
   sessions: sessionsStore,
   submodifiers: submodifiersStore,
   users: usersStore,
 };
 
-export { realtime, type RealtimeEvents } from "./realtime";
 export {
-  additionalsStore,
+  additionals,
   cartStore,
   categoriesStore,
   clientsStore,
@@ -35,9 +40,9 @@ export {
   ordersStore,
   productsStore,
   promocodesStore,
-  redis,
   sessionsStore,
   store,
   submodifiersStore,
   usersStore,
 };
+export { redis };

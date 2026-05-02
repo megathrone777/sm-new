@@ -3,7 +3,7 @@ import { redis } from "./redis";
 const HASH = "categories";
 
 const categoriesStore = {
-  delete: async (id: TProductCategory["id"] | string): Promise<void> => {
+  delete: async (id: string | TProductCategory["id"]): Promise<void> => {
     await redis.hdel(HASH, String(id));
   },
 
@@ -20,7 +20,7 @@ const categoriesStore = {
   },
 
   popById: async (
-    id: TProductCategory["id"] | string,
+    id: string | TProductCategory["id"],
   ): Promise<null | TProductCategory> => {
     const [category] = await redis
       .pipeline()
