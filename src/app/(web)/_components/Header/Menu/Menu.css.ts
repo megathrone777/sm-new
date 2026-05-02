@@ -8,26 +8,29 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = cssVariants(
+export const layoutClass = cssVariants<{ isOpened: boolean }>(
   ({ devices }) => ({
-    default: {
-      opacity: 0,
-      pointerEvents: "none",
+    isOpened: {
+      off: {
+        opacity: 0,
+        pointerEvents: "none",
 
-      "@media": {
-        [devices.desktop]: {
-          opacity: 1,
-          pointerEvents: "auto",
+        "@media": {
+          [devices.desktop]: {
+            opacity: 1,
+            pointerEvents: "auto",
+          },
         },
       },
-    },
-    opened: {
-      opacity: 1,
-      pointerEvents: "auto",
+
+      on: {
+        opacity: 1,
+        pointerEvents: "auto",
+      },
     },
   }),
 
-  (state, { colors, devices, easing }) => [
+  ({ colors, devices, easing }) => [
     {
       alignContent: "center",
       alignItems: "center",
@@ -59,7 +62,6 @@ export const layoutClass = cssVariants(
         },
       },
     },
-    state,
   ],
 );
 

@@ -3,7 +3,7 @@ import { redis } from "./redis";
 const INDEX = "orders";
 const COUNTER = "orders:counter";
 
-const hashKey = (id: TOrder["id"] | string): string => `order:${id}`;
+const hashKey = (id: TOrder["id"]): string => `order:${id}`;
 const phoneIndex = (phoneNumber: string): string => `orders:phone:${phoneNumber}`;
 const promocodeIndex = (code: string): string => `promocode:${code}:orders`;
 
@@ -22,7 +22,7 @@ const fanOutById = async (ids: (number | string)[]): Promise<TOrder[]> => {
 };
 
 const ordersStore = {
-  delete: async (id: TOrder["id"] | string, order: TOrder): Promise<void> => {
+  delete: async (id: TOrder["id"], order: TOrder): Promise<void> => {
     const pipeline = redis.pipeline();
 
     pipeline.del(hashKey(id));
@@ -45,18 +45,18 @@ const ordersStore = {
     return fanOutById(ids as (number | string)[]);
   },
 
+  getById: async (id: TOrder["id"]): Promise<null | TOrder> => {
+    const order = (await redis.hgetall(hashKey(id))) as unknown as null | TOrder;
+
+    return order && Object.keys(order).length > 0 ? order : null;
+  },
+
   getByPhone: async (phoneNumber: string, offset = 0, limit = 20): Promise<TOrder[]> => {
     const ids = await redis.zrange(phoneIndex(phoneNumber), offset, offset + limit - 1, {
       rev: true,
     });
 
     return fanOutById(ids as (number | string)[]);
-  },
-
-  getById: async (id: TOrder["id"] | string): Promise<null | TOrder> => {
-    const order = (await redis.hgetall(hashKey(id))) as unknown as null | TOrder;
-
-    return order && Object.keys(order).length > 0 ? order : null;
   },
 
   getByPromocode: async (code: string, offset = 0, limit = 50): Promise<TOrder[]> => {
@@ -82,8 +82,8 @@ const ordersStore = {
   registerNewOrder: async (order: TOrder): Promise<void> => {
     await redis
       .pipeline()
-      .zadd(INDEX, { member: `${order.id}`, score: order.id })
-      .zadd(phoneIndex(order.clientPhoneNumber), { member: `${order.id}`, score: order.id })
+      .zadd(INDEX, { member: `${order.id}`, score: +order.id })
+      .zadd(phoneIndex(order.clientPhoneNumber), { member: `${order.id}`, score: +order.id })
       .hset(`client:${order.clientPhoneNumber}`, {
         email: order.clientEmail,
         name: order.clientName,
@@ -97,7 +97,7 @@ const ordersStore = {
     await redis.hset<TOrder>(hashKey(order.id), order as unknown as Record<TOrder["id"], TOrder>);
   },
 
-  update: async (id: TOrder["id"] | string, patch: Partial<TOrder>): Promise<void> => {
+  update: async (id: string | TOrder["id"], patch: Partial<TOrder>): Promise<void> => {
     await redis.hset(hashKey(id), patch);
   },
 };

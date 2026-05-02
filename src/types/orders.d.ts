@@ -28,7 +28,7 @@ declare global {
     deliveryTime: string;
     deliveryTitle: string;
     deliveryType: TDeliveryType;
-    id: number;
+    id: number | string;
     note: string;
     onlinePaymentStatus: null | TOnlinePaymentStatus;
     paymentType: TPaymentType;

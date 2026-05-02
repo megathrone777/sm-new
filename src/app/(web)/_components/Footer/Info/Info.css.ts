@@ -17,7 +17,9 @@ export const contactListClass = css(({ devices }) => ({
   },
 }));
 
-export const contactItemClass = cssVariants(
+export const contactItemClass = cssVariants<{
+  type: "instagram" | "phone" | "telegram" | "viber" | "whatsapp";
+}>(
   {
     instagram: {
       backgroundPositionY: 0,
@@ -35,7 +37,7 @@ export const contactItemClass = cssVariants(
       backgroundPositionY: -106,
     },
   },
-  (type, { devices, easing }) => [
+  ({ devices, easing }) => [
     {
       background: "url('/images/contact_links_bg.png') center top/100% auto no-repeat",
       height: 40,
@@ -56,7 +58,6 @@ export const contactItemClass = cssVariants(
         },
       },
     },
-    type,
   ],
 );
 
