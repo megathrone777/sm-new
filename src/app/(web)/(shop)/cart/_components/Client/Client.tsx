@@ -2,17 +2,16 @@ import React from "react";
 
 import { Input } from "@/ui";
 
-import { FormLayout } from "./FormLayout";
 import { History } from "./History";
 import { Phone } from "./Phone";
 
-import { layoutClass, wrapperClass } from "./Client.css";
+import { inputsClass, layoutClass, wrapperClass } from "./Client.css";
 
 import type { TProps } from "./Client.types";
 
 const Client: React.FC<TProps> = ({ email, errors, name, phoneNumber }) => (
   <div className={wrapperClass}>
-    <FormLayout {...{ errors }}>
+    <div className={inputsClass}>
       <Input
         defaultValue={name}
         iconId="profile"
@@ -28,12 +27,12 @@ const Client: React.FC<TProps> = ({ email, errors, name, phoneNumber }) => (
         name="email"
         type="email"
       />
-    </FormLayout>
+    </div>
 
     <div className={layoutClass}>
       <Phone
-        isError={Boolean(errors.phone)}
         {...{ phoneNumber }}
+        isError={Boolean(errors.phone)}
       />
 
       <History {...{ phoneNumber }} />

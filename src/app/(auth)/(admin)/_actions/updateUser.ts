@@ -1,15 +1,14 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { usersStore } from "@/store";
+import { store } from "@/store";
 import { hashPassword } from "@/utils";
 
 const updateUser = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -18,11 +17,11 @@ const updateUser = async (
     };
   }
 
-  const currentLogin = (formData.get("currentLogin") as string).trim();
-  const newLogin = (formData.get("login") as string).trim();
-  const password = (formData.get("password") as string).trim();
+  const currentLogin = `${formData.get("currentLogin") ?? ""}`.trim();
+  const newLogin = `${formData.get("login") ?? ""}`.trim();
+  const password = `${formData.get("password") ?? ""}`.trim();
   const role = formData.get("role") as TUserRole;
-  const prevUser = await authHelpers.getUser(currentLogin);
+  const prevUser = await store.users.get(currentLogin);
 
   if (!prevUser) {
     return {
@@ -39,9 +38,9 @@ const updateUser = async (
   const updated: TUser = { ...prevUser, ...passwordFields, login: newLogin, role };
 
   if (newLogin !== currentLogin) {
-    await usersStore.rename(currentLogin, updated);
+    await store.users.rename(currentLogin, updated);
   } else {
-    await usersStore.set(updated);
+    await store.users.set(updated);
   }
 
   revalidatePath("/admin/users");

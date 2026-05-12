@@ -1,14 +1,14 @@
 import React from "react";
 
 import { Products } from "@/app/(web)/_components";
-import { productsHelpers } from "@/helpers/products";
+import { store } from "@/store";
 
 import { Details } from "./_components";
 
 const Page: React.FC<PageProps<"/product/[slug]">> = async ({ params }) => {
   const { slug } = await params;
-  const product = await productsHelpers.getProductBySlug(slug);
-  const category = await productsHelpers.getCategoryById(product?.categoryId);
+  const product = await store.products.getBySlug(slug);
+  const category = await store.categories.getById(product?.categoryId);
 
   const renderDetails = (): null | React.ReactElement => {
     if (category && product) {

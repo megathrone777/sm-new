@@ -14,10 +14,12 @@ const Additionals: React.FC<TProps> = ({ additionals, cartAdditionals }) => {
   const { t } = useTranslation();
 
   const displayAdditionals: TCartAdditional[] = additionals.map(
-    (a: TAdditional): TCartAdditional => {
-      const inCart = cartAdditionals.find((ca: TCartAdditional): boolean => ca.id === a.id);
+    (additional: TAdditional): TCartAdditional => {
+      const inCart = cartAdditionals.find(
+        (cartAdditional: TCartAdditional): boolean => cartAdditional.id === additional.id,
+      );
 
-      return inCart ?? { ...a, quantity: 0, totalPrice: 0 };
+      return inCart ?? { ...additional, quantity: 0, totalPrice: 0 };
     },
   );
 

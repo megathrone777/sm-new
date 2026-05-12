@@ -4,14 +4,13 @@ import path from "path";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { categoriesStore } from "@/store";
+import { store } from "@/store";
 
 const deleteCategory = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
@@ -19,7 +18,7 @@ const deleteCategory = async (
 
   const id = formData.get("id") as string;
   const title = formData.get("title") as string;
-  const category = await categoriesStore.popById(id);
+  const category = await store.categories.popById(+id);
 
   if (category?.imageUrl) {
     const filePath = path.join(process.cwd(), "public", category.imageUrl);

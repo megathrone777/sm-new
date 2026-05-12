@@ -4,8 +4,7 @@ import crypto from "crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-import { authHelpers } from "@/helpers/auth";
-import { sessionsStore } from "@/store";
+import { store } from "@/store";
 import { verifyPassword } from "@/utils";
 
 const COOKIE_NAME = "session";
@@ -14,7 +13,7 @@ const SESSION_TTL = 60 * 60 * 24 * 30;
 const createSession = async (data: TSessionData): Promise<void> => {
   const sessionId = crypto.randomBytes(32).toString("hex");
 
-  await sessionsStore.set(sessionId, data, SESSION_TTL);
+  await store.sessions.set(sessionId, data, SESSION_TTL);
   const cookieStore = await cookies();
 
   cookieStore.set(COOKIE_NAME, sessionId, {
@@ -31,7 +30,7 @@ const login = async (formData: FormData): Promise<void> => {
   const password = formData.get("password");
 
   if (typeof loginValue !== "string" || typeof password !== "string") return;
-  const user = await authHelpers.getUser(loginValue);
+  const user = await store.users.get(loginValue);
 
   if (!user || !verifyPassword(password, user.passwordHash, user.salt)) return;
   await createSession({ role: user.role, userId: user.id });

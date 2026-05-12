@@ -40,7 +40,7 @@ const DeliveryType: React.FC<TProps> = ({ totalPrice, type }) => {
 
       <Checkbox
         checked={type === "pickup"}
-        hint={checkPickupDiscount() > 0 ? "-50 Kč" : undefined}
+        hint={checkPickupDiscount() > 0 ? "-50 Kč" : ""}
         label={t<string>("pickupLabel")}
         labelClassName={labelClass}
         onChange={handleDeliveryToggle}

@@ -3,9 +3,10 @@ import Link from "next/link";
 
 import { activatePromocode, deletePromocode, updatePromocode } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { promocodesHelpers } from "@/helpers/promocodes";
-import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Button, Input } from "@/ui";
+
+import { PromocodeOrders } from "./PromocodeOrders";
 
 import {
   activeBadgeClass,
@@ -16,14 +17,13 @@ import {
   itemClass,
   linkClass,
   listClass,
-  ordersClass,
   pendingBadgeClass,
   rowClass,
   statusClass,
 } from "./PromocodesList.css";
 
 const PromocodesList: React.FC = async () => {
-  const promocodes = await promocodesHelpers.getPromocodes();
+  const promocodes = await store.promocodes.getAll();
 
   return (
     <ListLayout
@@ -33,11 +33,12 @@ const PromocodesList: React.FC = async () => {
       {!!promocodes.length && (
         <div className={listClass}>
           {promocodes.map((promo: TPromoCode) => {
-            const isEffectivelyActive = promocodesHelpers.isPromocodeActive(promo);
+            const isActive =
+              promo.isActive && (!promo.activatedAt || new Date() >= new Date(promo.activatedAt));
             const isScheduled =
               promo.isActive && !!promo.activatedAt && new Date() < new Date(promo.activatedAt);
 
-            const statusBadge = isEffectivelyActive ? (
+            const statusBadge = isActive ? (
               <span className={activeBadgeClass}>Active</span>
             ) : isScheduled ? (
               <span className={pendingBadgeClass}>
@@ -77,7 +78,7 @@ const PromocodesList: React.FC = async () => {
                     <input
                       name="isActive"
                       type="hidden"
-                      value={String(promo.isActive)}
+                      value={`${promo.isActive}`}
                     />
 
                     <input
@@ -113,7 +114,7 @@ const PromocodesList: React.FC = async () => {
                     defaultValue={
                       promo.activatedAt
                         ? new Date(promo.activatedAt).toISOString().slice(0, 16)
-                        : undefined
+                        : ""
                     }
                     label="Activate at"
                     name="activatedAt"
@@ -121,33 +122,13 @@ const PromocodesList: React.FC = async () => {
                   />
                 </FormLayout>
 
-                <PromoOrders code={promo.code} />
+                <PromocodeOrders code={promo.code} />
               </div>
             );
           })}
         </div>
       )}
     </ListLayout>
-  );
-};
-
-const PromoOrders: React.FC<{ code: string }> = async ({ code }) => {
-  const orders = await promocodesHelpers.getOrdersByPromocode(code);
-  const { t } = useTranslation();
-
-  if (!orders.length) return null;
-
-  return (
-    <div className={ordersClass}>
-      Orders using {code} ({orders.length}):&nbsp;
-      {orders.map(({ clientPhoneNumber, createdAt, id, totalPrice }: TOrder) => (
-        <span key={`promo-order-${id}`}>
-          #{id} ({clientPhoneNumber}, {totalPrice} {t<string>("currency")},{" "}
-          {new Date(createdAt).toLocaleDateString()}
-          )&nbsp;
-        </span>
-      ))}
-    </div>
   );
 };
 

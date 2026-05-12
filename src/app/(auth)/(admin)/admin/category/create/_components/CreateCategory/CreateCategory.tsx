@@ -2,13 +2,13 @@ import React from "react";
 
 import { createCategory } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ImageUploader, ProductsSelect } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers/products";
+import { store } from "@/store";
 import { Input } from "@/ui";
 
 import { wrapperClass } from "./CreateCategory.css";
 
 const CreateCategory: React.FC = async () => {
-  const products = await productsHelpers.getProducts();
+  const products = await store.products.getAll();
 
   return (
     <FormLayout

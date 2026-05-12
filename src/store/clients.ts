@@ -4,7 +4,7 @@ const INDEX = "clients";
 
 const hashKey = (phoneNumber: string): string => `client:${phoneNumber}`;
 
-const clientsStore = {
+const clients = {
   delete: async (phoneNumber: string): Promise<void> => {
     await redis.pipeline().del(hashKey(phoneNumber)).zrem(INDEX, phoneNumber).exec();
   },
@@ -30,7 +30,7 @@ const clientsStore = {
   },
 
   getByPhone: async (phoneNumber: string): Promise<null | TClient> => {
-    const client = (await redis.hgetall(hashKey(phoneNumber))) as unknown as TClient | null;
+    const client = (await redis.hgetall(hashKey(phoneNumber))) as unknown as null | TClient;
 
     return client;
   },
@@ -56,4 +56,4 @@ const clientsStore = {
   },
 };
 
-export { clientsStore };
+export { clients };

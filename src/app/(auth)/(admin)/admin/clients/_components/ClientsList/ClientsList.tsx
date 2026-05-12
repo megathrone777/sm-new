@@ -3,13 +3,13 @@ import Link from "next/link";
 
 import { deleteClient } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { clientsHelpers } from "@/helpers/clients";
+import { store } from "@/store";
 import { Button } from "@/ui";
 
 import { headerClass, listClass, linkClass, itemClass } from "./ClientsList.css";
 
 const ClientsList: React.FC = async () => {
-  const clients = await clientsHelpers.getClients();
+  const clients = await store.clients.getAll();
 
   return (
     <ListLayout

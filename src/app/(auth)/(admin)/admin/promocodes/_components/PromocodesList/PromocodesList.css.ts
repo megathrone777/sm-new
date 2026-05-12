@@ -75,9 +75,3 @@ export const linkClass = css({
   display: "inline-block",
   height: 38,
 });
-
-export const ordersClass = css({
-  color: "#555",
-  fontSize: 13,
-  marginTop: 8,
-});

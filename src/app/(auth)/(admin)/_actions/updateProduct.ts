@@ -4,16 +4,13 @@ import path from "path";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { modifiersHelpers } from "@/helpers/modifiers";
-import { productsHelpers } from "@/helpers/products";
-import { productsStore } from "@/store";
+import { store } from "@/store";
 
 const updateProduct = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<null | TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -23,7 +20,7 @@ const updateProduct = async (
   }
 
   const slug = formData.get("slug") as string;
-  const prevProduct = await productsHelpers.getProductBySlug(slug);
+  const prevProduct = await store.products.getBySlug(slug);
 
   if (!prevProduct) {
     return {
@@ -33,26 +30,25 @@ const updateProduct = async (
   }
 
   const modifierIds = formData.getAll("modifierIds").map(Number);
-  const allModifiers = await modifiersHelpers.getModifiers();
+  const allModifiers = await store.modifiers.getAll();
   const modifiers = allModifiers.filter(({ id }) => modifierIds.includes(id));
 
   const newProduct: TProduct = {
     ...prevProduct,
-    allergens: (formData.get("allergens") as string) || null,
-    categoryId: Number(formData.get("categoryId")) || prevProduct.categoryId,
-    composition: formData.get("composition") as string,
-    description: (formData.get("description") as string) || null,
+    allergens: `${formData.get("allergens") ?? ""}`.trim() || null,
+    categoryId: +formData.get("categoryId")! || prevProduct.categoryId,
+    composition: `${formData.get("composition") ?? ""}`.trim(),
+    description: `${formData.get("description") ?? ""}`.trim() || null,
     imageUrl: prevProduct.imageUrl,
     isAvailable: formData.get("isAvailable") === "on",
     modifiers,
-    modifiersTitle: (formData.get("modifiersTitle") as string) || null,
-    price: Number(formData.get("price")),
+    modifiersTitle: `${formData.get("modifiersTitle") ?? ""}`.trim() || null,
+    price: +formData.get("price")!,
     requiredModifier: formData.get("requiredModifier") === "on",
-    sortOrder: Number(formData.get("sortOrder")),
-    title: formData.get("title") as string,
-    weight: formData.get("weight") as string,
+    sortOrder: +formData.get("sortOrder")!,
+    title: `${formData.get("title") ?? ""}`,
+    weight: `${formData.get("weight") ?? ""}`,
   };
-
   const imageFile = formData.get("image") as File;
 
   if (imageFile?.size) {
@@ -69,7 +65,7 @@ const updateProduct = async (
     newProduct.imageUrl = `/uploads/products/${filename}`;
   }
 
-  await productsStore.set(newProduct);
+  await store.products.set(newProduct);
 
   revalidatePath(`/admin/product/${slug}`);
 

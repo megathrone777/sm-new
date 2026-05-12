@@ -3,15 +3,14 @@ import crypto from "crypto";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { usersStore } from "@/store";
+import { store } from "@/store";
 import { hashPassword } from "@/utils";
 
 const createUser = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -20,9 +19,9 @@ const createUser = async (
     };
   }
 
-  const login = (formData.get("login") as string).trim();
+  const login = `${formData.get("login") ?? ""}`.trim();
   const role = formData.get("role") as TUserRole;
-  const password = (formData.get("password") as string).trim();
+  const password = `${formData.get("password") ?? ""}`.trim();
 
   if (!login) {
     return {
@@ -45,7 +44,7 @@ const createUser = async (
     };
   }
 
-  const existing = await authHelpers.getUser(login);
+  const existing = await store.users.get(login);
 
   if (existing) {
     return {
@@ -56,7 +55,7 @@ const createUser = async (
 
   const { hash, salt } = hashPassword(password);
 
-  await usersStore.set({
+  await store.users.set({
     id: crypto.randomUUID(),
     login,
     passwordHash: hash,

@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 
 import { logout } from "@/app/(auth)/_actions";
-import { shopHelpers } from "@/helpers/shop";
+import { store } from "@/store";
 import { Button, Icon } from "@/ui";
 
 import {
@@ -15,7 +15,7 @@ import {
 } from "./Header.css";
 
 const Header: React.FC = async () => {
-  const { logoUrl } = await shopHelpers.getSettings();
+  const { logoUrl } = await store.shop.getSettings();
 
   return (
     <div className={wrapperClass}>

@@ -58,7 +58,7 @@ const Checkbox: React.FC<TProps> = ({
       >
         <span>
           {label}
-          {Boolean(hint) && <span className={hintClass}>{hint}</span>}
+          {Boolean(hint && hint.length > 0) && <span className={hintClass}>{hint}</span>}
         </span>
       </label>
     </div>

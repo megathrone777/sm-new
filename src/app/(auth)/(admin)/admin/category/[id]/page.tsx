@@ -7,7 +7,7 @@ import {
   ImageUploader,
   ProductsSelect,
 } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers/products";
+import { store } from "@/store";
 import { Input } from "@/ui";
 
 import { formClass } from "./page.css";
@@ -15,8 +15,8 @@ import { formClass } from "./page.css";
 const Page: React.FC<PageProps<"/admin/category/[id]">> = async ({ params }) => {
   const { id } = await params;
   const [category, allProducts] = await Promise.all([
-    productsHelpers.getCategoryById(Number(id)),
-    productsHelpers.getProducts(),
+    store.categories.getById(+id),
+    store.products.getAll(),
   ]);
 
   if (!category) return <Header title="Category not found" />;

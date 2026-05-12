@@ -1,25 +1,25 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { cartHelpers } from "@/helpers/cart";
+import { store } from "@/store";
 
-import { lock, release } from "./cartLock";
 import { saveCart } from "./saveCart";
 
 const updateCutleryQuantity = async (type: "decrease" | "increase"): Promise<void> => {
-  const sessionId = await cartHelpers.getSessionId();
+  const sessionId = await store.cart.getSessionId();
 
   if (!sessionId) return;
 
-  const locked = await lock(sessionId);
+  const locked = await store.cart.lock(sessionId);
 
   if (!locked) return;
 
   try {
-    const cart = await cartHelpers.getCart();
+    const cart = await store.cart.get();
 
     if (!cart) return;
 
+    const { cutlery: _, ...errors } = cart.errors;
     const quantity =
       type === "increase" ? cart.cutlery.quantity + 1 : Math.max(0, cart.cutlery.quantity - 1);
 
@@ -28,14 +28,11 @@ const updateCutleryQuantity = async (type: "decrease" | "increase"): Promise<voi
         ...cart.cutlery,
         quantity,
       },
-      errors: {
-        ...cart.errors,
-        cutlery: undefined,
-      },
+      errors,
     });
     revalidatePath("/cart");
   } finally {
-    await release(sessionId);
+    await store.cart.unlock(sessionId);
   }
 };
 

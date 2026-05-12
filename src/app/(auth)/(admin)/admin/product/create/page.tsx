@@ -8,17 +8,16 @@ import {
   ImageUploader,
   ModifiersSelect,
 } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers } from "@/helpers/modifiers";
-import { productsHelpers } from "@/helpers/products";
 import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
 import { formClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
   const [modifiers, categories] = await Promise.all([
-    modifiersHelpers.getModifiers(),
-    productsHelpers.getCategories(),
+    store.modifiers.getAll(),
+    store.categories.getAll(),
   ]);
   const { t } = useTranslation();
 
@@ -28,6 +27,11 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
       label: title,
       value: `${id}`,
     }));
+
+  const modifiersOptions = modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
+    label: `${title}${price !== 0 ? ` +${price} ${t<string>("currency")}` : ""}`,
+    value: `${id}`,
+  }));
 
   return (
     <>
@@ -42,7 +46,9 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
         <div />
 
         <CategorySelect
-          defaultValue={categoryOptions[0] ? Number(categoryOptions[0].value) : 0}
+          defaultValue={
+            categoryOptions[0] && categoryOptions[0].value ? +categoryOptions[0].value : 0
+          }
           options={categoryOptions}
         />
 
@@ -110,10 +116,7 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
 
         <ModifiersSelect
           defaultValue={[]}
-          options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
-            label: `${title}${price !== 0 ? ` +${price} ${t<string>("currency")}` : ""}`,
-            value: String(id),
-          }))}
+          options={modifiersOptions}
         />
       </FormLayout>
     </>

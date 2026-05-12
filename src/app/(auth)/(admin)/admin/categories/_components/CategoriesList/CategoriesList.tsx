@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { deleteCategory } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers/products";
+import { store } from "@/store";
 import { Button } from "@/ui";
 
 import {
@@ -17,7 +17,7 @@ import {
 } from "./CategoriesList.css";
 
 const CategoriesList: React.FC = async () => {
-  const categories = await productsHelpers.getCategories();
+  const categories = await store.categories.getAll();
 
   return (
     <ListLayout

@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css({
   position: "sticky",
@@ -20,7 +20,7 @@ export const itemClass = css(({ colors }) => ({
   },
 }));
 
-export const linkClass = cssVariants(
+export const linkClass = cssVariant(
   ({ colors }) => ({
     default: colors.black,
     isActive: colors.red,

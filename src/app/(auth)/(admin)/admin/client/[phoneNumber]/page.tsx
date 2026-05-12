@@ -4,9 +4,8 @@ import Link from "next/link";
 
 import { deleteClient } from "@/app/(auth)/(admin)/_actions";
 import { Header } from "@/app/(auth)/(admin)/_components";
-import { clientsHelpers } from "@/helpers/clients";
-import { ordersHelpers } from "@/helpers/orders";
 import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
 import {
@@ -26,8 +25,8 @@ const Page: React.FC<PageProps<"/admin/client/[phoneNumber]">> = async ({
 }) => {
   const { phoneNumber } = await params;
   const { deleteId, deleteTitle } = await searchParams;
-  const orders = await ordersHelpers.getOrdersByPhone(phoneNumber);
-  const client = await clientsHelpers.getClientByPhone(phoneNumber);
+  const orders = await store.orders.getByPhone(phoneNumber);
+  const client = await store.clients.getByPhone(phoneNumber);
   const { t } = useTranslation();
 
   if (!client) {

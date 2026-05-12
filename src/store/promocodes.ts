@@ -19,20 +19,20 @@ const serializeFields = (
   usability: promocode.usability ?? "",
 });
 
-const promocodesStore = {
+const promocodes = {
   delete: async (code: string): Promise<void> => {
     await redis.pipeline().del(hashKey(code)).del(ordersIndex(code)).zrem(INDEX, code).exec();
   },
 
   getAll: async (offset = 0, limit = 50): Promise<TPromoCode[]> => {
-    const codes = await redis.zrange(INDEX, offset, offset + limit - 1, { rev: true });
+    const codes = await redis.zrange<string[]>(INDEX, offset, offset + limit - 1, { rev: true });
 
     if (!codes?.length) return [];
 
     const pipeline = redis.pipeline();
 
     for (const code of codes) {
-      pipeline.hgetall(hashKey(code as string));
+      pipeline.hgetall(hashKey(code));
     }
 
     const promocodes = await pipeline.exec<TPromoCode[]>();
@@ -57,4 +57,4 @@ const promocodesStore = {
   },
 };
 
-export { promocodesStore };
+export { promocodes };

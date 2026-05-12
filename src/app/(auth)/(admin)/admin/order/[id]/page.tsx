@@ -1,14 +1,14 @@
 import React from "react";
 
 import { Header } from "@/app/(auth)/(admin)/_components";
-import { ordersHelpers } from "@/helpers/orders";
+import { store } from "@/store";
 import { Input } from "@/ui";
 
 import { formClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/admin/order/[id]">> = async ({ params }) => {
   const { id } = await params;
-  const order = await ordersHelpers.getOrderById(id);
+  const order = await store.orders.getById(+id);
 
   if (!order) {
     return <Header title={`Order #${id} not found`} />;

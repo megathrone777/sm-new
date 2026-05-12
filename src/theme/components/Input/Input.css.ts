@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css({
   display: "grid",
@@ -21,7 +21,7 @@ export const labelClass = css(({ fonts }) => ({
   userSelect: "none",
 }));
 
-export const inputClass = cssVariants(
+export const inputClass = cssVariant(
   ({ colors }) => ({
     default: {
       "::placeholder": {

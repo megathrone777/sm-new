@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   "@media": {
@@ -8,29 +8,26 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = cssVariants<{ isOpened: boolean }>(
+export const layoutClass = cssVariant(
   ({ devices }) => ({
-    isOpened: {
-      off: {
-        opacity: 0,
-        pointerEvents: "none",
+    closed: {
+      opacity: 0,
+      pointerEvents: "none",
 
-        "@media": {
-          [devices.desktop]: {
-            opacity: 1,
-            pointerEvents: "auto",
-          },
+      "@media": {
+        [devices.desktop]: {
+          opacity: 1,
+          pointerEvents: "auto",
         },
       },
+    },
 
-      on: {
-        opacity: 1,
-        pointerEvents: "auto",
-      },
+    opened: {
+      opacity: 1,
+      pointerEvents: "auto",
     },
   }),
-
-  ({ colors, devices, easing }) => [
+  (variant, { colors, devices, easing }) => [
     {
       alignContent: "center",
       alignItems: "center",
@@ -62,6 +59,7 @@ export const layoutClass = cssVariants<{ isOpened: boolean }>(
         },
       },
     },
+    variant,
   ],
 );
 
@@ -84,7 +82,7 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const linkClass = cssVariants(
+export const linkClass = cssVariant(
   ({ colors }) => ({
     active: colors.red,
     default: "white",

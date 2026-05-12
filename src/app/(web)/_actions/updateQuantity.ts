@@ -1,22 +1,21 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { cartHelpers } from "@/helpers/cart";
+import { store } from "@/store";
 
-import { lock, release } from "./cartLock";
 import { saveCart } from "./saveCart";
 
 const updateQuantity = async (index: number, type: "decrease" | "increase"): Promise<void> => {
-  const sessionId = await cartHelpers.getSessionId();
+  const sessionId = await store.cart.getSessionId();
 
   if (!sessionId) return;
 
-  const locked = await lock(sessionId);
+  const locked = await store.cart.lock(sessionId);
 
   if (!locked) return;
 
   try {
-    const cart = await cartHelpers.getCart();
+    const cart = await store.cart.get();
 
     if (!cart) return;
 
@@ -48,7 +47,7 @@ const updateQuantity = async (index: number, type: "decrease" | "increase"): Pro
     await saveCart({ products });
     revalidatePath("/cart");
   } finally {
-    await release(sessionId);
+    await store.cart.unlock(sessionId);
   }
 };
 

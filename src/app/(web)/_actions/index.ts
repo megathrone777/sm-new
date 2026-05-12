@@ -1,8 +1,8 @@
 export { addToCart } from "./addToCart";
 export { removeFromCart } from "./removeFromCart";
 export { saveCart } from "./saveCart";
+export { saveCartFields } from "./saveCartFields";
 export { updateAdditionalQuantity } from "./updateAdditionalQuantity";
-export { updateClient } from "./updateClient";
 export { updateCutleryQuantity } from "./updateCutleryQuantity";
 export { updatePhone } from "./updatePhone";
 export { updateQuantity } from "./updateQuantity";

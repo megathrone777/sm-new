@@ -1,10 +1,12 @@
+import { sortByOrder } from "@/utils";
+
 import { redis } from "./redis";
 
 const HASH = "submodifiers";
 
-const submodifiersStore = {
-  delete: async (id: TSubmodifier["id"] | string): Promise<void> => {
-    await redis.hdel(HASH, String(id));
+const submodifiers = {
+  delete: async (id: TSubmodifier["id"]): Promise<void> => {
+    await redis.hdel(HASH, `${id}`);
   },
 
   getAll: async (): Promise<TSubmodifier[]> => {
@@ -12,13 +14,11 @@ const submodifiersStore = {
 
     if (!submodifiers) return [];
 
-    return Object.values(submodifiers).sort(
-      (a: TSubmodifier, b: TSubmodifier): number => a.sortOrder - b.sortOrder,
-    );
+    return sortByOrder<TSubmodifier>(Object.values(submodifiers));
   },
 
   getById: async (id: TSubmodifier["id"]): Promise<null | TSubmodifier> => {
-    return (await redis.hget<TSubmodifier>(HASH, String(id))) ?? null;
+    return (await redis.hget<TSubmodifier>(HASH, `${id}`)) ?? null;
   },
 
   set: async (submodifier: TSubmodifier): Promise<void> => {
@@ -26,4 +26,4 @@ const submodifiersStore = {
   },
 };
 
-export { submodifiersStore };
+export { submodifiers };

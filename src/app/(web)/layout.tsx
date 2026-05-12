@@ -1,12 +1,11 @@
 import React from "react";
 
-import { authHelpers } from "@/helpers/auth";
-import { shopHelpers } from "@/helpers/shop";
+import { store } from "@/store";
 
 import { Admin, Cart, Controls, Footer, Header } from "./_components";
 
 const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
-  const authSession = await authHelpers.getSession();
+  const authSession = await store.sessions.get();
   const {
     address,
     allergeny,
@@ -20,7 +19,7 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
     phone,
     text,
     title,
-  } = await shopHelpers.getSettings();
+  } = await store.shop.getSettings();
 
   return (
     <>

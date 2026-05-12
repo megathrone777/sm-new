@@ -9,7 +9,6 @@ import { fonts } from "./fonts";
 const RootLayout: React.FC<LayoutProps<"/">> = ({ children }) => (
   <html
     className={`${fonts.avenir.variable} ${fonts.franklin.variable} ${fonts.akrobat.variable} ${themeClass}`}
-    data-scroll-behavior="smooth"
     lang="cs"
   >
     <body>

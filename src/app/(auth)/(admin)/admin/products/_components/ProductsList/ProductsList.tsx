@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { deleteProduct } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { productsHelpers } from "@/helpers/products";
+import { store } from "@/store";
 import { Button } from "@/ui";
 
 import {
@@ -16,14 +16,12 @@ import {
   listClass,
 } from "./ProductsList.css";
 
-interface TProps {
-  categoryId?: number;
-}
+import type { TProps } from "./ProductsList.types";
 
 const ProductsList: React.FC<TProps> = async ({ categoryId }) => {
-  const allProducts = await productsHelpers.getProducts();
+  const allProducts = await store.products.getAll();
   const products = categoryId
-    ? allProducts.filter((p: TProduct): boolean => p.categoryId === categoryId)
+    ? allProducts.filter((product: TProduct): boolean => product.categoryId === +categoryId)
     : allProducts;
 
   return (

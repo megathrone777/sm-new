@@ -26,7 +26,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   const [countrySelected, setCountrySelected] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const telephone = useTelephone({
-    initialValue: phoneNumber ? phoneNumber : "+420",
+    initialValue: phoneNumber ? `+${phoneNumber}` : "+420",
   });
 
   const getOptions = (): TOption[] =>
@@ -139,9 +139,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         showSearch={{
           autoClearSearchValue: true,
           filterOption: (input: string, option) =>
-            String(option?.label ?? "")
-              .toLowerCase()
-              .includes(input.toLowerCase()),
+            `${option?.label ?? ""}`.toLowerCase().includes(input.toLowerCase()),
           onSearch: setSearchValue,
           searchValue,
         }}
@@ -151,7 +149,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
       />
 
       <input
-        autoComplete="off"
+        autoComplete="new-password"
         className={inputClass[Boolean(isError) ? "error" : "default"]}
         maxLength={telephone.country === "CZ" ? 16 : 100}
         name="phone"

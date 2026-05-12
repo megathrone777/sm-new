@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const inputWrapperClass = css(({ colors }) => ({
   alignContent: "center",
@@ -11,7 +11,7 @@ export const inputWrapperClass = css(({ colors }) => ({
   justifyContent: "start",
 }));
 
-export const inputClass = cssVariants(
+export const inputClass = cssVariant(
   ({ colors }) => ({
     default: {
       color: "black",

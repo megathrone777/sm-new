@@ -1,21 +1,19 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { ordersHelpers } from "@/helpers/orders";
-import { ordersStore } from "@/store";
+import { store } from "@/store";
 
 const updateOrder = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
   }
 
-  const id = (formData.get("id") as string).trim();
+  const id = `${formData.get("id") ?? ""}`.trim();
   const status = formData.get("status") as TOrderStatus;
   const courier = ((formData.get("courier") as string) ?? "").trim();
   const note = ((formData.get("note") as string) ?? "").trim();
@@ -25,13 +23,13 @@ const updateOrder = async (
     return { message: "Order ID is required", type: "error" };
   }
 
-  const existing = await ordersHelpers.getOrderById(id);
+  const existing = await store.orders.getById(+id);
 
   if (!existing) {
     return { message: `Order #${id} not found`, type: "error" };
   }
 
-  await ordersStore.update(id, { courier, deliveryTime, note, status });
+  await store.orders.update(+id, { courier, deliveryTime, note, status });
 
   revalidatePath("/admin/orders");
   revalidatePath(`/admin/order/${id}`);

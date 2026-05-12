@@ -1,19 +1,150 @@
-import { redis } from "./redis";
+import { randomUUID } from "node:crypto";
 
+import { redis } from "./redis";
+import { shop } from "./shop";
+
+const COOKIE_MAX_AGE: number = 60 * 60 * 24 * 7;
+const COOKIE_NAME: string = "sid";
 const TTL_SECONDS = 60 * 60 * 24 * 7;
 const LOCK_TTL_SECONDS = 5;
 
 const lockKey = (sessionId: string): string => `lock:${sessionId}`;
 
-const cartStore = {
+const cart = {
   delete: async (sessionId: string): Promise<void> => {
     await redis.del(sessionId);
   },
 
-  get: async (sessionId: string): Promise<null | TCart> => {
-    const cart = await redis.hgetall<Record<string, unknown>>(sessionId);
+  get: async (): Promise<null | TCart> => {
+    const sessionId = await cart.getSessionId();
 
-    return cart && Object.keys(cart).length > 0 ? (cart as unknown as TCart) : null;
+    if (!sessionId) return null;
+
+    const data = await redis.hgetall<Record<string, unknown>>(sessionId);
+
+    if (!data || Object.keys(data).length === 0) return null;
+
+    const { additionals, cutlery, delivery, products, promo, ...cartRest } =
+      data as unknown as TCart;
+    const { cutleryPrice } = await shop.getSettings();
+
+    const getCategoryDiscount = (): number => {
+      const productsWithDiscount: TCartProduct[] = products.filter(
+        ({ isPromotionActive }: TCartProduct): boolean => Boolean(isPromotionActive),
+      );
+      const productsWithDiscountQuantity: number = productsWithDiscount.reduce<number>(
+        (accumulator, { quantity }: TCartProduct): number => accumulator + quantity,
+        0,
+      );
+
+      if (productsWithDiscount && !!productsWithDiscount.length && productsWithDiscount[0]) {
+        const { promotionDiscountAmount, promotionForEveryXProducts } = productsWithDiscount[0];
+
+        return (
+          Math.floor(productsWithDiscountQuantity / promotionForEveryXProducts) *
+          promotionDiscountAmount
+        );
+      }
+
+      return 0;
+    };
+
+    const getCutleryPrice = (): number => {
+      const freeCutleryQuantity: number = products.reduce(
+        (accumulator: number, { freeCutleryCount, quantity }: TCartProduct): number =>
+          accumulator + freeCutleryCount * quantity,
+        0,
+      );
+
+      if (cutlery.quantity > freeCutleryQuantity) {
+        return (cutlery.quantity - freeCutleryQuantity) * cutleryPrice;
+      }
+
+      return 0;
+    };
+
+    const getProductsPrice = (): number => {
+      const productsPrice: number = products.reduce<number>(
+        (accumulator: number, { totalPrice }: TCartProduct): number => accumulator + totalPrice,
+        0,
+      );
+      const additionalsPrice: number = additionals.reduce<number>(
+        (accumulator: number, { totalPrice }: TCartAdditional): number => accumulator + totalPrice,
+        0,
+      );
+
+      return productsPrice + additionalsPrice;
+    };
+
+    const getDeliveryDiscount = (): number => {
+      if (getProductsPrice() > 500 && delivery.type === "pickup") {
+        return 50;
+      }
+
+      return 0;
+    };
+
+    const getDeliveryPrice = (): number => {
+      if (delivery.price && delivery.type === "delivery") {
+        return delivery.price;
+      }
+
+      return 0;
+    };
+
+    const totalPrice: number =
+      getProductsPrice() +
+      getDeliveryPrice() +
+      getCutleryPrice() -
+      getCategoryDiscount() -
+      getDeliveryDiscount() -
+      promo.discount;
+
+    return {
+      ...cartRest,
+      additionals,
+      categoryDiscount: getCategoryDiscount(),
+      cutlery: {
+        ...cutlery,
+        totalPrice: getCutleryPrice(),
+      },
+      delivery: {
+        ...delivery,
+        price: getDeliveryPrice(),
+      },
+      products,
+      promo,
+      totalPrice,
+    };
+  },
+
+  getOrCreateSessionId: async (): Promise<string> => {
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const existingSessionId = cookieStore.get(COOKIE_NAME)?.value;
+
+    if (existingSessionId) return `cart:${existingSessionId}`;
+    const sessionId: string = randomUUID();
+
+    cookieStore.set({
+      httpOnly: true,
+      maxAge: COOKIE_MAX_AGE,
+      name: COOKIE_NAME,
+      path: "/",
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      value: sessionId,
+    });
+
+    return `cart:${sessionId}`;
+  },
+
+  getSessionId: async (): Promise<null | string> => {
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const existingSessionId = cookieStore.get(COOKIE_NAME)?.value;
+
+    return existingSessionId ? `cart:${existingSessionId}` : null;
   },
 
   lock: async (sessionId: string, retries = 10, delayMs = 100): Promise<boolean> => {
@@ -37,4 +168,4 @@ const cartStore = {
   },
 };
 
-export { cartStore };
+export { cart };

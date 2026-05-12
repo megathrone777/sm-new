@@ -1,28 +1,27 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { clientsStore } from "@/store";
+import { store } from "@/store";
 
 const updateClient = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
   }
 
-  const phoneNumber = (formData.get("phoneNumber") as string).trim();
-  const name = (formData.get("name") as string).trim();
-  const email = (formData.get("email") as string).trim();
+  const phoneNumber = `${formData.get("phoneNumber") ?? ""}`.trim();
+  const name = `${formData.get("name") ?? ""}`.trim();
+  const email = `${formData.get("email") ?? ""}`.trim();
 
   if (!phoneNumber || !name) {
     return { message: "Phone number and name are required", type: "error" };
   }
 
-  await clientsStore.update({ email, name, phoneNumber });
+  await store.clients.update({ email, name, phoneNumber });
   revalidatePath("/admin/clients");
 
   return { message: `Client ${name} successfully updated`, type: "success" };

@@ -1,8 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { cartHelpers } from "@/helpers/cart";
-import { cartStore } from "@/store";
+import { store } from "@/store";
 import { isEqual } from "@/utils";
 
 import { saveCart } from "./saveCart";
@@ -53,7 +52,7 @@ const addToCart = async (
   newProduct: TCartProduct,
 ): Promise<TActionResult> => {
   const validationResult = await validateNewProduct(newProduct);
-  const sessionId = await cartHelpers.getSessionIdAndCreateIfMissing();
+  const sessionId = await store.cart.getOrCreateSessionId();
 
   if (!sessionId) {
     return {
@@ -62,7 +61,7 @@ const addToCart = async (
     };
   }
 
-  const cart = await cartStore.get(sessionId);
+  const cart = await store.cart.get();
 
   if (validationResult.type === "success") {
     if (!cart) {

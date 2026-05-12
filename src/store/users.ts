@@ -2,7 +2,7 @@ import { redis } from "./redis";
 
 const HASH = "users";
 
-const usersStore = {
+const users = {
   delete: async (login: string): Promise<void> => {
     await redis.hdel(HASH, login);
   },
@@ -20,8 +20,8 @@ const usersStore = {
 
     if (!users) return [];
 
-    return Object.values(users).sort((a: TUser, b: TUser): number =>
-      a.role.localeCompare(b.role),
+    return Object.values(users).sort((userA: TUser, userB: TUser): number =>
+      userA.role.localeCompare(userB.role),
     );
   },
 
@@ -38,4 +38,4 @@ const usersStore = {
   },
 };
 
-export { usersStore };
+export { users };

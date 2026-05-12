@@ -1,15 +1,26 @@
 import { redis } from "./redis";
 
+const COOKIE_NAME = "session";
 const DEFAULT_TTL_SECONDS = 60 * 60 * 24 * 30;
 
 const key = (sessionId: string): string => `session:${sessionId}`;
 
-const sessionsStore = {
+const sessions = {
   delete: async (sessionId: string): Promise<void> => {
     await redis.del(key(sessionId));
   },
 
-  get: async (sessionId: string): Promise<null | TSessionData> => {
+  get: async (): Promise<null | TSessionData> => {
+    const { cookies } = await import("next/headers");
+    const cookieStore = await cookies();
+    const sessionId = cookieStore.get(COOKIE_NAME)?.value;
+
+    if (!sessionId) return null;
+
+    return sessions.getById(sessionId);
+  },
+
+  getById: async (sessionId: string): Promise<null | TSessionData> => {
     const data = await redis.get<TSessionData>(key(sessionId));
 
     if (!data) return null;
@@ -26,4 +37,4 @@ const sessionsStore = {
   },
 };
 
-export { sessionsStore };
+export { sessions };

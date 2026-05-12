@@ -8,9 +8,8 @@ import {
   ImageUploader,
 } from "@/app/(auth)/(admin)/_components";
 import { FormLayout } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers } from "@/helpers/modifiers";
-import { productsHelpers } from "@/helpers/products";
 import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
 import { formClass } from "./page.css";
@@ -18,9 +17,9 @@ import { formClass } from "./page.css";
 const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) => {
   const { slug } = await params;
   const [product, modifiers, categories] = await Promise.all([
-    productsHelpers.getProductBySlug(slug),
-    modifiersHelpers.getModifiers(),
-    productsHelpers.getCategories(),
+    store.products.getBySlug(slug),
+    store.modifiers.getAll(),
+    store.categories.getAll(),
   ]);
   const { t } = useTranslation();
 
@@ -137,14 +136,14 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
           defaultValue={assignedModifierIds}
           options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
             label: `${title}${price !== 0 ? ` +${price} ${t<string>("currency")}` : ""}`,
-            value: String(id),
+            value: `${id}`,
           }))}
         />
 
         <input
           name="isTopProduct"
           type="hidden"
-          value={String(product.isTopProduct)}
+          value={`${product.isTopProduct}`}
         />
 
         <input
@@ -156,14 +155,15 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
         <input
           name="requiredCutlery"
           type="hidden"
-          value={String(product.requiredCutlery)}
+          value={`${product.requiredCutlery}`}
         />
 
         <input
           name="fbUpload"
           type="hidden"
-          value={String(product.fbUpload)}
+          value={`${product.fbUpload}`}
         />
+
         <input
           name="fbDescription"
           type="hidden"
@@ -185,13 +185,13 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
         <input
           name="isMultipleModifiers"
           type="hidden"
-          value={String(product.isMultipleModifiers)}
+          value={`${product.isMultipleModifiers}`}
         />
 
         <input
           name="isPromotionActive"
           type="hidden"
-          value={String(product.isPromotionActive)}
+          value={`${product.isPromotionActive}`}
         />
 
         <input

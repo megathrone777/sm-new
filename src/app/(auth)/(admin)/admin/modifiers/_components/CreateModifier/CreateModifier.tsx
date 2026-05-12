@@ -2,14 +2,14 @@ import React from "react";
 
 import { createModifier } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, SubModifiersSelect } from "@/app/(auth)/(admin)/_components";
-import { submodifiersHelpers } from "@/helpers/submodifiers";
 import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
 import { wrapperClass } from "./CreateModifier.css";
 
 const CreateModifier: React.FC = async () => {
-  const submodifiers = await submodifiersHelpers.getSubmodifiers();
+  const submodifiers = await store.submodifiers.getAll();
   const { t } = useTranslation();
 
   return (

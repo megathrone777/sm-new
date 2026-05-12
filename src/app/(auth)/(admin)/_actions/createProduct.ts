@@ -5,41 +5,38 @@ import path from "path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-import { authHelpers } from "@/helpers/auth";
-import { modifiersHelpers } from "@/helpers/modifiers";
-import { productsHelpers } from "@/helpers/products";
-import { productsStore } from "@/store";
+import { store } from "@/store";
 import { slugify } from "@/utils";
 
 const createProduct = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
   }
 
-  const title = (formData.get("title") as string).trim();
+  const title = `${formData.get("title") ?? ""}`.trim();
 
   if (!title) return { message: "Title is required", type: "error" };
 
-  const price = Number(formData.get("price") ?? 0);
-  const weight = (formData.get("weight") as string).trim();
-  const composition = (formData.get("composition") as string).trim();
-  const categoryId = Number(formData.get("categoryId"));
-  const allergens = (formData.get("allergens") as string).trim() || null;
-  const description = (formData.get("description") as string).trim() || null;
-  const modifiersTitle = (formData.get("modifiersTitle") as string).trim() || null;
+  const price = +formData.get("price")!;
+  const weight = `${formData.get("weight") ?? ""}`.trim();
+  const composition = `${formData.get("composition") ?? ""}`.trim();
+  const categoryId = +formData.get("categoryId")!;
+  const allergens = `${formData.get("allergens") ?? ""}`.trim() || null;
+  const description = `${formData.get("description") ?? ""}`.trim() || null;
+  const modifiersTitle = `${formData.get("modifiersTitle") ?? ""}`.trim() || null;
   const isAvailable = formData.get("isAvailable") === "on";
   const requiredModifier = formData.get("requiredModifier") === "on";
   const modifierIds = formData.getAll("modifierIds").map(Number);
 
   const [existing, allModifiers, categories] = await Promise.all([
-    productsHelpers.getProducts(),
-    modifiersHelpers.getModifiers(),
-    productsHelpers.getCategories(),
+    store.products.getAll(),
+    store.modifiers.getAll(),
+    store.categories.getAll(),
   ]);
 
   if (categoryId && !categories.find((c) => c.id === categoryId)) {
@@ -60,8 +57,8 @@ const createProduct = async (
     slug = `${baseSlug}-${counter++}`;
   }
 
-  const modifiers = allModifiers.filter(({ id: mid }) => modifierIds.includes(mid));
-  const category = categories.find((c) => c.id === categoryId);
+  const modifiers = allModifiers.filter(({ id: mid }: TModifier) => modifierIds.includes(mid));
+  const category = categories.find((category: TProductCategory) => category.id === categoryId);
 
   const product: TProduct = {
     allergens,
@@ -103,7 +100,7 @@ const createProduct = async (
     product.imageUrl = `/uploads/products/${filename}`;
   }
 
-  await productsStore.set(product);
+  await store.products.set(product);
 
   revalidatePath("/admin/products");
   redirect(`/admin/product/${slug}`);

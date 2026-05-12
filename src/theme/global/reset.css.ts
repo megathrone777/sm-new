@@ -1,4 +1,4 @@
-import { globalStyle } from "@vanilla-extract/css";
+import { globalStyle } from "@/theme";
 
 globalStyle("*", {
   boxSizing: "border-box",

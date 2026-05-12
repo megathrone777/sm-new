@@ -1,14 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { submodifiersStore } from "@/store";
+import { store } from "@/store";
 
 const deleteSubmodifier = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -19,7 +18,7 @@ const deleteSubmodifier = async (
 
   const id = formData.get("id") as string;
 
-  await submodifiersStore.delete(id);
+  await store.submodifiers.delete(+id);
   revalidatePath("/admin/submodifiers");
   revalidatePath("/admin/modifiers");
 

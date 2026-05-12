@@ -1,14 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { modifiersStore, redis } from "@/store";
+import { redis, store } from "@/store";
 
 const createModifier = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -16,7 +15,7 @@ const createModifier = async (
       type: "error",
     };
   }
-  const title = (formData.get("title") as string).trim();
+  const title = `${formData.get("title") ?? ""}`.trim();
 
   if (!title) {
     return {
@@ -25,8 +24,8 @@ const createModifier = async (
     };
   }
 
-  const price = Number(formData.get("price") ?? 0);
-  const sortOrder = Number(formData.get("sortOrder") ?? 0);
+  const price = +formData.get("price")!;
+  const sortOrder = +formData.get("sortOrder")!;
   const requiredSubModifier = formData.get("requiredSubModifier") === "on";
   const subModifierIds = formData.getAll("subModifierIds").map(Number);
   const [existingMap, subsMap] = await redis
@@ -38,9 +37,9 @@ const createModifier = async (
   const existing = existingMap ? Object.values(existingMap) : [];
   const allSubs = subsMap ? Object.values(subsMap) : [];
   const id = existing.length ? Math.max(...existing.map<number>(({ id }) => id)) + 1 : 1;
-  const subModifiers = allSubs.filter(({ id: sid }) => subModifierIds.includes(sid));
+  const subModifiers = allSubs.filter(({ id: sid }): boolean => subModifierIds.includes(sid));
 
-  await modifiersStore.set({ id, price, requiredSubModifier, sortOrder, subModifiers, title });
+  await store.modifiers.set({ id, price, requiredSubModifier, sortOrder, subModifiers, title });
   revalidatePath("/admin/modifiers");
 
   return {

@@ -1,21 +1,15 @@
-import { Redis } from "@upstash/redis";
-
 import { additionals } from "./additionals";
-import { cartStore } from "./cart";
-import { categoriesStore } from "./categories";
-import { clientsStore } from "./clients";
-import { modifiersStore } from "./modifiers";
-import { ordersStore } from "./orders";
-import { productsStore } from "./products";
-import { promocodesStore } from "./promocodes";
-import { sessionsStore } from "./sessions";
-import { submodifiersStore } from "./submodifiers";
-import { usersStore } from "./users";
-
-const redis = new Redis({
-  token: process.env.APP_KV_REST_API_TOKEN,
-  url: process.env.APP_KV_REST_API_URL,
-});
+import { cart } from "./cart";
+import { categories } from "./categories";
+import { clients } from "./clients";
+import { modifiers } from "./modifiers";
+import { orders } from "./orders";
+import { products } from "./products";
+import { promocodes } from "./promocodes";
+import { sessions } from "./sessions";
+import { shop } from "./shop";
+import { submodifiers } from "./submodifiers";
+import { users } from "./users";
 
 const store = {
   additionals,
@@ -25,24 +19,13 @@ const store = {
   modifiers,
   orders,
   products,
-  promocodes: promocodesStore,
-  sessions: sessionsStore,
-  submodifiers: submodifiersStore,
-  users: usersStore,
+  promocodes,
+  sessions,
+  shop,
+  submodifiers,
+  users,
 };
 
-export {
-  additionals,
-  cartStore,
-  categoriesStore,
-  clientsStore,
-  modifiersStore,
-  ordersStore,
-  productsStore,
-  promocodesStore,
-  sessionsStore,
-  store,
-  submodifiersStore,
-  usersStore,
-};
-export { redis };
+export { realtime, type RealtimeEvents } from "./realtime";
+export { redis } from "./redis";
+export { store };

@@ -1,26 +1,24 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { additionalsHelpers } from "@/helpers/additionals";
-import { cartHelpers } from "@/helpers/cart";
+import { store } from "@/store";
 
-import { lock, release } from "./cartLock";
 import { saveCart } from "./saveCart";
 
 const updateAdditionalQuantity = async (
   id: number,
   type: "decrease" | "increase",
 ): Promise<void> => {
-  const sessionId = await cartHelpers.getSessionId();
+  const sessionId = await store.cart.getSessionId();
 
   if (!sessionId) return;
 
-  const locked = await lock(sessionId);
+  const locked = await store.cart.lock(sessionId);
 
   if (!locked) return;
 
   try {
-    const cart = await cartHelpers.getCart();
+    const cart = await store.cart.get();
 
     if (!cart) return;
 
@@ -36,7 +34,7 @@ const updateAdditionalQuantity = async (
           totalPrice: existing.totalPrice + existing.price,
         };
       } else {
-        const additional = await additionalsHelpers.getAdditionalById(id);
+        const additional = await store.additionals.getById(id);
 
         if (!additional) return;
         additionals.push({ ...additional, quantity: 1, totalPrice: additional.price });
@@ -57,7 +55,7 @@ const updateAdditionalQuantity = async (
     await saveCart({ additionals });
     revalidatePath("/cart");
   } finally {
-    await release(sessionId);
+    await store.cart.unlock(sessionId);
   }
 };
 

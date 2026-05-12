@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css({
   alignItems: "start",
@@ -7,7 +7,7 @@ export const wrapperClass = css({
   rowGap: 15,
 });
 
-export const layoutClass = cssVariants(
+export const layoutClass = cssVariant(
   ({ colors }) => ({
     default: {
       color: colors.black,

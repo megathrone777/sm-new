@@ -1,4 +1,4 @@
-import { globalStyle } from "@vanilla-extract/css";
+import { globalStyle } from "@/theme";
 
 globalStyle("html, body", {
   width: "100%",
@@ -7,7 +7,6 @@ globalStyle("html, body", {
 globalStyle("html", {
   height: "-webkit-fill-available",
   overflowY: "scroll",
-  scrollBehavior: "smooth",
 });
 
 globalStyle("body", {
@@ -40,9 +39,9 @@ globalStyle("object", {
   display: "none",
 });
 
-globalStyle("b", {
-  fontWeight: 500,
-});
+globalStyle("b", ({ fonts }) => ({
+  fontWeight: fonts.demi,
+}));
 
 globalStyle(".leaflet-div-icon", {
   background: "none",

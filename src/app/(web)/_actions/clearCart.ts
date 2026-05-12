@@ -2,13 +2,12 @@
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
-import { cartHelpers } from "@/helpers/cart";
 import { store } from "@/store";
 
 const COOKIE_NAME: string = "sid";
 
 const clearCart = async (): Promise<void> => {
-  const sessionId = await cartHelpers.getSessionId();
+  const sessionId = await store.cart.getSessionId();
 
   if (sessionId) {
     await store.cart.delete(sessionId);

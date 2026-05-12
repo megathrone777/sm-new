@@ -1,15 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { additionalsHelpers } from "@/helpers/additionals";
-import { authHelpers } from "@/helpers/auth";
-import { additionalsStore } from "@/store";
+import { store } from "@/store";
 
 const createAdditional = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -18,7 +16,7 @@ const createAdditional = async (
     };
   }
 
-  const title = (formData.get("title") as string).trim();
+  const title = `${formData.get("title") ?? ""}`.trim();
 
   if (!title) {
     return {
@@ -27,12 +25,12 @@ const createAdditional = async (
     };
   }
 
-  const price = Number(formData.get("price") ?? 0);
-  const sortOrder = Number(formData.get("sortOrder") ?? 0);
-  const existing = await additionalsHelpers.getAdditionals();
+  const price = +(formData.get("price") ?? 0);
+  const sortOrder = +(formData.get("sortOrder") ?? 0);
+  const existing = await store.additionals.getAll();
   const id = existing.length ? Math.max(...existing.map<number>(({ id }) => id)) + 1 : 1;
 
-  await additionalsStore.set({ id, price, sortOrder, title });
+  await store.additionals.create({ id, price, sortOrder, title });
   revalidatePath("/admin/additionals");
 
   return {

@@ -1,7 +1,7 @@
-import { globalStyle, keyframes } from "@vanilla-extract/css";
+import { keyframes } from "@vanilla-extract/css";
 import { calc } from "@vanilla-extract/css-utils";
 
-import { css, cssVariants, devices, vars } from "@/theme";
+import { css, cssVariant, globalStyle } from "@/theme";
 
 const slideInUp = keyframes({
   "0%": { opacity: 0, transform: "translateY(100%)" },
@@ -13,7 +13,7 @@ const slideOutDown = keyframes({
   "100%": { opacity: 0, transform: "translateY(100%)" },
 });
 
-export const wrapperClass = css(({ fonts }) => ({
+export const wrapperClass = css(({ devices, fonts }) => ({
   selectors: {
     "&.Toastify__toast-container": {
       alignContent: "end",
@@ -54,69 +54,6 @@ export const wrapperClass = css(({ fonts }) => ({
   },
 }));
 
-globalStyle(`${wrapperClass} > .Toastify__toast`, {
-  alignItems: "center",
-  animationDuration: "500ms",
-  animationFillMode: "forwards",
-  animationTimingFunction: vars.easing,
-  borderRadius: 3,
-  boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
-  display: "grid",
-  fontFamily: "inherit",
-  fontSize: 18,
-  fontWeight: vars.fonts.normal,
-  gridAutoFlow: "column",
-  gridTemplateColumns: "auto 1fr auto",
-  justifyContent: "start",
-  marginBottom: 0,
-  minHeight: 60,
-  minWidth: "fit-content",
-  overflow: "hidden",
-  paddingBlock: 6,
-  pointerEvents: "auto",
-
-  "@media": {
-    [devices.desktop]: {
-      whiteSpace: "nowrap",
-    },
-  },
-});
-
-globalStyle(".Toastify", {
-  alignContent: "end",
-  bottom: 0,
-  display: "grid",
-  height: 0,
-  justifyContent: "end",
-  position: "sticky",
-  width: "100%",
-  zIndex: 203,
-});
-
-globalStyle(".Toastify__toast-icon", {
-  alignItems: "center",
-  display: "grid",
-  justifyContent: "center",
-});
-
-globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast--error`, {
-  backgroundColor: vars.colors.red,
-  color: "white",
-});
-
-globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast--success`, {
-  backgroundColor: "white",
-  color: "green",
-});
-
-globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast-slideInUp--bottom-right`, {
-  animationName: slideInUp,
-});
-
-globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast-slideOutDown--bottom-right`, {
-  animationName: slideOutDown,
-});
-
 export const closeButtonClass = css(({ devices }) => ({
   appearance: "none",
   backgroundColor: "transparent",
@@ -135,7 +72,7 @@ export const closeButtonClass = css(({ devices }) => ({
   },
 }));
 
-export const iconClass = cssVariants(
+export const iconClass = cssVariant(
   ({ colors }) => ({
     error: {
       backgroundColor: "white",
@@ -159,3 +96,66 @@ export const iconClass = cssVariants(
     type,
   ],
 );
+
+globalStyle(`${wrapperClass} > .Toastify__toast`, ({ devices, easing, fonts }) => ({
+  alignItems: "center",
+  animationDuration: "500ms",
+  animationFillMode: "forwards",
+  animationTimingFunction: easing,
+  borderRadius: 3,
+  boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+  display: "grid",
+  fontFamily: "inherit",
+  fontSize: 18,
+  fontWeight: fonts.normal,
+  gridAutoFlow: "column",
+  gridTemplateColumns: "auto 1fr auto",
+  justifyContent: "start",
+  marginBottom: 0,
+  minHeight: 60,
+  minWidth: "fit-content",
+  overflow: "hidden",
+  paddingBlock: 6,
+  pointerEvents: "auto",
+
+  "@media": {
+    [devices.desktop]: {
+      whiteSpace: "nowrap",
+    },
+  },
+}));
+
+globalStyle(".Toastify", {
+  alignContent: "end",
+  bottom: 0,
+  display: "grid",
+  height: 0,
+  justifyContent: "end",
+  position: "sticky",
+  width: "100%",
+  zIndex: 203,
+});
+
+globalStyle(".Toastify__toast-icon", {
+  alignItems: "center",
+  display: "grid",
+  justifyContent: "center",
+});
+
+globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast--error`, ({ colors }) => ({
+  backgroundColor: colors.red,
+  color: "white",
+}));
+
+globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast--success`, {
+  backgroundColor: "white",
+  color: "green",
+});
+
+globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast-slideInUp--bottom-right`, {
+  animationName: slideInUp,
+});
+
+globalStyle(`${wrapperClass} > .Toastify__toast.Toastify__toast-slideOutDown--bottom-right`, {
+  animationName: slideOutDown,
+});

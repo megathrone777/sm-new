@@ -7,7 +7,7 @@ const hashKey = (id: TOrder["id"]): string => `order:${id}`;
 const phoneIndex = (phoneNumber: string): string => `orders:phone:${phoneNumber}`;
 const promocodeIndex = (code: string): string => `promocode:${code}:orders`;
 
-const fanOutById = async (ids: (number | string)[]): Promise<TOrder[]> => {
+const fanOutById = async (ids: number[]): Promise<TOrder[]> => {
   if (!ids.length) return [];
 
   const pipeline = redis.pipeline();
@@ -21,28 +21,32 @@ const fanOutById = async (ids: (number | string)[]): Promise<TOrder[]> => {
   return orders.filter(Boolean);
 };
 
-const ordersStore = {
+const orders = {
+  create: async (order: TOrder): Promise<void> => {
+    await redis.hset<TOrder>(hashKey(order.id), order as unknown as Record<TOrder["id"], TOrder>);
+  },
+
   delete: async (id: TOrder["id"], order: TOrder): Promise<void> => {
     const pipeline = redis.pipeline();
 
     pipeline.del(hashKey(id));
-    pipeline.zrem(INDEX, String(id));
+    pipeline.zrem(INDEX, `${id}`);
 
     if (order.clientPhoneNumber) {
-      pipeline.zrem(phoneIndex(order.clientPhoneNumber), String(id));
+      pipeline.zrem(phoneIndex(order.clientPhoneNumber), `${id}`);
     }
 
     if (order.promocode) {
-      pipeline.zrem(promocodeIndex(order.promocode), String(id));
+      pipeline.zrem(promocodeIndex(order.promocode), `${id}`);
     }
 
     await pipeline.exec();
   },
 
   getAll: async (offset = 0, limit = 10): Promise<TOrder[]> => {
-    const ids = await redis.zrange(INDEX, offset, offset + limit - 1, { rev: true });
+    const ids = await redis.zrange<number[]>(INDEX, offset, offset + limit - 1, { rev: true });
 
-    return fanOutById(ids as (number | string)[]);
+    return fanOutById(ids);
   },
 
   getById: async (id: TOrder["id"]): Promise<null | TOrder> => {
@@ -52,22 +56,22 @@ const ordersStore = {
   },
 
   getByPhone: async (phoneNumber: string, offset = 0, limit = 20): Promise<TOrder[]> => {
-    const ids = await redis.zrange(phoneIndex(phoneNumber), offset, offset + limit - 1, {
+    const ids = await redis.zrange<number[]>(phoneIndex(phoneNumber), offset, offset + limit - 1, {
       rev: true,
     });
 
-    return fanOutById(ids as (number | string)[]);
+    return fanOutById(ids);
   },
 
   getByPromocode: async (code: string, offset = 0, limit = 50): Promise<TOrder[]> => {
-    const ids = await redis.zrange(promocodeIndex(code), offset, offset + limit - 1, {
+    const ids = await redis.zrange<number[]>(promocodeIndex(code), offset, offset + limit - 1, {
       rev: true,
     });
 
-    return fanOutById(ids as (number | string)[]);
+    return fanOutById(ids);
   },
 
-  listExistingOrderIdsByPhoneAndAllocateNextId: async (
+  getExistingOrder: async (
     phoneNumber: string,
   ): Promise<{ existingOrderIds: string[]; id: number }> => {
     const [existingOrderIds, id] = await redis
@@ -79,9 +83,10 @@ const ordersStore = {
     return { existingOrderIds: existingOrderIds ?? [], id };
   },
 
-  registerNewOrder: async (order: TOrder): Promise<void> => {
-    await redis
+  registerNewOrder: async (order: TOrder, cartSessionId?: null | string): Promise<void> => {
+    const pipeline = redis
       .pipeline()
+      .hset<TOrder>(hashKey(order.id), order as unknown as Record<TOrder["id"], TOrder>)
       .zadd(INDEX, { member: `${order.id}`, score: +order.id })
       .zadd(phoneIndex(order.clientPhoneNumber), { member: `${order.id}`, score: +order.id })
       .hset(`client:${order.clientPhoneNumber}`, {
@@ -89,17 +94,15 @@ const ordersStore = {
         name: order.clientName,
         phoneNumber: order.clientPhoneNumber,
       })
-      .zadd("clients", { member: order.clientPhoneNumber, score: Date.now() })
-      .exec();
+      .zadd("clients", { member: order.clientPhoneNumber, score: Date.now() });
+
+    if (cartSessionId) pipeline.del(cartSessionId);
+    await pipeline.exec();
   },
 
-  set: async (order: TOrder): Promise<void> => {
-    await redis.hset<TOrder>(hashKey(order.id), order as unknown as Record<TOrder["id"], TOrder>);
-  },
-
-  update: async (id: string | TOrder["id"], patch: Partial<TOrder>): Promise<void> => {
+  update: async (id: TOrder["id"], patch: Partial<TOrder>): Promise<void> => {
     await redis.hset(hashKey(id), patch);
   },
 };
 
-export { ordersStore };
+export { orders };

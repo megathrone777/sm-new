@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css({
   alignContent: "end",
@@ -11,7 +11,7 @@ export const wrapperClass = css({
   zIndex: 202,
 });
 
-export const overlayClass = cssVariants(
+export const overlayClass = cssVariant(
   ({ animations, easing }) => ({
     default: {
       opacity: 0,

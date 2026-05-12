@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   marginBottom: 14,
@@ -33,7 +33,7 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const linkClass = cssVariants(
+export const linkClass = cssVariant(
   ({ colors }) => ({
     active: colors.red,
     default: "white",

@@ -4,9 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { CategorySelect } from "@/app/(auth)/(admin)/_components";
 
-interface TProps {
-  options: TSelectOption[];
-}
+import type { TProps } from "./CategoryFilter.types";
 
 const CategoryFilter: React.FC<TProps> = ({ options }) => {
   const router = useRouter();
@@ -24,7 +22,7 @@ const CategoryFilter: React.FC<TProps> = ({ options }) => {
     router.replace(`/admin/products?${params.toString()}`);
   };
 
-  const categoryId = Number(searchParams.get("categoryId")) || 0;
+  const categoryId = +(searchParams.get("categoryId") ?? 0);
 
   return (
     <CategorySelect

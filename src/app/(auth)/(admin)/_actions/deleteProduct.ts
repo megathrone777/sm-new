@@ -4,15 +4,13 @@ import path from "path";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { productsHelpers } from "@/helpers/products";
-import { productsStore } from "@/store";
+import { store } from "@/store";
 
 const deleteProduct = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -23,7 +21,7 @@ const deleteProduct = async (
 
   const slug = formData.get("id") as string;
   const title = formData.get("title");
-  const product = await productsHelpers.getProductBySlug(slug);
+  const product = await store.products.getBySlug(slug);
 
   if (!product) {
     return {
@@ -38,7 +36,7 @@ const deleteProduct = async (
     await fs.unlink(filePath).catch(() => {});
   }
 
-  await productsStore.delete(slug, product.id);
+  await store.products.delete(slug, product.id);
   revalidatePath("/admin/products");
 
   return {

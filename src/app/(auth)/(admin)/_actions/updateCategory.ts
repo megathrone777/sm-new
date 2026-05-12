@@ -4,26 +4,24 @@ import path from "path";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { productsHelpers } from "@/helpers/products";
-import { redis } from "@/store";
+import { redis, store } from "@/store";
 
 const updateCategory = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
   }
 
-  const id = Number(formData.get("id"));
-  const title = (formData.get("title") as string).trim();
-  const sortOrder = Number(formData.get("sortOrder") ?? 0);
+  const id = +formData.get("id")!;
+  const title = `${formData.get("title") ?? ""}`.trim();
+  const sortOrder = +(formData.get("sortOrder") ?? 0);
   const productSlugs = formData.getAll("productSlugs") as string[];
 
-  const prev = await productsHelpers.getCategoryById(id);
+  const prev = await store.categories.getById(id);
 
   if (!prev) return { message: `Category ${id} not found`, type: "error" };
 
@@ -52,7 +50,7 @@ const updateCategory = async (
     title,
   };
 
-  const allCategories = await productsHelpers.getCategories();
+  const allCategories = await store.categories.getAll();
   const allProducts = allCategories.find((c: TProductCategory) => c.id === 0)?.products ?? [];
 
   const fallbackCategory = allCategories

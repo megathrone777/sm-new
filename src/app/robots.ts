@@ -12,8 +12,8 @@ const robots = (): MetadataRoute.Robots => {
           "/rules",
           "/terms",
           "/cart",
-          "/orderConfirmed",
-          "/orderDeclined",
+          "/order-confirmed",
+          "/order-declined",
         ],
       },
     };

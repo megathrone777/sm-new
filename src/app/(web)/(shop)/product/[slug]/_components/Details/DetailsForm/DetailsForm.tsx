@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 import { addToCart, validateNewProduct } from "@/app/(web)/_actions";
-import { getProductPrice } from "@/helpers/cart/getProductPrice";
 import { useTranslation } from "@/hooks";
 import { Button } from "@/ui";
 import { toKey } from "@/utils";
@@ -31,13 +30,11 @@ const DetailsForm: React.FC<TProps> = ({
     const modifierIds = formData.getAll("modifier");
 
     const selectedModifiers: TCartModifier[] = modifierIds.map((modifierId): TCartModifier => {
-      const modifier = modifiers.find(({ id }: TModifier): boolean => id === Number(modifierId))!;
+      const modifier = modifiers.find(({ id }: TModifier): boolean => id === +modifierId)!;
       const subModifierId = formData.get(`${modifierId}-submodifier`);
-      const subModifier = subModifierId
-        ? modifier.subModifiers?.find(
-            ({ id }: TSubmodifier): boolean => id === Number(subModifierId),
-          )
-        : undefined;
+      const subModifier =
+        subModifierId &&
+        modifier.subModifiers?.find(({ id }: TSubmodifier): boolean => id === +subModifierId);
 
       return {
         ...modifier,
@@ -64,7 +61,10 @@ const DetailsForm: React.FC<TProps> = ({
   }: React.SyntheticEvent<HTMLFormElement>): Promise<void> => {
     const formData = new FormData(currentTarget);
     const selectedModifiers = collectSelectedModifiers(formData);
-    const newTotalPrice = getProductPrice(price, selectedModifiers);
+    const newTotalPrice = selectedModifiers.reduce<number>(
+      (accumulator, modifier) => accumulator + modifier.price,
+      price,
+    );
 
     removeRequiredParam();
     setTotalPrice(newTotalPrice);

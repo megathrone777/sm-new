@@ -1,6 +1,6 @@
 import { keyframes } from "@vanilla-extract/css";
 
-import { cssVariants } from "@/theme";
+import { cssVariant } from "@/theme";
 
 const spin = keyframes({
   "0%": {
@@ -12,7 +12,7 @@ const spin = keyframes({
   },
 });
 
-export const wrapperClass = cssVariants(
+export const wrapperClass = cssVariant(
   {
     normal: {
       borderWidth: 8,

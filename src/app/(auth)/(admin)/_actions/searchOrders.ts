@@ -1,6 +1,5 @@
 "use server";
-import { ordersHelpers } from "@/helpers/orders";
-import { redis } from "@/store";
+import { redis, store } from "@/store";
 
 import type { FlatIndexSchema } from "@upstash/redis";
 
@@ -22,7 +21,7 @@ const searchOrders = async (query: string): Promise<TOrderSearchResult["data"][]
 
   // If the query looks like a numeric ID, fetch directly
   if (/^\d+$/.test(query.trim())) {
-    const order = await ordersHelpers.getOrderById(query.trim());
+    const order = await store.orders.getById(+query.trim());
 
     return order ? [order] : [];
   }

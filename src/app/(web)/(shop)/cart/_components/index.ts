@@ -3,6 +3,7 @@ export { Client } from "./Client";
 export { Cutlery } from "./Cutlery";
 export { Delivery } from "./Delivery";
 export { DeliveryType } from "./DeliveryType";
+export { FormLayout } from "./FormLayout";
 export { Note } from "./Note";
 export { Placeholder } from "./Placeholder";
 export { ProductsList } from "./ProductsList";

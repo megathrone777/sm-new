@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css({
   marginBottom: 25,
@@ -17,9 +17,7 @@ export const contactListClass = css(({ devices }) => ({
   },
 }));
 
-export const contactItemClass = cssVariants<{
-  type: "instagram" | "phone" | "telegram" | "viber" | "whatsapp";
-}>(
+export const contactItemClass = cssVariant(
   {
     instagram: {
       backgroundPositionY: 0,
@@ -37,7 +35,7 @@ export const contactItemClass = cssVariants<{
       backgroundPositionY: -106,
     },
   },
-  ({ devices, easing }) => [
+  (variant, { devices, easing }) => [
     {
       background: "url('/images/contact_links_bg.png') center top/100% auto no-repeat",
       height: 40,
@@ -58,6 +56,7 @@ export const contactItemClass = cssVariants<{
         },
       },
     },
+    variant,
   ],
 );
 

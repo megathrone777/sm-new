@@ -2,9 +2,8 @@ import React from "react";
 
 import { updateModifier } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, Header, SubModifiersSelect } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers } from "@/helpers/modifiers";
-import { submodifiersHelpers } from "@/helpers/submodifiers";
 import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
 import { formClass } from "./page.css";
@@ -12,12 +11,13 @@ import { formClass } from "./page.css";
 const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => {
   const { id } = await params;
   const [modifier, submodifiers] = await Promise.all([
-    modifiersHelpers.getModifierById(Number(id)),
-    submodifiersHelpers.getSubmodifiers(),
+    store.modifiers.getById(+id),
+    store.submodifiers.getAll(),
   ]);
   const { t } = useTranslation();
 
   if (!modifier) return <p>Modifier not found</p>;
+
   const assignedIds = (modifier.subModifiers ?? []).map<string>(
     ({ id: submodifierId }) => `${submodifierId}`,
   );

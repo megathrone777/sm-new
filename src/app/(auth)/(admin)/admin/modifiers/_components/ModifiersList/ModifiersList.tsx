@@ -3,13 +3,13 @@ import Link from "next/link";
 
 import { deleteModifier } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { modifiersHelpers } from "@/helpers/modifiers";
+import { store } from "@/store";
 import { Button } from "@/ui";
 
 import { headerClass, itemClass, linkClass, listClass } from "./ModifiersList.css";
 
 const ModifiersList: React.FC = async () => {
-  const modifiers = await modifiersHelpers.getModifiers();
+  const modifiers = await store.modifiers.getAll();
 
   return (
     <ListLayout

@@ -79,6 +79,14 @@ const config = defineConfig({
         message: "Avoid raw degree symbol in template literals. Use '\\u00B0'.",
         selector: "TemplateElement[value.raw=/°/u]",
       },
+      {
+        message: "Use template literal `${value}` instead of String(value).",
+        selector: "CallExpression[callee.name='String']",
+      },
+      {
+        message: "Use unary plus +value instead of Number(value).",
+        selector: "CallExpression[callee.name='Number']",
+      },
     ],
     "no-trailing-spaces": "error",
     "no-unused-vars": "off",

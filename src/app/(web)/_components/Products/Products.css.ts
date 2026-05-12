@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   backgroundImage: "url('/images/products_bg.jpg')",
@@ -30,7 +30,7 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const titleClass = cssVariants(
+export const titleClass = cssVariant(
   ({ devices }) => ({
     isNormal: {
       fontSize: 25,

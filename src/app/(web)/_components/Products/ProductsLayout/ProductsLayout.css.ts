@@ -1,8 +1,8 @@
 import { calc } from "@vanilla-extract/css-utils";
 
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
-export const titleClass = cssVariants(
+export const titleClass = cssVariant(
   ({ devices }) => ({
     default: {
       fontSize: 25,
@@ -33,7 +33,7 @@ export const titleClass = cssVariants(
   ],
 );
 
-export const tabsListClass = cssVariants(
+export const tabsListClass = cssVariant(
   ({ devices }) => ({
     collapsed: {
       gap: 10,
@@ -69,7 +69,7 @@ export const tabsListClass = cssVariants(
   ],
 );
 
-export const tabClass = cssVariants(
+export const tabClass = cssVariant(
   ({ devices }) => ({
     active: {
       height: 55,

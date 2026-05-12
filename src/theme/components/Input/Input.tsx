@@ -14,19 +14,7 @@ import {
 
 import type { TProps } from "./Input.types";
 
-const Input: React.FC<TProps> = ({
-  defaultValue,
-  disabled,
-  iconId,
-  isError,
-  label,
-  maxLength,
-  name,
-  onChange,
-  placeholder,
-  type,
-  value,
-}) => {
+const Input: React.FC<TProps> = ({ iconId, isError, label, ...rest }) => {
   const inputId = useId();
 
   return (
@@ -62,20 +50,11 @@ const Input: React.FC<TProps> = ({
         )}
 
         <input
-          autoComplete="off"
+          autoComplete="new-password"
           className={inputClass[isError ? "error" : "default"]}
           id={inputId}
           spellCheck="false"
-          {...{
-            defaultValue,
-            disabled,
-            maxLength,
-            name,
-            onChange,
-            placeholder,
-            type,
-            value,
-          }}
+          {...rest}
         />
 
         {isError && (

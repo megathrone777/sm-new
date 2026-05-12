@@ -3,13 +3,13 @@ import Link from "next/link";
 
 import { deleteSubmodifier, updateSubmodifier } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { submodifiersHelpers } from "@/helpers/submodifiers";
+import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
 import { itemClass, itemFormClass, listClass, linkClass } from "./SubModifiersList.css";
 
 const SubModifiersList: React.FC = async () => {
-  const subModifiers = await submodifiersHelpers.getSubmodifiers();
+  const subModifiers = await store.submodifiers.getAll();
 
   return (
     <ListLayout

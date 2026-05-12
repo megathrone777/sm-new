@@ -49,7 +49,7 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
 
   return (
     <div className={wrapperClass}>
-      <div className={layoutClass({ isOpened })}>
+      <div className={layoutClass[isOpened ? "opened" : "closed"]}>
         <p className={contactClass}>
           {phone && (
             <a

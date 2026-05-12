@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { sessionsStore } from "@/store";
+import { store } from "@/store";
 
 const COOKIE_NAME = "session";
 
@@ -9,7 +9,7 @@ const getSession = async ({ cookies }: NextRequest): Promise<null | TSessionData
 
   if (!sessionId) return null;
 
-  return sessionsStore.get(sessionId);
+  return store.sessions.getById(sessionId);
 };
 
 export const proxy = async (request: NextRequest): Promise<NextResponse> => {

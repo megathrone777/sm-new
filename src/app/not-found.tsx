@@ -3,7 +3,7 @@ import React from "react";
 import { Hero } from "@/app/(web)/(shop)/_components";
 import { Footer, Header } from "@/app/(web)/_components";
 import { Error } from "@/components";
-import { shopHelpers } from "@/helpers/shop";
+import { store } from "@/store";
 
 const Page: React.FC = async () => {
   const {
@@ -16,7 +16,7 @@ const Page: React.FC = async () => {
     logoUrl,
     navigation,
     phone,
-  } = await shopHelpers.getSettings();
+  } = await store.shop.getSettings();
 
   return (
     <>

@@ -1,3 +1,5 @@
+import { sortByOrder } from "@/utils";
+
 import { redis } from "./redis";
 
 const HASH = "modifiers";
@@ -5,13 +7,9 @@ const SEARCH_PREFIX = "modifier:";
 
 type TModifierSearchEntry = Pick<TModifier, "id" | "price" | "title">;
 
-const modifiersStore = {
-  delete: async (id: TModifier["id"] | string): Promise<void> => {
-    await redis
-      .pipeline()
-      .hdel(HASH, String(id))
-      .del(`${SEARCH_PREFIX}${id}`)
-      .exec();
+const modifiers = {
+  delete: async (id: TModifier["id"]): Promise<void> => {
+    await redis.pipeline().hdel(HASH, `${id}`).del(`${SEARCH_PREFIX}${id}`).exec();
   },
 
   getAll: async (): Promise<TModifier[]> => {
@@ -19,13 +17,11 @@ const modifiersStore = {
 
     if (!modifiers) return [];
 
-    return Object.values(modifiers).sort(
-      (a: TModifier, b: TModifier): number => a.sortOrder - b.sortOrder,
-    );
+    return sortByOrder<TModifier>(Object.values(modifiers));
   },
 
   getById: async (id: TModifier["id"]): Promise<null | TModifier> => {
-    return (await redis.hget<TModifier>(HASH, String(id))) ?? null;
+    return (await redis.hget<TModifier>(HASH, `${id}`)) ?? null;
   },
 
   set: async (modifier: TModifier): Promise<void> => {
@@ -43,4 +39,4 @@ const modifiersStore = {
   },
 };
 
-export { modifiersStore };
+export { modifiers };

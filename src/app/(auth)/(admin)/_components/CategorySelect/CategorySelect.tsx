@@ -31,7 +31,7 @@ const CategorySelect: React.FC<TProps> = ({
 
       <Selectbox
         {...{ label, options, placeholder }}
-        defaultValue={defaultValue ? `${defaultValue}` : undefined}
+        defaultValue={defaultValue ? `${defaultValue}` : ""}
         onChange={handleChange}
       />
     </div>

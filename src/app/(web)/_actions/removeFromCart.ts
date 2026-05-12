@@ -1,13 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { cartHelpers } from "@/helpers/cart";
+import { store } from "@/store";
 
 import { clearCart } from "./clearCart";
 import { saveCart } from "./saveCart";
 
 const removeFromCart = async (index: number): Promise<void> => {
-  const cart = await cartHelpers.getCart();
+  const cart = await store.cart.get();
 
   if (!cart) return;
   const products = [...cart.products];

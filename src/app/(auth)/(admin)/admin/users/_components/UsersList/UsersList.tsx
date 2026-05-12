@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { deleteUser, updateUser } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { authHelpers } from "@/helpers/auth";
+import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
 import { RoleSelect } from "../RoleSelect";
@@ -11,7 +11,7 @@ import { RoleSelect } from "../RoleSelect";
 import { formClass, itemClass, linkClass, listClass } from "./UsersList.css";
 
 const UsersList: React.FC = async () => {
-  const users = await authHelpers.getUsers();
+  const users = await store.users.getAll();
 
   return (
     <ListLayout

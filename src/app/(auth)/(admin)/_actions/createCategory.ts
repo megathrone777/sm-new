@@ -4,29 +4,26 @@ import path from "path";
 
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { productsHelpers } from "@/helpers/products";
-import { categoriesStore } from "@/store";
+import { store } from "@/store";
 
 const createCategory = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
   }
 
-  const title = (formData.get("title") as string).trim();
+  const title = `${formData.get("title") ?? ""}`.trim();
 
   if (!title) return { message: "Title is required", type: "error" };
 
-  const sortOrder = Number(formData.get("sortOrder") ?? 0);
-  const existing = await productsHelpers.getCategories();
-  const realCategories = existing.filter(({ id }) => id !== 0);
+  const sortOrder = +formData.get("sortOrder")!;
+  const existing = await store.categories.getAll();
+  const realCategories = existing.filter(({ id }: TProductCategory): boolean => id !== 0);
   const id = realCategories.length ? Math.max(...realCategories.map(({ id }) => id)) + 1 : 1;
-
   let imageUrl = "";
   const imageFile = formData.get("image") as File;
 
@@ -50,7 +47,7 @@ const createCategory = async (
     title,
   };
 
-  await categoriesStore.set(category);
+  await store.categories.set(category);
 
   revalidatePath("/admin/categories");
 

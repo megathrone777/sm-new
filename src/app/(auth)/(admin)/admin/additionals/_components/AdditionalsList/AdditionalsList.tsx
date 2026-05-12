@@ -3,14 +3,14 @@ import Link from "next/link";
 
 import { deleteAdditional, updateAdditional } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { additionalsHelpers } from "@/helpers/additionals";
 import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
 import { itemClass, itemFormClass, linkClass, listClass } from "./AdditionalsList.css";
 
 const AdditionalsList: React.FC = async () => {
-  const additionals = await additionalsHelpers.getAdditionals();
+  const additionals = await store.additionals.getAll();
   const { t } = useTranslation();
 
   return (

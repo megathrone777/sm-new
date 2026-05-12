@@ -1,15 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { ordersHelpers } from "@/helpers/orders";
-import { ordersStore } from "@/store";
+import { store } from "@/store";
 
 const deleteOrder = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
@@ -21,13 +19,13 @@ const deleteOrder = async (
     return { message: "Order ID is required", type: "error" };
   }
 
-  const order = await ordersHelpers.getOrderById(id);
+  const order = await store.orders.getById(+id);
 
   if (!order) {
     return { message: `Order #${id} not found`, type: "error" };
   }
 
-  await ordersStore.delete(id, order);
+  await store.orders.delete(+id, order);
   revalidatePath("/admin/orders");
 
   return { message: `Order #${id} successfully deleted`, type: "success" };

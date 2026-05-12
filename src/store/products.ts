@@ -7,13 +7,9 @@ const SEARCH_PREFIX = "product:";
 
 type TProductSearchEntry = Pick<TProduct, "id" | "imageUrl" | "price" | "slug" | "title">;
 
-const productsStore = {
+const products = {
   delete: async (slug: string, id: TProduct["id"]): Promise<void> => {
-    await redis
-      .pipeline()
-      .hdel(HASH, slug)
-      .del(`${SEARCH_PREFIX}${id}`)
-      .exec();
+    await redis.pipeline().hdel(HASH, slug).del(`${SEARCH_PREFIX}${id}`).exec();
   },
 
   getAll: async (): Promise<TProduct[]> => {
@@ -21,9 +17,7 @@ const productsStore = {
 
     if (!products) return [];
 
-    return Object.values(products).sort(
-      (a: TProduct, b: TProduct): number => a.sortOrder - b.sortOrder || a.id - b.id,
-    );
+    return sortByOrder(Object.values(products));
   },
 
   getAllRaw: async (): Promise<null | Record<string, TProduct>> => {
@@ -51,10 +45,10 @@ const productsStore = {
   },
 
   sortedByCategory: async (): Promise<TProduct[]> => {
-    const products = await productsStore.getAllRaw();
+    const productsList = await products.getAllRaw();
 
-    return products ? sortByOrder(Object.values(products)) : [];
+    return productsList ? sortByOrder(Object.values(productsList)) : [];
   },
 };
 
-export { productsStore };
+export { products };

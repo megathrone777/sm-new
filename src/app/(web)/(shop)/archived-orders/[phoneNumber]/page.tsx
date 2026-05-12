@@ -1,11 +1,11 @@
 import React from "react";
 
-import { ordersHelpers } from "@/helpers/orders";
+import { store } from "@/store";
 import { Container } from "@/ui";
 
 const Page: React.FC<PageProps<"/archived-orders/[phoneNumber]">> = async ({ params }) => {
   const { phoneNumber } = await params;
-  const orders = await ordersHelpers.getOrdersByPhone(phoneNumber, 0, 100);
+  const orders = await store.orders.getByPhone(phoneNumber, 0, 100);
 
   return (
     <Container>

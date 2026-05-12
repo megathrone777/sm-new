@@ -1,9 +1,8 @@
 import React from "react";
 
 import { Products } from "@/app/(web)/_components";
-import { additionalsHelpers } from "@/helpers/additionals";
-import { cartHelpers } from "@/helpers/cart";
 import { useTranslation } from "@/hooks";
+import { store } from "@/store";
 import { Container } from "@/ui";
 
 import {
@@ -12,6 +11,7 @@ import {
   Cutlery,
   Delivery,
   DeliveryType,
+  FormLayout,
   Note,
   Placeholder,
   ProductsList,
@@ -20,13 +20,10 @@ import {
   Submit,
 } from "./_components";
 
-import { layoutClass, wrapperClass } from "./page.css";
+import { wrapperClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/cart">> = async () => {
-  const [cart, additionals] = await Promise.all([
-    cartHelpers.getCart(),
-    additionalsHelpers.getAdditionals(),
-  ]);
+  const [cart, additionals] = await Promise.all([store.cart.get(), store.additionals.getAll()]);
   const { t } = useTranslation();
 
   const renderCart = (): null | React.ReactElement => {
@@ -38,11 +35,12 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
         cutlery,
         delivery,
         errors,
+        note,
         products,
         totalPrice,
       } = cart;
 
-      console.log(errors.cutlery);
+      console.log(errors);
 
       return (
         <>
@@ -53,9 +51,8 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
             <ProductsList {...{ categoryDiscount, products }} />
           </SectionLayout>
 
-          <div className={layoutClass}>
+          <FormLayout {...{ errors }}>
             <SectionLayout
-              error={errors.cutlery}
               gridArea="cutlery"
               id="cart-cutlery"
               title={t<string>("cutleryQuantity")}
@@ -67,7 +64,6 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
             </SectionLayout>
 
             <SectionLayout
-              error={errors.delivery}
               gridArea="delivery"
               title={t<string>("delivery")}
             >
@@ -99,11 +95,11 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               gridArea="note"
               title={t<string>("note")}
             >
-              <Note />
+              <Note defaultValue={note} />
             </SectionLayout>
 
             <Submit {...{ totalPrice }} />
-          </div>
+          </FormLayout>
         </>
       );
     }

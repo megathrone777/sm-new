@@ -3,13 +3,13 @@ import Link from "next/link";
 
 import { deleteOrder } from "@/app/(auth)/(admin)/_actions";
 import { ListLayout } from "@/app/(auth)/(admin)/_components";
-import { ordersHelpers } from "@/helpers/orders";
+import { store } from "@/store";
 import { Button } from "@/ui";
 
 import { headerClass, itemClass, linkClass, listClass } from "./OrdersList.css";
 
 const OrdersList: React.FC = async () => {
-  const orders = await ordersHelpers.getOrders();
+  const orders = await store.orders.getAll();
 
   return (
     <ListLayout

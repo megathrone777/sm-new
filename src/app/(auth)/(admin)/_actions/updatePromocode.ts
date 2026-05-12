@@ -1,22 +1,20 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { promocodesHelpers } from "@/helpers/promocodes";
-import { promocodesStore } from "@/store";
+import { store } from "@/store";
 
 const updatePromocode = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return { message: "Unauthorized", type: "error" };
   }
 
-  const code = (formData.get("code") as string).trim().toUpperCase();
-  const discount = Number(formData.get("discount"));
+  const code = `${formData.get("code") ?? ""}`.trim().toUpperCase();
+  const discount = +formData.get("discount")!;
   const type = formData.get("type") as TPromoCode["type"];
   const activatedAt = (formData.get("activatedAt") as string) || null;
   const isActive = formData.get("isActive") === "true";
@@ -25,13 +23,13 @@ const updatePromocode = async (
     return { message: "Code and discount are required", type: "error" };
   }
 
-  const existing = await promocodesHelpers.getPromocodeByCode(code);
+  const existing = await store.promocodes.getByCode(code);
 
   if (!existing) {
     return { message: `Promocode ${code} not found`, type: "error" };
   }
 
-  await promocodesStore.update(code, {
+  await store.promocodes.update(code, {
     activatedAt: activatedAt ?? "",
     discount,
     isActive: isActive ? "1" : "0",

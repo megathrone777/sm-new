@@ -1,8 +1,7 @@
 "use server";
 import { redirect } from "next/navigation";
 
-import { authHelpers } from "@/helpers/auth";
-import { clientsStore, redis } from "@/store";
+import { redis, store } from "@/store";
 
 import type { FlatIndexSchema } from "@upstash/redis";
 
@@ -18,7 +17,7 @@ const deleteClient = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -27,7 +26,7 @@ const deleteClient = async (
     };
   }
 
-  const phoneNumber = (formData.get("phoneNumber") as string).trim();
+  const phoneNumber = `${formData.get("phoneNumber") ?? ""}`.trim();
 
   if (!phoneNumber) {
     return {
@@ -36,7 +35,7 @@ const deleteClient = async (
     };
   }
 
-  await clientsStore.delete(phoneNumber);
+  await store.clients.delete(phoneNumber);
 
   const index = redis.search.index({
     name: CLIENT_SEARCH_INDEX,

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ordersHelpers } from "@/helpers/orders";
+import { store } from "@/store";
 import { Button } from "@/ui";
 
 import type { TProps } from "./History.types";
@@ -8,7 +8,7 @@ import type { TProps } from "./History.types";
 const History: React.FC<TProps> = async ({ phoneNumber }) => {
   if (!phoneNumber) return null;
   if (!phoneNumber.match(/^\+\d{7,15}$/)) return null;
-  const orders = await ordersHelpers.getOrdersByPhone(phoneNumber.replace("+", ""), 0, 100);
+  const orders = await store.orders.getByPhone(phoneNumber.replace("+", ""), 0, 100);
 
   if (orders && !!orders.length) {
     return (

@@ -4,28 +4,25 @@ import { Icon } from "@/ui";
 
 import { iconClass, textareaClass, wrapperClass } from "./Note.css";
 
-const Note: React.FC = () => {
-  // const handleNoteChange = ({ currentTarget }: React.SyntheticEvent<HTMLTextAreaElement>): void => {
-  // dispatch(setNote(currentTarget.value));
-  // };
+interface TProps {
+  defaultValue?: string;
+}
 
-  return (
-    <>
-      <div className={wrapperClass}>
-        <Icon
-          className={iconClass}
-          id="note"
-        />
+const Note: React.FC<TProps> = ({ defaultValue }) => (
+  <div className={wrapperClass}>
+    <Icon
+      className={iconClass}
+      id="note"
+    />
 
-        <textarea
-          className={textareaClass}
-          maxLength={250}
-          name="note"
-          placeholder="Pokud si přejete vynechat sezam nebo pálivou omáčku, tak stačí napsat sem..."
-        />
-      </div>
-    </>
-  );
-};
+    <textarea
+      className={textareaClass}
+      defaultValue={defaultValue}
+      maxLength={250}
+      name="note"
+      placeholder="Pokud si přejete vynechat sezam nebo pálivou omáčku, tak stačí napsat sem..."
+    />
+  </div>
+);
 
 export { Note };

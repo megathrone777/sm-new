@@ -1,4 +1,4 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   alignItems: "start",
@@ -14,7 +14,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = cssVariants(
+export const layoutClass = cssVariant(
   {
     normal: {
       height: 25,
@@ -55,7 +55,7 @@ export const inputClass = css({
   zIndex: 2,
 });
 
-export const iconClass = cssVariants(
+export const iconClass = cssVariant(
   {
     normal: {
       height: 14,
@@ -84,7 +84,7 @@ export const iconClass = cssVariants(
   ],
 );
 
-export const labelClass = cssVariants(
+export const labelClass = cssVariant(
   {
     normal: {
       lineHeight: "25px",

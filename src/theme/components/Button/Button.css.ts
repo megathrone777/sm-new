@@ -1,6 +1,6 @@
-import { css, cssVariants } from "@/theme";
+import { css, cssVariant } from "@/theme";
 
-export const buttonClass = cssVariants(
+export const buttonClass = cssVariant(
   ({ devices }) => ({
     normal: {
       fontSize: 16,

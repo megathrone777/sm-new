@@ -1,15 +1,13 @@
 "use server";
 import { revalidatePath } from "next/cache";
 
-import { authHelpers } from "@/helpers/auth";
-import { submodifiersHelpers } from "@/helpers/submodifiers";
-import { submodifiersStore } from "@/store";
+import { store } from "@/store";
 
 const updateSubmodifier = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<TActionResult> => {
-  const session = await authHelpers.getSession();
+  const session = await store.sessions.get();
 
   if (!session || session.role !== "admin") {
     return {
@@ -18,9 +16,9 @@ const updateSubmodifier = async (
     };
   }
 
-  const id = Number(formData.get("id"));
-  const sortOrder = Number(formData.get("sortOrder") ?? 0);
-  const title = (formData.get("title") as string).trim();
+  const id = +formData.get("id")!;
+  const sortOrder = +(formData.get("sortOrder") ?? 0);
+  const title = `${formData.get("title") ?? ""}`.trim();
 
   if (!title) {
     return {
@@ -29,7 +27,7 @@ const updateSubmodifier = async (
     };
   }
 
-  const prev = await submodifiersHelpers.getSubmodifierById(id);
+  const prev = await store.submodifiers.getById(id);
 
   if (!prev) {
     return {
@@ -38,7 +36,7 @@ const updateSubmodifier = async (
     };
   }
 
-  await submodifiersStore.set({ id, sortOrder, title });
+  await store.submodifiers.set({ id, sortOrder, title });
   revalidatePath("/admin/submodifiers");
 
   return {

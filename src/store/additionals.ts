@@ -1,4 +1,6 @@
-import { redis } from "./";
+import { sortByOrder } from "@/utils";
+
+import { redis } from "./redis";
 
 const HASH = "additionals";
 
@@ -7,8 +9,8 @@ const additionals = {
     await redis.hset(HASH, { [additional.id]: JSON.stringify(additional) });
   },
 
-  delete: async (id: string | TAdditional["id"]): Promise<void> => {
-    await redis.hdel(HASH, String(id));
+  delete: async (id: TAdditional["id"]): Promise<void> => {
+    await redis.hdel(HASH, `${id}`);
   },
 
   getAll: async (): Promise<TAdditional[]> => {
@@ -16,13 +18,11 @@ const additionals = {
 
     if (!additionals) return [];
 
-    return Object.values(additionals).sort(
-      (a: TAdditional, b: TAdditional): number => a.sortOrder - b.sortOrder,
-    );
+    return sortByOrder<TAdditional>(Object.values(additionals));
   },
 
   getById: async (id: TAdditional["id"]): Promise<null | TAdditional> => {
-    return (await redis.hget<TAdditional>(HASH, String(id))) ?? null;
+    return (await redis.hget<TAdditional>(HASH, `${id}`)) ?? null;
   },
 };
 
