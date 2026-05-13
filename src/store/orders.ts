@@ -63,7 +63,7 @@ const orders = {
 
   getActive: async (): Promise<TOrder[]> => {
     const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
-  
+
     if (!ids.length) return [];
 
     const orders = await fanOutById(ids);
