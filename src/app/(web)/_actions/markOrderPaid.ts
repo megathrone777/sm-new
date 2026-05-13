@@ -24,9 +24,8 @@ const markOrderPaid = async (formData: FormData): Promise<void> => {
   await store.orders.update(id, paidPatch);
   const paidOrder: TOrder = { ...order, ...paidPatch };
 
-  after((): void => {
-    void sendOrderConfirmation(paidOrder);
-    void sendOrderCreatedSms(paidOrder);
+  after(async (): Promise<void> => {
+    await Promise.allSettled([sendOrderConfirmation(paidOrder), sendOrderCreatedSms(paidOrder)]);
   });
   redirect(`/order-confirmed/${id}`);
 };

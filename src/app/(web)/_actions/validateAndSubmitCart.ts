@@ -210,13 +210,10 @@ const validateAndSubmitCart = async (
   await store.orders.registerNewOrder(order, cartSessionId);
   (await cookies()).delete(CART_COOKIE);
 
-  after((): void => {
+  after(async (): Promise<void> => {
     realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
-
-    if (payment.type !== "card") {
-      void sendOrderConfirmation(order);
-      void sendOrderCreatedSms(order);
-    }
+    if (payment.type === "card") return;
+    await Promise.allSettled([sendOrderConfirmation(order), sendOrderCreatedSms(order)]);
   });
 
   if (payment.type === "card") {
