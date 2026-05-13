@@ -4,6 +4,7 @@ export const wrapperClass = css({
   display: "grid",
   gridAutoFlow: "row",
   minHeight: 220,
+  overflow: "hidden",
   rowGap: 15,
   textAlign: "left",
 });

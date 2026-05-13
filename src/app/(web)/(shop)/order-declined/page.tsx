@@ -12,7 +12,7 @@ const Page: React.FC = () => (
         <h2 className={titleClass}>Transakce ne proběhla úspěšně!</h2>
 
         <Image
-          alt="Failed."
+          alt="Order failed."
           className={imageClass}
           height={0}
           priority

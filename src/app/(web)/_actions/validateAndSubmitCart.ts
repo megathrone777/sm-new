@@ -201,6 +201,11 @@ const validateAndSubmitCart = async (
   after((): void => {
     realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
   });
+
+  if (payment.type === "card") {
+    redirect(`/payment-gateway/${id}`);
+  }
+
   redirect(`/order-confirmed/${id}`);
 };
 

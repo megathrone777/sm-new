@@ -12,7 +12,7 @@ const Additionals: React.FC<TProps> = ({ additionals }) => (
         key={`${id}-order-additional`}
       >
         {title}
-        <span className={countClass}>x{quantity}</span>
+        <b className={countClass}>x{quantity}</b>
       </li>
     ))}
   </ul>

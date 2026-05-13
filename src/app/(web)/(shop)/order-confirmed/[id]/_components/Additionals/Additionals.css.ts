@@ -12,5 +12,5 @@ export const itemClass = css({
 
 export const countClass = css({
   display: "inline-block",
-  marginLeft: 8,
+  marginLeft: 5,
 });

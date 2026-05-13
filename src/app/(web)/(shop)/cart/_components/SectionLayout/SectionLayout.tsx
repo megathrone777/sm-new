@@ -15,7 +15,7 @@ const SectionLayout: React.FC<TProps> = ({ children, gridArea, heroChildren, id,
   <div
     {...{ id }}
     className={wrapperClass}
-    style={{ ...assignInlineVars({ [gridAreaVar]: `${gridArea}` }) }}
+    style={gridArea ? { ...assignInlineVars({ [gridAreaVar]: `${gridArea}` }) } : undefined}
   >
     <div className={headerClass}>
       <h2 className={titleClass}>{title}</h2>

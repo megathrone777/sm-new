@@ -60,6 +60,8 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
       note,
       paymentType,
       products,
+      tipsAmount,
+      tipsPrice,
       totalPrice,
     } = order;
 
@@ -154,6 +156,18 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                   <b>Poznámka:</b> {note}
                 </p>
               )}
+
+              {/* {promocode && (
+                <p className={itemClass}>
+                  <b>Promo:</b> {promocode} ({promocodeDiscountAmountCZK} Kč)
+                </p>
+              )} */}
+
+              {tipsPrice && tipsPrice > 0 ? (
+                <p className={itemClass}>
+                  <b>Tips:</b> {tipsPrice} {t<string>("currency")} ({tipsAmount}%)
+                </p>
+              ) : null}
 
               <p className={itemClass}>
                 <b>Cena: </b>

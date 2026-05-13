@@ -1,7 +1,6 @@
 "use client";
-import React, { startTransition, useOptimistic } from "react";
+import React from "react";
 
-import { removeFromCart } from "@/app/(web)/_actions";
 import { useTranslation } from "@/hooks";
 
 import { ProductRow } from "./ProductRow";
@@ -10,20 +9,8 @@ import { wrapperClass, discountClass, labelClass } from "./ProductsList.css";
 
 import type { TProps } from "./ProductsList.types";
 
-const ProductsList: React.FC<TProps> = ({ categoryDiscount, products: initialProducts }) => {
-  const [products, removeProduct] = useOptimistic(
-    initialProducts,
-    (state: TCartProduct[], index: number): TCartProduct[] =>
-      state.filter((_, productIndex: number): boolean => productIndex !== index),
-  );
+const ProductsList: React.FC<TProps> = ({ categoryDiscount, onRemove, products }) => {
   const { t } = useTranslation();
-
-  const handleRemove = (index: number): void => {
-    startTransition(async (): Promise<void> => {
-      removeProduct(index);
-      await removeFromCart(index);
-    });
-  };
 
   const productsWithDiscount: TCartProduct[] = products.filter(
     ({ isPromotionActive }: TCartProduct): boolean => isPromotionActive,
@@ -70,7 +57,7 @@ const ProductsList: React.FC<TProps> = ({ categoryDiscount, products: initialPro
         ({ id, title, ...rest }: TCartProduct, index: number): React.ReactElement => (
           <ProductRow
             key={`${id}-${crypto.randomUUID()}`}
-            onRemove={(): void => handleRemove(index)}
+            onRemove={(): void => onRemove(index)}
             {...{ id, index, title, ...rest }}
           />
         ),

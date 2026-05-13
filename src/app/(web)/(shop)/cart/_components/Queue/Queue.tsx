@@ -16,7 +16,7 @@ const Queue: React.FC = async () => {
       />
 
       <span>
-        Fronta: <span className={amountClass}>{ordersInQueue}</span> objednávky před Vámi.
+        Fronta: <span className={amountClass}>{ordersInQueue}</span>objednávky před Vámi.
       </span>
     </div>
   );

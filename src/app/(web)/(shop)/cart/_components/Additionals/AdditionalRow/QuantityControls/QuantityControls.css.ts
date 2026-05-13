@@ -13,5 +13,5 @@ export const quantityClass = css(({ fonts }) => ({
   lineHeight: "24px",
   textAlign: "center",
   verticalAlign: "middle",
-  width: 50,
+  width: 48,
 }));

@@ -24,7 +24,7 @@ const cart = {
 
     if (!data || Object.keys(data).length === 0) return null;
 
-    const { additionals, cutlery, delivery, products, promo, ...cartRest } =
+    const { additionals, cutlery, delivery, products, promo, tips, ...cartRest } =
       data as unknown as TCart;
     const { cutleryPrice } = await shop.getSettings();
 
@@ -92,13 +92,15 @@ const cart = {
       return 0;
     };
 
-    const totalPrice: number =
+    const subtotal: number =
       getProductsPrice() +
       getDeliveryPrice() +
       getCutleryPrice() -
       getCategoryDiscount() -
       getDeliveryDiscount() -
       promo.discount;
+    const tipsPercentage = tips?.percentage ?? 0;
+    const tipsPrice: number = Math.round((subtotal * tipsPercentage) / 100);
 
     return {
       ...cartRest,
@@ -114,7 +116,8 @@ const cart = {
       },
       products,
       promo,
-      totalPrice,
+      tips: { percentage: tipsPercentage, price: tipsPrice },
+      totalPrice: subtotal + tipsPrice,
     };
   },
 

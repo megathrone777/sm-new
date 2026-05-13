@@ -9,7 +9,7 @@ export const wrapperClass = css(({ devices }) => ({
 
   "@media": {
     [devices.mobile]: {
-      columnGap: 10,
+      columnGap: 8,
     },
   },
 }));

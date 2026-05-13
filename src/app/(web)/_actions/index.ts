@@ -1,6 +1,8 @@
 export { addToCart } from "./addToCart";
 export { applyPromocode } from "./applyPromocode";
 export { getAddressSuggestions } from "./getAddressSuggestions";
+export { markOrderCancelled } from "./markOrderCancelled";
+export { markOrderPaid } from "./markOrderPaid";
 export { removeFromCart } from "./removeFromCart";
 export { resetDeliveryAddress } from "./resetDeliveryAddress";
 export { resetPromocode } from "./resetPromocode";
@@ -13,5 +15,6 @@ export { updateDeliveryType } from "./updateDeliveryType";
 export { updatePaymentType } from "./updatePaymentType";
 export { updatePhone } from "./updatePhone";
 export { updateQuantity } from "./updateQuantity";
+export { updateTips } from "./updateTips";
 export { validateAndSubmitCart } from "./validateAndSubmitCart";
 export { validateNewProduct } from "./validateNewProduct";

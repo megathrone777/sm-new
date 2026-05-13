@@ -1,11 +1,18 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = css(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
+  minHeight: 232,
   paddingBlock: 4,
   rowGap: 15,
-});
+
+  "@media": {
+    [devices.tablet]: {
+      minHeight: 150,
+    },
+  },
+}));
 
 export const discountClass = css(({ devices, fonts }) => ({
   fontWeight: fonts.medium,

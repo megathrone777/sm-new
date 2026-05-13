@@ -18,6 +18,7 @@ export const rowClass = css({
 export const labelHolderClass = css({
   display: "grid",
   gridAutoFlow: "column",
+  justifyContent: "start",
 });
 
 export const labelImageClass = css(({ devices }) => ({
@@ -39,6 +40,7 @@ export const agreeClass = css({
   display: "grid",
   gridAutoFlow: "column",
   paddingBlock: 25,
+  paddingLeft: 5,
   position: "relative",
 });
 

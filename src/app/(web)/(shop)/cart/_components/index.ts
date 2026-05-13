@@ -1,5 +1,6 @@
 export { Additionals } from "./Additionals";
 export { Address } from "./Address";
+export { CartShell } from "./CartShell";
 export { Client } from "./Client";
 export { Cutlery } from "./Cutlery";
 export { Delivery } from "./Delivery";

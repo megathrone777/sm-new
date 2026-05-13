@@ -41,7 +41,7 @@ export const contentClass = css(({ devices }) => ({
 
   "@media": {
     [devices.tablet]: {
-      paddingInline: 10,
+      paddingInline: 8,
     },
   },
 }));

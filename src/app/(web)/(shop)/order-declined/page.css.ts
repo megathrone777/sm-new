@@ -5,12 +5,17 @@ export const wrapperClass = css({
 });
 
 export const layoutClass = css({
+  display: "grid",
+  gridAutoFlow: "row",
+  justifyItems: "center",
+  rowGap: 30,
   textAlign: "center",
 });
 
 export const titleClass = css(({ devices, fonts }) => ({
   fontSize: 24,
   fontWeight: fonts.medium,
+  textWrap: "balance",
 
   "@media": {
     [devices.mobile]: {
@@ -20,7 +25,6 @@ export const titleClass = css(({ devices, fonts }) => ({
 }));
 
 export const imageClass = css({
-  height: 360,
-  marginBottom: 30,
+  height: 340,
   width: "auto",
 });

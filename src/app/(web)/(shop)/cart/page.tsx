@@ -10,6 +10,7 @@ import "leaflet/dist/leaflet.css";
 import {
   Additionals,
   Address,
+  CartShell,
   Client,
   Cutlery,
   Delivery,
@@ -17,7 +18,6 @@ import {
   Note,
   Payment,
   Placeholder,
-  ProductsList,
   Promo,
   Queue,
   SectionLayout,
@@ -42,18 +42,18 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
         payment,
         products,
         promo,
+        tips,
         totalPrice,
       } = cart;
 
       return (
-        <>
-          <SectionLayout
-            heroChildren={<Queue />}
-            title={t<string>("order")}
-          >
-            <ProductsList {...{ categoryDiscount, products }} />
-          </SectionLayout>
-
+        <CartShell
+          {...{ categoryDiscount }}
+          initialProducts={products}
+          placeholder={<Placeholder />}
+          productsTitle={t<string>("order")}
+          queue={<Queue />}
+        >
           <FormLayout {...{ errors }}>
             <SectionLayout
               gridArea="delivery"
@@ -122,12 +122,12 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               title={t<string>("paymentMethods")}
             >
               <Payment
-                {...{ payment, totalPrice }}
+                {...{ payment, tips, totalPrice }}
                 deliveryType={delivery.type}
               />
             </SectionLayout>
           </FormLayout>
-        </>
+        </CartShell>
       );
     }
 

@@ -5,6 +5,7 @@ import { useTranslation } from "@/hooks";
 import { Checkbox } from "@/ui";
 
 import { Submit } from "./Submit";
+import { Tips } from "./Tips";
 
 import {
   agreeClass,
@@ -19,7 +20,7 @@ import {
 
 import type { TProps } from "./Payment.types";
 
-const Payment: React.FC<TProps> = ({ deliveryType, payment, totalPrice }) => {
+const Payment: React.FC<TProps> = ({ deliveryType, payment, tips, totalPrice }) => {
   const { t } = useTranslation();
 
   return (
@@ -32,13 +33,13 @@ const Payment: React.FC<TProps> = ({ deliveryType, payment, totalPrice }) => {
             labelImage={
               <div className={labelHolderClass}>
                 <img
-                  alt="Apple pay"
+                  alt="Apple pay."
                   className={labelImageClass}
                   src="/images/payments_img2.png"
                 />
 
                 <img
-                  alt="Card"
+                  alt="Card pay."
                   className={labelImageClass}
                   src="/images/payments_img.png"
                 />
@@ -58,13 +59,13 @@ const Payment: React.FC<TProps> = ({ deliveryType, payment, totalPrice }) => {
               labelImage={
                 <div className={labelHolderClass}>
                   <img
-                    alt="Apple pay"
+                    alt="Apple pay."
                     className={labelImageClass}
                     src="/images/payments_img2.png"
                   />
 
                   <img
-                    alt="Card"
+                    alt="Card pay."
                     className={labelImageClass}
                     src="/images/payments_img.png"
                   />
@@ -84,7 +85,7 @@ const Payment: React.FC<TProps> = ({ deliveryType, payment, totalPrice }) => {
             labelImage={
               <div className={labelHolderClass}>
                 <img
-                  alt="Cash"
+                  alt="Cash pay."
                   className={labelImageClass}
                   src="/images/cash_img.jpg"
                 />
@@ -123,6 +124,8 @@ const Payment: React.FC<TProps> = ({ deliveryType, payment, totalPrice }) => {
           </div>
         )}
       </div>
+
+      <Tips {...{ tips }} />
 
       <div className={agreeClass}>
         <Checkbox

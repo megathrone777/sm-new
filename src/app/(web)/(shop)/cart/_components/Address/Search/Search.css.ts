@@ -28,18 +28,12 @@ export const distanceClass = css(({ devices }) => ({
   },
 }));
 
-export const resultsClass = css(({ devices }) => ({
+export const resultsClass = css({
   alignItems: "center",
   display: "grid",
   gridAutoFlow: "column",
   width: "100%",
-
-  "@media": {
-    [devices.mobile]: {
-      width: 400,
-    },
-  },
-}));
+});
 
 export const deliveryPriceClass = css(({ fonts }) => ({
   fontSize: 18,
@@ -88,7 +82,7 @@ export const suggestionsClass = css(({ colors }) => ({
   position: "absolute",
   top: 45,
   width: "100%",
-  zIndex: 2000,
+  zIndex: 9,
 }));
 
 export const suggestionsItemClass = css(({ colors }) => ({
