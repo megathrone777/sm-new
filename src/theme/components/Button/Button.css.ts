@@ -3,7 +3,7 @@ import { css, cssVariant } from "@/theme";
 export const buttonClass = cssVariant(
   ({ devices }) => ({
     normal: {
-      fontSize: 16,
+      fontSize: 17,
       height: 45,
       minWidth: 140,
       paddingInline: 10,

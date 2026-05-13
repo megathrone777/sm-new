@@ -50,6 +50,7 @@ const Details: React.FC<TProps> = (product) => {
               alt={title}
               className={imageClass}
               height={600}
+              priority
               src={imageUrl}
               width={380}
             />
@@ -92,9 +93,11 @@ const Details: React.FC<TProps> = (product) => {
                 {price} {t<string>("currency")}
               </p>
 
-              <div className={modifiersHeadingClass}>
-                <p className={modifiersTitleClass}>{titleModifiers}:</p>
-              </div>
+              {modifiers && !!modifiers.length && (
+                <div className={modifiersHeadingClass}>
+                  <p className={modifiersTitleClass}>{titleModifiers}:</p>
+                </div>
+              )}
 
               {isAvailable ? (
                 <DetailsForm

@@ -21,10 +21,29 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
   const pathname = usePathname();
   const [isOpened, toggleOpened] = useState<boolean>(false);
 
-  const handleNagigate = (): void => {
+  const checkMenu = (): void => {
     if (isOpened) {
-      document.body.removeAttribute("style");
       toggleOpened(false);
+      document.body.removeAttribute("style");
+    }
+  };
+
+  const handleLinkClick = (event: React.SyntheticEvent<HTMLAnchorElement>): void => {
+    const { currentTarget } = event;
+    const { hash } = currentTarget;
+
+    checkMenu();
+
+    if (hash && pathname === "/") {
+      event.preventDefault();
+      const section = document.getElementById(currentTarget.hash.replace("#", ""));
+
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
     }
   };
 
@@ -41,10 +60,12 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
     document.body.style.overflow = "hidden";
   };
 
+  const handleLinkNavigate = (): void => {
+    checkMenu();
+  };
+
   useEffect((): void => {
-    if (isOpened) {
-      toggleOpened(false);
-    }
+    checkMenu();
   }, [pathname]);
 
   return (
@@ -67,7 +88,8 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
               <Link
                 {...{ href }}
                 className={linkClass[pathname === href ? "active" : "default"]}
-                onNavigate={handleNagigate}
+                onClick={handleLinkClick}
+                onNavigate={handleLinkNavigate}
               >
                 {title}
               </Link>

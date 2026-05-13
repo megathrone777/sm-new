@@ -1,6 +1,9 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
+  alignContent: "stretch",
+  display: "grid",
+  minHeight: "100%",
   transform: "translateY(-7px)",
   width: 72,
   zIndex: 40,
@@ -30,5 +33,9 @@ export const linkClass = css({
 });
 
 export const imageClass = css({
-  maxWidth: "100%",
+  height: "auto",
+  width: "100%",
+  // height: "100%",
+  // maxWidth: "100%",
+  // width: "auto",
 });

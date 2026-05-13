@@ -1,21 +1,19 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = css(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 20,
-});
+
+  "@media": {
+    [devices.tablet]: {
+      maxWidth: 437,
+    },
+  },
+}));
 
 export const inputsClass = css({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 20,
-});
-
-export const layoutClass = css({
-  alignItems: "center",
-  columnGap: 10,
-  display: "grid",
-  gridAutoFlow: "column",
-  gridTemplateColumns: "1fr auto",
 });

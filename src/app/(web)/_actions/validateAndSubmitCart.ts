@@ -1,5 +1,5 @@
 "use server";
-import moment from "moment";
+import moment from "moment-timezone";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -16,34 +16,38 @@ const validateAndSubmitCart = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<null | TActionResult> => {
-  const [storedCart, { deliveryConditions, lastTimeForPickup: _ }] = await Promise.all([
+  const [cartSessionId, storedCart, deliveryConditions] = await Promise.all([
+    store.cart.getSessionId(),
     store.cart.get(),
-    store.shop.getSettings(),
+    store.deliveryConditions.getAll(),
   ]);
 
-  if (!storedCart) return null;
+  if (!cartSessionId || !storedCart) return null;
 
   const name = `${formData.get("name") ?? ""}`.trim();
   const email = `${formData.get("email") ?? ""}`.trim();
   const phoneNumber = `${formData.get("phone") ?? ""}`.replace(/\D/g, "");
   const note = `${formData.get("note") ?? ""}`;
+  const paymentTypeRaw = `${formData.get("payment") ?? ""}`;
+  const paymentType: TPaymentType = (
+    ["card", "cardAfterDelivery", "cash"] as TPaymentType[]
+  ).includes(paymentTypeRaw as TPaymentType)
+    ? (paymentTypeRaw as TPaymentType)
+    : storedCart.payment.type;
+  const changeRaw = `${formData.get("change") ?? ""}`;
+  const change: TCart["payment"]["change"] =
+    paymentType === "cash" && (changeRaw === "2000" || changeRaw === "5000")
+      ? (+changeRaw as TCart["payment"]["change"])
+      : null;
 
   const cart: TCart = {
     ...storedCart,
     client: { ...storedCart.client, email, name, phoneNumber },
     note,
+    payment: { change, type: paymentType },
   };
-  const {
-    additionals,
-    client,
-    cutlery,
-    delivery,
-    payment,
-    products,
-    promo,
-    tips,
-    totalPrice,
-  } = cart;
+  const { additionals, client, cutlery, delivery, payment, products, promo, tips, totalPrice } =
+    cart;
   const errors: TCart["errors"] = {};
 
   const isEmailValid = (email: string): null | RegExpMatchArray => {
@@ -54,7 +58,6 @@ const validateAndSubmitCart = async (
       );
   };
 
-  // TODO
   // const checkVicinityOpened = (): boolean => {
   //   const format: string = "hh:mm";
   //   const currentTime = moment(moment(), format);
@@ -115,11 +118,10 @@ const validateAndSubmitCart = async (
     errors.email = "Vyplňte validní Email";
   }
 
-  if (!delivery.address && delivery.type === "delivery") {
-    errors.streetNumber = "Vyplňte adresu s směrovacím nebo popisném číslem";
-  }
-
-  if (isMissedStreetNumber(delivery.address) && delivery.type === "delivery") {
+  if (
+    (!delivery.address || isMissedStreetNumber(delivery.address)) &&
+    delivery.type === "delivery"
+  ) {
     errors.addressFormat = "Vyplňte adresu s směrovacím nebo popisném číslem";
   }
 
@@ -131,7 +133,7 @@ const validateAndSubmitCart = async (
   }
 
   if (!!Object.keys(errors).length) {
-    await saveCart({ client, errors, note });
+    await saveCart({ client, errors, note, payment });
     revalidatePath("/cart");
     redirect("/cart", "replace");
   }
@@ -151,8 +153,17 @@ const validateAndSubmitCart = async (
     0,
   );
   const { existingOrderIds, id } = await store.orders.getExistingOrder(client.phoneNumber);
+  const orderAdditionals: TOrderAdditional[] = additionals.filter(
+    ({ quantity }: TCartAdditional): boolean => quantity > 0,
+  );
+
+  const orderNote =
+    payment.type === "cash" && payment.change
+      ? [note, `Mám v hotovosti ${payment.change} Kč`].filter(Boolean).join("\n")
+      : note;
 
   const order: TOrder = {
+    additionals: orderAdditionals,
     clientEmail: client.email,
     clientName: client.name,
     clientOrdersCount: existingOrderIds.length + 1,
@@ -166,16 +177,17 @@ const validateAndSubmitCart = async (
     cutleryPrice: cutlery.totalPrice,
     deliveryAddress: delivery.address,
     deliveryAddressDistrict: "",
-    deliveryCoordinates: delivery.position
-      ? `${delivery.position.lat},${delivery.position.lng}`
-      : "",
+    deliveryCoordinates:
+      delivery.position && delivery.position.length > 0
+        ? (delivery.position[delivery.position.length - 1] as unknown as [number, number]).join(",")
+        : "",
     deliveryDistance: delivery.distanceInM,
     deliveryPrice: delivery.price ?? 0,
     deliveryTime: delivery.time.value ?? "",
     deliveryTitle: delivery.title,
     deliveryType: delivery.type,
     id,
-    note,
+    note: orderNote,
     onlinePaymentStatus: null,
     paymentType: payment.type,
     products,
@@ -189,16 +201,11 @@ const validateAndSubmitCart = async (
     totalPrice,
     totalProductsPrice,
   };
-  const cartSessionId = await store.cart.getSessionId();
 
   await store.orders.registerNewOrder(order, cartSessionId);
   (await cookies()).delete(CART_COOKIE);
-  revalidatePath("/", "layout");
-
   after((): void => {
-    realtime
-      .channel("notification")
-      .emit("notification.newOrder", { createdAt: Date.now(), updatedAt: Date.now() });
+    realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
   });
   redirect(`/order-confirmed/${id}`);
 };

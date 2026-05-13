@@ -1,4 +1,5 @@
-import React, { useId } from "react";
+"use client";
+import React, { useEffect, useId, useState } from "react";
 
 import { Icon } from "@/ui";
 
@@ -14,8 +15,37 @@ import {
 
 import type { TProps } from "./Input.types";
 
-const Input: React.FC<TProps> = ({ iconId, isError, label, ...rest }) => {
+const CYRILLIC_REGEX = /[Ѐ-ӿԀ-ԯⷠ-ⷿꙀ-ꚟ]/;
+
+const Input: React.FC<TProps> = ({ iconId, isError, label, onBeforeInput, onBlur, ...rest }) => {
   const inputId = useId();
+  const [showError, setShowError] = useState<boolean>(Boolean(isError));
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>): void => {
+    const { currentTarget } = event;
+
+    if (currentTarget.value.trim()) {
+      setShowError(false);
+    }
+
+    onBlur?.(event);
+  };
+
+  const handleBeforeInput = (event: React.InputEvent<HTMLInputElement>): void => {
+    const { data } = event.nativeEvent;
+
+    if (data && CYRILLIC_REGEX.test(data)) {
+      event.preventDefault();
+
+      return;
+    }
+
+    onBeforeInput?.(event);
+  };
+
+  useEffect((): void => {
+    setShowError(Boolean(isError));
+  }, [isError]);
 
   return (
     <div className={wrapperClass}>
@@ -32,10 +62,10 @@ const Input: React.FC<TProps> = ({ iconId, isError, label, ...rest }) => {
         className={layoutClass}
         style={{
           gridTemplateColumns: iconId
-            ? isError
+            ? showError
               ? "auto 1fr auto"
               : "auto 1fr"
-            : isError
+            : showError
               ? "1fr auto"
               : "1fr",
         }}
@@ -51,13 +81,15 @@ const Input: React.FC<TProps> = ({ iconId, isError, label, ...rest }) => {
 
         <input
           autoComplete="new-password"
-          className={inputClass[isError ? "error" : "default"]}
+          className={inputClass[showError ? "error" : "default"]}
           id={inputId}
+          onBeforeInput={handleBeforeInput}
+          onBlur={handleBlur}
           spellCheck="false"
           {...rest}
         />
 
-        {isError && (
+        {showError && (
           <Icon
             className={errorIconClass}
             id="exclamation"

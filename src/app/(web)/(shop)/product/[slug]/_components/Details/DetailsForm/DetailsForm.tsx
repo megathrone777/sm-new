@@ -116,12 +116,16 @@ const DetailsForm: React.FC<TProps> = ({
         value={totalPrice}
       />
 
-      {children}
+      {modifiers && !!modifiers.length && (
+        <>
+          {children}
 
-      <p className={totalPriceClass}>
-        <span className={totalPriceValueClass}>{t<string>("priceTotal")}:</span>
-        {totalPrice} {t<string>("currency")}
-      </p>
+          <p className={totalPriceClass}>
+            <span className={totalPriceValueClass}>{t<string>("priceTotal")}:</span>
+            {totalPrice} {t<string>("currency")}
+          </p>
+        </>
+      )}
 
       <div className={footerClass}>
         <Button type="submit">{t<string>("addToCart")}</Button>

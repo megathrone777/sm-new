@@ -3,7 +3,12 @@ import React, { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Form from "next/form";
 
-import { saveCartFields, validateAndSubmitCart } from "@/app/(web)/_actions";
+import {
+  saveCartFields,
+  updateDeliveryType,
+  updatePaymentType,
+  validateAndSubmitCart,
+} from "@/app/(web)/_actions";
 
 import { wrapperClass } from "./FormLayout.css";
 
@@ -12,8 +17,25 @@ import type { TProps } from "./FormLayout.types";
 const FormLayout: React.FC<TProps> = ({ children, errors }) => {
   const [, action] = useActionState(validateAndSubmitCart, null);
 
-  const handleBlur = ({ currentTarget }: React.FocusEvent<HTMLFormElement>): void => {
+  const handleFormBlur = ({ currentTarget }: React.FocusEvent<HTMLFormElement>): void => {
     saveCartFields(new FormData(currentTarget));
+  };
+
+  const handleFormChange = ({
+    currentTarget,
+    target,
+  }: React.SyntheticEvent<HTMLFormElement>): void => {
+    const input = target as HTMLInputElement;
+
+    if (input.name === "deliveryType") {
+      updateDeliveryType(new FormData(currentTarget));
+
+      return;
+    }
+
+    if (input.name === "payment") {
+      updatePaymentType(new FormData(currentTarget));
+    }
   };
 
   useEffect((): void => {
@@ -22,10 +44,16 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
     for (const key in errors) {
       const message = errors[key as keyof typeof errors];
 
-      if (message) toast(message, { type: "error" });
+      if (message) {
+        toast(message, { type: "error" });
+      }
     }
 
-    document.getElementById("cart-cutlery")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const errorsAnchor = document.getElementById("cart-cutlery");
+
+    if (errorsAnchor) {
+      errorsAnchor.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }, []);
 
   return (
@@ -33,7 +61,8 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
       {...{ action }}
       autoComplete="off"
       className={wrapperClass}
-      onBlur={handleBlur}
+      onBlur={handleFormBlur}
+      onChange={handleFormChange}
     >
       {children}
     </Form>

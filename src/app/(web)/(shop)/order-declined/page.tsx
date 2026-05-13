@@ -15,7 +15,7 @@ const Page: React.FC = () => (
           alt="Failed."
           className={imageClass}
           height={0}
-          preload
+          priority
           sizes="100vw"
           src="/images/failed_img.png"
           width={0}

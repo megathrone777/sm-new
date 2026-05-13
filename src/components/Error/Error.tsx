@@ -15,7 +15,7 @@ const Error: React.FC<TProps> = ({ title }) => (
       alt="Failed."
       className={imageClass}
       height={0}
-      preload
+      priority
       sizes="100vw"
       src="/images/failed_img.png"
       width={0}

@@ -4,9 +4,7 @@ import { Icon } from "@/ui";
 
 import { iconClass, textareaClass, wrapperClass } from "./Note.css";
 
-interface TProps {
-  defaultValue?: string;
-}
+import type { TProps } from "./Note.types";
 
 const Note: React.FC<TProps> = ({ defaultValue }) => (
   <div className={wrapperClass}>

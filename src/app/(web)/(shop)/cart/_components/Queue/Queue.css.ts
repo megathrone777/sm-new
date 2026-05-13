@@ -15,6 +15,11 @@ export const wrapperClass = css(({ devices, fonts }) => ({
     [devices.mobileXs]: {
       fontSize: 20,
     },
+
+    [devices.desktop]: {
+      fontSize: 20,
+      marginBottom: 0,
+    },
   },
 }));
 

@@ -1,17 +1,11 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = css({
   display: "grid",
   gridAutoFlow: "row",
   paddingBlock: 4,
   rowGap: 15,
-
-  "@media": {
-    [devices.mobile]: {
-      // marginBottom: 30,
-    },
-  },
-}));
+});
 
 export const discountClass = css(({ devices, fonts }) => ({
   fontWeight: fonts.medium,

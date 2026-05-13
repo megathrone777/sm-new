@@ -29,7 +29,7 @@ const Info: React.FC<TProps> = ({
         {contactItems.map<React.ReactElement>(({ link, type }: TContactLink) => (
           <li
             className={contactItemClass[type]}
-            key={`footer-contact-${type}-${crypto.randomUUID()}`}
+            key={`footer-contact-${type}`}
           >
             <a
               className={contactLinkClass}

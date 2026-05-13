@@ -2,6 +2,11 @@ declare global {
   type TOnlinePaymentStatus = "CANCELLED" | "PAID";
   type TOrderStatus = "done" | "new" | "placed" | "ready" | "started" | "took";
 
+  interface TOrderAdditional extends TAdditional {
+    quantity: number;
+    totalPrice: number;
+  }
+
   interface TOrderProduct extends TProduct {
     modifiers: TCartModifier[];
     quantity: number;
@@ -9,6 +14,7 @@ declare global {
   }
 
   interface TOrder {
+    additionals: TOrderAdditional[];
     clientEmail: TClient["email"];
     clientName: TClient["name"];
     clientOrdersCount: number;

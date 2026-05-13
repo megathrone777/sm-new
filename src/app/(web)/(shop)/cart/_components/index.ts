@@ -1,12 +1,13 @@
 export { Additionals } from "./Additionals";
+export { Address } from "./Address";
 export { Client } from "./Client";
 export { Cutlery } from "./Cutlery";
 export { Delivery } from "./Delivery";
-export { DeliveryType } from "./DeliveryType";
 export { FormLayout } from "./FormLayout";
 export { Note } from "./Note";
+export { Payment } from "./Payment";
 export { Placeholder } from "./Placeholder";
 export { ProductsList } from "./ProductsList";
+export { Promo } from "./Promo";
 export { Queue } from "./Queue";
 export { SectionLayout } from "./SectionLayout";
-export { Submit } from "./Submit";

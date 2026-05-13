@@ -5,13 +5,11 @@ globalStyle("html, body", {
 });
 
 globalStyle("html", {
-  height: "-webkit-fill-available",
   overflowY: "scroll",
 });
 
 globalStyle("body", {
   fontFamily: "var(--font-avenir)",
-  minHeight: "-webkit-fill-available",
   MozOsxFontSmoothing: "grayscale",
   WebkitFontSmoothing: "antialiased",
 });
@@ -43,10 +41,10 @@ globalStyle("b", ({ fonts }) => ({
   fontWeight: fonts.demi,
 }));
 
-globalStyle(".leaflet-div-icon", {
-  background: "none",
-  border: "none",
-});
+// globalStyle(".leaflet-div-icon", {
+//   background: "none",
+//   border: "none",
+// });
 
 globalStyle(".leaflet-zoom-animated", {
   height: "auto",

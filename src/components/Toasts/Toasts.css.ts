@@ -23,8 +23,9 @@ export const wrapperClass = css(({ devices, fonts }) => ({
       gridAutoFlow: "row",
       height: "100dvh",
       justifyContent: "end",
+      justifyItems: "end",
       paddingBottom: 90,
-      paddingRight: 10,
+      paddingInline: 10,
       pointerEvents: "none",
       position: "static",
       rowGap: 15,
@@ -106,7 +107,7 @@ globalStyle(`${wrapperClass} > .Toastify__toast`, ({ devices, easing, fonts }) =
   boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
   display: "grid",
   fontFamily: "inherit",
-  fontSize: 18,
+  fontSize: 16,
   fontWeight: fonts.normal,
   gridAutoFlow: "column",
   gridTemplateColumns: "auto 1fr auto",
@@ -119,6 +120,10 @@ globalStyle(`${wrapperClass} > .Toastify__toast`, ({ devices, easing, fonts }) =
   pointerEvents: "auto",
 
   "@media": {
+    [devices.mobile]: {
+      fontSize: 18,
+    },
+
     [devices.desktop]: {
       whiteSpace: "nowrap",
     },

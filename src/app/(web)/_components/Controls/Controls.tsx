@@ -19,6 +19,7 @@ const Controls: React.FC<TProps> = ({ contactItems, isOpened, text, title }) => 
 
   const handleScrollTop = (): void => {
     document.documentElement.scrollTo({
+      behavior: "smooth",
       top: 0,
     });
   };

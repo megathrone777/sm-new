@@ -11,6 +11,7 @@ import {
   layoutClass,
   linkClass,
   modifierClass,
+  modifierTitleClass,
   subModifierClass,
   titleClass,
   weightClass,
@@ -58,9 +59,7 @@ const ProductRow: React.FC<TProps> = ({
             ({ id: modifierID, subModifier, title }: TCartModifier): React.ReactElement => (
               <ul key={`${modifierID}-modifier`}>
                 <li className={modifierClass}>
-                  {title}
-                  <br />
-
+                  <span className={modifierTitleClass}>{title}</span>
                   {subModifier && <span className={subModifierClass}>{subModifier.title}</span>}
                 </li>
               </ul>

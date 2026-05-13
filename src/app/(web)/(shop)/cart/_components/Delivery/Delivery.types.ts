@@ -1,1 +1,1 @@
-export type TProps = TDelivery;
+export type TProps = Pick<TDelivery, "type"> & Pick<TCart, "totalPrice">;

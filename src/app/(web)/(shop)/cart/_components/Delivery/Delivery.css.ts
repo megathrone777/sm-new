@@ -1,13 +1,32 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
+  alignItems: "start",
+  columnGap: 12,
   display: "grid",
-  gridAutoFlow: "row",
-  rowGap: 10,
+  gridAutoFlow: "column",
+  justifyContent: "center",
+  minHeight: 55,
+  paddingTop: 8,
 
   "@media": {
-    [devices.desktop]: {
-      maxWidth: 437,
+    [devices.mobile]: {
+      columnGap: 30,
+    },
+
+    [devices.tablet]: {
+      justifyContent: "start",
+    },
+  },
+}));
+
+export const labelClass = css(({ devices }) => ({
+  fontSize: 15,
+  whiteSpace: "nowrap",
+
+  "@media": {
+    [devices.mobileXs]: {
+      fontSize: 16,
     },
   },
 }));

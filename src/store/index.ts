@@ -2,6 +2,7 @@ import { additionals } from "./additionals";
 import { cart } from "./cart";
 import { categories } from "./categories";
 import { clients } from "./clients";
+import { deliveryConditions } from "./deliveryConditions";
 import { modifiers } from "./modifiers";
 import { orders } from "./orders";
 import { products } from "./products";
@@ -16,6 +17,7 @@ const store = {
   cart,
   categories,
   clients,
+  deliveryConditions,
   modifiers,
   orders,
   products,

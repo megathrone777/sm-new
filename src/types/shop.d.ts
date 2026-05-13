@@ -40,7 +40,6 @@ declare global {
     companyDetails: string;
     contactItems: TContactLink[];
     cutleryPrice: number;
-    deliveryConditions: TDeliveryCondition[];
     deliveryTimeOptions: string[];
     email: string;
     isAvailable: boolean;

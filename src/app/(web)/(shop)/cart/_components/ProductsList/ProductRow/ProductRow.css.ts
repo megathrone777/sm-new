@@ -9,10 +9,17 @@ export const wrapperClass = css(({ colors, devices }) => ({
     [devices.mobile]: {
       display: "grid",
     },
+
+    [devices.tablet]: {
+      border: "none",
+      boxShadow: "none",
+      gridAutoFlow: "column",
+      gridTemplateColumns: "1fr 1fr",
+    },
   },
 }));
 
-export const layoutClass = css(({ colors }) => ({
+export const layoutClass = css(({ colors, devices }) => ({
   alignItems: "center",
   display: "grid",
   gridAutoFlow: "column",
@@ -23,6 +30,14 @@ export const layoutClass = css(({ colors }) => ({
 
   ":last-of-type": {
     backgroundColor: colors.white,
+  },
+
+  "@media": {
+    [devices.tablet]: {
+      ":last-of-type": {
+        backgroundColor: "transparent",
+      },
+    },
   },
 }));
 
@@ -58,20 +73,21 @@ export const titleClass = css(({ fonts }) => ({
   fontWeight: fonts.bold,
 }));
 
-export const weightClass = css(({ devices }) => ({
-  marginBottom: 0,
-
-  "@media": {
-    [devices.mobile]: {
-      marginBottom: 10,
-    },
-  },
-}));
+export const weightClass = css({
+  marginBottom: 8,
+});
 
 export const modifierClass = css({
   fontSize: 14,
+  lineHeight: 1.1,
+  marginBottom: 6,
+});
+
+export const modifierTitleClass = css({
+  display: "block",
 });
 
 export const subModifierClass = css({
   fontSize: 12,
+  lineHeight: 1,
 });

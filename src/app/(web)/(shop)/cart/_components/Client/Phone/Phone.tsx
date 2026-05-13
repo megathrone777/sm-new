@@ -78,7 +78,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   }, [telephone.valid]);
 
   useLayoutEffect((): void => {
-    if (!phoneNumber) {
+    if (!phoneNumber || telephone.country === "AF") {
       telephone.onChangeCountry("CZ");
     }
   }, []);
@@ -144,7 +144,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
           searchValue,
         }}
         value={
-          !countrySelected && telephone.country === "AF" && !phoneNumber ? "CZ" : telephone.country
+          !countrySelected && telephone.country === "AF" ? "CZ" : telephone.country
         }
       />
 
@@ -154,6 +154,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         maxLength={telephone.country === "CZ" ? 16 : 100}
         name="phone"
         onChange={handlePhoneChange}
+        placeholder="Vyplňte telefonní číslo"
         spellCheck="false"
         type="tel"
         value={telephone.value}

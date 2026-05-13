@@ -21,6 +21,7 @@ const updatePhone = async (phoneNumber: string): Promise<void> => {
   });
 
   if (isPhoneValid) {
+    revalidatePath("/cart");
     revalidatePath(`/archived-orders/${phoneNumber.replace("+", "")}`);
   }
 };

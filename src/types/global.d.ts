@@ -32,7 +32,7 @@ declare global {
     value?: number | string;
   }
 
-  const fbq: (track: string, action: string, eventData: TFacebookEvent) => void;
+  const fbq: (track: string, action: string, eventData: TFacebookData) => void;
 
   interface Window {
     fbq: typeof fbq;
@@ -43,6 +43,7 @@ declare global {
       APP_KV_REST_API_READ_ONLY_TOKEN: string;
       APP_KV_REST_API_TOKEN: string;
       APP_KV_REST_API_URL: string;
+      APP_MAPY_CZ_API_KEY: string;
       APP_REDIS_URL: string;
       APP_URL: string;
       MAPY_CZ_API_KEY: string;

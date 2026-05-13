@@ -1,9 +1,16 @@
 export { addToCart } from "./addToCart";
+export { applyPromocode } from "./applyPromocode";
+export { getAddressSuggestions } from "./getAddressSuggestions";
 export { removeFromCart } from "./removeFromCart";
+export { resetDeliveryAddress } from "./resetDeliveryAddress";
+export { resetPromocode } from "./resetPromocode";
 export { saveCart } from "./saveCart";
 export { saveCartFields } from "./saveCartFields";
+export { selectDeliveryAddress } from "./selectDeliveryAddress";
 export { updateAdditionalQuantity } from "./updateAdditionalQuantity";
 export { updateCutleryQuantity } from "./updateCutleryQuantity";
+export { updateDeliveryType } from "./updateDeliveryType";
+export { updatePaymentType } from "./updatePaymentType";
 export { updatePhone } from "./updatePhone";
 export { updateQuantity } from "./updateQuantity";
 export { validateAndSubmitCart } from "./validateAndSubmitCart";

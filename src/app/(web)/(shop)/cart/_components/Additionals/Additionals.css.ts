@@ -15,7 +15,7 @@ export const listClass = css(({ devices }) => ({
   rowGap: 10,
 
   "@media": {
-    [devices.desktop]: {
+    [devices.tablet]: {
       maxWidth: 480,
     },
   },

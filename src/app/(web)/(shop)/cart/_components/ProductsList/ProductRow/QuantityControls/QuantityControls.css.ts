@@ -6,7 +6,7 @@ export const priceClass = css(({ fonts }) => ({
   whiteSpace: "nowrap",
 }));
 
-export const removeButtonClass = css(({ colors, fonts }) => ({
+export const removeButtonClass = css(({ colors, devices, fonts }) => ({
   background: "none",
   border: "none",
   color: colors.red,
@@ -16,6 +16,13 @@ export const removeButtonClass = css(({ colors, fonts }) => ({
 
   ":hover": {
     opacity: 0.8,
+  },
+
+  "@media": {
+    [devices.desktop]: {
+      fontSize: 17,
+      lineHeight: "28px",
+    },
   },
 }));
 
@@ -31,6 +38,14 @@ export const quantityAmountClass = css(({ fonts }) => ({
   fontWeight: fonts.bold,
 }));
 
-export const optionsClass = css({
+export const optionsClass = css(({ devices }) => ({
   textAlign: "center",
-});
+
+  "@media": {
+    [devices.desktop]: {
+      columnGap: 30,
+      display: "inline-grid",
+      gridAutoFlow: "column",
+    },
+  },
+}));

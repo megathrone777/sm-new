@@ -1,0 +1,1 @@
+export { DeliveryConditionsList } from "./DeliveryConditionsList";

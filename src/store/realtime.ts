@@ -1,15 +1,15 @@
 import { Realtime, type InferRealtimeEvents } from "@upstash/realtime";
-import { number, object } from "zod/v4";
+import { custom, number, object } from "zod/v4";
 
 import { redis } from "./redis";
 
 const schema = {
-  notification: {
-    newOrder: object({
-      createdAt: number(),
-      updatedAt: number(),
-    }),
-  },
+  newOrder: object({
+    createdAt: number(),
+    id: number(),
+    order: custom<TOrder>(),
+    updatedAt: number(),
+  }),
 };
 
 const realtime = new Realtime({ redis, schema });

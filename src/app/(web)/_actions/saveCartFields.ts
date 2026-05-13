@@ -1,4 +1,6 @@
 "use server";
+import { revalidatePath } from "next/cache";
+
 import { store } from "@/store";
 
 import { saveCart } from "./saveCart";
@@ -24,6 +26,10 @@ const saveCartFields = async (formData: FormData): Promise<void> => {
     errors,
     note,
   });
+
+  if (Object.keys(errors).length !== Object.keys(cart.errors).length) {
+    revalidatePath("/cart");
+  }
 };
 
 export { saveCartFields };

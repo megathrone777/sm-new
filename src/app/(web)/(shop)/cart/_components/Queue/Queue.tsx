@@ -1,11 +1,12 @@
 import React from "react";
 
+import { store } from "@/store";
 import { Icon } from "@/ui";
 
 import { amountClass, iconClass, wrapperClass } from "./Queue.css";
 
-const Queue: React.FC = () => {
-  const ordersInQueue = 7;
+const Queue: React.FC = async () => {
+  const ordersInQueue = await store.orders.getInQueueCount();
 
   return (
     <div className={wrapperClass}>
@@ -15,8 +16,7 @@ const Queue: React.FC = () => {
       />
 
       <span>
-        Fronta: <span className={amountClass}>{ordersInQueue ? ordersInQueue : 0}</span>objednávky
-        před Vámi.
+        Fronta: <span className={amountClass}>{ordersInQueue}</span> objednávky před Vámi.
       </span>
     </div>
   );

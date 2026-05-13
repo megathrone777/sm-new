@@ -6,7 +6,7 @@ export const gridAreaVar = createVar();
 
 export const wrapperClass = css(({ devices }) => ({
   "@media": {
-    [devices.desktop]: {
+    [devices.tablet]: {
       gridArea: gridAreaVar,
     },
   },

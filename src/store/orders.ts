@@ -1,7 +1,11 @@
+import moment from "moment";
+
 import { redis } from "./redis";
 
 const INDEX = "orders";
 const COUNTER = "orders:counter";
+const QUEUE_SCAN_LIMIT = 200;
+const PENDING_WINDOW_MINUTES = 15;
 
 const hashKey = (id: TOrder["id"]): string => `order:${id}`;
 const phoneIndex = (phoneNumber: string): string => `orders:phone:${phoneNumber}`;
@@ -41,6 +45,18 @@ const orders = {
     }
 
     await pipeline.exec();
+  },
+
+  getActive: async (): Promise<TOrder[]> => {
+    const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
+
+    if (!ids.length) return [];
+
+    const orders = await fanOutById(ids);
+
+    return orders.filter(
+      (order): boolean => order.status !== "done" && order.status !== "placed",
+    );
   },
 
   getAll: async (offset = 0, limit = 10): Promise<TOrder[]> => {
@@ -83,6 +99,33 @@ const orders = {
     return { existingOrderIds: existingOrderIds ?? [], id };
   },
 
+  getInQueueCount: async (excludeOrderId?: TOrder["id"]): Promise<number> => {
+    const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
+
+    if (!ids.length) return 0;
+
+    const pendingCutoff = moment().subtract(PENDING_WINDOW_MINUTES, "minutes").toISOString();
+    const orders = await fanOutById(ids);
+
+    return orders.filter((order): boolean => {
+      if (excludeOrderId !== undefined && order.id === excludeOrderId) return false;
+      if (order.status !== "new" && order.status !== "started") return false;
+
+      if (order.paymentType === "cash" || order.paymentType === "cardAfterDelivery") {
+        return true;
+      }
+
+      if (order.paymentType === "card") {
+        const status = `${order.onlinePaymentStatus ?? ""}`;
+
+        if (status === "PAID") return true;
+        if (status === "PENDING" && order.createdAt >= pendingCutoff) return true;
+      }
+
+      return false;
+    }).length;
+  },
+
   registerNewOrder: async (order: TOrder, cartSessionId?: null | string): Promise<void> => {
     const pipeline = redis
       .pipeline()
@@ -95,6 +138,14 @@ const orders = {
         phoneNumber: order.clientPhoneNumber,
       })
       .zadd("clients", { member: order.clientPhoneNumber, score: Date.now() });
+
+    if (order.promocode) {
+      pipeline.zadd(promocodeIndex(order.promocode), {
+        member: `${order.id}`,
+        score: +order.id,
+      });
+      pipeline.hincrby(`promocode:${order.promocode}`, "appliedCount", 1);
+    }
 
     if (cartSessionId) pipeline.del(cartSessionId);
     await pipeline.exec();

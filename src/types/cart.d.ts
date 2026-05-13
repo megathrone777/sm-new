@@ -1,4 +1,4 @@
-import type { LatLngExpression, LatLngLiteral } from "leaflet";
+import type { LatLngExpression } from "leaflet";
 
 declare global {
   type TDeliveryType = "delivery" | "pickup";
@@ -14,7 +14,17 @@ declare global {
     | "name"
     | "phone"
     | "pickup"
+    | "promo"
     | "streetNumber";
+
+  interface TAddressSuggestion {
+    location: string;
+    name: string;
+    position: {
+      lat: number;
+      lon: number;
+    };
+  }
 
   interface TClient {
     email: string;
@@ -26,13 +36,8 @@ declare global {
     address: string;
     conditions: TDeliveryCondition[];
     distanceInM: number;
-    pickupLocation: {
-      name: null | string;
-      position: number[];
-    };
-    position: LatLngLiteral;
+    position: LatLngExpression[] | null;
     price: null | number;
-    route: LatLngExpression[] | null;
     time: TSelectOption;
     title: string;
     type: TDeliveryType;

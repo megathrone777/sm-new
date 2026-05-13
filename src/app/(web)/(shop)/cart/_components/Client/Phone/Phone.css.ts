@@ -6,7 +6,7 @@ export const inputWrapperClass = css(({ colors }) => ({
   borderBottom: `2px solid ${colors.red}`,
   display: "grid",
   gridAutoFlow: "column",
-  gridTemplateColumns: "auto 1fr",
+  // gridTemplateColumns: "auto 1fr",
   height: 36,
   justifyContent: "start",
 }));

@@ -1,1 +1,0 @@
-export { DeliveryType } from "./DeliveryType";

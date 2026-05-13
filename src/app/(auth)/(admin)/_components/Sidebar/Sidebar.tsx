@@ -46,6 +46,10 @@ const Sidebar: React.FC = () => {
       label: "PromoCodes",
     },
     {
+      href: "/admin/deliveryConditions",
+      label: "Delivery conditions",
+    },
+    {
       href: "/admin/users",
       label: "Users",
     },

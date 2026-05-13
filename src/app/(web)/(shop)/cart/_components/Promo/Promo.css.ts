@@ -1,97 +1,81 @@
-// import { styled } from "~/theme";
+import { calc } from "@vanilla-extract/css-utils";
 
-// export const StyledWrapper = styled.form(({ theme: { rem } }) => ({
-//   gridArea: "promo",
-//   marginBottom: rem(20),
+import { css } from "@/theme";
 
-//   "&.disabled": {
-//     opacity: 0.5,
-//     pointerEvents: "none",
-//   },
-// }));
+export const layoutClass = css({
+  alignContent: "start",
+  alignItems: "start",
+  border: "none",
+  columnGap: 20,
+  display: "grid",
+  gridAutoFlow: "column",
+  gridTemplateColumns: "1fr auto",
+  paddingTop: 10,
+  position: "relative",
 
-// export const StyledTitle = styled.h2(({ theme: { colors, devices, fonts, rem } }) => ({
-//   borderBottom: `${rem(3)} solid ${colors.red}`,
-//   fontSize: rem(20),
-//   fontWeight: fonts.bold,
-//   marginBottom: rem(20),
-//   padding: rem(10),
-//   textAlign: "left",
-//   width: "100%",
+  ":disabled": {
+    opacity: 0.5,
+    pointerEvents: "none",
+  },
+});
 
-//   [devices.tablet]: {
-//     padding: rem(5),
-//   },
-// }));
+export const loadingWrapperClass = css({
+  height: 25,
+  left: -5,
+  position: "absolute",
+  top: "50%",
+  transform: "translateY(-50%)",
+  width: 25,
+});
 
-// export const StyledLayout = styled.div(({ theme: { rem } }) => ({
-//   columnGap: rem(20),
-//   display: "flex",
-//   position: "relative",
-// }));
+export const successIconClass = css({
+  color: "green",
+  display: "block",
+  height: 25,
+  left: -5,
+  position: "absolute",
+  top: "50%",
+  transform: "translateY(-50%)",
+  width: 25,
+});
 
-// export const StyledInputWrapper = styled.div({
-//   flexGrow: 1,
-// });
+export const resetButtonClass = css(({ colors }) => ({
+  backgroundColor: "transparent",
+  color: colors.red,
+  cursor: "pointer",
+  display: "block",
+  height: 25,
+  left: `${calc("100%").subtract("170px")}`,
+  position: "absolute",
+  top: "50%",
+  transform: "translateY(-50%)",
+  width: 25,
+}));
 
-// export const StyledLoaderWrapper = styled.div(({ theme: { rem } }) => ({
-//   height: rem(25),
-//   left: rem(-5),
-//   position: "absolute",
-//   top: "50%",
-//   transform: "translateY(-50%)",
-//   width: rem(25),
-// }));
+export const submitClass = css({
+  position: "relative",
+});
 
-// export const StyledSuccess = styled.svg(({ theme: { rem } }) => ({
-//   color: "green",
-//   display: "block",
-//   height: rem(25),
-//   left: rem(-5),
-//   position: "absolute",
-//   top: "50%",
-//   transform: "translateY(-50%)",
-//   width: rem(25),
-// }));
+export const buttonClass = css(({ colors, fonts }) => ({
+  backgroundColor: colors.red,
+  border: "none",
+  borderRadius: 5,
+  boxShadow: "0 0 8px 0 rgba(0, 0, 0, .3)",
+  color: "white",
+  cursor: "pointer",
+  display: "inline-block",
+  fontFamily: "inherit",
+  fontSize: 20,
+  fontWeight: fonts.medium,
+  height: 35,
+  lineHeight: "35px",
+  minWidth: 120,
+  padding: "0 10px",
+  textAlign: "center",
+  textDecoration: "none",
+  transition: ".2s ease-in",
 
-// export const StyledErrorButton = styled.button(({ theme: { colors, rem } }) => ({
-//   backgroundColor: "transparent",
-//   color: colors.red,
-//   cursor: "pointer",
-//   display: "block",
-//   height: rem(25),
-//   left: `calc(100% - ${rem(170)})`,
-//   position: "absolute",
-//   top: "50%",
-//   transform: "translateY(-50%)",
-//   width: rem(25),
-// }));
-
-// export const StyledSubmit = styled.div(({ theme: { rem } }) => ({
-//   flexBasis: rem(120),
-//   position: "relative",
-// }));
-
-// export const StyledButton = styled.button(({ theme: { colors, fonts, hover, rem } }) => ({
-//   backgroundColor: colors.red,
-//   boxShadow: `0 0 ${rem(8)} 0 rgba(0, 0, 0, 0.3)`,
-//   border: 0,
-//   borderRadius: rem(5),
-//   color: "white",
-//   cursor: "pointer",
-//   display: "inline-block",
-//   fontFamily: "inherit",
-//   fontSize: rem(20),
-//   fontWeight: fonts.medium,
-//   height: rem(35),
-//   lineHeight: rem(35),
-//   minWidth: rem(120),
-//   padding: `0 ${rem(10)}`,
-//   textAlign: "center",
-//   textDecoration: "none",
-//   transition: "0.2s ease-in",
-
-//   ...hover({
-//     boxShadow: `0 0 ${rem(12)} 0 rgba(218, 38, 40, 0.4)`,
-//   }),
-// }));
+  ":hover": {
+    boxShadow: "0 0 12px 0 rgba(218, 38, 40, 0.4)",
+  },
+}));

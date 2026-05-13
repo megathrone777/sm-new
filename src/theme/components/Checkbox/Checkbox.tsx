@@ -21,6 +21,7 @@ const Checkbox: React.FC<TProps> = ({
   hint,
   label,
   labelClassName,
+  labelImage,
   name,
   onChange,
   template = "normal",
@@ -60,6 +61,8 @@ const Checkbox: React.FC<TProps> = ({
           {label}
           {Boolean(hint && hint.length > 0) && <span className={hintClass}>{hint}</span>}
         </span>
+
+        {labelImage}
       </label>
     </div>
   );

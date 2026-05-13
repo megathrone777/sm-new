@@ -1,183 +1,155 @@
-// import React, { useEffect } from "react";
-// import Link from "next/link";
+import React from "react";
+import Link from "next/link";
 
-// import { useCart, useStore, useTranslation } from "~/hooks";
-// import { setPaymentInfo } from "~/store";
-// import { ThemeComponent } from "~/theme";
-// import {
-//   StyledWrapper,
-//   StyledLayout,
-//   StyledRow,
-//   StyledTitle,
-//   StyledLabelImageHolder,
-//   StyledLabelImage,
-//   StyledAgree,
-//   StyledAgreeLabel,
-//   StyledAgreeLink,
-//   StyledTotal,
-//   StyledChangeWrapper,
-// } from "./styled";
+import { useTranslation } from "@/hooks";
+import { Checkbox } from "@/ui";
 
-// const Payment: React.FC = () => {
-//   const { dispatch } = useStore();
-//   const { deliveryInfo, paymentInfo, totalPrice } = useCart();
-//   const { t } = useTranslation();
+import { Submit } from "./Submit";
 
-//   const handlePaymentChange = ({
-//     currentTarget,
-//   }: React.SyntheticEvent<HTMLInputElement>): void => {
-//     dispatch(
-//       setPaymentInfo({
-//         type: currentTarget.value as TPaymentInfo["type"],
-//       }),
-//     );
-//   };
+import {
+  agreeClass,
+  agreeLabelClass,
+  agreeLinkClass,
+  changeClass,
+  labelHolderClass,
+  labelImageClass,
+  layoutClass,
+  rowClass,
+} from "./Payment.css";
 
-//   const handleChangeToggle = ({
-//     currentTarget,
-//   }: React.SyntheticEvent<HTMLInputElement>): void => {
-//     const { checked, value } = currentTarget;
+import type { TProps } from "./Payment.types";
 
-//     dispatch(
-//       setPaymentInfo({
-//         change: checked ? (+value as TPaymentInfo["change"]) : null,
-//       }),
-//     );
-//   };
+const Payment: React.FC<TProps> = ({ deliveryType, payment, totalPrice }) => {
+  const { t } = useTranslation();
 
-//   useEffect((): void => {
-//     if (paymentInfo.type !== "cash") {
-//       const fbEventData: TFacebookEvent = {
-//         value: totalPrice,
-//         currency: "CZK",
-//       };
+  return (
+    <>
+      <div className={layoutClass}>
+        <div className={rowClass}>
+          <Checkbox
+            defaultChecked={payment.type === "card"}
+            label={t<string>("payByCard")}
+            labelImage={
+              <div className={labelHolderClass}>
+                <img
+                  alt="Apple pay"
+                  className={labelImageClass}
+                  src="/images/payments_img2.png"
+                />
 
-//       console.log("track adding payment info...");
-//       console.log("ƒb event data:", fbEventData);
-//       if (window.fbq) {
-//         window.fbq("track", "AddPaymentInfo", fbEventData);
-//       }
+                <img
+                  alt="Card"
+                  className={labelImageClass}
+                  src="/images/payments_img.png"
+                />
+              </div>
+            }
+            name="payment"
+            type="radio"
+            value="card"
+          />
+        </div>
 
-//       dispatch(
-//         setPaymentInfo({
-//           change: null,
-//         }),
-//       );
-//     }
-//   }, [paymentInfo.type]);
+        {deliveryType === "pickup" && (
+          <div className={rowClass}>
+            <Checkbox
+              defaultChecked={payment.type === "cardAfterDelivery"}
+              label={t<string>("payByCardPickup")}
+              labelImage={
+                <div className={labelHolderClass}>
+                  <img
+                    alt="Apple pay"
+                    className={labelImageClass}
+                    src="/images/payments_img2.png"
+                  />
 
-//   return (
-//     <StyledWrapper>
-//       <StyledTitle>{t<string>("paymentMethods")}</StyledTitle>
+                  <img
+                    alt="Card"
+                    className={labelImageClass}
+                    src="/images/payments_img.png"
+                  />
+                </div>
+              }
+              name="payment"
+              type="radio"
+              value="cardAfterDelivery"
+            />
+          </div>
+        )}
 
-//       <StyledLayout>
-//         <StyledRow>
-//           <ThemeComponent.Checkbox
-//             checked={paymentInfo.type === "card"}
-//             id="input-card"
-//             label={t<string>("payByCard")}
-//             labelImage={
-//               <StyledLabelImageHolder>
-//                 <StyledLabelImage alt="Apple pay" src="/images/payments_img2.png" />
-//                 <StyledLabelImage alt="Card" src="/images/payments_img.png" />
-//               </StyledLabelImageHolder>
-//             }
-//             name="payment"
-//             onChange={handlePaymentChange}
-//             type="radio"
-//             value="card"
-//           />
-//         </StyledRow>
+        <div className={rowClass}>
+          <Checkbox
+            defaultChecked={payment.type === "cash"}
+            label={t<string>("payByCash")}
+            labelImage={
+              <div className={labelHolderClass}>
+                <img
+                  alt="Cash"
+                  className={labelImageClass}
+                  src="/images/cash_img.jpg"
+                />
+              </div>
+            }
+            name="payment"
+            type="radio"
+            value="cash"
+          />
+        </div>
 
-//         {deliveryInfo.type === "pickup" && (
-//           <StyledRow>
-//             <ThemeComponent.Checkbox
-//               checked={paymentInfo.type === "cardAfterDelivery"}
-//               id="cardAfterDelivery"
-//               label={t<string>("payByCardPickup")}
-//               labelImage={
-//                 <StyledLabelImageHolder>
-//                   <StyledLabelImage alt="Apple pay" src="/images/payments_img2.png" />
-//                   <StyledLabelImage alt="Card" src="/images/payments_img.png" />
-//                 </StyledLabelImageHolder>
-//               }
-//               name="cardAfterDelivery"
-//               onChange={handlePaymentChange}
-//               type="radio"
-//               value="cardAfterDelivery"
-//             />
-//           </StyledRow>
-//         )}
+        {payment.type === "cash" && (
+          <div
+            className={changeClass}
+            key={payment.change ?? "none"}
+          >
+            <div className={rowClass}>
+              <Checkbox
+                defaultChecked={payment.change === 2000}
+                label={`Mám v hotovosti 2000 ${t<string>("currency")}`}
+                name="change"
+                type="radio"
+                value={2000}
+              />
+            </div>
 
-//         <StyledRow>
-//           <ThemeComponent.Checkbox
-//             checked={paymentInfo.type === "cash"}
-//             id="input-cash"
-//             label={t<string>("payByCash")}
-//             labelImage={
-//               <StyledLabelImageHolder>
-//                 <StyledLabelImage alt="Card" src="/images/cash_img.jpg" />
-//               </StyledLabelImageHolder>
-//             }
-//             name="cash"
-//             onChange={handlePaymentChange}
-//             type="radio"
-//             value="cash"
-//           />
-//         </StyledRow>
+            <div className={rowClass}>
+              <Checkbox
+                defaultChecked={payment.change === 5000}
+                label={`Mám v hotovosti 5000 ${t<string>("currency")}`}
+                name="change"
+                type="radio"
+                value={5000}
+              />
+            </div>
+          </div>
+        )}
+      </div>
 
-//         {paymentInfo.type === "cash" && (
-//           <StyledChangeWrapper>
-//             <StyledRow>
-//               <ThemeComponent.Checkbox
-//                 checked={paymentInfo.change === 2000}
-//                 id="input-change-cash"
-//                 label="Mám v hotovosti 2000 t<string>("currency")"
-//                 name="cash-change"
-//                 onChange={handleChangeToggle}
-//                 type="checkbox"
-//                 value={2000}
-//               />
-//             </StyledRow>
+      <div className={agreeClass}>
+        <Checkbox
+          defaultChecked
+          disabled
+          label={
+            <span className={agreeLabelClass}>
+              <span>
+                Při pokračování v nákupu souhlasíte a potvrzujete, že jste se <br />
+                seznámil s{" "}
+              </span>
 
-//             <StyledRow>
-//               <ThemeComponent.Checkbox
-//                 checked={paymentInfo.change === 5000}
-//                 id="input-change-cash2"
-//                 label="Mám v hotovosti 5000 t<string>("currency")"
-//                 name="cash-change"
-//                 onChange={handleChangeToggle}
-//                 type="checkbox"
-//                 value={5000}
-//               />
-//             </StyledRow>
-//           </StyledChangeWrapper>
-//         )}
-//       </StyledLayout>
+              <Link
+                className={agreeLinkClass}
+                href="/terms"
+              >
+                obchodními podmínkami
+              </Link>
+            </span>
+          }
+          type="checkbox"
+        />
+      </div>
 
-//       <StyledAgree>
-//         <ThemeComponent.Checkbox
-//           defaultChecked
-//           disabled
-//           id="input-terms"
-//           label={
-//             <StyledAgreeLabel>
-//               Při pokračování v nákupu souhlasíte a potvrzujete, že jste se <br />
-//               seznámil s{" "}
-//               <StyledAgreeLink as={Link} href="/terms">
-//                 obchodními podmínkami
-//               </StyledAgreeLink>
-//             </StyledAgreeLabel>
-//           }
-//           type="checkbox"
-//         />
-//       </StyledAgree>
+      <Submit {...{ totalPrice }} />
+    </>
+  );
+};
 
-//       <StyledTotal>
-//         {t<string>("priceTotal")}: {totalPrice} {t<string>("currency")}
-//       </StyledTotal>
-//     </StyledWrapper>
-//   );
-// };
-
-// export { Payment };
+export { Payment };

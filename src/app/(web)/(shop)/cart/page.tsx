@@ -5,19 +5,22 @@ import { useTranslation } from "@/hooks";
 import { store } from "@/store";
 import { Container } from "@/ui";
 
+import "leaflet/dist/leaflet.css";
+
 import {
   Additionals,
+  Address,
   Client,
   Cutlery,
   Delivery,
-  DeliveryType,
   FormLayout,
   Note,
+  Payment,
   Placeholder,
   ProductsList,
+  Promo,
   Queue,
   SectionLayout,
-  Submit,
 } from "./_components";
 
 import { wrapperClass } from "./page.css";
@@ -36,11 +39,11 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
         delivery,
         errors,
         note,
+        payment,
         products,
+        promo,
         totalPrice,
       } = cart;
-
-      console.log(errors);
 
       return (
         <>
@@ -53,21 +56,10 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
 
           <FormLayout {...{ errors }}>
             <SectionLayout
-              gridArea="cutlery"
-              id="cart-cutlery"
-              title={t<string>("cutleryQuantity")}
-            >
-              <Cutlery
-                {...cutlery}
-                isError={Boolean(errors.cutlery)}
-              />
-            </SectionLayout>
-
-            <SectionLayout
               gridArea="delivery"
               title={t<string>("delivery")}
             >
-              <DeliveryType
+              <Delivery
                 {...{ totalPrice }}
                 type={delivery.type}
               />
@@ -81,7 +73,21 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
                 }}
               />
 
-              <Delivery {...delivery} />
+              <Address
+                {...{ delivery }}
+                addressError={errors.addressFormat ?? errors.addressRange}
+              />
+            </SectionLayout>
+
+            <SectionLayout
+              gridArea="cutlery"
+              id="cart-cutlery"
+              title={t<string>("cutleryQuantity")}
+            >
+              <Cutlery
+                {...cutlery}
+                isError={Boolean(errors.cutlery)}
+              />
             </SectionLayout>
 
             <SectionLayout
@@ -98,7 +104,28 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <Note defaultValue={note} />
             </SectionLayout>
 
-            <Submit {...{ totalPrice }} />
+            <SectionLayout
+              gridArea="promo"
+              title={t<string>("promoTitle")}
+            >
+              <Promo
+                {...{ delivery, promo }}
+                addressError={errors.addressFormat ?? errors.addressRange}
+                phoneError={errors.phone}
+                phoneNumber={client.phoneNumber}
+                promoError={errors.promo}
+              />
+            </SectionLayout>
+
+            <SectionLayout
+              gridArea="payment"
+              title={t<string>("paymentMethods")}
+            >
+              <Payment
+                {...{ payment, totalPrice }}
+                deliveryType={delivery.type}
+              />
+            </SectionLayout>
           </FormLayout>
         </>
       );

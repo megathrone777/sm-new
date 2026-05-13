@@ -2,13 +2,13 @@ import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   alignItems: "start",
-  columnGap: 7,
+  columnGap: 5,
   display: "grid",
   gridAutoFlow: "column",
   justifyContent: "start",
 
   "@media": {
-    [devices.mobileXs]: {
+    [devices.mobile]: {
       columnGap: 10,
     },
   },
@@ -58,27 +58,22 @@ export const inputClass = css({
 export const iconClass = cssVariant(
   {
     normal: {
-      height: 14,
+      height: 13,
+      transform: "translateY(1px)",
     },
     small: {
-      height: 11,
+      height: 10,
     },
   },
   (template) => [
     {
       display: "none",
-      insetInline: 0,
-      marginInline: "auto",
       pointerEvents: "none",
-      position: "absolute",
       selectors: {
         [`${inputClass}:checked + &`]: {
           display: "block",
         },
       },
-      top: "50%",
-      transform: "translateY(-50%)",
-      zIndex: 1,
     },
     template,
   ],
