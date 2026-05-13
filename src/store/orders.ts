@@ -47,6 +47,7 @@ const orders = {
     await pipeline.exec();
   },
 
+  /*
   getActive: async (): Promise<TOrder[]> => {
     const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
 
@@ -58,6 +59,22 @@ const orders = {
       (order): boolean => order.status !== "done" && order.status !== "placed",
     );
   },
+  */
+
+  getActiveToday: async (): Promise<TOrder[]> => {
+  const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
+  if (!ids.length) return [];
+
+  const orders = await fanOutById(ids);
+  const today = new Date().toISOString().slice(0, 10);
+
+  return orders.filter(
+    (order) =>
+      order.status !== "done" &&
+      order.status !== "placed" &&
+      order.createdAt.startsWith(today),
+  );
+},
 
   getAll: async (offset = 0, limit = 10): Promise<TOrder[]> => {
     const ids = await redis.zrange<number[]>(INDEX, offset, offset + limit - 1, { rev: true });
