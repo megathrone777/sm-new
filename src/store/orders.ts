@@ -62,18 +62,19 @@ const orders = {
   */
 
   getActiveToday: async (): Promise<TOrder[]> => {
-  const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
+    const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
 
-  if (!ids.length) return [];
+    if (!ids.length) return [];
 
-  const orders = await fanOutById(ids);
-  const start = moment.tz("Europe/Prague").startOf("day").valueOf();
-  const end = moment.tz("Europe/Prague").endOf("day").valueOf();
+    const orders = await fanOutById(ids);
+    const start = moment.tz("Europe/Prague").startOf("day").valueOf();
+    const end = moment.tz("Europe/Prague").endOf("day").valueOf();
 
-  return orders.filter((order): boolean => {
-    if (order.status === "done" || order.status === "placed") return false;
+    return orders.filter((order): boolean => {
+      if (order.status === "done" || order.status === "placed") return false;
 
-    const created = moment(order.createdAt).valueOf();
+      const created = moment(order.createdAt).valueOf();
+
       return created >= start && created <= end;
     });
   },
