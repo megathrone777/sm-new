@@ -10,6 +10,11 @@ const schema = {
     order: custom<TOrder>(),
     updatedAt: number(),
   }),
+  orderStatusChanged: object({
+    id: number(),
+    status: custom<TOrderStatus>(),
+    updatedAt: number(),
+  }),
 };
 
 const realtime = new Realtime({ redis, schema });

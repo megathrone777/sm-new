@@ -14,12 +14,25 @@ const OrdersLayout: React.FC<TProps> = ({ initialOrders, isAdmin, placeholder })
   const { notify } = useNewOrderAlert();
 
   useRealtime({
-    events: ["newOrder"],
-    onData: ({ data }): void => {
-      if (!data?.order) return;
+    events: ["newOrder", "orderStatusChanged"],
+    onData: ({ data, event }): void => {
+      if (event === "newOrder") {
+        if (!data?.order) return;
 
-      setOrders((prev: TOrder[]): TOrder[] => [data.order, ...prev]);
-      notify(data.id);
+        setOrders((prev: TOrder[]): TOrder[] => [data.order, ...prev]);
+        notify(data.id);
+
+        return;
+      }
+
+      if (event === "orderStatusChanged") {
+        setOrders((prev: TOrder[]): TOrder[] =>
+          prev.map(
+            (order: TOrder): TOrder =>
+              order.id === data.id ? { ...order, status: data.status } : order,
+          ),
+        );
+      }
     },
   });
 
