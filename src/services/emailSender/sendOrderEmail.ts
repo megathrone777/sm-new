@@ -4,7 +4,7 @@ import { store } from "@/store";
 
 import { generateTemplate } from "./generateTemplate";
 
-const sendOrderConfirmation = async (order: TOrder): Promise<boolean> => {
+const sendOrderEmail = async (order: TOrder): Promise<boolean> => {
   if (process.env.EMAIL_ORDER_CONFIRMATION_ENABLED !== "true") return false;
 
   const user = process.env.EMAIL_ADDRESS;
@@ -34,10 +34,10 @@ const sendOrderConfirmation = async (order: TOrder): Promise<boolean> => {
 
     return info.accepted.length === 1;
   } catch (error) {
-    console.error("sendOrderConfirmation failed", error);
+    console.error("sendOrderEmail failed", error);
 
     return false;
   }
 };
 
-export { sendOrderConfirmation };
+export { sendOrderEmail };

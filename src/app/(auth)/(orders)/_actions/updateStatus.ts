@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { after } from "next/server";
 
-import { sendOrderStatusSms } from "@/sms/sendOrderStatusSms";
+import { sendOrderStatusSms } from "@/services";
 import { realtime, store } from "@/store";
 
 const updateStatus = async (id: TOrder["id"], status: TOrderStatus): Promise<void> => {

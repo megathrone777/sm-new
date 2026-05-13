@@ -2,8 +2,7 @@
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 
-import { sendOrderConfirmation } from "@/emailTemplate/sendOrderConfirmation";
-import { sendOrderCreatedSms } from "@/sms/sendOrderCreatedSms";
+import { sendOrderCreatedSms, sendOrderEmail } from "@/services";
 import { store } from "@/store";
 
 const markOrderPaid = async (formData: FormData): Promise<void> => {
@@ -25,7 +24,7 @@ const markOrderPaid = async (formData: FormData): Promise<void> => {
   const paidOrder: TOrder = { ...order, ...paidPatch };
 
   after(async (): Promise<void> => {
-    await Promise.allSettled([sendOrderConfirmation(paidOrder), sendOrderCreatedSms(paidOrder)]);
+    await Promise.allSettled([sendOrderEmail(paidOrder), sendOrderCreatedSms(paidOrder)]);
   });
   redirect(`/order-confirmed/${id}`);
 };

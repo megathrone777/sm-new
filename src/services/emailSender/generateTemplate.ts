@@ -4,20 +4,16 @@ import path from "path";
 import moment from "moment";
 import pug from "pug";
 
+import type { TGenerateTemplateInput } from "./emailSender.types";
+
 const PAYMENT_LABEL: Record<TPaymentType, string> = {
   card: "Kartou",
   cardAfterDelivery: "Kartou na místě",
   cash: "Hotovost",
 };
 
-const TEMPLATE_DIR = path.join(process.cwd(), "src", "emailTemplate", "template");
+const TEMPLATE_DIR = path.join(process.cwd(), "src", "services", "emailSender", "template");
 const TEMPLATE_PATH = path.join(TEMPLATE_DIR, "template.pug");
-
-type TGenerateTemplateInput = {
-  order: TOrder;
-  pickupAddress: string;
-  shopSettings: Pick<TShopSettings, "businessName" | "email" | "phone">;
-};
 
 const generateTemplate = async ({
   order,

@@ -5,8 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 
-import { sendOrderConfirmation } from "@/emailTemplate/sendOrderConfirmation";
-import { sendOrderCreatedSms } from "@/sms/sendOrderCreatedSms";
+import { sendOrderEmail, sendOrderCreatedSms } from "@/services";
 import { realtime, store } from "@/store";
 import { isMissedStreetNumber } from "@/utils";
 
@@ -213,7 +212,7 @@ const validateAndSubmitCart = async (
   after(async (): Promise<void> => {
     realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
     if (payment.type === "card") return;
-    await Promise.allSettled([sendOrderConfirmation(order), sendOrderCreatedSms(order)]);
+    await Promise.allSettled([sendOrderEmail(order), sendOrderCreatedSms(order)]);
   });
 
   if (payment.type === "card") {

@@ -1,17 +1,8 @@
-type TSendSmsInput = {
-  number: string;
-  text: string;
-};
-
-type TBulkgateResponse = {
-  data?: {
-    status?: string;
-  };
-};
+import type { TBulkgateResponse, TSendSmsInput } from "./smsSender.types";
 
 const sendSms = async ({ number, text }: TSendSmsInput): Promise<boolean> => {
   if (process.env.SMS_BULKGATE_IS_ENABLED !== "true") {
-    console.log(`[SMS disabled] would send to +${number}: ${text}`);
+    console.info(`[SMS disabled] would send to +${number}: ${text}`);
 
     return true;
   }
