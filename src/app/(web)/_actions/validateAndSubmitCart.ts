@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { after } from "next/server";
 
 import { sendOrderConfirmation } from "@/emailTemplate/sendOrderConfirmation";
+import { sendOrderCreatedSms } from "@/sms/sendOrderCreatedSms";
 import { realtime, store } from "@/store";
 import { isMissedStreetNumber } from "@/utils";
 
@@ -214,6 +215,7 @@ const validateAndSubmitCart = async (
 
     if (payment.type !== "card") {
       void sendOrderConfirmation(order);
+      void sendOrderCreatedSms(order);
     }
   });
 

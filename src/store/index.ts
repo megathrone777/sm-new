@@ -9,6 +9,7 @@ import { products } from "./products";
 import { promocodes } from "./promocodes";
 import { sessions } from "./sessions";
 import { shop } from "./shop";
+import { smsTemplates } from "./smsTemplates";
 import { submodifiers } from "./submodifiers";
 import { users } from "./users";
 
@@ -24,6 +25,7 @@ const store = {
   promocodes,
   sessions,
   shop,
+  smsTemplates,
   submodifiers,
   users,
 };

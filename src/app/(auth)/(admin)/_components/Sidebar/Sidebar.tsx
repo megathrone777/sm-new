@@ -49,12 +49,20 @@ const Sidebar: React.FC = () => {
       href: "/admin/deliveryConditions",
       label: "Delivery conditions",
     },
+    {
+      href: "/admin/schedule",
+      label: "Shop schedule",
+    },
   ];
 
   const menuItems2: TMenuItem[] = [
     {
       href: "/admin/navigation",
       label: "Navigation",
+    },
+    {
+      href: "/admin/notifications",
+      label: "Notifications",
     },
     {
       href: "/admin/users",

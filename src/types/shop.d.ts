@@ -68,6 +68,16 @@ declare global {
     title: string;
   }
 
+  type TSmsTemplateKey =
+    | "newOrderDelivery"
+    | "newOrderDeliveryCustomDeliveryTime"
+    | "newOrderPickup"
+    | "newOrderPickupCustomDeliveryTime"
+    | "orderIsOnTheWay"
+    | "orderIsReadyToPickup";
+
+  type TSmsTemplates = Record<TSmsTemplateKey, string>;
+
   interface TFeedback {
     bgImage: string;
     buttonSendTitle: string;

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { after } from "next/server";
 
 import { sendOrderConfirmation } from "@/emailTemplate/sendOrderConfirmation";
+import { sendOrderCreatedSms } from "@/sms/sendOrderCreatedSms";
 import { store } from "@/store";
 
 const markOrderPaid = async (formData: FormData): Promise<void> => {
@@ -21,8 +22,11 @@ const markOrderPaid = async (formData: FormData): Promise<void> => {
   };
 
   await store.orders.update(id, paidPatch);
+  const paidOrder: TOrder = { ...order, ...paidPatch };
+
   after((): void => {
-    void sendOrderConfirmation({ ...order, ...paidPatch });
+    void sendOrderConfirmation(paidOrder);
+    void sendOrderCreatedSms(paidOrder);
   });
   redirect(`/order-confirmed/${id}`);
 };

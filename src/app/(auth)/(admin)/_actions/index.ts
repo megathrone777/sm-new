@@ -34,5 +34,6 @@ export { updatePromocode } from "./updatePromocode";
 export { updateScheduleDay } from "./updateScheduleDay";
 export { updateSettings } from "./updateSettings";
 export { updateSettingsImage } from "./updateSettingsImage";
+export { updateSmsTemplate } from "./updateSmsTemplate";
 export { updateSubmodifier } from "./updateSubmodifier";
 export { updateUser } from "./updateUser";
