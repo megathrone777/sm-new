@@ -73,15 +73,19 @@ const validateAndSubmitCart = async (
   //   )}, vyzvednutí je možné jenom na provozovně Milicova 25, Praha 3`;
   // }
 
-  if (delivery.type === "delivery") {
+  if (
+    delivery.type === "delivery" &&
+    delivery.address &&
+    !isMissedStreetNumber(delivery.address)
+  ) {
     const relatedConditions = deliveryConditions.find(
       (item) => item.distanceFrom < delivery.distanceInM && delivery.distanceInM <= item.distanceTo,
     );
 
-    if (relatedConditions) {
-      if (relatedConditions.minimumOrderPrice > totalPrice) {
-        errors.delivery = relatedConditions.text;
-      }
+    if (!relatedConditions) {
+      errors.addressRange = "Adresa mimo rozsah rozvozu";
+    } else if (relatedConditions.minimumOrderPrice > totalPrice) {
+      errors.delivery = relatedConditions.text;
     }
   }
 
