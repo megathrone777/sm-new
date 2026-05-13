@@ -56,15 +56,20 @@ export const inputClass = css({
 });
 
 export const iconClass = cssVariant(
-  {
+  ({ devices }) => ({
     normal: {
       height: 13,
-      transform: "translateY(1px)",
     },
     small: {
       height: 10,
+
+      "@media": {
+        [devices.desktopLg]: {
+          transform: "none",
+        },
+      },
     },
-  },
+  }),
   (template) => [
     {
       display: "none",
@@ -74,6 +79,7 @@ export const iconClass = cssVariant(
           display: "block",
         },
       },
+      transform: "translateY(1px)",
     },
     template,
   ],

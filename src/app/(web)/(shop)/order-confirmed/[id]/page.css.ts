@@ -1,5 +1,3 @@
-import { calc } from "@vanilla-extract/css-utils";
-
 import { css } from "@/theme";
 
 export const wrapperClass = css({
@@ -7,38 +5,54 @@ export const wrapperClass = css({
 });
 
 export const layoutClass = css(({ devices }) => ({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
+  display: "grid",
+  gridAutoFlow: "row",
+  justifyItems: "stretch",
   marginBottom: 25,
+  rowGap: 10,
 
   "@media": {
-    [devices.mobile]: {
+    [devices.tablet]: {
+      gridAutoFlow: "column",
+      gridTemplateColumns: "repeat(3, 1fr)",
       justifyContent: "space-around",
     },
   },
 }));
 
-export const contentClass = css({
-  flex: `0 1 ${calc("33%").subtract("20px")}`,
+export const contentClass = css(({ devices }) => ({
   marginBottom: 15,
   selectors: {
+    "&:first-of-type": {
+      justifySelf: "stretch",
+      order: 1,
+      paddingLeft: 10,
+      width: "100%",
+    },
+
+    "&:last-of-type": {
+      marginBottom: 0,
+      order: 2,
+
+      "@media": {
+        [devices.tablet]: {
+          order: 3,
+        },
+      },
+    },
+
     "&:nth-of-type(2)": {
       order: 3,
+
+      "@media": {
+        [devices.tablet]: {
+          order: 2,
+        },
+      },
     },
   },
   textAlign: "left",
-
-  ":first-of-type": {
-    order: 1,
-    paddingLeft: 20,
-  },
-
-  ":last-of-type": {
-    marginBottom: 0,
-    order: 2,
-  },
-});
+}));
 
 export const titleClass = css(({ devices, fonts }) => ({
   fontSize: 24,
@@ -48,18 +62,34 @@ export const titleClass = css(({ devices, fonts }) => ({
   textWrap: "balance",
 
   "@media": {
-    [devices.mobile]: {
+    [devices.tablet]: {
       fontSize: 36,
       marginBottom: 30,
     },
   },
 }));
 
+export const subtitleClass = css({
+  textWrap: "balance",
+  wordBreak: "break-word",
+});
+
 export const imageHolderClass = css({
   height: 450,
   marginInline: "auto",
   position: "relative",
   textAlign: "center",
+  width: "auto",
+});
+
+export const linkClass = css({
+  display: "block",
+  height: "100%",
+});
+
+export const imageClass = css({
+  height: "100%",
+  marginInline: "auto",
   width: "auto",
 });
 

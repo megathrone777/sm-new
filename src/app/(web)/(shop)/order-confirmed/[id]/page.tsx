@@ -14,10 +14,13 @@ import {
   descriptionClass,
   footerClass,
   iconClass,
+  imageClass,
   imageHolderClass,
   itemClass,
   layoutClass,
+  linkClass,
   subitemClass,
+  subtitleClass,
   titleClass,
   wrapperClass,
 } from "./page.css";
@@ -162,6 +165,7 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
               <div className={imageHolderClass}>
                 <Image
                   alt="Order confirmed."
+                  className={imageClass}
                   height={0}
                   priority
                   sizes="100vw"
@@ -173,7 +177,7 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
 
             <div className={contentClass}>
               <div className={columnClass}>
-                <h3>Přihlaste se k odběru našeho Instagramu</h3>
+                <h3 className={subtitleClass}>Přihlaste se k odběru našeho Instagramu</h3>
 
                 <Button
                   href="https://www.instagram.com/sushiman_prague/"
@@ -184,11 +188,13 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
 
                 <div className={imageHolderClass}>
                   <a
+                    className={linkClass}
                     href="https://www.instagram.com/sushiman_prague/"
                     target="_blank"
                   >
                     <img
                       alt="Sushi-man instagram."
+                      className={imageClass}
                       src="/images/instagram_img.png"
                     />
                   </a>

@@ -199,7 +199,7 @@
       stroke-linejoin="round"
       stroke-miterlimit="10"
       stroke-dasharray="40"
-      stroke-dashoffset="40"
+      stroke-dashoffset="0"
       style="
         animation-duration: 0.25s;
         animation-fill-mode: forwards;
