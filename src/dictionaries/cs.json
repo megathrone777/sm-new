@@ -96,12 +96,14 @@
   "price": "Cena",
   "priceIncluded": "Pozor na to, že rolly a sety už mají v ceně Vasabi, Zázvor a Sójovku!",
   "priceTotal": "Konečná cena",
-  "promoUse": "Použit",
+  "privacyPolicy": "Zásady ochrany osobních údajů",
   "promoTitle": "Promo code",
+  "promoUse": "Použit",
   "quantity": "Množství / Váha",
   "recommendedTitle": "Chcete ještě něco přidat?",
   "remove": "Odstranit",
   "reviewsButton": "Objednat",
+  "termsOfUse": "Všeobecné obchodní podmínky",
   "shopModalTitle": "Ted' máme zavřeno<br />",
   "tipsDescription": "Pokud chcete podpořit naši restauraci, můžete nechat spropitné."
 }

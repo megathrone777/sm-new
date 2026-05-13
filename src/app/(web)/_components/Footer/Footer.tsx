@@ -12,7 +12,6 @@ import type { TProps } from "./Footer.types";
 
 const Footer: React.FC<TProps> = async ({
   address,
-  allergeny,
   allergenyUrl,
   businessName,
   contactItems,
@@ -31,9 +30,7 @@ const Footer: React.FC<TProps> = async ({
           {navigation && !!navigation.length && <Menu items={navigation} />}
 
           {contactItems && !!contactItems.length && (
-            <Info
-              {...{ address, allergeny, allergenyUrl, businessName, contactItems, email, phone }}
-            />
+            <Info {...{ address, allergenyUrl, businessName, contactItems, email, phone }} />
           )}
         </div>
       </Container>

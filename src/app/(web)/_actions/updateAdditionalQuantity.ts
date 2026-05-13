@@ -12,7 +12,6 @@ const updateAdditionalQuantity = async (
   const sessionId = await store.cart.getSessionId();
 
   if (!sessionId) return;
-
   const locked = await store.cart.lock(sessionId);
 
   if (!locked) return;
@@ -21,7 +20,6 @@ const updateAdditionalQuantity = async (
     const cart = await store.cart.get();
 
     if (!cart) return;
-
     const additionals = [...cart.additionals];
     const existingIndex = additionals.findIndex((a: TCartAdditional): boolean => a.id === id);
     const existing = additionals[existingIndex];

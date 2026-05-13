@@ -47,8 +47,18 @@ const validateAndSubmitCart = async (
     note,
     payment: { change, type: paymentType },
   };
-  const { additionals, client, cutlery, delivery, payment, products, promo, tips, totalPrice } =
-    cart;
+  const {
+    additionals,
+    client,
+    cutlery,
+    delivery,
+    payment,
+    products,
+    promo,
+    time,
+    tips,
+    totalPrice,
+  } = cart;
   const errors: TCart["errors"] = {};
 
   const isEmailValid = (email: string): null | RegExpMatchArray => {
@@ -91,9 +101,8 @@ const validateAndSubmitCart = async (
   }
 
   if (
-    delivery.time.value !== null &&
-    moment(new Date()).diff(`${moment().format("YYYY-MM-DD")} ${delivery.time.value}`, "m") * -1 <
-      60
+    time.value !== null &&
+    moment(new Date()).diff(`${moment().format("YYYY-MM-DD")} ${time.value}`, "m") * -1 < 60
   ) {
     const message =
       delivery.type === "delivery"
@@ -177,7 +186,7 @@ const validateAndSubmitCart = async (
         : "",
     deliveryDistance: delivery.distanceInM,
     deliveryPrice: delivery.price ?? 0,
-    deliveryTime: delivery.time.value ?? "",
+    deliveryTime: time.value ?? "",
     deliveryTitle: delivery.title,
     deliveryType: delivery.type,
     id,

@@ -38,6 +38,14 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
     }
   };
 
+  const handleFormKeyDown = (event: React.KeyboardEvent<HTMLFormElement>): void => {
+    const target = event.target as HTMLElement;
+
+    if (event.key === "Enter" && target.tagName === "INPUT") {
+      event.preventDefault();
+    }
+  };
+
   useEffect((): void => {
     if (!Object.keys(errors).length) return;
 
@@ -63,6 +71,7 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
       className={wrapperClass}
       onBlur={handleFormBlur}
       onChange={handleFormChange}
+      onKeyDown={handleFormKeyDown}
     >
       {children}
     </Form>

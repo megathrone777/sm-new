@@ -6,17 +6,8 @@ import { Error } from "@/components";
 import { store } from "@/store";
 
 const Page: React.FC = async () => {
-  const {
-    address,
-    allergeny,
-    allergenyUrl,
-    businessName,
-    contactItems,
-    email,
-    logoUrl,
-    navigation,
-    phone,
-  } = await store.shop.getSettings();
+  const { address, allergenyUrl, businessName, contactItems, email, logoUrl, navigation, phone } =
+    await store.shop.getSettings();
 
   return (
     <>
@@ -27,7 +18,6 @@ const Page: React.FC = async () => {
       <Footer
         {...{
           address,
-          allergeny,
           allergenyUrl,
           businessName,
           contactItems,

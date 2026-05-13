@@ -25,7 +25,6 @@ const initialCart: TCart = {
     distanceInM: 0,
     position: null,
     price: null,
-    time: { label: "Doručit teď", value: null },
     title: "",
     type: "delivery",
   },
@@ -37,6 +36,7 @@ const initialCart: TCart = {
     code: "",
     discount: 0,
   },
+  time: { label: "Doručit teď", value: null },
   tips: { percentage: 0, price: 0 },
   totalPrice: 0,
 };

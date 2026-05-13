@@ -24,8 +24,21 @@ const cart = {
 
     if (!data || Object.keys(data).length === 0) return null;
 
-    const { additionals, cutlery, delivery, products, promo, tips, ...cartRest } =
-      data as unknown as TCart;
+    const {
+      additionals,
+      cutlery,
+      delivery,
+      products,
+      promo,
+      time,
+      tips,
+      ...cartRest
+    } = data as unknown as TCart & { delivery: TDelivery & { time?: TSelectOption } };
+    const legacyDeliveryTime = (delivery as { time?: TSelectOption }).time;
+    const { time: _legacyTime, ...deliveryWithoutTime } =
+      delivery as TDelivery & { time?: TSelectOption };
+    const resolvedTime: TSelectOption = time ??
+      legacyDeliveryTime ?? { label: "Doručit teď", value: null };
     const { cutleryPrice } = await shop.getSettings();
 
     const getCategoryDiscount = (): number => {
@@ -111,11 +124,12 @@ const cart = {
         totalPrice: getCutleryPrice(),
       },
       delivery: {
-        ...delivery,
+        ...deliveryWithoutTime,
         price: getDeliveryPrice(),
       },
       products,
       promo,
+      time: resolvedTime,
       tips: { percentage: tipsPercentage, price: tipsPrice },
       totalPrice: subtotal + tipsPrice,
     };

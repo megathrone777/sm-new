@@ -38,7 +38,6 @@ declare global {
     distanceInM: number;
     position: LatLngExpression[] | null;
     price: null | number;
-    time: TSelectOption;
     title: string;
     type: TDeliveryType;
   }
@@ -81,6 +80,7 @@ declare global {
       code: string;
       discount: number;
     };
+    time: TSelectOption;
     tips: {
       percentage: number;
       price: number;

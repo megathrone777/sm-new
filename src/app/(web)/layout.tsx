@@ -8,7 +8,6 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
   const authSession = await store.sessions.get();
   const {
     address,
-    allergeny,
     allergenyUrl,
     businessName,
     contactItems,
@@ -29,7 +28,6 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
       <Footer
         {...{
           address,
-          allergeny,
           allergenyUrl,
           businessName,
           contactItems,

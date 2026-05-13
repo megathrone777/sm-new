@@ -10,7 +10,7 @@ import "leaflet/dist/leaflet.css";
 import {
   Additionals,
   Address,
-  CartShell,
+  CartLayout,
   Client,
   Cutlery,
   Delivery,
@@ -19,6 +19,7 @@ import {
   Payment,
   Placeholder,
   Promo,
+  Time,
   Queue,
   SectionLayout,
 } from "./_components";
@@ -26,7 +27,11 @@ import {
 import { wrapperClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/cart">> = async () => {
-  const [cart, additionals] = await Promise.all([store.cart.get(), store.additionals.getAll()]);
+  const [cart, additionals, { schedule }] = await Promise.all([
+    store.cart.get(),
+    store.additionals.getAll(),
+    store.shop.getSettings(),
+  ]);
   const { t } = useTranslation();
 
   const renderCart = (): null | React.ReactElement => {
@@ -42,12 +47,13 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
         payment,
         products,
         promo,
+        time,
         tips,
         totalPrice,
       } = cart;
 
       return (
-        <CartShell
+        <CartLayout
           {...{ categoryDiscount }}
           initialProducts={products}
           placeholder={<Placeholder />}
@@ -62,6 +68,11 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <Delivery
                 {...{ totalPrice }}
                 type={delivery.type}
+              />
+
+              <Time
+                {...{ schedule, time }}
+                deliveryType={delivery.type}
               />
 
               <Client
@@ -127,7 +138,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               />
             </SectionLayout>
           </FormLayout>
-        </CartShell>
+        </CartLayout>
       );
     }
 

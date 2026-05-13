@@ -49,6 +49,13 @@ const Sidebar: React.FC = () => {
       href: "/admin/deliveryConditions",
       label: "Delivery conditions",
     },
+  ];
+
+  const menuItems2: TMenuItem[] = [
+    {
+      href: "/admin/navigation",
+      label: "Navigation",
+    },
     {
       href: "/admin/users",
       label: "Users",
@@ -56,13 +63,6 @@ const Sidebar: React.FC = () => {
     {
       href: "/admin/settings",
       label: "Settings",
-    },
-  ];
-
-  const menuItems2: TMenuItem[] = [
-    {
-      href: "/admin/navigation",
-      label: "Navigation",
     },
   ];
 

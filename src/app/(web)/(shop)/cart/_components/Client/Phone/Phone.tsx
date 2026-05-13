@@ -3,7 +3,7 @@ import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "reac
 import Select from "@rc-component/select";
 import { countries, getCountryFlag, useTelephone, type CountryCode } from "use-telephone";
 
-import { updatePhone } from "@/app/(web)/_actions";
+import { setCartError, updatePhone } from "@/app/(web)/_actions";
 import { Icon } from "@/ui";
 
 import { Option, type TOption } from "./Option";
@@ -24,10 +24,17 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   const inputId = useId();
   const [searchValue, setSearchValue] = useState<string>("");
   const [countrySelected, setCountrySelected] = useState(false);
+  const [touched, setTouched] = useState<boolean>(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const telephone = useTelephone({
     initialValue: phoneNumber ? `+${phoneNumber}` : "+420",
   });
+  const showError = Boolean(isError) || (touched && !telephone.valid);
+
+  const handleBlur = (): void => {
+    setTouched(true);
+    setCartError("phone", telephone.valid ? "" : "Neplatné telefonní číslo");
+  };
 
   const getOptions = (): TOption[] =>
     countries.map(
@@ -86,7 +93,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   return (
     <div
       className={inputWrapperClass}
-      style={{ gridTemplateColumns: Boolean(isError) ? "auto 1fr auto" : "auto 1fr" }}
+      style={{ gridTemplateColumns: showError ? "auto 1fr auto" : "auto 1fr" }}
     >
       <Select
         className={layoutClass}
@@ -143,16 +150,16 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
           onSearch: setSearchValue,
           searchValue,
         }}
-        value={
-          !countrySelected && telephone.country === "AF" ? "CZ" : telephone.country
-        }
+        value={!countrySelected && telephone.country === "AF" ? "CZ" : telephone.country}
       />
 
       <input
         autoComplete="new-password"
-        className={inputClass[Boolean(isError) ? "error" : "default"]}
+        className={inputClass[showError ? "error" : "default"]}
+        enterKeyHint="done"
         maxLength={telephone.country === "CZ" ? 16 : 100}
         name="phone"
+        onBlur={handleBlur}
         onChange={handlePhoneChange}
         placeholder="Vyplňte telefonní číslo"
         spellCheck="false"
@@ -160,7 +167,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         value={telephone.value}
       />
 
-      {Boolean(isError) && (
+      {showError && (
         <Icon
           className={errorIconClass}
           id="exclamation"

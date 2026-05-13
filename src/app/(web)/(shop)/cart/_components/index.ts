@@ -1,6 +1,6 @@
 export { Additionals } from "./Additionals";
 export { Address } from "./Address";
-export { CartShell } from "./CartShell";
+export { CartLayout } from "./CartLayout";
 export { Client } from "./Client";
 export { Cutlery } from "./Cutlery";
 export { Delivery } from "./Delivery";
@@ -12,3 +12,4 @@ export { ProductsList } from "./ProductsList";
 export { Promo } from "./Promo";
 export { Queue } from "./Queue";
 export { SectionLayout } from "./SectionLayout";
+export { Time } from "./Time";

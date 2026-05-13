@@ -1,4 +1,4 @@
 export type TProps = Pick<
   TShopSettings,
-  "address" | "allergeny" | "allergenyUrl" | "businessName" | "contactItems" | "email" | "phone"
+  "address" | "allergenyUrl" | "businessName" | "contactItems" | "email" | "phone"
 >;

@@ -53,7 +53,7 @@ export const deliveryErrorClass = css(({ colors, fonts }) => ({
   textAlign: "left",
 }));
 
-export const resetButtonClass = css(({ devices }) => ({
+export const resetButtonClass = css({
   appearance: "none",
   backgroundColor: "transparent",
   border: "none",
@@ -65,13 +65,7 @@ export const resetButtonClass = css(({ devices }) => ({
   right: 25,
   top: 5,
   width: 25,
-
-  "@media": {
-    [devices.mobile]: {
-      right: 5,
-    },
-  },
-}));
+});
 
 export const suggestionsClass = css(({ colors }) => ({
   backgroundColor: "white",

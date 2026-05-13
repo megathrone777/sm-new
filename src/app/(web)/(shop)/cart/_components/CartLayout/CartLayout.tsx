@@ -6,9 +6,9 @@ import { removeFromCart } from "@/app/(web)/_actions";
 import { ProductsList } from "../ProductsList";
 import { SectionLayout } from "../SectionLayout";
 
-import type { TProps } from "./CartShell.types";
+import type { TProps } from "./CartLayout.types";
 
-const CartShell: React.FC<TProps> = ({
+const CartLayout: React.FC<TProps> = ({
   categoryDiscount,
   children,
   initialProducts,
@@ -49,4 +49,4 @@ const CartShell: React.FC<TProps> = ({
   );
 };
 
-export { CartShell };
+export { CartLayout };

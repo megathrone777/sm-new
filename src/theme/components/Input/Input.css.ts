@@ -60,7 +60,6 @@ export const inputClass = cssVariant(
       fontSize: 16,
       fontWeight: fonts.medium,
       height: "100%",
-
       selectors: {
         "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
           {
@@ -69,7 +68,6 @@ export const inputClass = cssVariant(
             WebkitBoxShadow: "0 0 0 1000px white inset",
           },
       },
-
       width: "100%",
 
       ":disabled": {
@@ -79,6 +77,11 @@ export const inputClass = cssVariant(
 
       ":focus": {
         outline: "none",
+      },
+
+      ":read-only": {
+        cursor: "not-allowed",
+        opacity: 0.7,
       },
     },
     template,

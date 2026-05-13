@@ -17,6 +17,10 @@ export const wrapperClass = css(({ devices }) => ({
     [devices.tablet]: {
       justifyContent: "start",
     },
+
+    [devices.desktop]: {
+      paddingLeft: 3,
+    },
   },
 }));
 

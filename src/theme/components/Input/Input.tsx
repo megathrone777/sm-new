@@ -17,7 +17,15 @@ import type { TProps } from "./Input.types";
 
 const CYRILLIC_REGEX = /[Ѐ-ӿԀ-ԯⷠ-ⷿꙀ-ꚟ]/;
 
-const Input: React.FC<TProps> = ({ iconId, isError, label, onBeforeInput, onBlur, ...rest }) => {
+const Input: React.FC<TProps> = ({
+  iconId,
+  isError,
+  label,
+  onBeforeInput,
+  onBlur,
+  restrictCyrillic,
+  ...rest
+}) => {
   const inputId = useId();
   const [showError, setShowError] = useState<boolean>(Boolean(isError));
 
@@ -32,12 +40,14 @@ const Input: React.FC<TProps> = ({ iconId, isError, label, onBeforeInput, onBlur
   };
 
   const handleBeforeInput = (event: React.InputEvent<HTMLInputElement>): void => {
-    const { data } = event.nativeEvent;
+    if (restrictCyrillic) {
+      const { data } = event.nativeEvent;
 
-    if (data && CYRILLIC_REGEX.test(data)) {
-      event.preventDefault();
+      if (data && CYRILLIC_REGEX.test(data)) {
+        event.preventDefault();
 
-      return;
+        return;
+      }
     }
 
     onBeforeInput?.(event);

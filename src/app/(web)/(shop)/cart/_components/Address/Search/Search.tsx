@@ -72,11 +72,13 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
   return (
     <div className={wrapperClass}>
       <Input
+        enterKeyHint="done"
         iconId="address"
         isError={Boolean(addressError)}
         name="address"
         onChange={handleInputChange}
         placeholder={t<string>("fillAddress")}
+        restrictCyrillic
         type="text"
         value={inputValue}
       />

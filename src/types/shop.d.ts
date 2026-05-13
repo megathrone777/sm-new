@@ -32,15 +32,30 @@ declare global {
     usability: "" | "permanent" | "temporary";
   }
 
+  type TWeekDay =
+    | "friday"
+    | "monday"
+    | "saturday"
+    | "sunday"
+    | "thursday"
+    | "tuesday"
+    | "wednesday";
+
+  interface TScheduleDay {
+    closeTime: string;
+    lastTimeForDelivery: string;
+    openTime: string;
+  }
+
+  type TSchedule = Record<TWeekDay, TScheduleDay>;
+
   interface TShopSettings {
     address: string;
-    allergeny: string;
     allergenyUrl: string;
     businessName: string;
     companyDetails: string;
     contactItems: TContactLink[];
     cutleryPrice: number;
-    deliveryTimeOptions: string[];
     email: string;
     isAvailable: boolean;
     isOpened: boolean;
@@ -48,8 +63,7 @@ declare global {
     logoUrl: string;
     navigation: TNavItem[];
     phone: string;
-    privacyPolicy: string;
-    termsOfUse: string;
+    schedule: TSchedule;
     text: string;
     title: string;
   }

@@ -40,11 +40,13 @@ const Promo: React.FC<TProps> = ({
       <Input
         autoComplete="off"
         defaultValue={promo.code}
+        enterKeyHint="done"
         iconId="promo"
         isError={Boolean(promoError)}
         key={`promo-${promo.code}`}
         name="promo"
         placeholder={t<string>("promoTitle")}
+        restrictCyrillic
         type="text"
       />
 
