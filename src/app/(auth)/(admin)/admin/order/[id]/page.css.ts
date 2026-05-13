@@ -6,3 +6,9 @@ export const formClass = css({
   gap: 20,
   gridTemplateColumns: "repeat(2, 1fr)",
 });
+
+export const deleteWrapperClass = css({
+  display: "flex",
+  justifyContent: "flex-end",
+  marginTop: 24,
+});

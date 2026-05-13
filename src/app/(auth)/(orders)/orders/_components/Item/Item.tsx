@@ -29,7 +29,9 @@ const Item: React.FC<TProps> = ({
   deliveryTitle,
   deliveryType,
   id,
+  isAdmin,
   note,
+  onDelete,
   paymentType,
   products,
   promocode,
@@ -39,7 +41,7 @@ const Item: React.FC<TProps> = ({
 }) => (
   <div className={`${wrapperClass} ${status === "new" && deliveryTime ? "new time" : status}`}>
     <Heading
-      {...{ createdAt, id, status }}
+      {...{ createdAt, id, isAdmin, onDelete, status }}
       ordersCount={clientOrdersCount}
     />
 

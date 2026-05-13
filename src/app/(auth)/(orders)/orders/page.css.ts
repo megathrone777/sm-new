@@ -1,13 +1,6 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css({
-  height: "100%",
+export const wrapperClass = css(({ colors }) => ({
+  backgroundColor: colors.black,
   padding: 10,
-});
-
-export const listClass = css({
-  columnGap: 10,
-  display: "flex",
-  flexWrap: "wrap",
-  rowGap: 10,
-});
+}));

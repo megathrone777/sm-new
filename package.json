@@ -25,7 +25,6 @@
     "@vanilla-extract/css-utils": "^0.1.6",
     "@vanilla-extract/dynamic": "^2.1.5",
     "@vanilla-extract/next-plugin": "^2.5.2",
-    "dotenv": "^17.4.2",
     "eslint": "^10.2.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-perfectionist": "^5.9.0",
@@ -33,7 +32,6 @@
     "eslint-plugin-react-naming-convention": "^3.0.0",
     "eslint-plugin-react-x": "^3.0.0",
     "prettier": "^3.8.3",
-    "tsx": "^4.21.0",
     "typescript": "^6",
     "typescript-eslint": "^8.59.3"
   },
@@ -43,7 +41,6 @@
     "build": "yarn lint && next build --turbopack",
     "dev": "next dev --turbopack --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost-cert.pem",
     "lint": "eslint ./src --config eslint.config.mjs",
-    "migrate:order-dates": "tsx scripts/migrateOrderDates.ts",
     "start": "next start",
     "typegen": "next typegen"
   },

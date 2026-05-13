@@ -8,7 +8,7 @@ import { contentClass, deleteButtonClass, titleClass, wrapperClass } from "./Hea
 
 import type { TProps } from "./Heading.types";
 
-const Heading: React.FC<TProps> = ({ createdAt, id, ordersCount, status }) => {
+const Heading: React.FC<TProps> = ({ createdAt, id, isAdmin, onDelete, ordersCount, status }) => {
   const [isPending, startTransition] = useTransition();
 
   const handleDeleteClick = (): void => {
@@ -18,8 +18,10 @@ const Heading: React.FC<TProps> = ({ createdAt, id, ordersCount, status }) => {
 
     formData.set("id", `${id}`);
 
-    startTransition((): void => {
-      deleteOrder(null, formData);
+    startTransition(async (): Promise<void> => {
+      const result = await deleteOrder(null, formData);
+
+      if (result?.type === "success") onDelete(id);
     });
   };
 
@@ -33,14 +35,16 @@ const Heading: React.FC<TProps> = ({ createdAt, id, ordersCount, status }) => {
       <div className={contentClass}>
         <span>{moment(createdAt).format("HH:mm")}</span>
 
-        <button
-          className={deleteButtonClass}
-          disabled={isPending}
-          onClick={handleDeleteClick}
-          type="button"
-        >
-          X
-        </button>
+        {isAdmin && (
+          <button
+            className={deleteButtonClass}
+            disabled={isPending}
+            onClick={handleDeleteClick}
+            type="button"
+          >
+            X
+          </button>
+        )}
       </div>
     </div>
   );

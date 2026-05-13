@@ -15,10 +15,24 @@ export const inputClass = cssVariant(
   ({ colors }) => ({
     default: {
       color: "black",
+
+      selectors: {
+        "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
+          {
+            WebkitTextFillColor: "black",
+          },
+      },
     },
 
     error: {
       color: colors.red,
+
+      selectors: {
+        "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
+          {
+            WebkitTextFillColor: colors.red,
+          },
+      },
     },
   }),
   (template, { fonts }) => [
@@ -32,12 +46,18 @@ export const inputClass = cssVariant(
       fontWeight: fonts.medium,
       height: "100%",
       position: "relative",
+
+      selectors: {
+        "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
+          {
+            caretColor: "black",
+            transition: "background-color 9999s ease-out",
+            WebkitBoxShadow: "0 0 0 1000px white inset",
+          },
+      },
+
       width: "100%",
       zIndex: 3,
-
-      ":-webkit-autofill": {
-        boxShadow: "0 0 0 1000px white inset",
-      },
 
       ":disabled": {
         cursor: "not-allowed",

@@ -1,4 +1,4 @@
-import moment from "moment-timezone";
+import moment from "moment";
 
 import { redis } from "./redis";
 
@@ -10,6 +10,7 @@ const PENDING_WINDOW_MINUTES = 15;
 const hashKey = (id: TOrder["id"]): string => `order:${id}`;
 const phoneIndex = (phoneNumber: string): string => `orders:phone:${phoneNumber}`;
 const promocodeIndex = (code: string): string => `promocode:${code}:orders`;
+const dayIndex = (day: string): string => `orders:day:${day}`;
 
 const fanOutById = async (ids: number[]): Promise<TOrder[]> => {
   if (!ids.length) return [];
@@ -35,6 +36,10 @@ const orders = {
 
     pipeline.del(hashKey(id));
     pipeline.zrem(INDEX, `${id}`);
+    pipeline.zrem(
+      dayIndex(moment.utc(order.createdAt).tz("Europe/Prague").format("YYYY-MM-DD")),
+      `${id}`,
+    );
 
     if (order.clientPhoneNumber) {
       pipeline.zrem(phoneIndex(order.clientPhoneNumber), `${id}`);
@@ -47,32 +52,17 @@ const orders = {
     await pipeline.exec();
   },
 
-  /*
   getActive: async (): Promise<TOrder[]> => {
-    const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
+    const today = moment().tz("Europe/Prague").format("YYYY-MM-DD");
+    const ids = await redis.zrange<number[]>(dayIndex(today), 0, QUEUE_SCAN_LIMIT - 1, {
+      rev: true,
+    });
 
     if (!ids.length) return [];
-
     const orders = await fanOutById(ids);
 
     return orders.filter(
       (order): boolean => order.status !== "done" && order.status !== "placed",
-    );
-  },
-  */
-
-  getActive: async (): Promise<TOrder[]> => {
-    const ids = await redis.zrange<number[]>(INDEX, 0, QUEUE_SCAN_LIMIT - 1, { rev: true });
-
-    if (!ids.length) return [];
-
-    const orders = await fanOutById(ids);
-    const today = new Date().toISOString().slice(0, 10);
-
-    return orders.filter((order) =>
-      order.status !== "done" &&
-      order.status !== "placed" &&
-      order.createdAt.startsWith(today),
     );
   },
 
@@ -148,6 +138,10 @@ const orders = {
       .pipeline()
       .hset<TOrder>(hashKey(order.id), order as unknown as Record<TOrder["id"], TOrder>)
       .zadd(INDEX, { member: `${order.id}`, score: +order.id })
+      .zadd(
+        dayIndex(moment.utc(order.createdAt).tz("Europe/Prague").format("YYYY-MM-DD")),
+        { member: `${order.id}`, score: +order.id },
+      )
       .zadd(phoneIndex(order.clientPhoneNumber), { member: `${order.id}`, score: +order.id })
       .hset(`client:${order.clientPhoneNumber}`, {
         email: order.clientEmail,

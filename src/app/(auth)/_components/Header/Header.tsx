@@ -47,7 +47,6 @@ const Header: React.FC = async () => {
         <Link
           className={goLinkClass}
           href="/orders"
-          target="_blank"
         >
           <Icon
             className={iconClass}

@@ -1,5 +1,9 @@
 import { css } from "@/theme";
 
+export const wrapperClass = css({
+  height: "100%",
+});
+
 export const layoutClass = css({
   alignItems: "start",
   display: "grid",

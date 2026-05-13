@@ -1,6 +1,7 @@
 import { globalStyle } from "@/theme";
 
 globalStyle("html, body", {
+  height: "100%",
   width: "100%",
 });
 
@@ -40,11 +41,6 @@ globalStyle("object", {
 globalStyle("b", ({ fonts }) => ({
   fontWeight: fonts.demi,
 }));
-
-// globalStyle(".leaflet-div-icon", {
-//   background: "none",
-//   border: "none",
-// });
 
 globalStyle(".leaflet-zoom-animated", {
   height: "auto",

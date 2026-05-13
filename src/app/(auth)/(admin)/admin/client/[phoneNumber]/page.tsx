@@ -1,23 +1,14 @@
 import React from "react";
-import Form from "next/form";
 import Link from "next/link";
 
 import { deleteClient } from "@/app/(auth)/(admin)/_actions";
 import { Header } from "@/app/(auth)/(admin)/_components";
+import { DeleteAlert } from "@/app/(auth)/_components";
 import { useTranslation } from "@/hooks";
 import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
-import {
-  idClass,
-  labelClass,
-  linkClass,
-  confirmActionsClass,
-  confirmClass,
-  confirmTextClass,
-  confirmWrapperClass,
-  wrapperClass,
-} from "./page.css";
+import { idClass, labelClass, linkClass, wrapperClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/admin/client/[phoneNumber]">> = async ({
   params,
@@ -38,35 +29,12 @@ const Page: React.FC<PageProps<"/admin/client/[phoneNumber]">> = async ({
       <Header title={`Client: ${client.name}`} />
 
       {deleteId && (
-        <div className={confirmWrapperClass}>
-          <div className={confirmClass}>
-            <p className={confirmTextClass}>Delete &ldquo;{deleteTitle ?? deleteId}&rdquo;?</p>
-
-            <div className={confirmActionsClass}>
-              <Form action={(formData) => deleteClient(null, formData)}>
-                <input
-                  name="phoneNumber"
-                  type="hidden"
-                  value={phoneNumber}
-                />
-
-                <Button
-                  template="small"
-                  type="submit"
-                >
-                  Delete
-                </Button>
-              </Form>
-
-              <Link
-                href={`/admin/client/${phoneNumber}`}
-                scroll={false}
-              >
-                <Button template="small">Cancel</Button>
-              </Link>
-            </div>
-          </div>
-        </div>
+        <DeleteAlert
+          action={deleteClient}
+          deleteId={`${deleteId}`}
+          deleteTitle={deleteTitle ? `${deleteTitle}` : null}
+          href={`/admin/client/${phoneNumber}` as __next_route_internal_types__.RouteImpl<string>}
+        />
       )}
 
       <div className={wrapperClass}>

@@ -44,7 +44,7 @@ const useNewOrderAlert = (): { notify: (id: number) => void; test: () => void } 
       if ("Notification" in window && Notification.permission === "granted") {
         const notification = new Notification(`Новый заказ №${id}`, {
           body: "Новый заказ",
-          requireInteraction: true,
+          requireInteraction: false,
           tag: `order-${id}`,
         });
 

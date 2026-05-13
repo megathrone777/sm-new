@@ -6,6 +6,11 @@ export const wrapperClass = css(({ colors, devices }) => ({
   paddingTop: 20,
 
   "@media": {
+    [devices.pointerCoarse]: {
+      marginBottom: -2,
+      paddingBottom: "env(safe-area-inset-bottom)",
+    },
+
     [devices.tablet]: {
       paddingTop: 40,
     },

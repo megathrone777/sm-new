@@ -45,6 +45,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   fontWeight: fonts.medium,
   marginBottom: 15,
   textAlign: "center",
+  textWrap: "balance",
 
   "@media": {
     [devices.mobile]: {

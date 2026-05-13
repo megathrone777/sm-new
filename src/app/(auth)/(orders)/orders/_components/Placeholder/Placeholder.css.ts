@@ -17,4 +17,5 @@ export const titleClass = css(({ fonts }) => ({
 
 export const imageClass = css({
   height: 300,
+  width: "auto",
 });

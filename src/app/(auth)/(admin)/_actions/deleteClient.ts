@@ -26,7 +26,7 @@ const deleteClient = async (
     };
   }
 
-  const phoneNumber = `${formData.get("phoneNumber") ?? ""}`.trim();
+  const phoneNumber = `${formData.get("id") ?? ""}`.trim();
 
   if (!phoneNumber) {
     return {

@@ -4,14 +4,12 @@ import React, { useState } from "react";
 import { useNewOrderAlert, useRealtime } from "@/hooks";
 
 import { Item } from "../Item";
-import { Placeholder } from "../Placeholder";
 
-import { listClass, wrapperClass } from "../../page.css";
+import { listClass } from "./OrdersLayout.css";
 
 import type { TProps } from "./OrdersLayout.types";
 
-// TODO: pass children
-const OrdersLayout: React.FC<TProps> = ({ initialOrders }) => {
+const OrdersLayout: React.FC<TProps> = ({ initialOrders, isAdmin, placeholder }) => {
   const [orders, setOrders] = useState<TOrder[]>(initialOrders);
   const { notify } = useNewOrderAlert();
 
@@ -25,21 +23,29 @@ const OrdersLayout: React.FC<TProps> = ({ initialOrders }) => {
     },
   });
 
+  const handleDelete = (deletedId: number): void => {
+    setOrders((prev: TOrder[]): TOrder[] =>
+      prev.filter((order: TOrder): boolean => order.id !== deletedId),
+    );
+  };
+
   return (
-    <div className={wrapperClass}>
+    <>
       {orders.length > 0 ? (
         <div className={listClass}>
           {orders.map<React.ReactElement>((order: TOrder) => (
             <Item
               key={`${order.id}-order-${order.status}`}
               {...order}
+              isAdmin={isAdmin}
+              onDelete={handleDelete}
             />
           ))}
         </div>
       ) : (
-        <Placeholder />
+        placeholder
       )}
-    </div>
+    </>
   );
 };
 

@@ -5,19 +5,21 @@ import { Container } from "@/ui";
 
 import { Sidebar } from "./_components";
 
-import { contentClass, layoutClass } from "./layout.css";
+import { wrapperClass, contentClass, layoutClass } from "./layout.css";
 
 const Layout: React.FC<LayoutProps<"/">> = ({ children }) => (
-  <>
+  <div className={wrapperClass}>
     <Header />
 
-    <Container>
-      <div className={layoutClass}>
-        <Sidebar />
-        <div className={contentClass}>{children}</div>
-      </div>
-    </Container>
-  </>
+    <div>
+      <Container>
+        <div className={layoutClass}>
+          <Sidebar />
+          <div className={contentClass}>{children}</div>
+        </div>
+      </Container>
+    </div>
+  </div>
 );
 
 export { metadata } from "./metadata";
