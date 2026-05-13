@@ -1,0 +1,51 @@
+h2 Podrobnosti
+
+p Příbory:
+	strong.detail-value
+		span #{"("}
+		span x#{order.cutleryCount}
+		span #{")"}
+p Doprava:
+	strong.detail-value= order.deliveryType === "delivery" ? "Kurýr" : "Vyzvednutí"
+
+if order.deliveryType === "pickup"
+	p Čas vyzvednutí:
+		if order.deliveryTime
+			strong.detail-value= moment(order.deliveryTime, "HH:mm").format("HH:mm")
+		else
+			strong.detail-value teď
+
+	p Adresa vyzvednutí:
+		strong.detail-value= pickupAddress
+
+if order.deliveryType === "delivery"
+	p Čas doručení:
+		if order.deliveryTime
+			strong.detail-value= moment(order.deliveryTime, "HH:mm").format("HH:mm")
+		else
+			strong.detail-value teď
+
+	p Adresa doručení:
+		strong.detail-value= order.deliveryAddress
+
+p Telefon:
+	strong.detail-value +#{order.clientPhoneNumber}
+
+if order.note && order.note.length > 0
+	p Poznámka:
+		strong.detail-value= order.note
+
+if order.promocodeDiscountPrice && order.promocodeDiscountPrice !== 0
+	p Promo code:
+		strong.detail-value #{order.promocode}
+		strong.detail-value
+			span #{"("}
+			span #{order.promocodeDiscountPrice}Kč
+			span #{")"}
+
+if order.tipsPrice && order.tipsPrice > 0
+	p Tips:
+		strong.detail-value #{order.tipsPrice} Kč (#{order.tipsAmount}%)
+
+p Způsob platby:
+	strong.detail-value= paymentType

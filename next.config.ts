@@ -13,6 +13,9 @@ const config: NextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     dangerouslyAllowSVG: true,
   },
+  outputFileTracingIncludes: {
+    "**/*": ["./src/emailTemplate/template/**/*.pug"],
+  },
   reactStrictMode: false,
   // redirects: async () => [
   //   {

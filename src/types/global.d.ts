@@ -46,7 +46,16 @@ declare global {
       APP_MAPY_CZ_API_KEY: string;
       APP_REDIS_URL: string;
       APP_URL: string;
-      MAPY_CZ_API_KEY: string;
+
+      EMAIL_ADDRESS: string;
+      EMAIL_APP_PASSWORD: string;
+      EMAIL_ORDER_CONFIRMATION_ENABLED: string;
+
+      SMS_BULKGATE_APPLICATION_ID: string;
+      SMS_BULKGATE_APPLICATION_TOKEN: string;
+      SMS_BULKGATE_IS_ENABLED: string;
+      SMS_BULKGATE_SENDER_ID: string;
+      SMS_BULKGATE_SENDER_ID_VALUE: string;
     }
   }
 }

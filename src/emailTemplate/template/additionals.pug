@@ -1,0 +1,13 @@
+if order.additionals && order.additionals.length > 0
+	h2 Doplňky
+
+	each additionalItem in order.additionals
+		.product
+			p(style="margin-bottom: 4px;")
+				span.product-prefix -
+				span.product-title= additionalItem.title
+				span.product-divider
+				span #{"("}
+				span x
+				strong.product-count= additionalItem.quantity
+				span #{")"}

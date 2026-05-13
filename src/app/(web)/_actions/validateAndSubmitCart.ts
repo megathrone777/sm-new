@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 
+import { sendOrderConfirmation } from "@/emailTemplate/sendOrderConfirmation";
 import { realtime, store } from "@/store";
 import { isMissedStreetNumber } from "@/utils";
 
@@ -207,8 +208,13 @@ const validateAndSubmitCart = async (
 
   await store.orders.registerNewOrder(order, cartSessionId);
   (await cookies()).delete(CART_COOKIE);
+
   after((): void => {
     realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
+
+    if (payment.type !== "card") {
+      void sendOrderConfirmation(order);
+    }
   });
 
   if (payment.type === "card") {
