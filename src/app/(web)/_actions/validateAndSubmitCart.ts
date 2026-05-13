@@ -129,13 +129,6 @@ const validateAndSubmitCart = async (
     errors.addressFormat = "Vyplňte adresu s směrovacím nebo popisném číslem";
   }
 
-  if (
-    Object.keys(errors).some((type): boolean => type === "streetNumber" || type === "delivery") &&
-    delivery.type === "delivery"
-  ) {
-    errors.addressRange = "Adresa mimo rozsah rozvozu";
-  }
-
   if (!!Object.keys(errors).length) {
     await saveCart({ client, errors, note, payment });
     revalidatePath("/cart");
