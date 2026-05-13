@@ -16,10 +16,11 @@ const validateAndSubmitCart = async (
   _state: null | TActionResult,
   formData: FormData,
 ): Promise<null | TActionResult> => {
-  const [cartSessionId, storedCart, deliveryConditions] = await Promise.all([
+  const [cartSessionId, storedCart, deliveryConditions, { lastTimeForPickup }] = await Promise.all([
     store.cart.getSessionId(),
     store.cart.get(),
     store.deliveryConditions.getAll(),
+    store.shop.getSettings(),
   ]);
 
   if (!cartSessionId || !storedCart) return null;
@@ -58,26 +59,22 @@ const validateAndSubmitCart = async (
       );
   };
 
-  // const checkVicinityOpened = (): boolean => {
-  //   const format: string = "hh:mm";
-  //   const currentTime = moment(moment(), format);
-  //   const startTime = moment("11:00", format);
-  //   const lastTime = moment(lastTimeForPickup, format);
+  const checkVicinityOpened = (): boolean => {
+    const format: string = "hh:mm";
+    const currentTime = moment(moment(), format);
+    const startTime = moment("11:00", format);
+    const lastTime = moment(lastTimeForPickup, format);
 
-  //   return currentTime.isBetween(startTime, lastTime);
-  // };
+    return currentTime.isBetween(startTime, lastTime);
+  };
 
-  // if (delivery.type === "pickup" && !checkVicinityOpened()) {
-  //   errors.pickup = `Po času ${moment(lastTimeForPickup, "HH:mm").format(
-  //     "HH:mm",
-  //   )}, vyzvednutí je možné jenom na provozovně Milicova 25, Praha 3`;
-  // }
+  if (delivery.type === "pickup" && !checkVicinityOpened()) {
+    errors.pickup = `Po času ${moment(lastTimeForPickup, "HH:mm").format(
+      "HH:mm",
+    )}, vyzvednutí je možné jenom na provozovně Milicova 25, Praha 3`;
+  }
 
-  if (
-    delivery.type === "delivery" &&
-    delivery.address &&
-    !isMissedStreetNumber(delivery.address)
-  ) {
+  if (delivery.type === "delivery" && delivery.address && !isMissedStreetNumber(delivery.address)) {
     const relatedConditions = deliveryConditions.find(
       (item) => item.distanceFrom < delivery.distanceInM && delivery.distanceInM <= item.distanceTo,
     );
@@ -169,7 +166,6 @@ const validateAndSubmitCart = async (
     comgateTransId: "",
     courier: "",
     createdAt: moment().toISOString(),
-    // createdAt: moment().tz("Europe/Prague").format(),
     cutleryCount: cutlery.quantity,
     cutleryCountToPay,
     cutleryPrice: cutlery.totalPrice,
