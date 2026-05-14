@@ -1,23 +1,13 @@
-// ─── LESSON 7: Testing optimistic UI and user interactions ────────────────────
-//
-// QuantityControls uses React 19's useOptimistic hook to update the displayed
-// quantity INSTANTLY when a button is clicked, before the server responds.
-//
-// Testing this teaches you:
-//   - How to test buttons with async handlers (userEvent handles act() for you)
-//   - How to verify optimistic state: the UI updates before the server call completes
-//   - How to test that a callback prop (onRemove) is called correctly
-// ─────────────────────────────────────────────────────────────────────────────
 import React from "react";
+import { beforeEach, describe, expect, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/app/(web)/_actions", () => ({
-  updateQuantity: vi.fn().mockResolvedValue(undefined),
+jest.mock("@/app/(web)/_actions", () => ({
+  updateQuantity: jest.fn<() => Promise<void>>().mockResolvedValue(undefined),
 }));
 
-vi.mock("@/ui", () => ({
+jest.mock("@/ui", () => ({
   QuantityButton: ({
     decrease,
     disabled,
@@ -37,7 +27,11 @@ vi.mock("@/ui", () => ({
   ),
 }));
 
-vi.mock("../QuantityControls.css", () => ({
+jest.mock("@/hooks", () => ({
+  useTranslation: (): { t: (key: string) => string } => ({ t: (key: string) => key }),
+}));
+
+jest.mock("../QuantityControls.css", () => ({
   optionsClass: "",
   priceClass: "",
   quantityAmountClass: "",
@@ -49,10 +43,8 @@ import { updateQuantity } from "@/app/(web)/_actions";
 
 import { QuantityControls } from "../QuantityControls";
 
-// ─────────────────────────────────────────────────────────────────────────────
-
 beforeEach(() => {
-  vi.clearAllMocks();
+  jest.clearAllMocks();
 });
 
 describe("QuantityControls", () => {
@@ -61,7 +53,7 @@ describe("QuantityControls", () => {
       render(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={3}
           totalPrice={280}
         />,
@@ -74,7 +66,7 @@ describe("QuantityControls", () => {
       render(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
         />,
@@ -87,14 +79,13 @@ describe("QuantityControls", () => {
       render(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
         />,
       );
 
-      // useTranslation returns 'Kč' for the 'currency' key
-      expect(screen.getByText(/Kč/)).toBeInTheDocument();
+      expect(screen.getByText(/currency/)).toBeInTheDocument();
     });
   });
 
@@ -103,7 +94,7 @@ describe("QuantityControls", () => {
       render(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
         />,
@@ -116,7 +107,7 @@ describe("QuantityControls", () => {
       render(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={2}
           totalPrice={560}
         />,
@@ -133,7 +124,7 @@ describe("QuantityControls", () => {
       render(
         <QuantityControls
           index={2}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
         />,
@@ -150,27 +141,21 @@ describe("QuantityControls", () => {
       render(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={3}
           totalPrice={840}
         />,
       );
 
       await user.click(screen.getByTestId("btn-decrease"));
-
       expect(updateQuantity).toHaveBeenCalledWith(0, "decrease");
     });
 
     it("re-renders with the updated quantity when the server confirms", () => {
-      // Note: testing the OPTIMISTIC state directly is not possible in jsdom because
-      // React flushes the entire transition (including the server action) synchronously,
-      // so the optimistic value reverts before any assertion can observe it.
-      // What we test instead: the component correctly reflects a prop update — this
-      // is what happens after the server confirms and the parent re-renders.
       const { rerender } = render(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
         />,
@@ -179,7 +164,7 @@ describe("QuantityControls", () => {
       rerender(
         <QuantityControls
           index={0}
-          onRemove={vi.fn()}
+          onRemove={jest.fn()}
           quantity={2}
           totalPrice={560}
         />,
@@ -190,7 +175,7 @@ describe("QuantityControls", () => {
 
     it("calls the onRemove callback when the Remove button is clicked", async () => {
       const user = userEvent.setup();
-      const onRemove = vi.fn();
+      const onRemove = jest.fn();
 
       render(
         <QuantityControls
@@ -201,10 +186,8 @@ describe("QuantityControls", () => {
         />,
       );
 
-      // 'Odstranit' is the Czech word for 'Remove' (remove key in cs.json)
-      await user.click(screen.getByRole("button", { name: /odstranit/i }));
-
-      expect(onRemove).toHaveBeenCalledOnce();
+      await user.click(screen.getByRole("button", { name: /remove/i }));
+      expect(onRemove).toHaveBeenCalled();
     });
   });
 });

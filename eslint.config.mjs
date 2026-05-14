@@ -11,6 +11,7 @@ const config = defineConfig({
   extends: [configs.recommended],
   ignores: [
     "eslint.config.mjs",
+    "jest.config.ts",
     "node_modules/**",
     ".next/**",
     "out/**",

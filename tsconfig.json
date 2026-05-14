@@ -30,6 +30,8 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "jest.setup.ts",
+    "jest.config.ts",
     ".next/dev/types/**/*.ts",
     ".next/types/**/*.ts",
     "next-env.d.ts",

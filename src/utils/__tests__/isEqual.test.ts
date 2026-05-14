@@ -1,13 +1,4 @@
-// ─── LESSON 2: Edge cases & grouping ─────────────────────────────────────────
-//
-// Good tests cover:
-//  1. The happy path  (normal inputs that should work)
-//  2. Edge cases      (nulls, empty values, type mismatches)
-//  3. Boundary cases  (arrays vs objects, nested structures)
-//
-// Nest describe() blocks to organise related scenarios.
-// ─────────────────────────────────────────────────────────────────────────────
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "@jest/globals";
 
 import { isEqual } from "../isEqual";
 

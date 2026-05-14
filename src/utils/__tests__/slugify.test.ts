@@ -1,14 +1,4 @@
-// ─── LESSON 3: Testing string transformations ─────────────────────────────────
-//
-// For pure functions (input → output, no side effects) tests are short and
-// readable. Use one it() per behaviour you care about.
-//
-// toEqual() and toBe() are identical for primitives. Convention:
-//   toBe()    → primitives (strings, numbers, booleans)
-//   toEqual() → objects and arrays
-// ─────────────────────────────────────────────────────────────────────────────
-
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from "@jest/globals";
 
 import { slugify } from "../slugify";
 
@@ -26,7 +16,6 @@ describe("slugify", () => {
   });
 
   it("strips diacritics (accented letters)", () => {
-    // Useful for Czech/Slovak product names like "Šťáva"
     expect(slugify("café")).toBe("cafe");
     expect(slugify("Šťáva")).toBe("stava");
   });

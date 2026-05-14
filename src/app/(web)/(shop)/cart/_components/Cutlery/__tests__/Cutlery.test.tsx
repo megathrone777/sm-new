@@ -1,42 +1,17 @@
-// ─── LESSON 5: Testing a React component ─────────────────────────────────────
-//
-// render(<Component />)         — mounts the component in a fake browser DOM
-// screen.getByText('...')       — find element by its visible text
-// screen.getByTestId('...')     — find element by data-testid attribute
-// screen.queryByTestId('...')   — like getBy but returns null (not throws) if missing
-// userEvent.click(element)      — simulates a real user click (async, handles React updates)
-// expect(el).toBeInTheDocument() — from jest-dom: checks the element exists in the DOM
-// expect(el).toBeDisabled()     — from jest-dom: checks the button/input is disabled
-//
-// We mock the UI library (@/ui) and server actions to keep this test focused
-// solely on the Cutlery component's own logic — not on the Button or CSS.
-// ─────────────────────────────────────────────────────────────────────────────
 import React from "react";
+import { beforeEach, describe, expect, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
-// ─── Mock server action ───────────────────────────────────────────────────────
-
-vi.mock("@/app/(web)/_actions", () => ({
-  updateCutleryQuantity: vi.fn().mockResolvedValue(undefined),
+jest.mock("@/app/(web)/_actions", () => ({
+  updateCutleryQuantity: jest.fn().mockResolvedValue(undefined),
 }));
 
-// ─── Mock Next.js router (Cutlery cleans up the URL hash on scroll) ───────────
-
-vi.mock("next/navigation", () => ({
-  useRouter: vi.fn(() => ({ replace: vi.fn() })),
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(() => ({ replace: jest.fn() })),
 }));
 
-// ─── Mock @/ui with simple HTML elements ─────────────────────────────────────
-//
-// We replace the styled QuantityButton and Icon with plain buttons/spans.
-// This means:
-//   - We don't pull in any CSS/vanilla-extract code from the UI library
-//   - We control what data-testid each element has
-//   - Tests are fast and focused on Cutlery's own logic
-
-vi.mock("@/ui", () => ({
+jest.mock("@/ui", () => ({
   Icon: ({ id }: { id: string }): React.ReactElement => <span data-testid={`icon-${id}`} />,
   QuantityButton: ({
     decrease,
@@ -57,13 +32,11 @@ vi.mock("@/ui", () => ({
   ),
 }));
 
-// ─── Mock the vanilla-extract CSS file ───────────────────────────────────────
-//
-// Cutlery.tsx imports class names from ./Cutlery.css (a .css.ts file).
-// We replace them with empty strings — we're testing behaviour, not styling.
-// layoutClass is an object with 'default' and 'error' keys (a CSS variant).
+jest.mock("@/hooks", () => ({
+  useTranslation: (): { t: (key: string) => string } => ({ t: (key: string) => key }),
+}));
 
-vi.mock("../Cutlery.css", () => ({
+jest.mock("../Cutlery.css", () => ({
   errorIconClass: "",
   layoutClass: { default: "", error: "" },
   nameClass: "",
@@ -77,10 +50,8 @@ import { updateCutleryQuantity } from "@/app/(web)/_actions";
 
 import { Cutlery } from "../Cutlery";
 
-// ─────────────────────────────────────────────────────────────────────────────
-
 beforeEach(() => {
-  vi.clearAllMocks();
+  jest.clearAllMocks();
 });
 
 describe("Cutlery", () => {
@@ -118,7 +89,6 @@ describe("Cutlery", () => {
         />,
       );
 
-      // The component renders nothing for price when totalPrice === 0
       expect(screen.queryByText(/Kč/)).not.toBeInTheDocument();
     });
 
@@ -186,7 +156,6 @@ describe("Cutlery", () => {
       );
 
       await user.click(screen.getByTestId("btn-increase"));
-
       expect(updateCutleryQuantity).toHaveBeenCalledWith("increase");
     });
 
@@ -202,16 +171,10 @@ describe("Cutlery", () => {
       );
 
       await user.click(screen.getByTestId("btn-decrease"));
-
       expect(updateCutleryQuantity).toHaveBeenCalledWith("decrease");
     });
 
     it("re-renders with the new quantity when the prop updates (simulates server confirming)", () => {
-      // Note: testing the optimistic state directly is not possible in jsdom because
-      // React flushes the transition synchronously in tests, reverting the optimistic
-      // value before any assertion runs.
-      // What we CAN test: when the parent re-renders with the new quantity (after the
-      // server response), the correct value is displayed.
       const { rerender } = render(
         <Cutlery
           isError={false}

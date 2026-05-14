@@ -1,64 +1,43 @@
-// @vitest-environment node
-// ─── LESSON 4: Testing async server actions with mocked dependencies ──────────
-//
-// Server actions depend on Redis (store), Next.js APIs (cookies, redirect),
-// and external services (email, SMS). None of those should run in tests.
-//
-// vi.mock(module, factory) — replaces an entire module with your fake version.
-// vi.fn()                  — creates a spy function you can inspect later.
-// mockResolvedValue(x)     — makes an async fn resolve with x.
-// expect(fn).toHaveBeenCalledWith(args) — checks the fn was called correctly.
-//
-// Important: vi.mock() calls are hoisted to the top of the file by Vitest,
-// so the order you write them in doesn't matter.
-// ─────────────────────────────────────────────────────────────────────────────
+import { beforeEach, describe, expect, it } from "@jest/globals";
 import { revalidatePath } from "next/cache";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { store } from "@/store";
 
 import { saveCart } from "../saveCart";
 import { validateAndSubmitCart } from "../validateAndSubmitCart";
 
-// ─── Module mocks ─────────────────────────────────────────────────────────────
-
-vi.mock("@/store", () => ({
-  realtime: { emit: vi.fn() },
+jest.mock("@/store", () => ({
+  realtime: { emit: jest.fn() },
   store: {
-    cart: { get: vi.fn(), getSessionId: vi.fn() },
-    deliveryConditions: { getAll: vi.fn() },
-    orders: { getExistingOrder: vi.fn(), registerNewOrder: vi.fn() },
-    shop: { getSettings: vi.fn() },
+    cart: { get: jest.fn(), getSessionId: jest.fn() },
+    deliveryConditions: { getAll: jest.fn() },
+    orders: { getExistingOrder: jest.fn(), registerNewOrder: jest.fn() },
+    shop: { getSettings: jest.fn() },
   },
 }));
 
-vi.mock("next/cache", () => ({ revalidatePath: vi.fn() }));
+jest.mock("next/cache", () => ({ revalidatePath: jest.fn() }));
 
-// In real Next.js, redirect() throws an internal NEXT_REDIRECT error.
-// We mimic that so execution stops — just like in production.
-vi.mock("next/navigation", () => ({
-  redirect: vi.fn((url: string) => {
+jest.mock("next/navigation", () => ({
+  redirect: jest.fn((url: string) => {
     throw new Error(`REDIRECT:${url}`);
   }),
 }));
 
-vi.mock("next/headers", () => ({
-  cookies: vi.fn(() => ({ delete: vi.fn() })),
+jest.mock("next/headers", () => ({
+  cookies: jest.fn(() => ({ delete: jest.fn() })),
 }));
 
-vi.mock("next/server", () => ({
-  // after() schedules work for after the response is sent; run it immediately here
-  after: vi.fn((fn: () => void) => fn()),
+jest.mock("next/server", () => ({
+  after: jest.fn((fn: () => void) => fn()),
 }));
 
-vi.mock("@/services", () => ({
-  sendOrderCreatedSms: vi.fn(),
-  sendOrderEmail: vi.fn(),
+jest.mock("@/services", () => ({
+  sendOrderCreatedSms: jest.fn(),
+  sendOrderEmail: jest.fn(),
 }));
 
-vi.mock("../saveCart", () => ({ saveCart: vi.fn() }));
-
-// ─── Test data factories ──────────────────────────────────────────────────────
+jest.mock("../saveCart", () => ({ saveCart: jest.fn() }));
 
 const makeCart = (overrides: Partial<TCart> = {}): TCart => ({
   additionals: [],
@@ -103,14 +82,12 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
   return fd;
 };
 
-// ─── Default store behaviour (happy path — override per test) ─────────────────
-
 beforeEach(() => {
-  vi.clearAllMocks();
+  jest.clearAllMocks();
 
-  vi.mocked(store.cart.getSessionId).mockResolvedValue("session-abc" as never);
-  vi.mocked(store.cart.get).mockResolvedValue(makeCart() as never);
-  vi.mocked(store.deliveryConditions.getAll).mockResolvedValue([
+  jest.mocked(store.cart.getSessionId).mockResolvedValue("session-abc" as never);
+  jest.mocked(store.cart.get).mockResolvedValue(makeCart() as never);
+  jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
     {
       distanceFrom: 0,
       distanceTo: 5000,
@@ -121,21 +98,19 @@ beforeEach(() => {
       title: "",
     },
   ] as never);
-  vi.mocked(store.shop.getSettings).mockResolvedValue({ lastTimeForPickup: "23:00" } as never);
-  vi.mocked(store.orders.getExistingOrder).mockResolvedValue({
+  jest.mocked(store.shop.getSettings).mockResolvedValue({ lastTimeForPickup: "23:00" } as never);
+  jest.mocked(store.orders.getExistingOrder).mockResolvedValue({
     existingOrderIds: [],
     id: "42",
   } as never);
-  vi.mocked(store.orders.registerNewOrder).mockResolvedValue(undefined as never);
+  jest.mocked(store.orders.registerNewOrder).mockResolvedValue(undefined as never);
 });
-
-// ─── Tests ────────────────────────────────────────────────────────────────────
 
 describe("validateAndSubmitCart", () => {
   describe("when cart is missing", () => {
     it("returns null immediately without creating an order", async () => {
-      vi.mocked(store.cart.getSessionId).mockResolvedValue(null as never);
-      vi.mocked(store.cart.get).mockResolvedValue(null as never);
+      jest.mocked(store.cart.getSessionId).mockResolvedValue(null as never);
+      jest.mocked(store.cart.get).mockResolvedValue(null as never);
 
       const result = await validateAndSubmitCart(null, makeFormData());
 
@@ -144,20 +119,11 @@ describe("validateAndSubmitCart", () => {
     });
   });
 
-  // ── Validation errors ──────────────────────────────────────────────────────
-  //
-  // When validation fails, the action:
-  //   1. Saves the errors into the cart (so the form can show them)
-  //   2. Calls revalidatePath('/cart') to refresh server data
-  //   3. Calls redirect('/cart') which throws — halting execution
-  //
-  // In tests, we assert that redirect WAS called by expecting the thrown error.
-
   describe("validation errors", () => {
     it("fails with a cutlery error when cutlery quantity is 0", async () => {
-      vi.mocked(store.cart.get).mockResolvedValue(
-        makeCart({ cutlery: { quantity: 0, totalPrice: 0 } }) as never,
-      );
+      jest
+        .mocked(store.cart.get)
+        .mockResolvedValue(makeCart({ cutlery: { quantity: 0, totalPrice: 0 } }) as never);
 
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:/cart");
       expect(saveCart).toHaveBeenCalledWith(
@@ -209,7 +175,7 @@ describe("validateAndSubmitCart", () => {
     });
 
     it("fails with an address error when delivery address is missing", async () => {
-      vi.mocked(store.cart.get).mockResolvedValue(
+      jest.mocked(store.cart.get).mockResolvedValue(
         makeCart({
           delivery: {
             address: "",
@@ -224,6 +190,7 @@ describe("validateAndSubmitCart", () => {
       );
 
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:/cart");
+
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           errors: expect.objectContaining({ addressFormat: expect.any(String) }),
@@ -232,8 +199,9 @@ describe("validateAndSubmitCart", () => {
     });
 
     it("fails with a delivery error when total price is below the zone minimum", async () => {
-      vi.mocked(store.cart.get).mockResolvedValue(makeCart({ totalPrice: 100 }) as never);
-      vi.mocked(store.deliveryConditions.getAll).mockResolvedValue([
+      jest.mocked(store.cart.get).mockResolvedValue(makeCart({ totalPrice: 100 }) as never);
+
+      jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
         {
           distanceFrom: 0,
           distanceTo: 5000,
@@ -254,7 +222,7 @@ describe("validateAndSubmitCart", () => {
     });
 
     it("fails with address-range error when delivery distance is outside all zones", async () => {
-      vi.mocked(store.cart.get).mockResolvedValue(
+      jest.mocked(store.cart.get).mockResolvedValue(
         makeCart({
           delivery: {
             address: "Outskirts 42",
@@ -267,7 +235,8 @@ describe("validateAndSubmitCart", () => {
           },
         }) as never,
       );
-      vi.mocked(store.deliveryConditions.getAll).mockResolvedValue([
+
+      jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
         {
           distanceFrom: 0,
           distanceTo: 5000,
@@ -298,13 +267,10 @@ describe("validateAndSubmitCart", () => {
     });
   });
 
-  // ── Successful order creation ──────────────────────────────────────────────
-
   describe("successful order creation", () => {
     it("registers the order exactly once when validation passes", async () => {
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:");
-
-      expect(store.orders.registerNewOrder).toHaveBeenCalledOnce();
+      expect(store.orders.registerNewOrder).toHaveBeenCalledTimes(1);
     });
 
     it("redirects to /order-confirmed/{id} for cash payment", async () => {
@@ -314,9 +280,9 @@ describe("validateAndSubmitCart", () => {
     });
 
     it("redirects to /payment-gateway/{id} for card payment", async () => {
-      vi.mocked(store.cart.get).mockResolvedValue(
-        makeCart({ payment: { change: null, type: "card" } }) as never,
-      );
+      jest
+        .mocked(store.cart.get)
+        .mockResolvedValue(makeCart({ payment: { change: null, type: "card" } }) as never);
 
       await expect(validateAndSubmitCart(null, makeFormData({ payment: "card" }))).rejects.toThrow(
         "REDIRECT:/payment-gateway/42",
@@ -328,7 +294,7 @@ describe("validateAndSubmitCart", () => {
         validateAndSubmitCart(null, makeFormData({ email: "petr@test.cz", name: "Petr Dvořák" })),
       ).rejects.toThrow("REDIRECT:");
 
-      const [order] = vi.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];
+      const [order] = jest.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];
 
       expect(order.clientName).toBe("Petr Dvořák");
       expect(order.clientEmail).toBe("petr@test.cz");
@@ -337,14 +303,12 @@ describe("validateAndSubmitCart", () => {
     it("sets order status to 'new'", async () => {
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:");
 
-      const [order] = vi.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];
+      const [order] = jest.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];
 
       expect(order.status).toBe("new");
     });
 
     it("appends cash-change notice to the order note for cash payment", async () => {
-      // Note comes from FormData, not the cart. The action appends a cash-change
-      // message to it when payment type is "cash" and change amount is selected.
       await expect(
         validateAndSubmitCart(
           null,
@@ -352,7 +316,7 @@ describe("validateAndSubmitCart", () => {
         ),
       ).rejects.toThrow("REDIRECT:");
 
-      const [order] = vi.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];
+      const [order] = jest.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];
 
       expect(order.note).toContain("Extra sauce please");
       expect(order.note).toContain("2000 Kč");

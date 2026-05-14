@@ -1,22 +1,13 @@
-// ─── LESSON 6: Testing conditional rendering and disabled state ───────────────
-//
-// The Promo component is a great example of "logic inside rendering":
-//   - The fieldset becomes disabled based on 4 conditions
-//   - The "Apply" button becomes a checkmark icon once a promo is applied
-//   - A reset button appears only when a code has been entered
-//
-// We can test all of this without running the real server actions.
-// ─────────────────────────────────────────────────────────────────────────────
 import React from "react";
+import { beforeEach, describe, expect, it } from "@jest/globals";
 import { render, screen } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
 
-vi.mock("@/app/(web)/_actions", () => ({
-  applyPromocode: vi.fn(),
-  resetPromocode: vi.fn(),
+jest.mock("@/app/(web)/_actions", () => ({
+  applyPromocode: jest.fn(),
+  resetPromocode: jest.fn(),
 }));
 
-vi.mock("@/ui", () => ({
+jest.mock("@/ui", () => ({
   Icon: ({ id }: { id: string }): React.ReactElement => <span data-testid={`icon-${id}`} />,
   Input: ({
     defaultValue,
@@ -37,7 +28,11 @@ vi.mock("@/ui", () => ({
   ),
 }));
 
-vi.mock("../Promo.css", () => ({
+jest.mock("@/hooks", () => ({
+  useTranslation: (): { t: (key: string) => string } => ({ t: (key: string) => key }),
+}));
+
+jest.mock("../Promo.css", () => ({
   buttonClass: "",
   layoutClass: "",
   loadingWrapperClass: "",
@@ -47,7 +42,6 @@ vi.mock("../Promo.css", () => ({
 }));
 
 import { Promo } from "../Promo";
-// ─── Default props for a fully enabled, empty promo field ─────────────────────
 
 const defaultProps = {
   addressError: undefined,
@@ -59,7 +53,7 @@ const defaultProps = {
 };
 
 beforeEach(() => {
-  vi.clearAllMocks();
+  jest.clearAllMocks();
 });
 
 describe("Promo", () => {
@@ -67,8 +61,7 @@ describe("Promo", () => {
     it("is enabled when phone and delivery address are both provided", () => {
       render(<Promo {...defaultProps} />);
 
-      // The fieldset wraps all promo inputs; disabled on it means everything inside is disabled
-      const fieldset = document.querySelector("fieldset");
+      const fieldset = document.querySelector("fieldset") as HTMLFieldSetElement;
 
       expect(fieldset).not.toBeDisabled();
     });
@@ -81,7 +74,7 @@ describe("Promo", () => {
         />,
       );
 
-      expect(document.querySelector("fieldset")).toBeDisabled();
+      expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
     });
 
     it("is disabled when there is a phone validation error", () => {
@@ -92,7 +85,7 @@ describe("Promo", () => {
         />,
       );
 
-      expect(document.querySelector("fieldset")).toBeDisabled();
+      expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
     });
 
     it("is disabled when delivery is selected but address is empty", () => {
@@ -108,7 +101,7 @@ describe("Promo", () => {
         />,
       );
 
-      expect(document.querySelector("fieldset")).toBeDisabled();
+      expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
     });
 
     it("is disabled when there is an address validation error", () => {
@@ -119,11 +112,10 @@ describe("Promo", () => {
         />,
       );
 
-      expect(document.querySelector("fieldset")).toBeDisabled();
+      expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
     });
 
     it("is enabled for pickup delivery even without an address", () => {
-      // For pickup, address is irrelevant — the fieldset should be enabled
       render(
         <Promo
           {...defaultProps}
@@ -136,16 +128,14 @@ describe("Promo", () => {
         />,
       );
 
-      expect(document.querySelector("fieldset")).not.toBeDisabled();
+      expect(document.querySelector("fieldset") as HTMLFieldSetElement).not.toBeDisabled();
     });
   });
 
   describe("promo state", () => {
     it("shows the Apply button when no promo code is applied", () => {
       render(<Promo {...defaultProps} />);
-
-      // "Použit" is the Czech translation for "Use" (promoUse key in cs.json)
-      expect(screen.getByRole("button", { name: /použit/i })).toBeInTheDocument();
+      expect(screen.getByRole("button", { name: /promoUse/i })).toBeInTheDocument();
     });
 
     it("shows a success checkmark icon instead of the Apply button when promo is applied", () => {
@@ -155,7 +145,6 @@ describe("Promo", () => {
           promo={{ code: "SUMMER20", discount: 50 }}
         />,
       );
-
       expect(screen.queryByRole("button", { name: /použít/i })).not.toBeInTheDocument();
       expect(screen.getByTestId("icon-checkmark")).toBeInTheDocument();
     });
@@ -167,8 +156,6 @@ describe("Promo", () => {
           promo={{ code: "SUMMER20", discount: 0 }}
         />,
       );
-
-      // The cross icon is inside a button; there should be one for resetting
       expect(screen.getByTestId("icon-cross")).toBeInTheDocument();
     });
 
@@ -179,7 +166,6 @@ describe("Promo", () => {
           promo={{ code: "", discount: 0 }}
         />,
       );
-
       expect(screen.queryByTestId("icon-cross")).not.toBeInTheDocument();
     });
 
@@ -190,14 +176,27 @@ describe("Promo", () => {
           promoError="Promo kód není aktivní"
         />,
       );
-
       expect(screen.getByText("Promo kód není aktivní")).toBeInTheDocument();
     });
 
     it("does not show an error paragraph when promoError is not provided", () => {
       render(<Promo {...defaultProps} />);
-
       expect(screen.queryByText(/promo kód/i)).not.toBeInTheDocument();
+    });
+
+    it("apply button is type submit (wired to applyPromocode via formAction)", () => {
+      render(<Promo {...defaultProps} />);
+      expect(screen.getByRole("button", { name: /promoUse/i })).toHaveAttribute("type", "submit");
+    });
+
+    it("reset button is type submit (wired to resetPromocode via formAction)", () => {
+      render(
+        <Promo
+          {...defaultProps}
+          promo={{ code: "SAVE10", discount: 0 }}
+        />,
+      );
+      expect(screen.getByTestId("icon-cross").closest("button")).toHaveAttribute("type", "submit");
     });
   });
 });

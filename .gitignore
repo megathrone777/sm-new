@@ -40,7 +40,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-certificates
-/src/app/orders.json
-/src/app/promocodes.json
-/src/app/clients.json
+/.claude/
