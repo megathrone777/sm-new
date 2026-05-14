@@ -53,18 +53,20 @@ declare global {
     address: string;
     allergenyUrl: string;
     businessName: string;
+    closedByOverloadText: string;
+    closedByOverloadTitle: string;
+    closedByScheduleText: string;
+    closedByScheduleTitle: string;
     companyDetails: string;
     contactItems: TContactLink[];
     cutleryPrice: number;
     email: string;
     isAvailable: boolean;
-    isOpened: boolean;
     lastTimeForPickup: string;
     logoUrl: string;
     navigation: TNavItem[];
     phone: string;
     schedule: TSchedule;
-    text: string;
     title: string;
   }
 

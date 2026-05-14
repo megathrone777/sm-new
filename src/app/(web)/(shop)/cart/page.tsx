@@ -4,6 +4,7 @@ import { Products } from "@/app/(web)/_components";
 import { useTranslation } from "@/hooks";
 import { store } from "@/store";
 import { Container } from "@/ui";
+import { isShopOpened } from "@/utils";
 
 import "leaflet/dist/leaflet.css";
 
@@ -27,14 +28,18 @@ import {
 import { wrapperClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/cart">> = async () => {
-  const [cart, additionals, { schedule }] = await Promise.all([
+  const [cart, additionals, settings] = await Promise.all([
     store.cart.get(),
     store.additionals.getAll(),
     store.shop.getSettings(),
   ]);
+  const { isAvailable, schedule } = settings;
+  const shopIsOpen = isShopOpened(schedule, isAvailable);
   const { t } = useTranslation();
 
   const renderCart = (): null | React.ReactElement => {
+    if (!shopIsOpen) return <Placeholder />;
+
     if (cart) {
       const {
         additionals: cartAdditionals,

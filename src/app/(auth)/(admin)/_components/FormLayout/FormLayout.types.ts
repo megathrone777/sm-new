@@ -5,4 +5,5 @@ export interface TProps {
   className?: React.HTMLAttributes<HTMLDivElement>["className"];
   formAction: (_state: null | TActionResult, formData: FormData) => Promise<null | TActionResult>;
   layoutClassName?: React.HTMLAttributes<HTMLDivElement>["className"];
+  resetOnSuccess?: boolean;
 }

@@ -66,17 +66,20 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
     });
   };
 
+  const resetLabel = deliveryType === "delivery" ? "Doručit teď" : "Vyzvednout teď";
+
   const options = useMemo((): TSelectOption[] => {
     const today = WEEKDAY_LOOKUP[new Date().getDay()] ?? "monday";
     const daySchedule = schedule[today as TWeekDay];
-
-    return generateOptions(daySchedule).map<TSelectOption>((slot: string) => ({
+    const slots = generateOptions(daySchedule).map<TSelectOption>((slot: string) => ({
       label: slot,
       value: slot,
     }));
-  }, [schedule]);
 
-  if (options && !!options.length) {
+    return [{ label: resetLabel, value: "" }, ...slots];
+  }, [resetLabel, schedule]);
+
+  if (options.length > 1) {
     return (
       <div className={wrapperClass}>
         <label
@@ -93,7 +96,7 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
 
         <Selectbox
           {...{ options }}
-          defaultValue={time.value ?? undefined}
+          defaultValue={time.value ?? ""}
           id="time"
           onChange={handleChange}
           placeholder={getLabel()}

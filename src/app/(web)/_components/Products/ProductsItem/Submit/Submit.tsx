@@ -4,6 +4,10 @@ import { toast } from "react-toastify";
 import Form from "next/form";
 
 import { addToCart, validateNewProduct } from "@/app/(web)/_actions";
+import {
+  dispatchShopClosed,
+  SHOP_CLOSED_MESSAGE,
+} from "@/app/(web)/_components/Controls/shopClosed";
 import { Icon } from "@/ui";
 
 import { buttonClass, iconClass } from "./Submit.css";
@@ -21,6 +25,12 @@ const Submit: React.FC<TProps> = (product) => {
 
     startTransition(async () => {
       const { message, type } = await validateNewProduct(newProduct);
+
+      if (message === SHOP_CLOSED_MESSAGE) {
+        dispatchShopClosed();
+
+        return;
+      }
 
       toast(message, { type });
 

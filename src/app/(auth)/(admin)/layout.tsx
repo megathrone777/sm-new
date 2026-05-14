@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps<"/">> = ({ children }) => (
   <div className={wrapperClass}>
     <Header />
 
-    <div>
+    <div style={{ height: "100%", minHeight: 400 }}>
       <Container>
         <div className={layoutClass}>
           <Sidebar />

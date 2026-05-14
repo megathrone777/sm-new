@@ -4,6 +4,10 @@ import { toast } from "react-toastify";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 import { addToCart, validateNewProduct } from "@/app/(web)/_actions";
+import {
+  dispatchShopClosed,
+  SHOP_CLOSED_MESSAGE,
+} from "@/app/(web)/_components/Controls/shopClosed";
 import { useTranslation } from "@/hooks";
 import { Button } from "@/ui";
 import { toKey } from "@/utils";
@@ -85,6 +89,12 @@ const DetailsForm: React.FC<TProps> = ({
 
     startTransition(async (): Promise<void> => {
       const { message, type } = await validateNewProduct(newProduct);
+
+      if (message === SHOP_CLOSED_MESSAGE) {
+        dispatchShopClosed();
+
+        return;
+      }
 
       toast(message, { type });
 

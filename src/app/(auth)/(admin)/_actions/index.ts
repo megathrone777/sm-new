@@ -22,6 +22,7 @@ export { searchClients } from "./searchClients";
 export { searchModifiers } from "./searchModifiers";
 export { searchOrders } from "./searchOrders";
 export { searchProducts } from "./searchProducts";
+export { setShopAvailable } from "./setShopAvailable";
 export { updateAdditional } from "./updateAdditional";
 export { updateCategory } from "./updateCategory";
 export { updateClient } from "./updateClient";

@@ -3,7 +3,7 @@ import { css } from "@/theme";
 export const listClass = css({
   display: "grid",
   gridAutoFlow: "row",
-  rowGap: 12,
+  rowGap: 30,
 });
 
 export const itemClass = css({

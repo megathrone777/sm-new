@@ -9,9 +9,7 @@ export const wrapperClass = css(({ colors }) => ({
   gridAutoFlow: "column",
   justifyContent: "space-between",
   marginBottom: 25,
-  minHeight: 70,
-  paddingBottom: 10,
-  paddingTop: 16,
+  paddingBlock: "16px 10px",
   position: "sticky",
   top: 80,
   zIndex: 100,
@@ -20,6 +18,7 @@ export const wrapperClass = css(({ colors }) => ({
 export const titleClass = css(({ fonts }) => ({
   fontSize: 26,
   fontWeight: fonts.bold,
+  minHeight: 42,
 }));
 
 export const layoutClass = css({
@@ -28,5 +27,5 @@ export const layoutClass = css({
   columnGap: 40,
   display: "grid",
   gridAutoFlow: "column",
-  gridTemplateColumns: "max-content"
+  gridTemplateColumns: "max-content",
 });

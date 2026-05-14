@@ -1,9 +1,12 @@
 import { css, cssVariant } from "@/theme";
 
 export const wrapperClass = css({
+  height: "100%",
+});
+
+export const layoutClass = css({
   position: "sticky",
-  top: 108,
-  zIndex: 100,
+  top: 106,
 });
 
 export const listClass = css({
@@ -30,8 +33,8 @@ export const linkClass = cssVariant(
       display: "block",
       fontSize: 18,
       fontWeight: fonts.demi,
-      lineHeight: "40px",
-      minHeight: 40,
+      lineHeight: "42px",
+      minHeight: 42,
       whiteSpace: "nowrap",
 
       ":hover": {

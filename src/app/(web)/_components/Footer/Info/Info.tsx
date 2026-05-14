@@ -61,7 +61,7 @@ const Info: React.FC<TProps> = ({
           <p className={itemClass}>
             <a
               className={linkClass}
-              href={`/uploads/${allergenyUrl}`}
+              href={allergenyUrl}
             >
               {t<string>("allergeny")}
             </a>

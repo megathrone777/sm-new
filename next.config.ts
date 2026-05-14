@@ -14,17 +14,17 @@ const config: NextConfig = {
     dangerouslyAllowSVG: true,
   },
   outputFileTracingIncludes: {
-    "**/*": ["./src/emailTemplate/template/**/*.pug"],
+    "**/*": ["./src/services/emailSender/template/**/*.pug"],
   },
   reactStrictMode: false,
-  // redirects: async () => [
-  //   {
-  //     destination: "https://sushi-man.cz/:path*",
-  //     has: [{ type: "host", value: "www.sushi-man.cz" }],
-  //     permanent: true,
-  //     source: "/:path*",
-  //   },
-  // ],
+  redirects: async () => [
+    {
+      destination: "https://:domain/:path*",
+      has: [{ type: "host", value: "www\\.(?<domain>.+)" }],
+      permanent: true,
+      source: "/:path*",
+    },
+  ],
   typedRoutes: true,
 };
 

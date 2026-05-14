@@ -23,11 +23,14 @@ type TEditableSettings = Pick<
   TShopSettings,
   | "address"
   | "businessName"
+  | "closedByOverloadText"
+  | "closedByOverloadTitle"
+  | "closedByScheduleText"
+  | "closedByScheduleTitle"
   | "companyDetails"
   | "cutleryPrice"
   | "email"
   | "isAvailable"
-  | "isOpened"
   | "lastTimeForPickup"
   | "phone"
   | "title"
@@ -36,11 +39,16 @@ type TEditableSettings = Pick<
 const DEFAULT_SETTINGS: TEditableSettings = {
   address: "Milíčova 471/25",
   businessName: "MSN form s.r.o., IČ: 099 07 017",
+  closedByOverloadText:
+    "Vážení zákazníci, dnes máme zavřeno z důvodu konání soukromé party.\nBudeme se na vás těšit v následující pracovní den!",
+  closedByOverloadTitle: "Teď objednat není možné.",
+  closedByScheduleText:
+    "Rozvoz: Pn. - Čt., Ne. 11:00-22:00<br />\nNoční rozvoz: Pá. - So. 11:00-22:30<br />\nRestaurace: Pn. - Ne. 17:00-22:00",
+  closedByScheduleTitle: "Teď máme zavřeno.",
   companyDetails: "MSN form s.r.o.\nIČ: 099 07 017\nDIČ: CZ 099 07 017",
   cutleryPrice: 10,
   email: "sushimanprague@gmail.com",
   isAvailable: true,
-  isOpened: true,
   lastTimeForPickup: "21:00",
   phone: "+420 792 745 116",
   title: "Rozvážíme",
@@ -73,23 +81,21 @@ const DEFAULT_SCHEDULE: TSchedule = WEEK_DAYS.reduce<TSchedule>(
   {} as TSchedule,
 );
 
-const parseSettingsOverrides = (
-  raw: null | Record<string, string>,
-): Partial<TEditableSettings> => {
+const parseSettingsOverrides = (raw: null | Record<string, unknown>): Partial<TEditableSettings> => {
   if (!raw) return {};
   const result: Partial<TEditableSettings> = {};
 
   for (const key of Object.keys(raw) as (keyof TEditableSettings)[]) {
     const value = raw[key];
 
-    if (value === undefined) continue;
+    if (value === undefined || value === null) continue;
 
     if (key === "cutleryPrice") {
-      result.cutleryPrice = +value;
-    } else if (key === "isAvailable" || key === "isOpened") {
-      result[key] = value === "true" || value === "1";
+      result.cutleryPrice = +`${value}`;
+    } else if (key === "isAvailable") {
+      result.isAvailable = value === true || value === "true" || value === "1" || value === 1;
     } else {
-      (result as Record<string, string>)[key] = value;
+      (result as Record<string, string>)[key] = `${value}`;
     }
   }
 
@@ -124,7 +130,7 @@ const shop = {
     const [navOverrides, imageOverrides, settingsOverrides, scheduleRaw] = await Promise.all([
       redis.hgetall<Record<string, string>>(NAV_TITLES_KEY),
       redis.hgetall<Record<TImageKey, string>>(IMAGE_URLS_KEY),
-      redis.hgetall<Record<string, string>>(SETTINGS_KEY),
+      redis.hgetall<Record<string, unknown>>(SETTINGS_KEY),
       redis.hgetall<Record<string, unknown>>(SCHEDULE_KEY),
     ]);
     const navigation: TNavItem[] = DEFAULT_NAV.map(
@@ -154,9 +160,6 @@ const shop = {
       logoUrl: imageOverrides?.logo ?? DEFAULT_IMAGE_URLS.logo,
       navigation,
       schedule: parseSchedule(scheduleRaw),
-      text: `Rozvoz :  Pn. - Čt., Ne. 11:00-22:00<br />\n' +
-    'Noční rozvoz:  Pá. - So. 11:00-22:30<br />\n' +
-    'Restaurace:  Pn. - Ne. 17:00-22:00`,
     };
   },
 

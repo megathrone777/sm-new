@@ -4,17 +4,31 @@ import { usePathname } from "next/navigation";
 
 import { Dialog, Icon } from "@/ui";
 
+import { SHOP_CLOSED_EVENT } from "./shopClosed";
+
 import { buttonClass, iconClass, layoutClass, wrapperClass } from "./Controls.css";
 
 import type { TProps } from "./Controls.types";
 
-const Controls: React.FC<TProps> = ({ contactItems, isOpened, text, title }) => {
+const Controls: React.FC<TProps> = ({
+  closedText,
+  closedTitle,
+  contactItems,
+  isOpened,
+  text,
+  title,
+}) => {
   const pathname = usePathname();
-  const [modalIsOpened, toggleModalOpened] = useState<boolean>(() => !isOpened);
+  const [userDialogOpened, toggleUserDialogOpened] = useState<boolean>(false);
+  const [closedDialogOpened, toggleClosedDialogOpened] = useState<boolean>(() => !isOpened);
   const [showScroller, toggleScroller] = useState<boolean>(false);
 
-  const handleModalToggle = (): void => {
-    toggleModalOpened(!modalIsOpened);
+  const handleUserDialogToggle = (): void => {
+    toggleUserDialogOpened((prev: boolean): boolean => !prev);
+  };
+
+  const handleClosedDialogClose = (): void => {
+    toggleClosedDialogOpened(false);
   };
 
   const handleScrollTop = (): void => {
@@ -46,6 +60,18 @@ const Controls: React.FC<TProps> = ({ contactItems, isOpened, text, title }) => 
     };
   }, [pathname]);
 
+  useEffect((): VoidFunction => {
+    const onShopClosed = (): void => {
+      toggleClosedDialogOpened(true);
+    };
+
+    window.addEventListener(SHOP_CLOSED_EVENT, onShopClosed);
+
+    return (): void => {
+      window.removeEventListener(SHOP_CLOSED_EVENT, onShopClosed);
+    };
+  }, []);
+
   return (
     <>
       <div className={wrapperClass}>
@@ -65,7 +91,7 @@ const Controls: React.FC<TProps> = ({ contactItems, isOpened, text, title }) => 
 
           <button
             className={buttonClass}
-            onClick={handleModalToggle}
+            onClick={handleUserDialogToggle}
             type="button"
           >
             <Icon
@@ -78,8 +104,18 @@ const Controls: React.FC<TProps> = ({ contactItems, isOpened, text, title }) => 
 
       <Dialog
         {...{ contactItems, text, title }}
-        isOpened={modalIsOpened}
-        onClose={handleModalToggle}
+        isOpened={userDialogOpened}
+        isShopOpen={isOpened}
+        onClose={handleUserDialogToggle}
+      />
+
+      <Dialog
+        {...{ contactItems }}
+        isOpened={closedDialogOpened}
+        isShopOpen={isOpened}
+        onClose={handleClosedDialogClose}
+        text={closedText}
+        title={closedTitle}
       />
     </>
   );

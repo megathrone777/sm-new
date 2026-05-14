@@ -1,23 +1,35 @@
 import moment from "moment-timezone";
 
-const SCHEDULE: Record<number, [number, number] | null> = {
-  0: [11 * 60, 22 * 60],
-  1: [11 * 60, 22 * 60],
-  2: [11 * 60, 22 * 60],
-  3: [11 * 60, 22 * 60],
-  4: [11 * 60, 22 * 60],
-  5: null,
-  6: null,
+const DAY_LOOKUP: TWeekDay[] = [
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+];
+
+const parseMinutes = (value: string): number => {
+  const [hours, minutes] = value.split(":").map(Number);
+
+  return (hours ?? 0) * 60 + (minutes ?? 0);
 };
 
-const isShopOpened = (): boolean => {
-  const pragueNow = moment.tz("Europe/Prague");
-  const hours = SCHEDULE[pragueNow.day()];
+const isShopOpened = (schedule: TSchedule, isAvailable: boolean): boolean => {
+  if (!isAvailable) return false;
 
-  if (!hours) return false;
-  const minutes = pragueNow.hours() * 60 + pragueNow.minutes();
+  const now = moment.tz("Europe/Prague");
+  const day = DAY_LOOKUP[now.day()];
 
-  return minutes >= hours[0] && minutes < hours[1];
+  if (!day) return false;
+
+  const daySchedule = schedule[day];
+  const minutes = now.hours() * 60 + now.minutes();
+
+  return (
+    minutes >= parseMinutes(daySchedule.openTime) && minutes < parseMinutes(daySchedule.closeTime)
+  );
 };
 
 export { isShopOpened };

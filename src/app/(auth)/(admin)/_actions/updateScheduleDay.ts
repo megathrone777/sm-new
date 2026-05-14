@@ -42,7 +42,7 @@ const updateScheduleDay = async (
 
   await store.shop.setScheduleDay(day, { closeTime, lastTimeForDelivery, openTime });
   revalidatePath("/admin/settings");
-  revalidatePath("/cart");
+  revalidatePath("/", "layout");
 
   return { message: `${day} schedule updated`, type: "success" };
 };

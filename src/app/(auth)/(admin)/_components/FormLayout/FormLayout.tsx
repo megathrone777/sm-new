@@ -9,7 +9,13 @@ import { contentClass, footerClass, wrapperClass } from "./FormLayout.css";
 
 import type { TProps } from "./FormLayout.types";
 
-const FormLayout: React.FC<TProps> = ({ children, className, formAction, layoutClassName }) => {
+const FormLayout: React.FC<TProps> = ({
+  children,
+  className,
+  formAction,
+  layoutClassName,
+  resetOnSuccess = true,
+}) => {
   const [state, action, pending] = useActionState(formAction, null);
   const [submitKey, setSubmitKey] = useState(0);
 
@@ -19,7 +25,9 @@ const FormLayout: React.FC<TProps> = ({ children, className, formAction, layoutC
 
     if (type === "success") {
       (document.activeElement as HTMLElement)?.blur();
-      setSubmitKey((prevKey: number): number => prevKey + 1);
+      if (resetOnSuccess) {
+        setSubmitKey((prevKey: number): number => prevKey + 1);
+      }
     }
 
     toast(message, { type });

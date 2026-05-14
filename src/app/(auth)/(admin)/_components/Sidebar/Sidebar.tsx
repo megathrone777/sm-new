@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { toKey } from "@/utils";
 
-import { dividerClass, itemClass, linkClass, wrapperClass } from "./Sidebar.css";
+import { dividerClass, itemClass, layoutClass, linkClass, wrapperClass } from "./Sidebar.css";
 
 import type { TMenuItem } from "./Sidebar.types";
 
@@ -51,7 +51,7 @@ const Sidebar: React.FC = () => {
     },
     {
       href: "/admin/schedule",
-      label: "Shop schedule",
+      label: "Schedule",
     },
   ];
 
@@ -76,43 +76,45 @@ const Sidebar: React.FC = () => {
 
   return (
     <div className={wrapperClass}>
-      <ul>
-        {menuItems.map(
-          ({ href, label }: TMenuItem): React.ReactElement => (
-            <li
-              className={itemClass}
-              key={`admin-menu-item-${toKey(label)}`}
-            >
-              <Link
-                {...{ href }}
-                className={linkClass[pathname === href ? "isActive" : "default"]}
+      <div className={layoutClass}>
+        <ul>
+          {menuItems.map(
+            ({ href, label }: TMenuItem): React.ReactElement => (
+              <li
+                className={itemClass}
+                key={`admin-menu-item-${toKey(label)}`}
               >
-                {label}
-              </Link>
-            </li>
-          ),
-        )}
-      </ul>
+                <Link
+                  {...{ href }}
+                  className={linkClass[pathname === href ? "isActive" : "default"]}
+                >
+                  {label}
+                </Link>
+              </li>
+            ),
+          )}
+        </ul>
 
-      <hr className={dividerClass} />
+        <hr className={dividerClass} />
 
-      <ul>
-        {menuItems2.map(
-          ({ href, label }: TMenuItem): React.ReactElement => (
-            <li
-              className={itemClass}
-              key={`admin-menu-item2-${toKey(label)}`}
-            >
-              <Link
-                {...{ href }}
-                className={linkClass[pathname === href ? "isActive" : "default"]}
+        <ul>
+          {menuItems2.map(
+            ({ href, label }: TMenuItem): React.ReactElement => (
+              <li
+                className={itemClass}
+                key={`admin-menu-item2-${toKey(label)}`}
               >
-                {label}
-              </Link>
-            </li>
-          ),
-        )}
-      </ul>
+                <Link
+                  {...{ href }}
+                  className={linkClass[pathname === href ? "isActive" : "default"]}
+                >
+                  {label}
+                </Link>
+              </li>
+            ),
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

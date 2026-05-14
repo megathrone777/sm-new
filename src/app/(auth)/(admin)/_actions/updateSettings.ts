@@ -15,14 +15,17 @@ const updateSettings = async (
 
   const address = `${formData.get("address") ?? ""}`.trim();
   const businessName = `${formData.get("businessName") ?? ""}`.trim();
+  const closedByOverloadText = `${formData.get("closedByOverloadText") ?? ""}`.trim();
+  const closedByOverloadTitle = `${formData.get("closedByOverloadTitle") ?? ""}`.trim();
+  const closedByScheduleText = `${formData.get("closedByScheduleText") ?? ""}`.trim();
+  const closedByScheduleTitle = `${formData.get("closedByScheduleTitle") ?? ""}`.trim();
   const companyDetails = `${formData.get("companyDetails") ?? ""}`.trim();
   const cutleryPriceRaw = `${formData.get("cutleryPrice") ?? ""}`.trim();
   const email = `${formData.get("email") ?? ""}`.trim();
   const lastTimeForPickup = `${formData.get("lastTimeForPickup") ?? ""}`.trim();
   const phone = `${formData.get("phone") ?? ""}`.trim();
   const title = `${formData.get("title") ?? ""}`.trim();
-  const isAvailable = formData.get("isAvailable") === "on";
-  const isOpened = formData.get("isOpened") === "on";
+  const isAvailable = formData.has("isAvailable");
 
   if (!title) return { message: "Title is required", type: "error" };
   if (!cutleryPriceRaw || Number.isNaN(+cutleryPriceRaw)) {
@@ -32,11 +35,14 @@ const updateSettings = async (
   await store.shop.setSettings({
     address,
     businessName,
+    closedByOverloadText,
+    closedByOverloadTitle,
+    closedByScheduleText,
+    closedByScheduleTitle,
     companyDetails,
     cutleryPrice: +cutleryPriceRaw,
     email,
     isAvailable,
-    isOpened,
     lastTimeForPickup,
     phone,
     title,

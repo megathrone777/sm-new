@@ -1,6 +1,7 @@
 import React from "react";
 
 import { store } from "@/store";
+import { isShopOpened } from "@/utils";
 
 import { Admin, Cart, Controls, Footer, Header } from "./_components";
 
@@ -10,15 +11,23 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
     address,
     allergenyUrl,
     businessName,
+    closedByOverloadText,
+    closedByOverloadTitle,
+    closedByScheduleText,
+    closedByScheduleTitle,
     contactItems,
     email,
-    isOpened,
+    isAvailable,
     logoUrl,
     navigation,
     phone,
-    text,
+    schedule,
     title,
   } = await store.shop.getSettings();
+  const scheduleIsOpen = isShopOpened(schedule, true);
+  const shopIsOpen = scheduleIsOpen && isAvailable;
+  const closedTitle = !scheduleIsOpen ? closedByScheduleTitle : closedByOverloadTitle;
+  const closedText = !scheduleIsOpen ? closedByScheduleText : closedByOverloadText;
 
   return (
     <>
@@ -38,9 +47,13 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
         }}
       />
 
-      <Cart />
+      {shopIsOpen && <Cart />}
       {authSession && authSession.role === "admin" && <Admin />}
-      <Controls {...{ contactItems, isOpened, text, title }} />
+      <Controls
+        {...{ closedText, closedTitle, contactItems, title }}
+        isOpened={shopIsOpen}
+        text={closedByScheduleText}
+      />
     </>
   );
 };

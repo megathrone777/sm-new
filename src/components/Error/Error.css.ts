@@ -1,10 +1,10 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css({
+  alignContent: "start",
   alignItems: "center",
   display: "grid",
   gridAutoFlow: "row",
-  height: "100%",
   justifyContent: "center",
   justifyItems: "center",
   paddingBlock: 30,

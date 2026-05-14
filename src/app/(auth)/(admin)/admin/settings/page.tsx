@@ -21,11 +21,14 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
     address,
     allergenyUrl,
     businessName,
+    closedByOverloadText,
+    closedByOverloadTitle,
+    closedByScheduleText,
+    closedByScheduleTitle,
     companyDetails,
     cutleryPrice,
     email,
     isAvailable,
-    isOpened,
     lastTimeForPickup,
     logoUrl,
     phone,
@@ -69,6 +72,7 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
           <FormLayout
             formAction={updateSettings}
             layoutClassName={settingsFormClass}
+            resetOnSuccess={false}
           >
             <Input
               defaultValue={title}
@@ -132,18 +136,47 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
               />
             </div>
 
+            <Input
+              defaultValue={closedByScheduleTitle}
+              label="Closed by schedule — title"
+              name="closedByScheduleTitle"
+              type="text"
+            />
+
+            <Input
+              defaultValue={closedByOverloadTitle}
+              label="Closed by overload — title"
+              name="closedByOverloadTitle"
+              type="text"
+            />
+
+            <div className={wideClass}>
+              <p className={titleClass}>Closed by schedule — text</p>
+
+              <textarea
+                className={textareaClass}
+                defaultValue={closedByScheduleText}
+                name="closedByScheduleText"
+                rows={3}
+              />
+            </div>
+
+            <div className={wideClass}>
+              <p className={titleClass}>Closed by overload — text</p>
+
+              <textarea
+                className={textareaClass}
+                defaultValue={closedByOverloadText}
+                name="closedByOverloadText"
+                rows={3}
+              />
+            </div>
+
             <div className={`${flagsClass} ${wideClass}`}>
               <Checkbox
                 defaultChecked={isAvailable}
                 label="Is available"
                 name="isAvailable"
-                type="checkbox"
-              />
-
-              <Checkbox
-                defaultChecked={isOpened}
-                label="Is opened"
-                name="isOpened"
                 type="checkbox"
               />
             </div>
