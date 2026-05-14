@@ -50,7 +50,7 @@
   "name": "sm-new",
   "private": true,
   "scripts": {
-    "build": "yarn lint && next build --turbopack",
+    "build": "yarn test:run && yarn lint && next build --turbopack",
     "dev": "next dev --turbopack --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost-cert.pem",
     "lint": "eslint ./src --config eslint.config.mjs",
     "start": "next start",
