@@ -12,6 +12,7 @@ export const itemClass = css({
 });
 
 export const dayTitleClass = css(({ fonts }) => ({
+  fontSize: 19,
   fontWeight: fonts.bold,
   marginBottom: 8,
   textTransform: "capitalize",

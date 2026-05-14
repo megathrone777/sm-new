@@ -3,21 +3,22 @@ import { custom, number, object } from "zod/v4";
 
 import { redis } from "./redis";
 
-const schema = {
-  newOrder: object({
-    createdAt: number(),
-    id: number(),
-    order: custom<TOrder>(),
-    updatedAt: number(),
-  }),
-  orderStatusChanged: object({
-    id: number(),
-    status: custom<TOrderStatus>(),
-    updatedAt: number(),
-  }),
-};
-
-const realtime = new Realtime({ redis, schema });
+const realtime = new Realtime({
+  redis,
+  schema: {
+    newOrder: object({
+      createdAt: number(),
+      id: number(),
+      order: custom<TOrder>(),
+      updatedAt: number(),
+    }),
+    orderStatusChanged: object({
+      id: number(),
+      status: custom<TOrderStatus>(),
+      updatedAt: number(),
+    }),
+  },
+});
 
 export type RealtimeEvents = InferRealtimeEvents<typeof realtime>;
 export { realtime };

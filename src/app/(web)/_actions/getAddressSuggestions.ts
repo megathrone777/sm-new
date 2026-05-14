@@ -5,7 +5,7 @@ const getAddressSuggestions = async (query: string): Promise<TAddressSuggestion[
   if (!query.trim()) return [];
 
   const params = new URLSearchParams({
-    apikey: process.env.APP_MAPY_CZ_API_KEY,
+    apikey: process.env.MAPY_CZ_API_KEY,
     lang: "cs",
     limit: "5",
     locality,

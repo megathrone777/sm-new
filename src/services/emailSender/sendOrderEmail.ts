@@ -6,7 +6,6 @@ import { generateTemplate } from "./generateTemplate";
 
 const sendOrderEmail = async (order: TOrder): Promise<boolean> => {
   if (process.env.EMAIL_ORDER_CONFIRMATION_ENABLED !== "true") return false;
-
   const user = process.env.EMAIL_ADDRESS;
   const pass = process.env.EMAIL_APP_PASSWORD;
 

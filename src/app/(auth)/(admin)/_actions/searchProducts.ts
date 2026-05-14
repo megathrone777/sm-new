@@ -37,7 +37,7 @@ const searchProducts = async (query: string): Promise<TProductSearchResult["data
     },
   })) as unknown as TProductSearchResult[];
 
-  return results.map(({ data }) => data);
+  return (results ?? []).map(({ data }) => data);
 };
 
 export { searchProducts };

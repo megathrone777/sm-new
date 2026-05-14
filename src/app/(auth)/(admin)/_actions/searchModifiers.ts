@@ -33,7 +33,7 @@ const searchModifiers = async (query: string): Promise<TModifierSearchResult["da
     },
   })) as unknown as TModifierSearchResult[];
 
-  return results.map(({ data }) => data);
+  return (results ?? []).map(({ data }) => data);
 };
 
 export { searchModifiers };

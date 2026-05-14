@@ -16,8 +16,8 @@ const Page: React.FC = async () => {
       <Header title="Schedule" />
 
       <div className={listClass}>
-        {WEEK_DAYS.map((day: TWeekDay) => {
-          const dayConfig: TScheduleDay = schedule[day];
+        {WEEK_DAYS.map<React.ReactElement>((day: TWeekDay) => {
+          const { closeTime, lastTimeForDelivery, openTime }: TScheduleDay = schedule[day];
 
           return (
             <div
@@ -37,21 +37,21 @@ const Page: React.FC = async () => {
                 />
 
                 <Input
-                  defaultValue={dayConfig.openTime}
+                  defaultValue={openTime}
                   label="Open time"
                   name="openTime"
                   type="time"
                 />
 
                 <Input
-                  defaultValue={dayConfig.closeTime}
+                  defaultValue={closeTime}
                   label="Close time"
                   name="closeTime"
                   type="time"
                 />
 
                 <Input
-                  defaultValue={dayConfig.lastTimeForDelivery}
+                  defaultValue={lastTimeForDelivery}
                   label="Last time for delivery"
                   name="lastTimeForDelivery"
                   type="time"

@@ -49,6 +49,7 @@ export const inputClass = cssVariant(
       },
     },
   }),
+
   (template, { fonts }) => [
     {
       appearance: "none",

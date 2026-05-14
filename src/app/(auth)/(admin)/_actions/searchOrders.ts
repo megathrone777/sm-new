@@ -42,7 +42,7 @@ const searchOrders = async (query: string): Promise<TOrderSearchResult["data"][]
     },
   })) as unknown as TOrderSearchResult[];
 
-  return results.map(({ data }) => data);
+  return (results ?? []).map(({ data }) => data);
 };
 
 export { searchOrders };

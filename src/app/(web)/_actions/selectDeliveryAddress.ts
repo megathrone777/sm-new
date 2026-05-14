@@ -27,10 +27,9 @@ const selectDeliveryAddress = async (
 
   if (!cart) return;
 
-  const apikey = process.env.APP_MAPY_CZ_API_KEY ?? "";
+  const apikey = process.env.MAPY_CZ_API_KEY ?? "";
   const clientLonLat: [number, number] = [position.lng, position.lat];
   const deliveryConditions = await store.deliveryConditions.getAll();
-
   const matrixUrl = new URL("https://api.mapy.cz/v1/routing/matrix-m");
 
   matrixUrl.searchParams.set("apikey", apikey);

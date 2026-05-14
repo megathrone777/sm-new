@@ -33,7 +33,7 @@ const searchClients = async (query: string): Promise<TClientSearchResult["data"]
     },
   })) as unknown as TClientSearchResult[];
 
-  return results.map<TClient>(({ data }) => data);
+  return (results ?? []).map<TClient>(({ data }) => data);
 };
 
 export { searchClients };
