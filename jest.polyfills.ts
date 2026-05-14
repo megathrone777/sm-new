@@ -1,4 +1,4 @@
-process.env.NODE_ENV = "test";
+Object.assign(process.env, { NODE_ENV: "test" });
 
 import { Blob } from "node:buffer";
 import { ReadableStream, TransformStream, WritableStream } from "node:stream/web";
