@@ -19,6 +19,10 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^5.10.0",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^25.7.0",
     "@types/nodemailer": "^7.0.4",
@@ -29,15 +33,19 @@
     "@vanilla-extract/css-utils": "^0.1.6",
     "@vanilla-extract/dynamic": "^2.1.5",
     "@vanilla-extract/next-plugin": "^2.5.2",
+    "@vanilla-extract/vite-plugin": "^5.2.2",
+    "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.2.1",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-perfectionist": "^5.9.0",
     "eslint-plugin-react-dom": "^3.0.0",
     "eslint-plugin-react-naming-convention": "^3.0.0",
     "eslint-plugin-react-x": "^3.0.0",
+    "jsdom": "^29.1.1",
     "prettier": "^3.8.3",
     "typescript": "^6",
-    "typescript-eslint": "^8.59.3"
+    "typescript-eslint": "^8.59.3",
+    "vitest": "^4.1.6"
   },
   "name": "sm-new",
   "private": true,
@@ -46,6 +54,8 @@
     "dev": "next dev --turbopack --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost-cert.pem",
     "lint": "eslint ./src --config eslint.config.mjs",
     "start": "next start",
+    "test": "vitest",
+    "test:run": "vitest run",
     "typegen": "next typegen"
   },
   "version": "1.0.0"

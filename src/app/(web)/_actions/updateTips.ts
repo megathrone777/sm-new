@@ -13,7 +13,6 @@ const updateTips = async (formData: FormData): Promise<void> => {
   const cart = await store.cart.get();
 
   if (!cart || cart.tips.percentage === percentage) return;
-
   await saveCart({
     tips: { percentage, price: 0 },
   });
