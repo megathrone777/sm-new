@@ -13,6 +13,10 @@ const config = defineConfig({
     ],
   },
   test: {
+    // Force test environment even when Vercel (or any CI) pre-sets NODE_ENV=production.
+    // Without this, React loads its production bundle which has no act() — crashing
+    // @testing-library/react on every render.
+    env: { NODE_ENV: "test" },
     environment: "jsdom",
     globals: true,
     setupFiles: ["./src/tests/setup.ts"],

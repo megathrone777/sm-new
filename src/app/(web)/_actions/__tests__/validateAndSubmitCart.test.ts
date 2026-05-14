@@ -1,3 +1,4 @@
+// @vitest-environment node
 // ─── LESSON 4: Testing async server actions with mocked dependencies ──────────
 //
 // Server actions depend on Redis (store), Next.js APIs (cookies, redirect),
