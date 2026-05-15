@@ -1,7 +1,5 @@
 "use server";
-import fs from "fs/promises";
-import path from "path";
-
+import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
 import { store } from "@/store";
@@ -20,10 +18,8 @@ const deleteCategory = async (
   const title = formData.get("title") as string;
   const category = await store.categories.popById(+id);
 
-  if (category?.imageUrl) {
-    const filePath = path.join(process.cwd(), "public", category.imageUrl);
-
-    await fs.unlink(filePath).catch(() => {});
+  if (category?.imageUrl.includes("blob.vercel-storage.com")) {
+    await del(category.imageUrl).catch((): void => {});
   }
 
   revalidatePath("/admin/categories");

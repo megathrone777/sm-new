@@ -1,7 +1,5 @@
 "use server";
-import fs from "fs/promises";
-import path from "path";
-
+import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -92,16 +90,14 @@ const createProduct = async (
   const imageFile = formData.get("image") as File;
 
   if (imageFile?.size) {
-    const ext = path.extname(imageFile.name) || ".jpg";
-    const filename = `${Date.now()}${ext}`;
-    const filePath = path.join(process.cwd(), "public", "uploads", "products", filename);
+    const blob = await put(`products/${Date.now()}-${imageFile.name}`, imageFile, {
+      access: "public",
+    });
 
-    await fs.writeFile(filePath, Buffer.from(await imageFile.arrayBuffer()));
-    product.imageUrl = `/uploads/products/${filename}`;
+    product.imageUrl = blob.url;
   }
 
   await store.products.set(product);
-
   revalidatePath("/admin/products");
   redirect(`/admin/product/${slug}`);
 };

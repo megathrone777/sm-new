@@ -1,7 +1,5 @@
 "use server";
-import fs from "fs/promises";
-import path from "path";
-
+import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
 import { store } from "@/store";
@@ -28,12 +26,11 @@ const createCategory = async (
   const imageFile = formData.get("image") as File;
 
   if (imageFile?.size) {
-    const ext = path.extname(imageFile.name) || ".jpg";
-    const filename = `${Date.now()}${ext}`;
-    const filePath = path.join(process.cwd(), "public", "uploads", "categories", filename);
+    const blob = await put(`categories/${Date.now()}-${imageFile.name}`, imageFile, {
+      access: "public",
+    });
 
-    await fs.writeFile(filePath, Buffer.from(await imageFile.arrayBuffer()));
-    imageUrl = `/uploads/categories/${filename}`;
+    imageUrl = blob.url;
   }
 
   const category: TProductCategory = {

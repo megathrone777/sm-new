@@ -40,6 +40,8 @@ declare global {
 
   namespace NodeJS {
     interface ProcessEnv {
+      BLOB_READ_WRITE_TOKEN: string;
+
       EMAIL_ADDRESS: string;
       EMAIL_APP_PASSWORD: string;
       EMAIL_ORDER_CONFIRMATION_ENABLED: string;

@@ -1,7 +1,5 @@
 "use server";
-import fs from "fs/promises";
-import path from "path";
-
+import { del } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
 import { store } from "@/store";
@@ -30,10 +28,8 @@ const deleteProduct = async (
     };
   }
 
-  if (product.imageUrl) {
-    const filePath = path.join(process.cwd(), "public", product.imageUrl);
-
-    await fs.unlink(filePath).catch(() => {});
+  if (product.imageUrl.includes("blob.vercel-storage.com")) {
+    await del(product.imageUrl).catch((): void => {});
   }
 
   await store.products.delete(slug, product.id);

@@ -1,7 +1,5 @@
 "use server";
-import fs from "fs/promises";
-import path from "path";
-
+import { del, put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
 import { store } from "@/store";
@@ -22,21 +20,17 @@ const updateAboutImage = async (
     return { message: "Image is required", type: "error" };
   }
 
-  const ext = path.extname(imageFile.name) || ".jpg";
-  const filename = `about-${Date.now()}${ext}`;
-  const filePath = path.join(process.cwd(), "public", "uploads", "about", filename);
-
-  await fs.mkdir(path.dirname(filePath), { recursive: true });
-  await fs.writeFile(filePath, Buffer.from(await imageFile.arrayBuffer()));
+  const blob = await put(`about/${Date.now()}-${imageFile.name}`, imageFile, {
+    access: "public",
+  });
 
   const prevUrl = `${formData.get("imageUrl") ?? ""}`;
-  const prevFilename = path.basename(prevUrl);
 
-  if (prevFilename.startsWith("about-")) {
-    await fs.unlink(path.join(process.cwd(), "public", prevUrl)).catch((): void => {});
+  if (prevUrl.includes("blob.vercel-storage.com")) {
+    await del(prevUrl).catch((): void => {});
   }
 
-  await store.about.set({ imageUrl: `/uploads/about/${filename}` });
+  await store.about.set({ imageUrl: blob.url });
   revalidatePath("/admin/about");
   revalidatePath("/", "layout");
 

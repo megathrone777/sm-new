@@ -1,7 +1,5 @@
 "use server";
-import fs from "fs/promises";
-import path from "path";
-
+import { del, put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
 import { redis, store } from "@/store";
@@ -30,17 +28,15 @@ const updateCategory = async (
   const imageFile = formData.get("image") as File;
 
   if (imageFile?.size) {
-    const ext = path.extname(imageFile.name) || ".jpg";
-    const filename = `${Date.now()}${ext}`;
-    const filePath = path.join(process.cwd(), "public", "uploads", "categories", filename);
+    const blob = await put(`categories/${Date.now()}-${imageFile.name}`, imageFile, {
+      access: "public",
+    });
 
-    await fs.writeFile(filePath, Buffer.from(await imageFile.arrayBuffer()));
-
-    if (prev.imageUrl) {
-      await fs.unlink(path.join(process.cwd(), "public", prev.imageUrl)).catch(() => {});
+    if (prev.imageUrl.includes("blob.vercel-storage.com")) {
+      await del(prev.imageUrl).catch((): void => {});
     }
 
-    imageUrl = `/uploads/categories/${filename}`;
+    imageUrl = blob.url;
   }
 
   const updated: TProductCategory = {
