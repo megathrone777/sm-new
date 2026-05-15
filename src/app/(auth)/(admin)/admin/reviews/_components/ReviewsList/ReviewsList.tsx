@@ -6,7 +6,13 @@ import { FormLayout, ImageUploader, ListLayout } from "@/app/(auth)/(admin)/_com
 import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
-import { imageRowClass, itemClass, itemFormClass, linkClass, listClass } from "./ReviewsList.css";
+import {
+  itemClass,
+  itemFormClass,
+  itemHeaderClass,
+  linkClass,
+  listClass,
+} from "./ReviewsList.css";
 
 const ReviewsList: React.FC = async () => {
   const reviews = await store.reviews.getAll();
@@ -19,95 +25,85 @@ const ReviewsList: React.FC = async () => {
       {reviews && !!reviews.length && (
         <div className={listClass}>
           {reviews.map(
-            ({ count, id, imageUrl, link, linkTitle, ratingImageUrl, text }: TReview): React.ReactElement => (
+            ({
+              count,
+              id,
+              imageUrl,
+              link,
+              linkTitle,
+              text,
+            }: TReview): React.ReactElement => (
               <div
                 className={itemClass}
                 key={`review-${id}`}
               >
-                <div className={itemFormClass}>
-                  <div className={imageRowClass}>
-                    <FormLayout formAction={updateReviewImage}>
-                      <input
-                        name="id"
-                        type="hidden"
-                        value={id}
-                      />
-                      <input
-                        name="key"
-                        type="hidden"
-                        value="imageUrl"
-                      />
-
-                      <ImageUploader initialUrl={imageUrl} />
-                    </FormLayout>
-
-                    <FormLayout formAction={updateReviewImage}>
-                      <input
-                        name="id"
-                        type="hidden"
-                        value={id}
-                      />
-                      <input
-                        name="key"
-                        type="hidden"
-                        value="ratingImageUrl"
-                      />
-
-                      <ImageUploader initialUrl={ratingImageUrl} />
-                    </FormLayout>
-                  </div>
-
-                  <FormLayout
-                    className={itemClass}
-                    formAction={updateReview}
-                    layoutClassName={itemFormClass}
-                  >
+                <div className={itemHeaderClass}>
+                  <FormLayout formAction={updateReviewImage}>
                     <input
                       name="id"
                       type="hidden"
                       value={id}
                     />
 
-                    <Input
-                      defaultValue={count}
-                      label="Count"
-                      name="count"
-                      type="text"
+                    <input
+                      name="key"
+                      type="hidden"
+                      value="imageUrl"
                     />
 
-                    <Input
-                      defaultValue={text}
-                      label="Text"
-                      name="text"
-                      type="text"
-                    />
-
-                    <Input
-                      defaultValue={link}
-                      label="Link"
-                      name="link"
-                      type="text"
-                    />
-
-                    <Input
-                      defaultValue={linkTitle}
-                      label="Link title"
-                      name="linkTitle"
-                      type="text"
-                    />
+                    <ImageUploader initialUrl={imageUrl} />
                   </FormLayout>
+
+                  <Link
+                    className={linkClass}
+                    href={`/admin/reviews?deleteId=${id}&deleteTitle=${encodeURIComponent(`${count} - ${text}`)}`}
+                    scroll={false}
+                  >
+                    <Button
+                      iconId="trash"
+                      template="small"
+                    />
+                  </Link>
                 </div>
 
-                <Link
-                  className={linkClass}
-                  href={`/admin/reviews?deleteId=${id}&deleteTitle=${encodeURIComponent(`${count} - ${text}`)}`}
-                  scroll={false}
+                <FormLayout
+                  formAction={updateReview}
+                  layoutClassName={itemFormClass}
                 >
-                  <Button
-                    iconId="trash"
-                    template="small"
+                  <input
+                    name="id"
+                    type="hidden"
+                    value={id}
                   />
-                </Link>
+
+                  <Input
+                    defaultValue={count}
+                    label="Count"
+                    name="count"
+                    type="text"
+                  />
+
+                  <Input
+                    defaultValue={text}
+                    label="Text"
+                    name="text"
+                    type="text"
+                  />
+
+                  <Input
+                    defaultValue={link}
+                    label="Link"
+                    name="link"
+                    type="text"
+                  />
+
+                  <Input
+                    defaultValue={linkTitle}
+                    label="Link title"
+                    name="linkTitle"
+                    type="text"
+                  />
+                </FormLayout>
               </div>
             ),
           )}

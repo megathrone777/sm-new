@@ -5,9 +5,28 @@ const IMAGE_URLS_KEY = "shop:imageUrls";
 const SETTINGS_KEY = "shop:settings";
 const SCHEDULE_KEY = "shop:schedule";
 
-type TImageKey = "allergeny" | "logo";
+type TImageKey =
+  | "additionalInfoBg"
+  | "allergeny"
+  | "heroMain"
+  | "heroPages"
+  | "logo"
+  | "promotionBg"
+  | "promotionCol1"
+  | "promotionCol2"
+  | "scheduleImage";
 
-const VALID_IMAGE_KEYS: TImageKey[] = ["allergeny", "logo"];
+const VALID_IMAGE_KEYS: TImageKey[] = [
+  "additionalInfoBg",
+  "allergeny",
+  "heroMain",
+  "heroPages",
+  "logo",
+  "promotionBg",
+  "promotionCol1",
+  "promotionCol2",
+  "scheduleImage",
+];
 
 const WEEK_DAYS: TWeekDay[] = [
   "monday",
@@ -63,8 +82,15 @@ const DEFAULT_NAV: TNavItem[] = [
 ];
 
 const DEFAULT_IMAGE_URLS: Record<TImageKey, string> = {
+  additionalInfoBg: "",
   allergeny: "/uploads/settings/allergeny_img.jpg",
+  heroMain: "",
+  heroPages: "",
   logo: "/uploads/settings/logo_img.svg",
+  promotionBg: "",
+  promotionCol1: "",
+  promotionCol2: "",
+  scheduleImage: "",
 };
 
 const DEFAULT_SCHEDULE_DAY: TScheduleDay = {
@@ -81,7 +107,9 @@ const DEFAULT_SCHEDULE: TSchedule = WEEK_DAYS.reduce<TSchedule>(
   {} as TSchedule,
 );
 
-export const parseSettingsOverrides = (raw: null | Record<string, unknown>): Partial<TEditableSettings> => {
+export const parseSettingsOverrides = (
+  raw: null | Record<string, unknown>,
+): Partial<TEditableSettings> => {
   if (!raw) return {};
   const result: Partial<TEditableSettings> = {};
 
@@ -146,6 +174,7 @@ const shop = {
 
     return {
       ...settings,
+      additionalInfoBgUrl: imageOverrides?.additionalInfoBg ?? DEFAULT_IMAGE_URLS.additionalInfoBg,
       allergenyUrl: imageOverrides?.allergeny ?? DEFAULT_IMAGE_URLS.allergeny,
       contactItems: [
         { link: "https://instagram.com/sushiman_prague", type: "instagram" },
@@ -157,9 +186,15 @@ const shop = {
         { link: "viber://chat?number=%2B420792745116#/", type: "viber" },
         { link: "tel:+420792745116", type: "phone" },
       ],
+      heroMainUrl: imageOverrides?.heroMain ?? DEFAULT_IMAGE_URLS.heroMain,
+      heroPagesUrl: imageOverrides?.heroPages ?? DEFAULT_IMAGE_URLS.heroPages,
       logoUrl: imageOverrides?.logo ?? DEFAULT_IMAGE_URLS.logo,
       navigation,
+      promotionBgUrl: imageOverrides?.promotionBg ?? DEFAULT_IMAGE_URLS.promotionBg,
+      promotionCol1Url: imageOverrides?.promotionCol1 ?? DEFAULT_IMAGE_URLS.promotionCol1,
+      promotionCol2Url: imageOverrides?.promotionCol2 ?? DEFAULT_IMAGE_URLS.promotionCol2,
       schedule: parseSchedule(scheduleRaw),
+      scheduleImageUrl: imageOverrides?.scheduleImage ?? DEFAULT_IMAGE_URLS.scheduleImage,
     };
   },
 

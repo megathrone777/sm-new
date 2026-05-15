@@ -28,8 +28,8 @@ const Reviews: React.FC = async () => {
         <h2 className={titleClass}>Recenze</h2>
 
         <div className={listClass}>
-          {reviews.map(
-            ({ count, id, imageUrl, link, linkTitle, ratingImageUrl, text }: TReview): React.ReactElement => (
+          {reviews.map<React.ReactElement>(
+            ({ count, id, imageUrl, link, linkTitle, text }: TReview) => (
               <div
                 className={itemClass}
                 key={`review-${id}`}
@@ -41,15 +41,15 @@ const Reviews: React.FC = async () => {
                     src={imageUrl}
                   />
                 )}
+
                 <p className={countClass}>{count}</p>
                 <p className={textClass}>{text}</p>
-                {ratingImageUrl && (
-                  <img
-                    alt="Rating."
-                    className={ratingImageClass}
-                    src={ratingImageUrl}
-                  />
-                )}
+
+                <img
+                  alt="Rating."
+                  className={ratingImageClass}
+                  src="/images/rating_img.jpg"
+                />
 
                 <a
                   className={linkClass}

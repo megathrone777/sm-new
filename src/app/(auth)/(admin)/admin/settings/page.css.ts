@@ -3,7 +3,7 @@ import { css } from "@/theme";
 export const listClass = css({
   display: "grid",
   gridAutoFlow: "row",
-  rowGap: 32,
+  rowGap: 40,
 });
 
 export const itemClass = css({
@@ -19,15 +19,14 @@ export const titleClass = css(({ fonts }) => ({
 export const imageRowClass = css({
   columnGap: 24,
   display: "grid",
+  gridAutoColumns: "1fr",
   gridAutoFlow: "column",
-  gridTemplateColumns: "1fr 1fr",
 });
 
 export const settingsFormClass = css({
-  columnGap: 12,
   display: "grid",
+  gap: 30,
   gridTemplateColumns: "repeat(2, 1fr)",
-  rowGap: 12,
 });
 
 export const wideClass = css({

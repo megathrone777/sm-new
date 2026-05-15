@@ -4,7 +4,10 @@
       "Bash(xargs grep:*)",
       "Bash(xargs cat:*)",
       "Bash(curl -sL \"https://raw.githubusercontent.com/vercel/next.js/canary/docs/01-app/02-guides/backend-for-frontend.mdx\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(npm list *)",
+      "Bash(npm install *)",
+      "Bash(Remove-Item \"c:\\\\Users\\\\krol2\\\\Desktop\\\\sm-new\\\\.env.migrate\")"
     ]
   }
 }

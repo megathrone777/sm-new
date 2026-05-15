@@ -1,8 +1,9 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = css(({ colors, devices }) => ({
   backgroundImage: "url('/images/products_bg.jpg')",
   backgroundSize: "50% auto",
+  borderTop: `3px solid ${colors.red}`,
   overflow: "hidden",
   paddingBlock: 40,
   position: "relative",
@@ -10,7 +11,6 @@ export const wrapperClass = css(({ devices }) => ({
 
   "@media": {
     [devices.tablet]: {
-      borderTop: "3px solid #da2629",
       paddingBlock: 60,
     },
   },
@@ -31,23 +31,26 @@ export const titleClass = css(({ devices }) => ({
 }));
 
 export const listClass = css(({ devices }) => ({
-  alignItems: "center",
-  columnGap: "unset",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "flex-start",
+  display: "grid",
+  gridAutoFlow: "row",
+  justifyContent: "stretch",
+  justifyItems: "center",
   marginBottom: 40,
   rowGap: 20,
 
   "@media": {
     [devices.tablet]: {
-      columnGap: 75,
-      flexDirection: "row",
+      columnGap: 10,
+      gridAutoFlow: "column",
       marginBottom: 60,
     },
 
     [devices.desktop]: {
-      columnGap: 10,
+      columnGap: 40,
+    },
+
+    [devices.desktopLg]: {
+      columnGap: 75,
     },
   },
 }));
@@ -56,16 +59,14 @@ export const itemClass = css(({ devices }) => ({
   backgroundColor: "white",
   borderRadius: 15,
   boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
-  flex: "none",
   maxWidth: 380,
   paddingBlock: "35px 30px",
   width: "100%",
 
   "@media": {
     [devices.tablet]: {
-      flex: "0 1 33.3333%",
-      maxWidth: "none",
-      width: "auto",
+      // maxWidth: "none",
+      // width: "auto",
     },
   },
 }));
@@ -99,6 +100,7 @@ export const buttonsClass = css({
 
 export const imageClass = css({
   marginBottom: 10,
+  marginInline: "auto",
   maxHeight: 100,
 });
 

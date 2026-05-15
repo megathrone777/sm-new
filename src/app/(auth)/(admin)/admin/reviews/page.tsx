@@ -4,14 +4,19 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { CreateReview, ReviewsList } from "./_components";
 
+import { layoutClass } from "./page.css";
+
 const Page: React.FC = async () => (
   <>
     <Header title="Reviews" />
-    <CreateReview />
 
-    <Suspense>
-      <ReviewsList />
-    </Suspense>
+    <div className={layoutClass}>
+      <CreateReview />
+
+      <Suspense>
+        <ReviewsList />
+      </Suspense>
+    </div>
   </>
 );
 

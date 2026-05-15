@@ -50,6 +50,7 @@ declare global {
   type TSchedule = Record<TWeekDay, TScheduleDay>;
 
   interface TShopSettings {
+    additionalInfoBgUrl: string;
     address: string;
     allergenyUrl: string;
     businessName: string;
@@ -61,13 +62,42 @@ declare global {
     contactItems: TContactLink[];
     cutleryPrice: number;
     email: string;
+    heroMainUrl: string;
+    heroPagesUrl: string;
     isAvailable: boolean;
     lastTimeForPickup: string;
     logoUrl: string;
     navigation: TNavItem[];
     phone: string;
+    promotionBgUrl: string;
+    promotionCol1Url: string;
+    promotionCol2Url: string;
     schedule: TSchedule;
+    scheduleImageUrl: string;
     title: string;
+  }
+
+  interface THero {
+    buttonLink: string;
+    buttonTitle: string;
+    description: string;
+    title: string;
+  }
+
+  interface TAdditionalInfo {
+    col1Text: string;
+    col1Title: string;
+    col2Text: string;
+    col2Title: string;
+    col3Text: string;
+    col3Title: string;
+    description: string;
+    title: string;
+  }
+
+  interface TPromotion {
+    col1Text: string;
+    col2Text: string;
   }
 
   type TSmsTemplateKey =
@@ -98,7 +128,6 @@ declare global {
     imageUrl: string;
     link: string;
     linkTitle: string;
-    ratingImageUrl: string;
     text: string;
   }
 }

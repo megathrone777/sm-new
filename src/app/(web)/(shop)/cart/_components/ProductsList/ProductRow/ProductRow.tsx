@@ -33,21 +33,23 @@ const ProductRow: React.FC<TProps> = ({
 }) => (
   <div className={wrapperClass}>
     <div className={layoutClass}>
-      <div className={imageHolderClass}>
-        <Link
-          className={linkClass}
-          href={`/product/${slug}`}
-        >
-          <Image
-            alt={title}
-            className={imageClass}
-            height={0}
-            sizes="100vw"
-            src={imageUrl}
-            width={0}
-          />
-        </Link>
-      </div>
+      {imageUrl && (
+        <div className={imageHolderClass}>
+          <Link
+            className={linkClass}
+            href={`/product/${slug}`}
+          >
+            <Image
+              alt={title}
+              className={imageClass}
+              height={0}
+              sizes="100vw"
+              src={imageUrl}
+              width={0}
+            />
+          </Link>
+        </div>
+      )}
 
       <div className={heroClass}>
         <p className={titleClass}>{title}</p>

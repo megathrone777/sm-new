@@ -1,14 +1,12 @@
 "use client";
 import React from "react";
 
+import { ContactLinks } from "@/ui";
 import { Icon } from "@/ui";
 
 import {
   closeButtonClass,
   contactClass,
-  contactItemClass,
-  contactLinkClass,
-  contactListClass,
   headerClass,
   layoutClass,
   overlayClass,
@@ -53,22 +51,7 @@ const Dialog: React.FC<TProps> = ({ contactItems, isOpened, isShopOpen, onClose,
           />
 
           <div className={contactClass}>
-            <ul className={contactListClass}>
-              {contactItems.map<React.ReactElement>(({ link, type }: TContactLink) => (
-                <li
-                  className={contactItemClass[type]}
-                  key={`dialog-contact-item-${type}`}
-                >
-                  <a
-                    className={contactLinkClass}
-                    href={link}
-                    target="_blank"
-                  >
-                    {type}
-                  </a>
-                </li>
-              ))}
-            </ul>
+            <ContactLinks items={contactItems} />
           </div>
 
           <p className={statusClass[isShopOpen ? "online" : "offline"]}>

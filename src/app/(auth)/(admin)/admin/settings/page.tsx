@@ -32,6 +32,7 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
     lastTimeForPickup,
     logoUrl,
     phone,
+    scheduleImageUrl,
     title,
   } = await store.shop.getSettings();
 
@@ -51,6 +52,8 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
                 value="logo"
               />
 
+              <p>Logo</p>
+
               <ImageUploader initialUrl={logoUrl} />
             </FormLayout>
 
@@ -61,7 +64,21 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
                 value="allergeny"
               />
 
+              <p>Allergeny</p>
+
               <ImageUploader initialUrl={allergenyUrl} />
+            </FormLayout>
+
+            <FormLayout formAction={updateSettingsImage}>
+              <input
+                name="key"
+                type="hidden"
+                value="scheduleImage"
+              />
+
+              <p>Schedule background</p>
+
+              <ImageUploader initialUrl={scheduleImageUrl} />
             </FormLayout>
           </div>
         </div>
