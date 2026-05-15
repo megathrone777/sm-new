@@ -10,6 +10,81 @@ const LOCK_TTL_SECONDS = 5;
 
 const lockKey = (sessionId: string): string => `lock:${sessionId}`;
 
+// --- Pure pricing helper functions (exported for testing) ---
+
+const getCategoryDiscount = (
+  products: TCartProduct[],
+): number => {
+  const productsWithDiscount: TCartProduct[] = products.filter(
+    ({ isPromotionActive }: TCartProduct): boolean => Boolean(isPromotionActive),
+  );
+  const productsWithDiscountQuantity: number = productsWithDiscount.reduce<number>(
+    (accumulator, { quantity }: TCartProduct): number => accumulator + quantity,
+    0,
+  );
+
+  if (productsWithDiscount && !!productsWithDiscount.length && productsWithDiscount[0]) {
+    const { promotionDiscountAmount, promotionForEveryXProducts } = productsWithDiscount[0];
+
+    return (
+      Math.floor(productsWithDiscountQuantity / promotionForEveryXProducts) *
+      promotionDiscountAmount
+    );
+  }
+
+  return 0;
+};
+
+const getCutleryPrice = (
+  products: TCartProduct[],
+  cutlery: TCart["cutlery"],
+  cutleryPrice: number,
+): number => {
+  const freeCutleryQuantity: number = products.reduce(
+    (accumulator: number, { freeCutleryCount, quantity }: TCartProduct): number =>
+      accumulator + freeCutleryCount * quantity,
+    0,
+  );
+
+  if (cutlery.quantity > freeCutleryQuantity) {
+    return (cutlery.quantity - freeCutleryQuantity) * cutleryPrice;
+  }
+
+  return 0;
+};
+
+const getProductsPrice = (
+  products: TCartProduct[],
+  additionals: TCartAdditional[],
+): number => {
+  const productsPrice: number = products.reduce<number>(
+    (accumulator: number, { totalPrice }: TCartProduct): number => accumulator + totalPrice,
+    0,
+  );
+  const additionalsPrice: number = additionals.reduce<number>(
+    (accumulator: number, { totalPrice }: TCartAdditional): number => accumulator + totalPrice,
+    0,
+  );
+
+  return productsPrice + additionalsPrice;
+};
+
+const getDeliveryDiscount = (productsPrice: number, deliveryType: TDeliveryType): number => {
+  if (productsPrice > 500 && deliveryType === "pickup") {
+    return 50;
+  }
+
+  return 0;
+};
+
+const getDeliveryPrice = (delivery: TDelivery): number => {
+  if (delivery.price && delivery.type === "delivery") {
+    return delivery.price;
+  }
+
+  return 0;
+};
+
 const cart = {
   delete: async (sessionId: string): Promise<void> => {
     await redis.del(sessionId);
@@ -41,76 +116,22 @@ const cart = {
       legacyDeliveryTime ?? { label: "Doručit teď", value: null };
     const { cutleryPrice } = await shop.getSettings();
 
-    const getCategoryDiscount = (): number => {
-      const productsWithDiscount: TCartProduct[] = products.filter(
-        ({ isPromotionActive }: TCartProduct): boolean => Boolean(isPromotionActive),
-      );
-      const productsWithDiscountQuantity: number = productsWithDiscount.reduce<number>(
-        (accumulator, { quantity }: TCartProduct): number => accumulator + quantity,
-        0,
-      );
-
-      if (productsWithDiscount && !!productsWithDiscount.length && productsWithDiscount[0]) {
-        const { promotionDiscountAmount, promotionForEveryXProducts } = productsWithDiscount[0];
-
-        return (
-          Math.floor(productsWithDiscountQuantity / promotionForEveryXProducts) *
-          promotionDiscountAmount
-        );
-      }
-
-      return 0;
-    };
-
-    const getCutleryPrice = (): number => {
-      const freeCutleryQuantity: number = products.reduce(
-        (accumulator: number, { freeCutleryCount, quantity }: TCartProduct): number =>
-          accumulator + freeCutleryCount * quantity,
-        0,
-      );
-
-      if (cutlery.quantity > freeCutleryQuantity) {
-        return (cutlery.quantity - freeCutleryQuantity) * cutleryPrice;
-      }
-
-      return 0;
-    };
-
-    const getProductsPrice = (): number => {
-      const productsPrice: number = products.reduce<number>(
-        (accumulator: number, { totalPrice }: TCartProduct): number => accumulator + totalPrice,
-        0,
-      );
-      const additionalsPrice: number = additionals.reduce<number>(
-        (accumulator: number, { totalPrice }: TCartAdditional): number => accumulator + totalPrice,
-        0,
-      );
-
-      return productsPrice + additionalsPrice;
-    };
-
-    const getDeliveryDiscount = (): number => {
-      if (getProductsPrice() > 500 && delivery.type === "pickup") {
-        return 50;
-      }
-
-      return 0;
-    };
-
-    const getDeliveryPrice = (): number => {
-      if (delivery.price && delivery.type === "delivery") {
-        return delivery.price;
-      }
-
-      return 0;
-    };
+    const categoryDiscount = getCategoryDiscount(products);
+    const computedCutleryPrice = getCutleryPrice(products, cutlery, cutleryPrice);
+    const productsPrice = getProductsPrice(products, additionals);
+    const deliveryDiscount = getDeliveryDiscount(productsPrice, delivery.type);
+    const computedDeliveryPrice = getDeliveryPrice({
+      ...deliveryWithoutTime,
+      conditions: delivery.conditions,
+      type: delivery.type,
+    } as TDelivery);
 
     const subtotal: number =
-      getProductsPrice() +
-      getDeliveryPrice() +
-      getCutleryPrice() -
-      getCategoryDiscount() -
-      getDeliveryDiscount() -
+      productsPrice +
+      computedDeliveryPrice +
+      computedCutleryPrice -
+      categoryDiscount -
+      deliveryDiscount -
       promo.discount;
     const tipsPercentage = tips?.percentage ?? 0;
     const tipsPrice: number = Math.round((subtotal * tipsPercentage) / 100);
@@ -118,14 +139,14 @@ const cart = {
     return {
       ...cartRest,
       additionals,
-      categoryDiscount: getCategoryDiscount(),
+      categoryDiscount,
       cutlery: {
         ...cutlery,
-        totalPrice: getCutleryPrice(),
+        totalPrice: computedCutleryPrice,
       },
       delivery: {
         ...deliveryWithoutTime,
-        price: getDeliveryPrice(),
+        price: computedDeliveryPrice,
       },
       products,
       promo,
@@ -185,4 +206,4 @@ const cart = {
   },
 };
 
-export { cart };
+export { cart, getCategoryDiscount, getCutleryPrice, getDeliveryDiscount, getDeliveryPrice, getProductsPrice };

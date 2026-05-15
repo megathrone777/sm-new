@@ -4,7 +4,7 @@ const INDEX = "delivery-conditions";
 
 const hashKey = (id: TDeliveryCondition["id"]): string => `delivery-condition:${id}`;
 
-const serializeFields = ({
+export const serializeFields = ({
   distanceFrom,
   distanceTo,
   id,
@@ -22,7 +22,7 @@ const serializeFields = ({
   title,
 });
 
-const parse = (raw: Record<string, unknown>): TDeliveryCondition => ({
+export const parseDeliveryCondition = (raw: Record<string, unknown>): TDeliveryCondition => ({
   distanceFrom: +raw.distanceFrom!,
   distanceTo: +raw.distanceTo!,
   id: +raw.id!,
@@ -51,13 +51,13 @@ const deliveryConditions = {
 
     return rows
       .filter((row): row is Record<string, unknown> => row !== null && Object.keys(row).length > 0)
-      .map(parse);
+      .map(parseDeliveryCondition);
   },
 
   getById: async (id: TDeliveryCondition["id"]): Promise<null | TDeliveryCondition> => {
     const raw = await redis.hgetall<Record<string, unknown>>(hashKey(id));
 
-    return raw && Object.keys(raw).length > 0 ? parse(raw) : null;
+    return raw && Object.keys(raw).length > 0 ? parseDeliveryCondition(raw) : null;
   },
 
   set: async (condition: TDeliveryCondition): Promise<void> => {

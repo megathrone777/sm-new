@@ -57,8 +57,16 @@ const Sidebar: React.FC = () => {
 
   const menuItems2: TMenuItem[] = [
     {
+      href: "/admin/about",
+      label: "About",
+    },
+    {
       href: "/admin/navigation",
       label: "Navigation",
+    },
+    {
+      href: "/admin/reviews",
+      label: "Reviews",
     },
     {
       href: "/admin/notifications",

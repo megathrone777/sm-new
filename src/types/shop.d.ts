@@ -80,6 +80,12 @@ declare global {
 
   type TSmsTemplates = Record<TSmsTemplateKey, string>;
 
+  interface TAbout {
+    description: string;
+    imageUrl: string;
+    title: string;
+  }
+
   interface TFeedback {
     bgImage: string;
     buttonSendTitle: string;
@@ -87,8 +93,13 @@ declare global {
   }
 
   interface TReview {
+    count: string;
     id: number;
     imageUrl: string;
+    link: string;
+    linkTitle: string;
+    ratingImageUrl: string;
+    text: string;
   }
 }
 

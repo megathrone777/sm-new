@@ -5,7 +5,7 @@ const INDEX = "promocodes";
 const hashKey = (code: string): string => `promocode:${code}`;
 const ordersIndex = (code: string): string => `promocode:${code}:orders`;
 
-const serializeFields = (
+export const serializeFields = (
   promocode: Omit<TPromoCode, "orderIds">,
 ): Record<string, number | string> => ({
   activatedAt: promocode.activatedAt ?? "",

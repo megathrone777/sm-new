@@ -13,7 +13,7 @@ const config: Config = {
     "^@/ui$": "<rootDir>/src/theme/components/index.ts",
     "^@/(.*)$": "<rootDir>/src/$1",
   },
-  transformIgnorePatterns: ["node_modules/(?!(uncrypto|@upstash/realtime)/)"],
+  transformIgnorePatterns: ["node_modules/(?!(uncrypto|@upstash/realtime|@upstash/redis)/)"],
 };
 
 module.exports = createJestConfig(config);

@@ -81,7 +81,7 @@ const DEFAULT_SCHEDULE: TSchedule = WEEK_DAYS.reduce<TSchedule>(
   {} as TSchedule,
 );
 
-const parseSettingsOverrides = (raw: null | Record<string, unknown>): Partial<TEditableSettings> => {
+export const parseSettingsOverrides = (raw: null | Record<string, unknown>): Partial<TEditableSettings> => {
   if (!raw) return {};
   const result: Partial<TEditableSettings> = {};
 
@@ -102,7 +102,7 @@ const parseSettingsOverrides = (raw: null | Record<string, unknown>): Partial<TE
   return result;
 };
 
-const parseScheduleDay = (raw: unknown): TScheduleDay => {
+export const parseScheduleDay = (raw: unknown): TScheduleDay => {
   if (!raw || typeof raw !== "object") return DEFAULT_SCHEDULE_DAY;
   const day = raw as Partial<TScheduleDay>;
 
@@ -113,7 +113,7 @@ const parseScheduleDay = (raw: unknown): TScheduleDay => {
   };
 };
 
-const parseSchedule = (raw: null | Record<string, unknown>): TSchedule => {
+export const parseSchedule = (raw: null | Record<string, unknown>): TSchedule => {
   if (!raw) return DEFAULT_SCHEDULE;
 
   return WEEK_DAYS.reduce<TSchedule>(

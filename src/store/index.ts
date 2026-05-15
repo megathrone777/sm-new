@@ -1,3 +1,4 @@
+import { about } from "./about";
 import { additionals } from "./additionals";
 import { cart } from "./cart";
 import { categories } from "./categories";
@@ -7,6 +8,7 @@ import { modifiers } from "./modifiers";
 import { orders } from "./orders";
 import { products } from "./products";
 import { promocodes } from "./promocodes";
+import { reviews } from "./reviews";
 import { sessions } from "./sessions";
 import { shop } from "./shop";
 import { smsTemplates } from "./smsTemplates";
@@ -14,6 +16,7 @@ import { submodifiers } from "./submodifiers";
 import { users } from "./users";
 
 const store = {
+  about,
   additionals,
   cart,
   categories,
@@ -23,6 +26,7 @@ const store = {
   orders,
   products,
   promocodes,
+  reviews,
   sessions,
   shop,
   smsTemplates,
