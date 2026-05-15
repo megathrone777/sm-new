@@ -12,6 +12,12 @@ const config: NextConfig = {
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     dangerouslyAllowSVG: true,
+    remotePatterns: [
+      {
+        hostname: "*.public.blob.vercel-storage.com",
+        protocol: "https",
+      },
+    ],
   },
   outputFileTracingIncludes: {
     "**/*": ["./src/services/emailSender/template/**/*.pug"],
