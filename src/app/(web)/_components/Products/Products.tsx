@@ -19,15 +19,13 @@ const Products: React.FC<TProps> = async ({ showAll, title }) => {
       { id, isPromotionActive, products, promotionDiscountAmount, promotionForEveryXProducts },
     ) => ({
       ...accumulator,
-      [id]: products.map(
-        (product: TProduct): React.ReactElement => (
-          <ProductsItem
-            key={`${product.id}-products-item`}
-            {...product}
-            {...{ isPromotionActive, promotionDiscountAmount, promotionForEveryXProducts }}
-          />
-        ),
-      ),
+      [id]: products.map<React.ReactElement>((product: TProduct) => (
+        <ProductsItem
+          key={`${product.id}-products-item`}
+          {...product}
+          {...{ isPromotionActive, promotionDiscountAmount, promotionForEveryXProducts }}
+        />
+      )),
     }),
     {},
   );

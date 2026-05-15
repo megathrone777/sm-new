@@ -10,13 +10,14 @@ import { configs, parser } from "typescript-eslint";
 const config = defineConfig({
   extends: [configs.recommended],
   ignores: [
+    ".next/**",
+    "build/**",
     "eslint.config.mjs",
     "jest.config.ts",
-    "node_modules/**",
-    ".next/**",
-    "out/**",
-    "build/**",
+    "jest.setup.ts",
     "next-env.d.ts",
+    "node_modules/**",
+    "out/**",
   ],
   languageOptions: {
     parser,
