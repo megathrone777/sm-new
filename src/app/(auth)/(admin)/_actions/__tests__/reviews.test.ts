@@ -21,7 +21,6 @@ const makeReview = (overrides: Partial<TReview> = {}): TReview => ({
   imageUrl: "",
   link: "https://www.instagram.com/sushiman",
   linkTitle: "Více",
-  ratingImageUrl: "",
   text: "pozitivních recenzí",
   ...overrides,
 });
@@ -86,7 +85,6 @@ describe("createReview", () => {
 
     it("assigns id = 1 when there are no existing reviews", async () => {
       jest.mocked(store.reviews.getAll).mockResolvedValue([] as never);
-
       await createReview(null, makeFormData());
 
       const [review] = jest.mocked(store.reviews.create).mock.calls[0] as [TReview];
@@ -96,10 +94,7 @@ describe("createReview", () => {
 
     it("creates the review with empty image URLs", async () => {
       await createReview(null, makeFormData());
-
-      expect(store.reviews.create).toHaveBeenCalledWith(
-        expect.objectContaining({ imageUrl: "", ratingImageUrl: "" }),
-      );
+      expect(store.reviews.create).toHaveBeenCalledWith(expect.objectContaining({ imageUrl: "" }));
     });
 
     it("saves all text fields trimmed", async () => {

@@ -31,7 +31,6 @@ const createReview = async (
     imageUrl: "",
     link,
     linkTitle,
-    ratingImageUrl: "",
     text,
   });
   revalidatePath("/admin/reviews");

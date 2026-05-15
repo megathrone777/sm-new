@@ -17,7 +17,7 @@ const updateReviewImage = async (
   const id = +formData.get("id")!;
   const key = `${formData.get("key") ?? ""}`;
 
-  if (key !== "imageUrl" && key !== "ratingImageUrl") {
+  if (key !== "imageUrl") {
     return { message: "Invalid image key", type: "error" };
   }
 

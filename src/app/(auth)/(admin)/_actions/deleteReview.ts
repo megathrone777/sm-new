@@ -21,7 +21,7 @@ const deleteReview = async (
   await store.reviews.delete(id);
 
   if (review) {
-    const blobUrls = [review.imageUrl, review.ratingImageUrl].filter((url) =>
+    const blobUrls = [review.imageUrl].filter((url) =>
       url.includes("blob.vercel-storage.com"),
     );
 
