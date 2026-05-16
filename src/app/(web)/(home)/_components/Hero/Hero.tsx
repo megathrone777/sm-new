@@ -1,9 +1,17 @@
 import React from "react";
+import Image from "next/image";
 
 import { store } from "@/store";
 import { Button, Container } from "@/ui";
 
-import { contentClass, textClass, titleClass, wrapperClass } from "./Hero.css";
+import {
+  bgImageClass,
+  contentClass,
+  layoutClass,
+  textClass,
+  titleClass,
+  wrapperClass,
+} from "./Hero.css";
 
 const Hero: React.FC = async () => {
   const [{ buttonLink, buttonTitle, description, title }, { heroMainUrl }] = await Promise.all([
@@ -15,22 +23,32 @@ const Hero: React.FC = async () => {
     <div
       className={wrapperClass}
       id="hero-section"
-      style={{
-        backgroundImage: heroMainUrl ? `url('${heroMainUrl}')` : undefined,
-      }}
     >
-      <Container>
-        <div className={contentClass}>
-          <h1 className={titleClass}>{title}</h1>
+      {heroMainUrl && (
+        <Image
+          alt="Hero main."
+          className={bgImageClass}
+          fill
+          priority
+          sizes="100vw"
+          src={heroMainUrl}
+        />
+      )}
 
-          <p
-            className={textClass}
-            dangerouslySetInnerHTML={{ __html: description }}
-          />
+      <div className={layoutClass}>
+        <Container>
+          <div className={contentClass}>
+            <h1 className={titleClass}>{title}</h1>
 
-          <Button href={buttonLink as never}>{buttonTitle}</Button>
-        </div>
-      </Container>
+            <p
+              className={textClass}
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+
+            <Button href={buttonLink}>{buttonTitle}</Button>
+          </div>
+        </Container>
+      </div>
     </div>
   );
 };

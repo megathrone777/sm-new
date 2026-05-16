@@ -23,14 +23,15 @@ const ProductsLayout: React.FC<TProps> = ({ categories, renderedProducts, showAl
     ({ currentTarget }: React.SyntheticEvent<HTMLButtonElement>): void => {
       const currentId = +currentTarget.value;
       const newCategoryId: number = categoryId === currentId ? -1 : currentId;
+      const section = document.getElementById("products-section");
 
-      if (categoryId === -1) {
-        document.getElementById("products-section")?.scrollIntoView();
+      if (section && section.getBoundingClientRect().top > 0) {
+        section.scrollIntoView({ behavior: "smooth" });
       }
 
       setCategoryId(newCategoryId);
     },
-    [categories, categoryId],
+    [categoryId],
   );
 
   const activeCategory = categories.find(({ id }: TProductCategory): boolean => id === categoryId);

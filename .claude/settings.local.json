@@ -7,7 +7,15 @@
       "Bash(npx tsc *)",
       "Bash(npm list *)",
       "Bash(npm install *)",
-      "Bash(Remove-Item \"c:\\\\Users\\\\krol2\\\\Desktop\\\\sm-new\\\\.env.migrate\")"
+      "Bash(Remove-Item \"c:\\\\Users\\\\krol2\\\\Desktop\\\\sm-new\\\\.env.migrate\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\krol2\\\\Desktop\\\\sm-new\" -Force)",
+      "Bash(Select-Object -Property Name, PSIsContainer)",
+      "Bash(Format-Table -AutoSize)",
+      "PowerShell(head -5)",
+      "PowerShell(head -30)",
+      "PowerShell(head -20)",
+      "Bash(ls /mnt/c/Users/krol2/Desktop/sm-new/src/app/\\\\\\(web\\\\\\)/\\\\\\(shop\\\\\\)/rules/)",
+      "Read(//mnt/c/Users/krol2/Desktop/sm-new/src/app/\\(web\\)/\\(shop\\)/**)"
     ]
   }
 }

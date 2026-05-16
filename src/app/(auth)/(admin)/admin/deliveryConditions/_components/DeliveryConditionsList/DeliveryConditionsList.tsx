@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { deleteDeliveryCondition, updateDeliveryCondition } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
+import { useTranslation } from "@/hooks";
 import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
@@ -15,6 +16,7 @@ import {
 } from "./DeliveryConditionsList.css";
 
 const DeliveryConditionsList: React.FC = async () => {
+  const { t } = useTranslation();
   const conditions = await store.deliveryConditions.getAll();
 
   return (
@@ -24,78 +26,88 @@ const DeliveryConditionsList: React.FC = async () => {
     >
       {conditions.length > 0 && (
         <div className={listClass}>
-          {conditions.map((condition: TDeliveryCondition) => (
-            <div
-              className={itemClass}
-              key={`delivery-condition-${condition.id}`}
-            >
-              <div className={rowClass}>
-                <FormLayout
-                  formAction={updateDeliveryCondition}
-                  layoutClassName={editFormClass}
-                >
-                  <input
-                    name="id"
-                    type="hidden"
-                    value={condition.id}
-                  />
+          {conditions.map<React.ReactElement>(
+            ({
+              distanceFrom,
+              distanceTo,
+              id,
+              minimumOrderPrice,
+              price,
+              text,
+              title,
+            }: TDeliveryCondition) => (
+              <div
+                className={itemClass}
+                key={`delivery-condition-${id}`}
+              >
+                <div className={rowClass}>
+                  <FormLayout
+                    formAction={updateDeliveryCondition}
+                    layoutClassName={editFormClass}
+                  >
+                    <input
+                      name="id"
+                      type="hidden"
+                      value={id}
+                    />
 
-                  <Input
-                    defaultValue={condition.title}
-                    label="Title"
-                    name="title"
-                    type="text"
-                  />
+                    <Input
+                      defaultValue={title}
+                      label="Title"
+                      name="title"
+                      type="text"
+                    />
 
-                  <Input
-                    defaultValue={condition.distanceFrom}
-                    label="From (m)"
-                    name="distanceFrom"
-                    type="number"
-                  />
+                    <Input
+                      defaultValue={distanceFrom}
+                      label="From (m)"
+                      name="distanceFrom"
+                      type="number"
+                    />
 
-                  <Input
-                    defaultValue={condition.distanceTo}
-                    label="To (m)"
-                    name="distanceTo"
-                    type="number"
-                  />
+                    <Input
+                      defaultValue={distanceTo}
+                      label="To (m)"
+                      name="distanceTo"
+                      type="number"
+                    />
 
-                  <Input
-                    defaultValue={condition.price}
-                    label="Price (Kč)"
-                    name="price"
-                    type="number"
-                  />
+                    <Input
+                      defaultValue={price}
+                      label={`Price (${t<string>("currency")})`}
+                      name="price"
+                      type="number"
+                    />
 
-                  <Input
-                    defaultValue={condition.minimumOrderPrice}
-                    label="Min order (Kč)"
-                    name="minimumOrderPrice"
-                    type="number"
-                  />
+                    <Input
+                      defaultValue={minimumOrderPrice}
+                      label={`Min order (${t<string>("currency")})`}
+                      name="minimumOrderPrice"
+                      type="number"
+                    />
 
-                  <Input
-                    defaultValue={condition.text}
-                    label="Tier message"
-                    name="text"
-                    type="text"
-                  />
-                </FormLayout>
+                    <Input
+                      defaultValue={text}
+                      label="Tier message"
+                      name="text"
+                      type="text"
+                    />
+                  </FormLayout>
 
-                <Link
-                  className={linkClass}
-                  href={`/admin/deliveryConditions?deleteId=${condition.id}&deleteTitle=${encodeURIComponent(condition.title)}`}
-                  scroll={false}
-                >
-                  <Button
-                    iconId="trash"
-                    template="small"
-                  />
-                </Link>
+                  <Link
+                    className={linkClass}
+                    href={`/admin/deliveryConditions?deleteId=${id}&deleteTitle=${encodeURIComponent(title)}`}
+                    scroll={false}
+                  >
+                    <Button
+                      iconId="trash"
+                      template="small"
+                    />
+                  </Link>
+                </div>
               </div>
-            </div>
-          ))}
+            ),
+          )}
         </div>
       )}
     </ListLayout>

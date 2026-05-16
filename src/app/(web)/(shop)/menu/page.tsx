@@ -11,4 +11,5 @@ const Page: React.FC<PageProps<"/menu">> = () => (
   </>
 );
 
+export { metadata } from "./metadata";
 export default Page;

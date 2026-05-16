@@ -27,4 +27,5 @@ const Page: React.FC = () => (
   </div>
 );
 
+export { metadata } from "./metadata";
 export default Page;

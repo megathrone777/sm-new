@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 import { store } from "@/store";
 
@@ -9,6 +10,7 @@ import {
   itemImageClass,
   itemImageHolderClass,
   layoutClass,
+  listClass,
   wrapperClass,
 } from "./Promotion.css";
 
@@ -29,37 +31,48 @@ const Promotion: React.FC = async () => {
       id="promotion-section"
     >
       {promotionBgUrl && (
-        <img
-          alt="Promotion background."
+        <Image
+          alt="Promotion."
           className={imageClass}
+          fill
+          priority
+          sizes="100vw"
           src={promotionBgUrl}
         />
       )}
 
       <div className={layoutClass}>
-        {columns.map<React.ReactElement>(({ imageUrl, text }) => (
-          <div
-            className={itemClass}
-            key={imageUrl || text.slice(0, 20)}
-          >
-            {imageUrl && (
-              <div className={itemImageHolderClass}>
-                <img
-                  alt="Promo banner."
-                  className={itemImageClass}
-                  src={imageUrl}
-                />
-              </div>
-            )}
-
-            {text && (
+        {columns && !!columns.length && (
+          <div className={listClass}>
+            {columns.map<React.ReactElement>(({ imageUrl, text }) => (
               <div
-                className={itemDescriptionClass}
-                dangerouslySetInnerHTML={{ __html: text }}
-              />
-            )}
+                className={itemClass}
+                key={imageUrl || text.slice(0, 20)}
+              >
+                {imageUrl && (
+                  <div className={itemImageHolderClass}>
+                    <Image
+                      alt="Promo banner."
+                      className={itemImageClass}
+                      height={0}
+                      loading="eager"
+                      sizes="(min-width: 768px) 350px, 200px"
+                      src={imageUrl}
+                      width={0}
+                    />
+                  </div>
+                )}
+
+                {text && (
+                  <div
+                    className={itemDescriptionClass}
+                    dangerouslySetInnerHTML={{ __html: text }}
+                  />
+                )}
+              </div>
+            ))}
           </div>
-        ))}
+        )}
       </div>
     </section>
   );

@@ -12,8 +12,19 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const inputsClass = css({
+export const layoutClass = css({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 20,
+});
+
+export const contentClass = css({
+  alignItems: "center",
+  display: "flex",
+  gap: 12,
+});
+
+export const phoneWrapperClass = css({
+  flex: 1,
+  minWidth: 0,
 });

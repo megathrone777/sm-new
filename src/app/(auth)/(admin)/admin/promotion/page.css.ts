@@ -1,12 +1,12 @@
-import { style } from "@vanilla-extract/css";
+import { css } from "@/theme";
 
-export const pageClass = style({
+export const pageClass = css({
   display: "flex",
   flexDirection: "column",
   gap: 16,
 });
 
-export const textareaClass = style({
+export const textareaClass = css({
   border: "1px solid #e0e0e0",
   borderRadius: 8,
   fontSize: 14,
@@ -18,8 +18,10 @@ export const textareaClass = style({
   width: "100%",
 });
 
-export const columnsGridClass = style({
+export const columnsGridClass = css({
   display: "grid",
   gap: 16,
+  gridAutoFlow: "column",
   gridTemplateColumns: "1fr 1fr",
+  width: "100%",
 });

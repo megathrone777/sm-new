@@ -4,6 +4,7 @@ export { getAddressSuggestions } from "./getAddressSuggestions";
 export { markOrderCancelled } from "./markOrderCancelled";
 export { markOrderPaid } from "./markOrderPaid";
 export { removeFromCart } from "./removeFromCart";
+export { repeatOrder } from "./repeatOrder";
 export { resetDeliveryAddress } from "./resetDeliveryAddress";
 export { resetPromocode } from "./resetPromocode";
 export { saveCart } from "./saveCart";

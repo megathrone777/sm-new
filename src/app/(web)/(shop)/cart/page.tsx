@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 
 import { Products } from "@/app/(web)/_components";
 import { useTranslation } from "@/hooks";
@@ -24,6 +24,7 @@ import {
   Queue,
   SectionLayout,
 } from "./_components";
+import { History } from "./_components/Client/History";
 
 import { wrapperClass } from "./page.css";
 
@@ -87,7 +88,11 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
                   name: errors.name,
                   phone: errors.phone,
                 }}
-              />
+              >
+                <Suspense>
+                  <History phoneNumber={client.phoneNumber} />
+                </Suspense>
+              </Client>
 
               <Address
                 {...{ delivery }}

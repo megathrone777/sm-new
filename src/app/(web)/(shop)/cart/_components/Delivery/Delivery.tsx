@@ -31,7 +31,7 @@ const Delivery: React.FC<TProps> = ({ totalPrice, type }) => {
 
       <Checkbox
         defaultChecked={type === "pickup"}
-        hint={checkPickupDiscount() > 0 ? "-50 Kč" : ""}
+        hint={checkPickupDiscount() > 0 ? `-50 ${t<string>("currency")}` : ""}
         label={t<string>("pickupLabel")}
         labelClassName={labelClass}
         name="deliveryType"

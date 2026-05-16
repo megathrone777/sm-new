@@ -18,7 +18,6 @@ const Page: React.FC<PageProps<"/product/[slug]">> = async ({ params }) => {
         <Details
           {...product}
           {...{ isPromotionActive, promotionDiscountAmount, promotionForEveryXProducts }}
-          // shopIsOpened={isAvailable && isOpened}
         />
       );
     }
@@ -34,4 +33,5 @@ const Page: React.FC<PageProps<"/product/[slug]">> = async ({ params }) => {
   );
 };
 
+export { generateMetadata } from "./metadata";
 export default Page;

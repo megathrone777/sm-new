@@ -23,6 +23,7 @@ const updateSettings = async (
   const cutleryPriceRaw = `${formData.get("cutleryPrice") ?? ""}`.trim();
   const email = `${formData.get("email") ?? ""}`.trim();
   const lastTimeForPickup = `${formData.get("lastTimeForPickup") ?? ""}`.trim();
+  const mapUrl = `${formData.get("mapUrl") ?? ""}`.trim();
   const phone = `${formData.get("phone") ?? ""}`.trim();
   const title = `${formData.get("title") ?? ""}`.trim();
   const isAvailable = formData.has("isAvailable");
@@ -44,6 +45,7 @@ const updateSettings = async (
     email,
     isAvailable,
     lastTimeForPickup,
+    mapUrl,
     phone,
     title,
   });

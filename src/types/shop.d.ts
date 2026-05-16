@@ -67,6 +67,7 @@ declare global {
     isAvailable: boolean;
     lastTimeForPickup: string;
     logoUrl: string;
+    mapUrl: string;
     navigation: TNavItem[];
     phone: string;
     promotionBgUrl: string;
@@ -78,7 +79,7 @@ declare global {
   }
 
   interface THero {
-    buttonLink: string;
+    buttonLink: __next_route_internal_types__.RouteImpl<string>;
     buttonTitle: string;
     description: string;
     title: string;
@@ -114,6 +115,14 @@ declare global {
     description: string;
     imageUrl: string;
     title: string;
+  }
+
+  interface TTerms {
+    content: string;
+  }
+
+  interface TRules {
+    content: string;
   }
 
   interface TFeedback {

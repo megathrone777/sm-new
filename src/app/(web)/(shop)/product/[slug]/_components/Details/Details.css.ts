@@ -46,6 +46,7 @@ export const modifiersTitleClass = css(({ fonts }) => ({
 }));
 
 export const imageHolderClass = css(({ devices }) => ({
+  backgroundColor: "#1a1a1a",
   borderRadius: 15,
   boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
   overflow: "hidden",

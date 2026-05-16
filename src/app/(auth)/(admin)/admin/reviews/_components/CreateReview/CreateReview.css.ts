@@ -1,6 +1,6 @@
-import { style } from "@vanilla-extract/css";
+import { css } from "@/theme";
 
-export const wrapperClass = style({
+export const wrapperClass = css({
   display: "flex",
   flexDirection: "column",
   gap: 16,

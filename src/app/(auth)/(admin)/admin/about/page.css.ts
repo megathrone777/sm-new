@@ -1,12 +1,12 @@
-import { style } from "@vanilla-extract/css";
+import { css } from "@/theme";
 
-export const aboutFormClass = style({
+export const aboutFormClass = css({
   display: "flex",
   flexDirection: "column",
   gap: 16,
 });
 
-export const textareaClass = style({
+export const textareaClass = css({
   border: "1px solid #e0e0e0",
   borderRadius: 8,
   fontSize: 14,

@@ -1,8 +1,7 @@
 import { css } from "@/theme";
 
 export const listClass = css({
-  columnGap: 10,
-  display: "flex",
-  flexWrap: "wrap",
-  rowGap: 10,
+  display: "grid",
+  gap: 10,
+  gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
 });

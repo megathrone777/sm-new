@@ -1,18 +1,47 @@
 import { css, cssVariant } from "@/theme";
 
-export const wrapperClass = css({
-  height: "100%",
-});
+export const wrapperClass = css(({ colors, devices }) => ({
+  backgroundColor: "white",
+  borderRight: `1px solid ${colors.grayDarkest}`,
+  bottom: 0,
+  left: 0,
+  overflowY: "auto",
+  padding: 16,
+  position: "fixed",
+  top: 80,
+  transform: "translateX(-100%)",
+  transition: "transform 0.3s ease",
+  width: 260,
+  zIndex: 101,
+
+  "@media": {
+    [devices.tablet]: {
+      backgroundColor: "transparent",
+      border: "none",
+      height: "100%",
+      overflow: "visible",
+      padding: 0,
+      position: "sticky",
+      top: 106,
+      transform: "none",
+      transition: "none",
+      width: "auto",
+    },
+  },
+}));
+
+export const openClass = css(({ devices }) => ({
+  transform: "translateX(0)",
+
+  "@media": {
+    [devices.tablet]: {
+      transform: "none",
+    },
+  },
+}));
 
 export const layoutClass = css({
-  position: "sticky",
-  top: 106,
-});
-
-export const listClass = css({
-  display: "grid",
-  gridAutoFlow: "row",
-  rowGap: 15,
+  position: "relative",
 });
 
 export const itemClass = css(({ colors }) => ({

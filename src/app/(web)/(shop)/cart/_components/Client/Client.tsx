@@ -5,10 +5,9 @@ import { setCartError } from "@/app/(web)/_actions";
 import { useTranslation } from "@/hooks";
 import { Input } from "@/ui";
 
-// import { History } from "./History";
 import { Phone } from "./Phone";
 
-import { inputsClass, wrapperClass } from "./Client.css";
+import { contentClass, layoutClass, phoneWrapperClass, wrapperClass } from "./Client.css";
 
 import type { TProps } from "./Client.types";
 
@@ -29,7 +28,7 @@ const validateEmail = (value: string): string | undefined => {
   return undefined;
 };
 
-const Client: React.FC<TProps> = ({ email, errors, name, phoneNumber }) => {
+const Client: React.FC<TProps> = ({ children, email, errors, name, phoneNumber }) => {
   const { t } = useTranslation();
   const [localErrors, setLocalErrors] = useState<{
     email?: string;
@@ -65,7 +64,7 @@ const Client: React.FC<TProps> = ({ email, errors, name, phoneNumber }) => {
 
   return (
     <div className={wrapperClass}>
-      <div className={inputsClass}>
+      <div className={layoutClass}>
         <Input
           defaultValue={name}
           enterKeyHint="done"
@@ -91,12 +90,16 @@ const Client: React.FC<TProps> = ({ email, errors, name, phoneNumber }) => {
         />
       </div>
 
-      <Phone
-        {...{ phoneNumber }}
-        isError={Boolean(errors.phone)}
-      />
+      <div className={contentClass}>
+        <div className={phoneWrapperClass}>
+          <Phone
+            {...{ phoneNumber }}
+            isError={Boolean(errors.phone)}
+          />
+        </div>
 
-      {/* <History {...{ phoneNumber }} /> */}
+        {children}
+      </div>
     </div>
   );
 };

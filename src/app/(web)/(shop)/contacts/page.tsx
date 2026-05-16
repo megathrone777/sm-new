@@ -1,9 +1,13 @@
 import React from "react";
 
+import { Details, Map } from "./_components";
+
 const Page: React.FC<PageProps<"/contacts">> = () => (
-  <div>
-    <h1>Contacts page</h1>
-  </div>
+  <>
+    <Details />
+    <Map />
+  </>
 );
 
+export { metadata } from "./metadata";
 export default Page;

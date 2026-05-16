@@ -12,10 +12,12 @@ import { products } from "./products";
 import { promocodes } from "./promocodes";
 import { promotion } from "./promotion";
 import { reviews } from "./reviews";
+import { rules } from "./rules";
 import { sessions } from "./sessions";
 import { shop } from "./shop";
 import { smsTemplates } from "./smsTemplates";
 import { submodifiers } from "./submodifiers";
+import { terms } from "./terms";
 import { users } from "./users";
 
 const store = {
@@ -33,10 +35,12 @@ const store = {
   promocodes,
   promotion,
   reviews,
+  rules,
   sessions,
   shop,
   smsTemplates,
   submodifiers,
+  terms,
   users,
 };
 

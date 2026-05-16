@@ -1,8 +1,6 @@
-import { calc } from "@vanilla-extract/css-utils";
-
 import { css } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = css(({ colors }) => ({
   backgroundColor: colors.grayDarker,
   border: "4px solid white",
   borderRadius: 10,
@@ -19,21 +17,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
     "&.started": { borderColor: "#3b82f6" },
     "&.took": { borderColor: colors.yellow },
   },
-  width: `${calc("25%").subtract("8px")}`,
-
-  "@media": {
-    [devices.mobile]: {
-      width: "100%",
-    },
-
-    [devices.tablet]: {
-      width: "calc(50% - 5px)",
-    },
-
-    [devices.desktop]: {
-      width: "calc(33.3333% - 7px)",
-    },
-  },
+  width: "100%",
 }));
 
 export const noteClass = css({

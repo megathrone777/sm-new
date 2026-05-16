@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useTranslation } from "@/hooks";
+
 import { itemClass, labelClass, valueClass } from "../Item.css";
 import { typeClass } from "./Payment.css";
 
@@ -11,6 +13,8 @@ const Payment: React.FC<TProps> = ({
   promocodeDiscountPrice,
   totalPrice,
 }) => {
+  const { t } = useTranslation();
+
   const getPaymentText = (): string => {
     if (paymentType === "card") return "Картой онлайн";
     if (paymentType === "cash") return "Наличными";
@@ -22,7 +26,8 @@ const Payment: React.FC<TProps> = ({
     <>
       <p className={itemClass}>
         <span className={valueClass}>
-          <span className={`${typeClass} ${paymentType}`}>{getPaymentText()}</span> - {totalPrice}Kč
+          <span className={`${typeClass} ${paymentType}`}>{getPaymentText()}</span> - {totalPrice}
+          {t<string>("currency")}
         </span>
       </p>
 
@@ -31,7 +36,8 @@ const Payment: React.FC<TProps> = ({
           <span className={labelClass}>Скидка:</span>
 
           <span className={`${valueClass} normal`}>
-            {promocode} ({promocodeDiscountPrice}Kč)
+            {promocode} ({promocodeDiscountPrice}
+            {t<string>("currency")})
           </span>
         </p>
       )}

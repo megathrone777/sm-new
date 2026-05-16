@@ -35,11 +35,10 @@ const ProductsItem: React.FC<TProps> = (product) => {
           <Image
             alt={title}
             className={imageClass}
-            height={0}
+            fill
             loading="eager"
-            sizes="100vw"
+            sizes="(min-width: 1023px) 25vw, (min-width: 768px) 33vw, (min-width: 500px) 50vw, 100vw"
             src={imageUrl}
-            width={0}
           />
         </div>
 

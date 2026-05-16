@@ -1,0 +1,1 @@
+export { PrintTrigger } from "./PrintTrigger";

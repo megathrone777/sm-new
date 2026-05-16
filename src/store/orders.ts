@@ -59,7 +59,12 @@ const orders = {
     if (!ids.length) return [];
     const orders = await fanOutById(ids);
 
-    return orders.filter((order): boolean => order.status !== "done" && order.status !== "placed");
+    const active = orders.filter(
+      (order): boolean => order.status !== "done" && order.status !== "placed",
+    );
+    const placed = orders.filter((order): boolean => order.status === "placed");
+
+    return [...active, ...placed];
   },
 
   getAll: async (offset = 0, limit = 10): Promise<TOrder[]> => {

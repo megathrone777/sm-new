@@ -12,6 +12,23 @@ import type { TProps } from "./Menu.types";
 const Menu: React.FC<TProps> = ({ items }) => {
   const pathname = usePathname();
 
+  const handleLinkClick = (event: React.SyntheticEvent<HTMLAnchorElement>): void => {
+    const { currentTarget } = event;
+    const { hash } = currentTarget;
+
+    if (hash && pathname === "/") {
+      event.preventDefault();
+      const section = document.getElementById(currentTarget.hash.replace("#", ""));
+
+      if (section) {
+        section.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
+      }
+    }
+  };
+
   return (
     <div className={wrapperClass}>
       <ul className={listClass}>
@@ -21,6 +38,7 @@ const Menu: React.FC<TProps> = ({ items }) => {
               <Link
                 {...{ href }}
                 className={linkClass[pathname === href ? "active" : "default"]}
+                onClick={handleLinkClick}
               >
                 {title}
               </Link>

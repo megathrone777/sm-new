@@ -1,21 +1,21 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
-  alignContent: "stretch",
-  backgroundPosition: "right -100px top",
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+export const wrapperClass = css(({ colors }) => ({
   borderBottom: `4px solid ${colors.red}`,
+  position: "relative",
+}));
+
+export const layoutClass = css(({ devices }) => ({
+  alignContent: "stretch",
   display: "grid",
   minHeight: 280,
   paddingBottom: 20,
   paddingTop: 120,
   position: "relative",
-  zIndex: 2,
+  zIndex: 1,
 
   "@media": {
     [devices.mobile]: {
-      backgroundPosition: "right top",
       paddingTop: 130,
     },
 
@@ -31,6 +31,17 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
+export const bgImageClass = css(({ devices }) => ({
+  objectFit: "cover",
+  objectPosition: "right -100px top",
+
+  "@media": {
+    [devices.mobile]: {
+      objectPosition: "right top",
+    },
+  },
+}));
+
 export const contentClass = css(({ devices }) => ({
   alignContent: "start",
   display: "grid",
@@ -38,6 +49,7 @@ export const contentClass = css(({ devices }) => ({
   height: "100%",
   justifyItems: "start",
   maxWidth: 280,
+  paddingLeft: 5,
   rowGap: 15,
 
   "@media": {

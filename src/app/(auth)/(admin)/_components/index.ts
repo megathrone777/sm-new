@@ -1,3 +1,4 @@
+export { AdminBody } from "./AdminBody";
 export { CategorySelect } from "./CategorySelect";
 export { FormLayout } from "./FormLayout";
 export { Header } from "./Header";

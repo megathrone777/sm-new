@@ -1,105 +1,99 @@
 import { css, globalStyle } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "auto 100%",
   overflow: "hidden",
   position: "relative",
 
   "@media": {
     [devices.tablet]: {
-      minHeight: 480,
-    },
-
-    [devices.desktop]: {
-      minHeight: 560,
+      minHeight: 500,
     },
   },
 }));
 
 export const imageClass = css({
   height: "100%",
-  left: 0,
   objectFit: "cover",
-  position: "absolute",
-  top: 0,
   width: "100%",
 });
 
 export const layoutClass = css(({ devices }) => ({
-  alignItems: "center",
-  display: "flex",
-  flexDirection: "column-reverse",
-  gap: 20,
-  paddingBlock: 20,
-  paddingInline: 16,
-  position: "relative",
+  marginInline: "auto",
+  maxWidth: 1200,
 
   "@media": {
     [devices.tablet]: {
-      alignItems: "center",
-      flexDirection: "row",
-      gap: 0,
-      inset: 0,
-      justifyContent: "space-around",
-      marginInline: "auto",
-      maxWidth: 1200,
-      padding: "40px 0",
-      position: "absolute",
+      height: 500,
     },
   },
 }));
 
-export const itemClass = css(({ devices }) => ({
+export const listClass = css(({ devices }) => ({
+  alignContent: "stretch",
+  alignItems: "flex-start",
+  display: "flex",
+  flexWrap: "wrap",
+  height: "100%",
+  inset: 0,
+  justifyContent: "space-around",
+  paddingBlock: "40px 20px",
+  position: "relative",
+
+  "@media": {
+    [devices.mobile]: {
+      paddingBottom: 40,
+    },
+  },
+}));
+
+export const itemClass = css({
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
-  maxWidth: 300,
+  minWidth: 300,
+  paddingTop: 50,
   position: "relative",
-  selectors: {
-    "&:first-of-type": {
-      background: "url('/images/promo_column_bg.png') right 35px top 130px / 130px auto no-repeat",
-    },
-
-    "&:last-of-type": {
-      flexDirection: "column-reverse",
-      justifyContent: "flex-end",
-    },
-  },
   width: "100%",
+});
+
+globalStyle(`.${itemClass}:first-of-type`, {
+  backgroundImage: "url('/images/promo_column_bg.png')",
+  backgroundPosition: "right 46px top 0",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: 110,
+  maxWidth: 300,
+});
+
+globalStyle(`.${itemClass}:last-of-type`, ({ devices }) => ({
+  flex: "0 1 100%",
+  flexDirection: "column",
+  maxWidth: "33%",
 
   "@media": {
     [devices.tablet]: {
-      width: 300,
+      flexDirection: "column-reverse",
+      height: "100%",
+      paddingTop: 30,
+      rowGap: 20,
     },
   },
 }));
 
-globalStyle(`.${itemClass}:first-of-type`, {
-  "@media": {
-    "(min-width: 768px)": {
-      backgroundPosition: "right 46px top 0",
-      backgroundSize: "110px auto",
-    },
-  },
-});
-
-globalStyle(`.${itemClass}:last-of-type`, {
-  "@media": {
-    "(min-width: 768px)": {
-      flex: "0 1 100%",
-      maxWidth: "33%",
-    },
-  },
-});
-
 export const itemImageHolderClass = css(({ devices }) => ({
+  height: "auto",
   marginBottom: 20,
   marginInline: "auto",
-  maxWidth: 200,
+  width: 200,
 
   "@media": {
     [devices.tablet]: {
       height: 200,
+      marginLeft: 0,
       maxWidth: 350,
+      width: "100%",
     },
   },
 }));
@@ -108,13 +102,13 @@ globalStyle(`.${itemClass}:first-of-type .${itemImageHolderClass}`, {
   marginLeft: "auto",
 });
 
-globalStyle(`.${itemClass}:first-of-type .${itemImageHolderClass}`, {
+globalStyle(`.${itemClass}:first-of-type .${itemImageHolderClass}`, ({ devices }) => ({
   "@media": {
-    "(min-width: 768px)": {
+    [devices.tablet]: {
       marginLeft: 0,
     },
   },
-});
+}));
 
 export const itemImageClass = css(({ devices }) => ({
   display: "block",
@@ -137,6 +131,10 @@ export const itemDescriptionClass = css(({ devices, fonts }) => ({
   textAlign: "center",
 
   "@media": {
+    [devices.mobile]: {
+      paddingLeft: 6,
+    },
+
     [devices.desktop]: {
       fontSize: 20,
     },
@@ -144,11 +142,13 @@ export const itemDescriptionClass = css(({ devices, fonts }) => ({
 }));
 
 globalStyle(`.${itemDescriptionClass} ul`, {
+  lineHeight: "1.2",
   textAlign: "left",
 });
 
 globalStyle(`.${itemDescriptionClass} ul li`, {
   marginBottom: 5,
+  whiteSpace: "nowrap",
 });
 
 globalStyle(`.${itemDescriptionClass} ul li::before`, {
@@ -157,17 +157,71 @@ globalStyle(`.${itemDescriptionClass} ul li::before`, {
   marginRight: 5,
 });
 
-globalStyle(`.${itemDescriptionClass} span`, {
+globalStyle(`.${itemDescriptionClass} > span`, ({ devices }) => ({
   color: "#ffcc00",
   display: "block",
-  fontSize: 80,
+  fontSize: 46,
   fontWeight: 700,
   textAlign: "center",
   textShadow: "0 0 15px #ffcc00",
+  top: 175,
   whiteSpace: "nowrap",
-});
+
+  "@media": {
+    [devices.tablet]: {
+      fontSize: 80,
+    },
+  },
+}));
 
 globalStyle(`.${itemDescriptionClass} p`, {
   marginTop: 10,
   textAlign: "center",
 });
+
+globalStyle(`.${itemClass}:first-of-type svg`, {
+  fill: "currentColor",
+  position: "absolute",
+  zIndex: 2,
+});
+
+globalStyle(`.${itemClass}:first-of-type svg:first-of-type`, {
+  color: "white",
+  left: 72,
+  top: -48,
+  transform: "rotate(60deg)",
+  width: 200,
+});
+
+globalStyle(`.${itemClass}:first-of-type svg:first-of-type text`, {
+  fontSize: 12,
+  fontWeight: 700,
+});
+
+globalStyle(`.${itemClass}:first-of-type svg:last-of-type`, {
+  left: 110,
+  opacity: 0.7,
+  top: -57,
+  transform: "rotate(55deg)",
+  width: 120,
+});
+
+globalStyle(`.${itemClass}:first-of-type svg:last-of-type text`, {
+  fontSize: 10,
+});
+
+globalStyle(`.${itemClass}:first-of-type svg:first-of-type`, ({ devices }) => ({
+  "@media": {
+    [devices.tablet]: {
+      top: -74,
+    },
+  },
+}));
+
+globalStyle(`.${itemClass}:first-of-type svg:last-of-type`, ({ devices }) => ({
+  "@media": {
+    [devices.tablet]: {
+      top: -81,
+    },
+  },
+}));

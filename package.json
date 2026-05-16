@@ -1,4 +1,8 @@
 {
+  "author": {
+    "email": "megathrone3333@gmail.com",
+    "name": "Andrii Taranenko"
+  },
   "dependencies": {
     "@rc-component/select": "^1.6.15",
     "@upstash/realtime": "^1.0.3",
@@ -50,7 +54,7 @@
     "typescript-eslint": "^8.59.3",
     "undici": "^6.19.0"
   },
-  "name": "sm-new",
+  "name": "sushi-man",
   "private": true,
   "scripts": {
     "build": "jest --ci --runInBand && yarn lint && next build --turbopack",

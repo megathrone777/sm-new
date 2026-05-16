@@ -43,6 +43,49 @@
     <path d="M12 7v5l4 2" />
   </symbol>
 
+  <symbol
+    fill="none"
+    id="invoiceIcon"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20" />
+    <path d="M8 11h8" />
+    <path d="M8 7h6" />
+  </symbol>
+
+  <symbol
+    fill="none"
+    id="copyIcon"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="M15 2h-4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8" />
+    <path d="M16.706 2.706A2.4 2.4 0 0 0 15 2v5a1 1 0 0 0 1 1h5a2.4 2.4 0 0 0-.706-1.706z" />
+    <path d="M5 7a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 1.732-1" />
+  </symbol>
+
+  <symbol
+    fill="none"
+    id="repeatIcon"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="2"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path d="m17 2 4 4-4 4" />
+    <path d="M3 11v-1a4 4 0 0 1 4-4h14" />
+    <path d="m7 22-4-4 4-4" />
+    <path d="M21 13v1a4 4 0 0 1-4 4H3" />
+  </symbol>
+
   <symbol id="saveIcon" viewBox="0 0 448 512">
     <path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-242.7c0-17-6.7-33.3-18.7-45.3L352
       50.7C340 38.7 323.7 32 306.7 32L64 32zm32 96c0-17.7 14.3-32 32-32l160 0c17.7 0 32 14.3 32 32l0 64c0 17.7-14.3 32-32
@@ -172,14 +215,17 @@
     />
   </symbol>
 
-  <symbol id="phoneIcon" viewBox="0 0 320 512">
-    <path
-      d="M16 64C16 28.7 44.7 0 80 0H304c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H80c-35.3
-        0-64-28.7-64-64V64zM144 448c0 8.8 7.2 16 16 16h64c8.8 0 16-7.2 16-16s-7.2-16-16-16H160c-8.8 0-16
-        7.2-16 16zM304 64H80V384H304V64z
-      "
-      fill="currentColor"
-    />
+  <symbol
+    fill="none"
+    id="phoneIcon"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="3"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <rect width="14" height="20" x="5" y="2" rx="3" ry="3" />
+    <path d="M12 18h.01" />
   </symbol>
 
   <symbol id="checkmarkIcon" viewBox="0 0 24 24">

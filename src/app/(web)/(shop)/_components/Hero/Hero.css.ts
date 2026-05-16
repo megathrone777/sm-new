@@ -41,6 +41,7 @@ export const contentClass = css(({ devices }) => ({
   height: "100%",
   justifyItems: "start",
   maxWidth: 280,
+  paddingLeft: 5,
   rowGap: 15,
 
   "@media": {

@@ -62,10 +62,11 @@ const addToCart = async (
       await saveCart({ ...initialCart, products: [newProduct] });
     } else {
       const toComparable = ({
-        quantity: _,
-        totalPrice: __,
+        modifiersTitle: _,
+        quantity: __,
+        totalPrice: ___,
         ...rest
-      }: TCartProduct): Omit<TCartProduct, "quantity" | "totalPrice"> => rest;
+      }: TCartProduct): Omit<TCartProduct, "modifiersTitle" | "quantity" | "totalPrice"> => rest;
 
       const foundIndex: number = cart.products.findIndex((product: TCartProduct): boolean =>
         isEqual(toComparable(newProduct), toComparable(product)),

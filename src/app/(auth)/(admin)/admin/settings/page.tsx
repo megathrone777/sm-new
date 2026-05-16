@@ -31,6 +31,7 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
     isAvailable,
     lastTimeForPickup,
     logoUrl,
+    mapUrl,
     phone,
     scheduleImageUrl,
     title,
@@ -133,6 +134,17 @@ const Page: React.FC<PageProps<"/admin/settings">> = async () => {
               name="address"
               type="text"
             />
+
+            <div className={wideClass}>
+              <p className={titleClass}>Google Maps embed URL (Contacts page)</p>
+
+              <textarea
+                className={textareaClass}
+                defaultValue={mapUrl}
+                name="mapUrl"
+                rows={2}
+              />
+            </div>
 
             <Input
               className={wideClass}

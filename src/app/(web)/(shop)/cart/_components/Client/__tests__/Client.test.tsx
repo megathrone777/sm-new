@@ -45,6 +45,10 @@ jest.mock("../Phone", () => ({
   Phone: (): React.ReactElement => <div data-testid="phone-mock" />,
 }));
 
+jest.mock("../History", () => ({
+  History: (): React.ReactElement => <div data-testid="history-mock" />,
+}));
+
 describe("Client", () => {
   const defaultProps = {
     email: "test@example.com",
@@ -117,12 +121,22 @@ describe("Client", () => {
   });
 
   it("marks name input as error when errors.name is set", () => {
-    render(<Client {...defaultProps} errors={{ name: "Vyplňte jméno" }} />);
+    render(
+      <Client
+        {...defaultProps}
+        errors={{ name: "Vyplňte jméno" }}
+      />,
+    );
     expect(screen.getByTestId("input-name")).toHaveAttribute("data-error", "true");
   });
 
   it("marks email input as error when errors.email is set", () => {
-    render(<Client {...defaultProps} errors={{ email: "Neplatný e-mail" }} />);
+    render(
+      <Client
+        {...defaultProps}
+        errors={{ email: "Neplatný e-mail" }}
+      />,
+    );
     expect(screen.getByTestId("input-email")).toHaveAttribute("data-error", "true");
   });
 });

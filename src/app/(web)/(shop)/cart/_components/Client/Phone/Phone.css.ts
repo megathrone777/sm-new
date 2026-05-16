@@ -6,9 +6,10 @@ export const inputWrapperClass = css(({ colors }) => ({
   borderBottom: `2px solid ${colors.red}`,
   display: "grid",
   gridAutoFlow: "column",
-  // gridTemplateColumns: "auto 1fr",
+  gridColumn: "1 / -1",
   height: 36,
   justifyContent: "start",
+  justifySelf: "stretch",
 }));
 
 export const inputClass = cssVariant(

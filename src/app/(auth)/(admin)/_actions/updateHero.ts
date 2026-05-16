@@ -16,7 +16,8 @@ const updateHero = async (
   const title = `${formData.get("title") ?? ""}`.trim();
   const description = `${formData.get("description") ?? ""}`.trim();
   const buttonTitle = `${formData.get("buttonTitle") ?? ""}`.trim();
-  const buttonLink = `${formData.get("buttonLink") ?? ""}`.trim();
+  const buttonLink =
+    `${formData.get("buttonLink") ?? ""}`.trim() as __next_route_internal_types__.RouteImpl<string>;
 
   if (!title) return { message: "Title is required", type: "error" };
   if (!buttonTitle) return { message: "Button title is required", type: "error" };
