@@ -15,10 +15,10 @@ const Logo: React.FC<TProps> = ({ imageUrl }) => (
       <Image
         alt="Sushi man."
         className={imageClass}
-        height={0}
-        sizes="100vw"
+        height={98}
+        sizes="98px"
         src={imageUrl}
-        width={0}
+        width={98}
       />
     </Link>
   </div>

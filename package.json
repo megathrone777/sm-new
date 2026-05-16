@@ -57,7 +57,7 @@
   "name": "sushi-man",
   "private": true,
   "scripts": {
-    "build": "jest --ci --runInBand && yarn lint && next build --turbopack",
+    "build": "jest --ci --runInBand && yarn lint && next build",
     "dev": "next dev --turbopack --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost-cert.pem",
     "lint": "eslint ./src --config eslint.config.mjs",
     "start": "next start",

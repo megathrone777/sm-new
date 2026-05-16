@@ -16,7 +16,8 @@
       "PowerShell(head -20)",
       "Bash(ls /mnt/c/Users/krol2/Desktop/sm-new/src/app/\\\\\\(web\\\\\\)/\\\\\\(shop\\\\\\)/rules/)",
       "Read(//mnt/c/Users/krol2/Desktop/sm-new/src/app/\\(web\\)/\\(shop\\)/**)",
-      "Bash(node -e \"console.log\\(require\\('./node_modules/next/package.json'\\).version\\)\")"
+      "Bash(node -e \"console.log\\(require\\('./node_modules/next/package.json'\\).version\\)\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\(JSON.stringify\\(p.scripts,null,2\\)\\)\")"
     ]
   }
 }

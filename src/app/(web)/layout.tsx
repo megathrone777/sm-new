@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
   return (
     <>
       <Header {...{ logoUrl, navigation, phone }} />
-      {children}
+      <main>{children}</main>
 
       <Footer
         {...{

@@ -15,11 +15,11 @@ const Logo: React.FC<TProps> = ({ imageUrl }) => (
       <Image
         alt="Logo."
         className={imageClass}
-        height={0}
+        height={98}
         priority
-        sizes="100vw"
+        sizes="98px"
         src={imageUrl}
-        width={0}
+        width={98}
       />
     </Link>
   </div>
