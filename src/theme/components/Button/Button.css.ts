@@ -23,11 +23,12 @@ export const buttonClass = cssVariant(
         },
       },
     },
+
     small: {
       fontSize: 16,
       height: 36,
       minWidth: 36,
-      paddingInline: 8,
+      paddingInline: 4,
     },
   }),
   (template, { colors, easing, fonts }) => [

@@ -1,4 +1,6 @@
+import type React from "react";
+
 export interface TProps {
-  color?: string;
+  color?: React.CSSProperties["color"];
   template?: "normal" | "small";
 }

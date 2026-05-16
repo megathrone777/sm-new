@@ -7,7 +7,7 @@ export interface TProps extends DetailedHTMLProps<
   HTMLButtonElement
 > {
   href?: __next_route_internal_types__.RouteImpl<string>;
-  iconId?: TIconID;
+  iconId?: null | TIconID;
   target?: HTMLAnchorElement["target"];
   template?: "normal" | "small";
 }

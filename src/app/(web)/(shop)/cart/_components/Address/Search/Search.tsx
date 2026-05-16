@@ -7,7 +7,7 @@ import {
   selectDeliveryAddress,
 } from "@/app/(web)/_actions";
 import { useDebouncedCallback, useTranslation } from "@/hooks";
-import { Button, Icon, Input } from "@/ui";
+import { Button, Icon, Input, Spinner } from "@/ui";
 
 import {
   distanceClass,
@@ -111,12 +111,19 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
 
         <Button
           disabled={isLocating}
-          iconId="locate"
+          iconId={isLocating ? null : "locate"}
           onClick={handleUseMyLocation}
           template="small"
           title={t<string>("useMyLocation")}
           type="button"
-        />
+        >
+          {isLocating && (
+            <Spinner
+              color="white"
+              template="small"
+            />
+          )}
+        </Button>
       </div>
 
       {suggestions.length > 0 && (
@@ -137,7 +144,7 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
         </div>
       )}
 
-      {delivery.address.length > 0 && (
+      {delivery.address.length > 0 && inputValue.length > 0 && (
         <button
           className={resetButtonClass}
           onClick={handleInputReset}
