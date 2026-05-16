@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { Marker, Polyline, TileLayer, useMap } from "react-leaflet";
 import Leaflet, { type LatLngExpression } from "leaflet";
@@ -15,6 +15,7 @@ const kitchenBbox: [number, number][] = [kitchenCoords, [50.0993822, 14.4309572]
 
 const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
   const map = useMap();
+  const polylineRef = useRef<Leaflet.Polyline | null>(null);
 
   const iconStart = Leaflet.divIcon({
     className: markerClass,
@@ -52,11 +53,32 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
     iconSize: [17, 30],
   });
 
-  useEffect((): void => {
+  useEffect((): (() => void) | void => {
     if (type === "delivery" && position && position.length > 0) {
       map.fitBounds(bbox(position as [number, number][]), { padding: [20, 20] });
 
-      return;
+      const handleMoveEnd = (): void => {
+        const pathEl = polylineRef.current?.getElement() as null | SVGPathElement;
+
+        if (!pathEl) return;
+
+        const length = pathEl.getTotalLength();
+
+        pathEl.style.transition = "none";
+        pathEl.style.strokeDasharray = `${length}`;
+        pathEl.style.strokeDashoffset = `${length}`;
+
+        void pathEl.getBoundingClientRect();
+
+        pathEl.style.transition = "stroke-dashoffset 1s ease";
+        pathEl.style.strokeDashoffset = "0";
+      };
+
+      map.once("moveend", handleMoveEnd);
+
+      return () => {
+        map.off("moveend", handleMoveEnd);
+      };
     }
 
     map.fitBounds(bbox(kitchenBbox));
@@ -73,6 +95,7 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
             color="red"
             pathOptions={{ fillColor: "currentColor", stroke: true }}
             positions={position}
+            ref={polylineRef}
           />
 
           <Marker
