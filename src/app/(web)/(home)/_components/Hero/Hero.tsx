@@ -28,6 +28,7 @@ const Hero: React.FC = async () => {
         <Image
           alt="Hero main."
           className={bgImageClass}
+          fetchPriority="high"
           fill
           priority
           sizes="100vw"

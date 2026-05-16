@@ -15,7 +15,8 @@
       "PowerShell(head -30)",
       "PowerShell(head -20)",
       "Bash(ls /mnt/c/Users/krol2/Desktop/sm-new/src/app/\\\\\\(web\\\\\\)/\\\\\\(shop\\\\\\)/rules/)",
-      "Read(//mnt/c/Users/krol2/Desktop/sm-new/src/app/\\(web\\)/\\(shop\\)/**)"
+      "Read(//mnt/c/Users/krol2/Desktop/sm-new/src/app/\\(web\\)/\\(shop\\)/**)",
+      "Bash(node -e \"console.log\\(require\\('./node_modules/next/package.json'\\).version\\)\")"
     ]
   }
 }

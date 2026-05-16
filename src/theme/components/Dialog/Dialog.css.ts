@@ -68,6 +68,7 @@ export const closeButtonClass = css({
   color: "white",
   height: 30,
   padding: 0,
+  textIndent: -9999,
   width: 30,
 
   ":focus": {

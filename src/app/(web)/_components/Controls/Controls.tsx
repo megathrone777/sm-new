@@ -78,6 +78,7 @@ const Controls: React.FC<TProps> = ({
         <div className={layoutClass}>
           {showScroller && (
             <button
+              aria-label="Scroll to top"
               className={buttonClass}
               onClick={handleScrollTop}
               type="button"
@@ -90,6 +91,7 @@ const Controls: React.FC<TProps> = ({
           )}
 
           <button
+            aria-label="Open schedule dialog"
             className={buttonClass}
             onClick={handleUserDialogToggle}
             type="button"

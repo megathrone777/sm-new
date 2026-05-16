@@ -60,6 +60,7 @@ export const buttonClass = css(({ colors, easing }) => ({
   opacity: 0.7,
   overflow: "hidden",
   pointerEvents: "auto",
+  textIndent: -9999,
   transition: `opacity .2s ${easing}`,
   width: 45,
 

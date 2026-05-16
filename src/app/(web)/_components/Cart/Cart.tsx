@@ -31,6 +31,7 @@ const Cart: React.FC = async () => {
     <div className={wrapperClass}>
       <div className={layoutClass}>
         <Link
+          aria-label="Go to cart"
           className={linkClass}
           href="/cart"
         >

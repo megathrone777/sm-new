@@ -35,6 +35,7 @@ const Dialog: React.FC<TProps> = ({ contactItems, isOpened, isShopOpen, onClose,
         >
           <div className={headerClass}>
             <button
+              aria-label="Close dialog"
               className={closeButtonClass}
               onClick={onClose}
               type="button"

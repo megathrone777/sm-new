@@ -62,11 +62,10 @@ const ProductsLayout: React.FC<TProps> = ({ categories, renderedProducts, showAl
                   <Image
                     alt={title}
                     className={tabImageClass}
-                    height={0}
+                    fill
                     loading="eager"
-                    sizes="100vw"
+                    sizes="(min-width: 1023px) 25vw, 50vw"
                     src={imageUrl}
-                    width={0}
                   />
 
                   <span className={tabLabelClass}>{title}</span>

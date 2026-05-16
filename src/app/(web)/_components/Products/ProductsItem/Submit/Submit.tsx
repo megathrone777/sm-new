@@ -43,6 +43,7 @@ const Submit: React.FC<TProps> = (product) => {
   return (
     <Form action={formAction}>
       <button
+        aria-label="Add to cart"
         className={buttonClass}
         type="submit"
       >

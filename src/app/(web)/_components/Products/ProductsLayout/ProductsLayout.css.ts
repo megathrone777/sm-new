@@ -1,5 +1,3 @@
-import { calc } from "@vanilla-extract/css-utils";
-
 import { css, cssVariant } from "@/theme";
 
 export const titleClass = cssVariant(
@@ -141,17 +139,13 @@ export const tabButtonClass = css(({ devices }) => ({
 }));
 
 export const tabImageClass = css(({ easing }) => ({
-  display: "block",
-  height: "auto",
-  minHeight: `${calc("100%").add("10px")}`,
-  minWidth: `${calc("100%").add("4px")}`,
+  objectFit: "cover",
   selectors: {
     [`${tabButtonClass}:hover > &`]: {
       transform: "scale(1.05)",
     },
   },
   transition: `transform .5s ${easing}`,
-  width: "100%",
 }));
 
 export const tabLabelClass = css(({ devices, fonts }) => ({
