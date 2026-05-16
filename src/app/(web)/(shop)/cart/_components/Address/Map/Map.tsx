@@ -57,11 +57,13 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
     if (type === "delivery" && position && position.length > 0) {
       map.fitBounds(bbox(position as [number, number][]), { padding: [20, 20] });
 
-      const handleMoveEnd = () => {
-        const pathEl = polylineRef.current?.getElement() as SVGPathElement | null;
+      const handleMoveEnd = (): void => {
+        const pathEl = polylineRef.current?.getElement() as null | SVGPathElement;
+
         if (!pathEl) return;
 
         const length = pathEl.getTotalLength();
+
         pathEl.style.transition = "none";
         pathEl.style.strokeDasharray = `${length}`;
         pathEl.style.strokeDashoffset = `${length}`;
@@ -89,11 +91,11 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
       {type === "delivery" && position && position.length > 0 ? (
         <>
           <Polyline
-            ref={polylineRef}
             className={routeClass}
             color="red"
             pathOptions={{ fillColor: "currentColor", stroke: true }}
             positions={position}
+            ref={polylineRef}
           />
 
           <Marker
