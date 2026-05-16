@@ -46,6 +46,8 @@ const getStatusKey = ({
 }: TArchivedOrder): "cancelled" | "done" | "processing" => {
   if (onlinePaymentStatus === "CANCELLED") return "cancelled";
 
+  if (status === "done") return "done";
+
   if (
     status === "placed" &&
     (paymentType === "cash" ||

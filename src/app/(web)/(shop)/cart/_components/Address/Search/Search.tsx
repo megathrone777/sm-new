@@ -3,16 +3,18 @@ import React, { useEffect, useState } from "react";
 import {
   getAddressSuggestions,
   resetDeliveryAddress,
+  reverseGeocodeAddress,
   selectDeliveryAddress,
 } from "@/app/(web)/_actions";
 import { useDebouncedCallback, useTranslation } from "@/hooks";
-import { Icon, Input } from "@/ui";
+import { Button, Icon, Input } from "@/ui";
 
 import {
   distanceClass,
   deliveryCurrencyClass,
   deliveryErrorClass,
   deliveryPriceClass,
+  layoutClass,
   resetButtonClass,
   resultsClass,
   suggestionsClass,
@@ -26,6 +28,7 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<string>(delivery.address);
   const [suggestions, setSuggestions] = useState<TAddressSuggestion[]>([]);
+  const [isLocating, setIsLocating] = useState<boolean>(false);
 
   const fetchSuggestions = useDebouncedCallback(async (query: string): Promise<void> => {
     const results = await getAddressSuggestions(query);
@@ -65,23 +68,56 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
     await resetDeliveryAddress();
   };
 
+  const handleUseMyLocation = (): void => {
+    if (!navigator.geolocation || isLocating) return;
+
+    setIsLocating(true);
+
+    navigator.geolocation.getCurrentPosition(
+      async ({ coords }): Promise<void> => {
+        const result = await reverseGeocodeAddress(coords.latitude, coords.longitude);
+
+        if (result) {
+          await handleAddressSelect(result);
+        }
+
+        setIsLocating(false);
+      },
+      (): void => {
+        setIsLocating(false);
+      },
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 },
+    );
+  };
+
   useEffect((): void => {
     setInputValue(delivery.address);
   }, [delivery.address]);
 
   return (
     <div className={wrapperClass}>
-      <Input
-        enterKeyHint="done"
-        iconId="address"
-        isError={Boolean(addressError)}
-        name="address"
-        onChange={handleInputChange}
-        placeholder={t<string>("fillAddress")}
-        restrictCyrillic
-        type="text"
-        value={inputValue}
-      />
+      <div className={layoutClass}>
+        <Input
+          enterKeyHint="done"
+          iconId="address"
+          isError={Boolean(addressError)}
+          name="address"
+          onChange={handleInputChange}
+          placeholder={t<string>("fillAddress")}
+          restrictCyrillic
+          type="text"
+          value={inputValue}
+        />
+
+        <Button
+          disabled={isLocating}
+          iconId="locate"
+          onClick={handleUseMyLocation}
+          template="small"
+          title={t<string>("useMyLocation")}
+          type="button"
+        />
+      </div>
 
       {suggestions.length > 0 && (
         <div className={suggestionsClass}>

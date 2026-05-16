@@ -7,6 +7,7 @@ export { removeFromCart } from "./removeFromCart";
 export { repeatOrder } from "./repeatOrder";
 export { resetDeliveryAddress } from "./resetDeliveryAddress";
 export { resetPromocode } from "./resetPromocode";
+export { reverseGeocodeAddress } from "./reverseGeocodeAddress";
 export { saveCart } from "./saveCart";
 export { saveCartFields } from "./saveCartFields";
 export { selectDeliveryAddress } from "./selectDeliveryAddress";

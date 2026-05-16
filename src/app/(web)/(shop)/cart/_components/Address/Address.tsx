@@ -12,11 +12,11 @@ import { addressClass, cityClass, iconClass, linkClass, wrapperClass } from "./A
 
 import type { TProps } from "./Address.types";
 
-const MapLayout = dynamic(() => import("./MapLayout").then((module) => module.MapLayout), {
+const MapLayout = dynamic(() => import("./MapLayout").then(({ MapLayout }) => MapLayout), {
   ssr: false,
 });
 
-const Map = dynamic(() => import("./Map").then((module) => module.Map), {
+const Map = dynamic(() => import("./Map").then(({ Map }) => Map), {
   ssr: false,
 });
 

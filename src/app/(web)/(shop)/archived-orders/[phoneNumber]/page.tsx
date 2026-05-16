@@ -27,6 +27,10 @@ const Page: React.FC<PageProps<"/archived-orders/[phoneNumber]">> = async ({ par
         (order.paymentType === "cash" ||
           order.paymentType === "cardAfterDelivery" ||
           (order.paymentType === "card" && order.onlinePaymentStatus === "PAID")),
+      products: order.products.map((p) => ({
+        ...p,
+        imageUrl: allProducts?.[p.slug]?.imageUrl ?? p.imageUrl,
+      })),
     }),
   );
 

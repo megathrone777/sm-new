@@ -13,6 +13,15 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
+export const layoutClass = css({
+  alignContent: "center",
+  alignItems: "center",
+  columnGap: 12,
+  display: "grid",
+  gridAutoFlow: "column",
+  gridTemplateColumns: "1fr auto",
+});
+
 export const distanceClass = css(({ devices }) => ({
   display: "none",
   left: `${calc("100%").add("20px")}`,
@@ -62,7 +71,7 @@ export const resetButtonClass = css({
   height: 25,
   padding: 0,
   position: "absolute",
-  right: 25,
+  right: 52,
   top: 5,
   width: 25,
 });

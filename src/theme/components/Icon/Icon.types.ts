@@ -14,6 +14,7 @@ export type TIconID =
   | "globe"
   | "history"
   | "invoice"
+  | "locate"
   | "minus"
   | "note"
   | "phone"

@@ -3,7 +3,6 @@ import React from "react";
 import { store } from "@/store";
 import { Button } from "@/ui";
 
-// import { wrapperClass } from "./History.css";
 import type { TProps } from "./History.types";
 
 const History: React.FC<TProps> = async ({ phoneNumber }) => {
