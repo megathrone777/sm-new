@@ -1,4 +1,5 @@
 import React from "react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { ToastsLoader } from "@/components/Toasts/ToastsLoader";
 import { themeClass } from "@/theme";
@@ -14,6 +15,7 @@ const RootLayout: React.FC<LayoutProps<"/">> = ({ children }) => (
     <body>
       {children}
       <ToastsLoader />
+      <SpeedInsights />
     </body>
   </html>
 );
