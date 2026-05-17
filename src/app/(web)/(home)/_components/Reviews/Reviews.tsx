@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 import { store } from "@/store";
 import { Button, Container } from "@/ui";
@@ -35,10 +36,12 @@ const Reviews: React.FC = async () => {
                 key={`review-${id}`}
               >
                 {imageUrl && (
-                  <img
+                  <Image
                     alt="Image."
                     className={imageClass}
+                    height={100}
                     src={imageUrl}
+                    width={100}
                   />
                 )}
 

@@ -54,6 +54,13 @@
     "typescript-eslint": "^8.59.3",
     "undici": "^6.19.0"
   },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 years",
+    "Firefox ESR",
+    "not dead",
+    "not IE 11"
+  ],
   "name": "sushi-man",
   "private": true,
   "scripts": {
