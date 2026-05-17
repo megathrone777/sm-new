@@ -16,6 +16,9 @@
 /out/
 .swc/
 
+# bundle analyzer report (generated)
+/bundle-analysis-report.txt
+
 # production
 /build
 
