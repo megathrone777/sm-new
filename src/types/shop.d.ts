@@ -62,6 +62,8 @@ declare global {
     contactItems: TContactLink[];
     cutleryPrice: number;
     email: string;
+    heroMainMobileUrl: string;
+    heroMainTabletUrl: string;
     heroMainUrl: string;
     heroPagesUrl: string;
     isAvailable: boolean;

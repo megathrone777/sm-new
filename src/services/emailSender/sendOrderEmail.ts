@@ -12,11 +12,11 @@ const sendOrderEmail = async (order: TOrder): Promise<boolean> => {
   if (!user || !pass || !order.clientEmail) return false;
 
   try {
-    const { address, businessName, email, phone } = await store.shop.getSettings();
+    const { address, businessName, email, logoUrl, phone } = await store.shop.getSettings();
     const html = await generateTemplate({
       order,
       pickupAddress: address,
-      shopSettings: { businessName, email, phone },
+      shopSettings: { businessName, email, logoUrl, phone },
     });
     const transporter = nodemailer.createTransport({
       auth: { pass, user },
@@ -27,7 +27,7 @@ const sendOrderEmail = async (order: TOrder): Promise<boolean> => {
     const info = await transporter.sendMail({
       from: user,
       html,
-      subject: `sushi-man.cz: Potvrzení objednávky #${order.id}`,
+      subject: `${process.env.PUBLIC_URL?.replace(/^https?:\/\//, "") ?? ""}: Potvrzení objednávky #${order.id}`,
       to: order.clientEmail,
     });
 

@@ -1,4 +1,4 @@
-import moment from "moment";
+import moment from "moment-timezone";
 
 import { redis } from "./redis";
 
@@ -116,9 +116,8 @@ const orders = {
     if (!ids.length) return 0;
     const orders = await fanOutById(ids);
 
-    return orders.filter(
-      (order): boolean => order.status !== "done" && order.status !== "placed",
-    ).length;
+    return orders.filter((order): boolean => order.status !== "done" && order.status !== "placed")
+      .length;
   },
 
   registerNewOrder: async (order: TOrder, cartSessionId?: null | string): Promise<void> => {

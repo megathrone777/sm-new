@@ -3,7 +3,7 @@ import { css } from "@/theme";
 export const pageClass = css({
   display: "flex",
   flexDirection: "column",
-  gap: 16,
+  gap: 30,
 });
 
 export const textareaClass = css({
@@ -20,8 +20,8 @@ export const textareaClass = css({
 
 export const columnsGridClass = css({
   display: "grid",
-  gap: 16,
+  gap: 30,
   gridAutoFlow: "column",
-  gridTemplateColumns: "1fr 1fr",
+  gridTemplateColumns: "40% 40%",
   width: "100%",
 });

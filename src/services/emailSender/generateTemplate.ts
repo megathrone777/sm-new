@@ -29,15 +29,16 @@ const generateTemplate = async ({
   return compile({
     company: {
       email: shopSettings.email,
+      logoUrl: shopSettings.logoUrl,
       name: shopSettings.businessName,
       phone: shopSettings.phone,
-      webAddress: "https://sushi-man.cz",
+      webAddress: process.env.PUBLIC_URL ?? "",
     },
     moment,
     order,
     paymentType: PAYMENT_LABEL[order.paymentType],
     pickupAddress,
-    title: `sushi-man.cz: Objednávka #${order.id}`,
+    title: `${process.env.PUBLIC_URL?.replace(/^https?:\/\//, "") ?? ""}: Objednávka #${order.id}`,
   });
 };
 

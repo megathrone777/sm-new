@@ -8,7 +8,7 @@ import { imageClass, wrapperClass } from "./ImageUploader.css";
 
 import type { TProps } from "./ImageUploader.types";
 
-const ImageUploader: React.FC<TProps> = ({ initialUrl }) => {
+const ImageUploader: React.FC<TProps> = ({ initialUrl, required }) => {
   const [previewUrl, setPreviewUrl] = useState<null | string>(initialUrl ?? null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,10 +37,11 @@ const ImageUploader: React.FC<TProps> = ({ initialUrl }) => {
         <Image
           alt="Image preview."
           className={imageClass}
-          height={200}
+          height={0}
           loading="eager"
+          sizes="100vw"
           src={previewUrl}
-          width={160}
+          width={0}
         />
       )}
 
@@ -49,7 +50,7 @@ const ImageUploader: React.FC<TProps> = ({ initialUrl }) => {
         template="small"
         type="button"
       >
-        {previewUrl ? "Select image" : "Upload image"}
+        {previewUrl ? "Select image" : required ? "Upload image *" : "Upload image"}
       </Button>
 
       <input

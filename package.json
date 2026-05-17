@@ -23,7 +23,6 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^16.2.6",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -65,7 +64,6 @@
   "name": "sushi-man",
   "private": true,
   "scripts": {
-    "analyze": "next experimental-analyze",
     "build": "jest --ci --runInBand && yarn lint && next build --turbopack",
     "dev": "next dev --turbopack --experimental-https --experimental-https-key ./localhost-key.pem --experimental-https-cert ./localhost-cert.pem",
     "lint": "eslint ./src --config eslint.config.mjs",

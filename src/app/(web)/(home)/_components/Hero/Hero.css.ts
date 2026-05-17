@@ -31,16 +31,21 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const bgImageClass = css(({ devices }) => ({
-  objectFit: "cover",
-  objectPosition: "right -100px top",
+export const pictureClass = css({
+  bottom: 0,
+  display: "block",
+  left: 0,
+  position: "absolute",
+  right: 0,
+  top: 0,
+});
 
-  "@media": {
-    [devices.mobile]: {
-      objectPosition: "right top",
-    },
-  },
-}));
+export const bgImageClass = css({
+  height: "100%",
+  objectFit: "cover",
+  objectPosition: "center top",
+  width: "100%",
+});
 
 export const contentClass = css(({ devices }) => ({
   alignContent: "start",

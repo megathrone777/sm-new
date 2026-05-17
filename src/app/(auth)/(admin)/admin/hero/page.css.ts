@@ -1,9 +1,10 @@
 import { css } from "@/theme";
 
 export const pageClass = css({
+  alignItems: "center",
   display: "flex",
   flexDirection: "column",
-  gap: 16,
+  gap: 30,
 });
 
 export const textareaClass = css({

@@ -8,8 +8,10 @@ import { Input } from "@/ui";
 import { pageClass, textareaClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/admin/hero">> = async () => {
-  const [{ buttonLink, buttonTitle, description, title }, { heroMainUrl, heroPagesUrl }] =
-    await Promise.all([store.hero.get(), store.shop.getSettings()]);
+  const [
+    { buttonLink, buttonTitle, description, title },
+    { heroMainMobileUrl, heroMainTabletUrl, heroMainUrl, heroPagesUrl },
+  ] = await Promise.all([store.hero.get(), store.shop.getSettings()]);
 
   return (
     <>
@@ -23,9 +25,39 @@ const Page: React.FC<PageProps<"/admin/hero">> = async () => {
             value="heroMain"
           />
 
-          <p>Main page hero (large)</p>
+          <p>Main page hero — desktop ≥768px (required)</p>
+          <ImageUploader
+            initialUrl={heroMainUrl}
+            required
+          />
+        </FormLayout>
 
-          <ImageUploader initialUrl={heroMainUrl} />
+        <FormLayout formAction={updateSettingsImage}>
+          <input
+            name="key"
+            type="hidden"
+            value="heroMainTablet"
+          />
+
+          <p>Main page hero — tablet 500–767px (required)</p>
+          <ImageUploader
+            initialUrl={heroMainTabletUrl}
+            required
+          />
+        </FormLayout>
+
+        <FormLayout formAction={updateSettingsImage}>
+          <input
+            name="key"
+            type="hidden"
+            value="heroMainMobile"
+          />
+
+          <p>Main page hero — mobile &lt;500px (required)</p>
+          <ImageUploader
+            initialUrl={heroMainMobileUrl}
+            required
+          />
         </FormLayout>
 
         <FormLayout formAction={updateSettingsImage}>
@@ -36,7 +68,6 @@ const Page: React.FC<PageProps<"/admin/hero">> = async () => {
           />
 
           <p>Other pages hero (smaller)</p>
-
           <ImageUploader initialUrl={heroPagesUrl} />
         </FormLayout>
 

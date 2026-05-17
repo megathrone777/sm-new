@@ -98,11 +98,12 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
         </ul>
       </div>
 
-      <Burger
-        {...{ isOpened }}
-        className={burgerClass}
-        onClick={handleMenuToggle}
-      />
+      <div className={burgerClass}>
+        <Burger
+          {...{ isOpened }}
+          onClick={handleMenuToggle}
+        />
+      </div>
     </div>
   );
 };

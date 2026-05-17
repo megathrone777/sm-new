@@ -9,6 +9,8 @@ type TImageKey =
   | "additionalInfoBg"
   | "allergeny"
   | "heroMain"
+  | "heroMainMobile"
+  | "heroMainTablet"
   | "heroPages"
   | "logo"
   | "promotionBg"
@@ -20,6 +22,8 @@ const VALID_IMAGE_KEYS: TImageKey[] = [
   "additionalInfoBg",
   "allergeny",
   "heroMain",
+  "heroMainMobile",
+  "heroMainTablet",
   "heroPages",
   "logo",
   "promotionBg",
@@ -86,10 +90,12 @@ const DEFAULT_NAV: TNavItem[] = [
 
 const DEFAULT_IMAGE_URLS: Record<TImageKey, string> = {
   additionalInfoBg: "",
-  allergeny: "/uploads/settings/allergeny_img.jpg",
+  allergeny: "",
   heroMain: "",
+  heroMainMobile: "",
+  heroMainTablet: "",
   heroPages: "",
-  logo: "/uploads/settings/logo_img.svg",
+  logo: "",
   promotionBg: "",
   promotionCol1: "",
   promotionCol2: "",
@@ -189,6 +195,8 @@ const shop = {
         { link: "viber://chat?number=%2B420792745116#/", type: "viber" },
         { link: "tel:+420792745116", type: "phone" },
       ],
+      heroMainMobileUrl: imageOverrides?.heroMainMobile ?? DEFAULT_IMAGE_URLS.heroMainMobile,
+      heroMainTabletUrl: imageOverrides?.heroMainTablet ?? DEFAULT_IMAGE_URLS.heroMainTablet,
       heroMainUrl: imageOverrides?.heroMain ?? DEFAULT_IMAGE_URLS.heroMain,
       heroPagesUrl: imageOverrides?.heroPages ?? DEFAULT_IMAGE_URLS.heroPages,
       logoUrl: imageOverrides?.logo ?? DEFAULT_IMAGE_URLS.logo,

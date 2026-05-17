@@ -4,13 +4,10 @@ import { buttonClass, lineClass } from "./Burger.css";
 
 import type { TProps } from "./Burger.types";
 
-const Burger: React.FC<TProps> = ({ className, isOpened, onClick }) => (
+const Burger: React.FC<TProps> = ({ isOpened, onClick }) => (
   <button
     {...{ onClick }}
-    className={`
-      ${buttonClass[isOpened ? "isOpened" : "default"]}
-      ${className}
-    `}
+    className={buttonClass[isOpened ? "isOpened" : "default"]}
     title="Menu trigger."
     type="button"
   >
