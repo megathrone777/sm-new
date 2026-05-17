@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Toasts } from "@/components";
+import { ToastsLoader } from "@/components/Toasts/ToastsLoader";
 import { themeClass } from "@/theme";
 import "@/theme/global";
 
@@ -13,7 +13,7 @@ const RootLayout: React.FC<LayoutProps<"/">> = ({ children }) => (
   >
     <body>
       {children}
-      <Toasts />
+      <ToastsLoader />
     </body>
   </html>
 );

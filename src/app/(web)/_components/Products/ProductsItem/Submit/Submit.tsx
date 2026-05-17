@@ -1,6 +1,5 @@
 "use client";
 import React, { startTransition } from "react";
-import { toast } from "react-toastify";
 import Form from "next/form";
 
 import { addToCart, validateNewProduct } from "@/app/(web)/_actions";
@@ -31,6 +30,8 @@ const Submit: React.FC<TProps> = (product) => {
 
         return;
       }
+
+      const { toast } = await import("react-toastify");
 
       toast(message, { type });
 
