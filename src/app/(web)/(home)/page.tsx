@@ -9,7 +9,10 @@ const Page: React.FC<PageProps<"/">> = async () => (
     <Schedule />
     <About />
     <Promotion />
-    <Products title="Menu" />
+    <Products
+      showAll
+      title="Menu"
+    />
     <AdditionalInfo />
     <Reviews />
   </>
