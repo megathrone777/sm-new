@@ -1,9 +1,9 @@
 "use client";
 import React, { startTransition, useMemo } from "react";
-import moment from "moment";
 
 import { updateDeliveryTime } from "@/app/(web)/_actions";
 import { Icon, Selectbox } from "@/ui";
+import { dayjs } from "@/utils/dayjs";
 
 import { iconClass, labelClass, wrapperClass } from "./Time.css";
 
@@ -24,24 +24,23 @@ const WEEKDAY_LOOKUP: TWeekDay[] = [
 ];
 
 const generateOptions = (day: TScheduleDay): string[] => {
-  const earliest = moment().add(MIN_LEAD_MINUTES, "minutes");
-  const open = moment(day.openTime, "HH:mm");
-  const lastSlot = moment(day.closeTime, "HH:mm").subtract(SLOT_END_OFFSET_MINUTES, "minutes");
+  const earliest = dayjs().add(MIN_LEAD_MINUTES, "minute");
+  const open = dayjs(day.openTime, "HH:mm");
+  const lastSlot = dayjs(day.closeTime, "HH:mm").subtract(SLOT_END_OFFSET_MINUTES, "minute");
   const remainder = earliest.minute() % SLOT_INTERVAL_MINUTES;
   const snappedEarliest =
     remainder === 0
-      ? earliest.clone().seconds(0).milliseconds(0)
+      ? earliest.second(0).millisecond(0)
       : earliest
-          .clone()
-          .add(SLOT_INTERVAL_MINUTES - remainder, "minutes")
-          .seconds(0)
-          .milliseconds(0);
-  const cursor = snappedEarliest.isAfter(open) ? snappedEarliest : open;
+          .add(SLOT_INTERVAL_MINUTES - remainder, "minute")
+          .second(0)
+          .millisecond(0);
+  let cursor = snappedEarliest.isAfter(open) ? snappedEarliest : open;
   const options: string[] = [];
 
   while (!cursor.isAfter(lastSlot)) {
     options.push(cursor.format("HH:mm"));
-    cursor.add(SLOT_INTERVAL_MINUTES, "minutes");
+    cursor = cursor.add(SLOT_INTERVAL_MINUTES, "minute");
   }
 
   return options;

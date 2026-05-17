@@ -1,8 +1,8 @@
 "use client";
 import React, { useTransition } from "react";
-import moment from "moment";
 
 import { updateStatus } from "@/app/(auth)/(orders)/_actions";
+import { dayjs } from "@/utils/dayjs";
 
 import { buttonClass, layoutClass, statusClass } from "./Controls.css";
 
@@ -30,8 +30,11 @@ const Controls: React.FC<TProps> = ({ createdAt, deliveryTime, deliveryType, id,
   const [isPending, startTransition] = useTransition();
 
   const minutesLate = deliveryTime
-    ? moment(new Date()).diff(`${moment().format("YYYY-MM-DD")} ${deliveryTime}`, "m") + 60
-    : moment(new Date()).diff(createdAt, "m");
+    ? dayjs().diff(
+      dayjs(`${dayjs().format("YYYY-MM-DD")} ${deliveryTime}`, "YYYY-MM-DD HH:mm"),
+      "minute",
+    ) + 60
+    : dayjs().diff(dayjs(createdAt), "minute");
 
   const getButtonLabel = (): string => {
     if (deliveryType === "pickup" && status === "ready") return "ОТДАН";
