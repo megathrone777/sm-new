@@ -104,8 +104,14 @@ export const imageClass = css({
   maxHeight: 100,
 });
 
-export const ratingImageClass = css({
+export const starsHelperClass = css({
+  backgroundImage: "url('/images/rating_img.jpg')",
+  backgroundPositionX: "center",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "auto 100%",
   display: "block",
+  height: 21,
   margin: "0 auto 15px",
   maxWidth: 120,
+  minHeight: 21,
 });

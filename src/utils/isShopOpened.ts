@@ -1,3 +1,5 @@
+import moment from "moment-timezone";
+
 const DAY_LOOKUP: TWeekDay[] = [
   "sunday",
   "monday",
@@ -17,13 +19,13 @@ const parseMinutes = (value: string): number => {
 const isShopOpened = (schedule: TSchedule, isAvailable: boolean): boolean => {
   if (!isAvailable) return false;
 
-  const pragueDate = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Prague" }));
-  const day = DAY_LOOKUP[pragueDate.getDay()];
+  const now = moment.tz("Europe/Prague");
+  const day = DAY_LOOKUP[now.day()];
 
   if (!day) return false;
 
   const daySchedule = schedule[day];
-  const minutes = pragueDate.getHours() * 60 + pragueDate.getMinutes();
+  const minutes = now.hours() * 60 + now.minutes();
 
   return (
     minutes >= parseMinutes(daySchedule.openTime) && minutes < parseMinutes(daySchedule.closeTime)
