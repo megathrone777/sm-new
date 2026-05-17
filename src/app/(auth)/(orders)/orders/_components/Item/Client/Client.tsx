@@ -1,5 +1,4 @@
 import React from "react";
-import moment from "moment";
 
 import { itemClass, labelClass, valueClass } from "../Item.css";
 import { typeClass } from "./Client.css";
@@ -36,7 +35,7 @@ const Client: React.FC<TProps> = ({
             <span className={`${typeClass} ${deliveryType}`}>Доставка</span> {deliveryTitle}
           </>
         )}{" "}
-        {deliveryTime ? ` на ${moment(deliveryTime, "HH:mm").format("HH:mm")}` : " на Сейчас"}
+        {deliveryTime ? ` на ${deliveryTime}` : " на Сейчас"}
       </span>
     </p>
   </>

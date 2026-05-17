@@ -11,7 +11,7 @@ p Doprava:
 if order.deliveryType === "pickup"
 	p Čas vyzvednutí:
 		if order.deliveryTime
-			strong.detail-value= moment(order.deliveryTime, "HH:mm").format("HH:mm")
+			strong.detail-value= order.deliveryTime
 		else
 			strong.detail-value teď
 
@@ -21,7 +21,7 @@ if order.deliveryType === "pickup"
 if order.deliveryType === "delivery"
 	p Čas doručení:
 		if order.deliveryTime
-			strong.detail-value= moment(order.deliveryTime, "HH:mm").format("HH:mm")
+			strong.detail-value= order.deliveryTime
 		else
 			strong.detail-value teď
 

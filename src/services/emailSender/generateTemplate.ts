@@ -1,7 +1,6 @@
 import fs from "fs";
 import path from "path";
 
-import moment from "moment";
 import pug from "pug";
 
 import type { TGenerateTemplateInput } from "./emailSender.types";
@@ -34,7 +33,6 @@ const generateTemplate = async ({
       phone: shopSettings.phone,
       webAddress: process.env.PUBLIC_URL ?? "",
     },
-    moment,
     order,
     paymentType: PAYMENT_LABEL[order.paymentType],
     pickupAddress,

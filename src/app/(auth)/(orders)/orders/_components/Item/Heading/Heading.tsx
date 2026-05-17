@@ -1,6 +1,5 @@
 "use client";
 import React, { useTransition } from "react";
-import moment from "moment";
 
 import { deleteOrder } from "@/app/(auth)/(admin)/_actions";
 
@@ -33,7 +32,7 @@ const Heading: React.FC<TProps> = ({ createdAt, id, isAdmin, onDelete, ordersCou
       </h3>
 
       <div className={contentClass}>
-        <span>{moment(createdAt).format("HH:mm")}</span>
+        <span>{new Intl.DateTimeFormat("sv-SE", { hour: "2-digit", minute: "2-digit" }).format(new Date(createdAt))}</span>
 
         {isAdmin && (
           <button

@@ -1,5 +1,3 @@
-import moment from "moment";
-
 import { store } from "@/store";
 
 import { sendSms } from "./sendSms";
@@ -31,7 +29,7 @@ const sendOrderCreatedSms = async (order: TOrder): Promise<boolean> => {
   const text = interpolate(templates[key], {
     "#orderId": `#${order.id}`,
     orderDeliveryTime: order.deliveryTime
-      ? moment(order.deliveryTime, "HH:mm").format("HH:mm")
+      ? order.deliveryTime
       : "",
     orderPickupAddress: address,
   });

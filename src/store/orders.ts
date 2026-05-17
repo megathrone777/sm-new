@@ -1,5 +1,3 @@
-import moment from "moment-timezone";
-
 import { redis } from "./redis";
 
 const INDEX = "orders";
@@ -10,6 +8,9 @@ const hashKey = (id: TOrder["id"]): string => `order:${id}`;
 const phoneIndex = (phoneNumber: string): string => `orders:phone:${phoneNumber}`;
 const promocodeIndex = (code: string): string => `promocode:${code}:orders`;
 const dayIndex = (day: string): string => `orders:day:${day}`;
+
+const pragueDay = (date?: Date): string =>
+  new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Prague" }).format(date ?? new Date());
 
 const fanOutById = async (ids: number[]): Promise<TOrder[]> => {
   if (!ids.length) return [];
@@ -34,10 +35,7 @@ const orders = {
 
     pipeline.del(hashKey(id));
     pipeline.zrem(INDEX, `${id}`);
-    pipeline.zrem(
-      dayIndex(moment.utc(order.createdAt).tz("Europe/Prague").format("YYYY-MM-DD")),
-      `${id}`,
-    );
+    pipeline.zrem(dayIndex(pragueDay(new Date(order.createdAt))), `${id}`);
 
     if (order.clientPhoneNumber) {
       pipeline.zrem(phoneIndex(order.clientPhoneNumber), `${id}`);
@@ -51,8 +49,7 @@ const orders = {
   },
 
   getActive: async (): Promise<TOrder[]> => {
-    const today = moment().tz("Europe/Prague").format("YYYY-MM-DD");
-    const ids = await redis.zrange<number[]>(dayIndex(today), 0, QUEUE_SCAN_LIMIT - 1, {
+    const ids = await redis.zrange<number[]>(dayIndex(pragueDay()), 0, QUEUE_SCAN_LIMIT - 1, {
       rev: true,
     });
 
@@ -108,8 +105,7 @@ const orders = {
   },
 
   getInQueueCount: async (): Promise<number> => {
-    const today = moment().tz("Europe/Prague").format("YYYY-MM-DD");
-    const ids = await redis.zrange<number[]>(dayIndex(today), 0, QUEUE_SCAN_LIMIT - 1, {
+    const ids = await redis.zrange<number[]>(dayIndex(pragueDay()), 0, QUEUE_SCAN_LIMIT - 1, {
       rev: true,
     });
 
@@ -125,7 +121,7 @@ const orders = {
       .pipeline()
       .hset<TOrder>(hashKey(order.id), order as unknown as Record<TOrder["id"], TOrder>)
       .zadd(INDEX, { member: `${order.id}`, score: +order.id })
-      .zadd(dayIndex(moment.utc(order.createdAt).tz("Europe/Prague").format("YYYY-MM-DD")), {
+      .zadd(dayIndex(pragueDay(new Date(order.createdAt))), {
         member: `${order.id}`,
         score: +order.id,
       })

@@ -1,5 +1,4 @@
 "use server";
-import moment from "moment-timezone";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -70,19 +69,27 @@ const validateAndSubmitCart = async (
       );
   };
 
-  const checkVicinityOpened = (): boolean => {
-    const format: string = "hh:mm";
-    const currentTime = moment(moment(), format);
-    const startTime = moment("11:00", format);
-    const lastTime = moment(lastTimeForPickup, format);
+  const toMinutes = (time: string): number => {
+    const [hours = 0, minutes = 0] = time.split(":").map(Number);
 
-    return currentTime.isBetween(startTime, lastTime);
+    return hours * 60 + minutes;
+  };
+
+  const pragueHHMM = (): string =>
+    new Intl.DateTimeFormat("sv-SE", {
+      hour: "2-digit",
+      minute: "2-digit",
+      timeZone: "Europe/Prague",
+    }).format(new Date());
+
+  const checkVicinityOpened = (): boolean => {
+    const current = toMinutes(pragueHHMM());
+
+    return current > toMinutes("11:00") && current < toMinutes(lastTimeForPickup);
   };
 
   if (delivery.type === "pickup" && !checkVicinityOpened()) {
-    errors.pickup = `Po času ${moment(lastTimeForPickup, "HH:mm").format(
-      "HH:mm",
-    )}, vyzvednutí je možné jenom na provozovně Milicova 25, Praha 3`;
+    errors.pickup = `Po času ${lastTimeForPickup}, vyzvednutí je možné jenom na provozovně Milicova 25, Praha 3`;
   }
 
   if (delivery.type === "delivery" && delivery.address && !isMissedStreetNumber(delivery.address)) {
@@ -101,10 +108,7 @@ const validateAndSubmitCart = async (
     errors.cutlery = "Zvolte množství příboru na osobu, minimálně 1";
   }
 
-  if (
-    time.value !== null &&
-    moment(new Date()).diff(`${moment().format("YYYY-MM-DD")} ${time.value}`, "m") * -1 < 60
-  ) {
+  if (time.value !== null && toMinutes(time.value) - toMinutes(pragueHHMM()) < 60) {
     const message =
       delivery.type === "delivery"
         ? "Zvoleny čas doručené musí být více než 60 minut od aktuálního času"
@@ -175,7 +179,7 @@ const validateAndSubmitCart = async (
     comgateProcessedAt: "",
     comgateTransId: "",
     courier: "",
-    createdAt: moment().toISOString(),
+    createdAt: new Date().toISOString(),
     cutleryCount: cutlery.quantity,
     cutleryCountToPay,
     cutleryPrice: cutlery.totalPrice,

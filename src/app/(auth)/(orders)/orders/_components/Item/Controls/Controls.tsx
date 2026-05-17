@@ -1,6 +1,5 @@
 "use client";
 import React, { useTransition } from "react";
-import moment from "moment";
 
 import { updateStatus } from "@/app/(auth)/(orders)/_actions";
 
@@ -30,8 +29,8 @@ const Controls: React.FC<TProps> = ({ createdAt, deliveryTime, deliveryType, id,
   const [isPending, startTransition] = useTransition();
 
   const minutesLate = deliveryTime
-    ? moment(new Date()).diff(`${moment().format("YYYY-MM-DD")} ${deliveryTime}`, "m") + 60
-    : moment(new Date()).diff(createdAt, "m");
+    ? Math.floor((Date.now() - new Date(`${new Date().toLocaleDateString("sv-SE")}T${deliveryTime}:00`).getTime()) / 60000) + 60
+    : Math.floor((Date.now() - new Date(createdAt).getTime()) / 60000);
 
   const getButtonLabel = (): string => {
     if (deliveryType === "pickup" && status === "ready") return "ОТДАН";

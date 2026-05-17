@@ -1,4 +1,4 @@
-import { randomUUID } from "node:crypto";
+import { randomUUID } from "crypto";
 
 import { redis } from "./redis";
 import { shop } from "./shop";
@@ -10,11 +10,7 @@ const LOCK_TTL_SECONDS = 5;
 
 const lockKey = (sessionId: string): string => `lock:${sessionId}`;
 
-// --- Pure pricing helper functions (exported for testing) ---
-
-const getCategoryDiscount = (
-  products: TCartProduct[],
-): number => {
+const getCategoryDiscount = (products: TCartProduct[]): number => {
   const productsWithDiscount: TCartProduct[] = products.filter(
     ({ isPromotionActive }: TCartProduct): boolean => Boolean(isPromotionActive),
   );
@@ -53,10 +49,7 @@ const getCutleryPrice = (
   return 0;
 };
 
-const getProductsPrice = (
-  products: TCartProduct[],
-  additionals: TCartAdditional[],
-): number => {
+const getProductsPrice = (products: TCartProduct[], additionals: TCartAdditional[]): number => {
   const productsPrice: number = products.reduce<number>(
     (accumulator: number, { totalPrice }: TCartProduct): number => accumulator + totalPrice,
     0,
@@ -99,19 +92,12 @@ const cart = {
 
     if (!data || Object.keys(data).length === 0) return null;
 
-    const {
-      additionals,
-      cutlery,
-      delivery,
-      products,
-      promo,
-      time,
-      tips,
-      ...cartRest
-    } = data as unknown as TCart & { delivery: TDelivery & { time?: TSelectOption } };
+    const { additionals, cutlery, delivery, products, promo, time, tips, ...cartRest } =
+      data as unknown as TCart & { delivery: TDelivery & { time?: TSelectOption } };
     const legacyDeliveryTime = (delivery as { time?: TSelectOption }).time;
-    const { time: _legacyTime, ...deliveryWithoutTime } =
-      delivery as TDelivery & { time?: TSelectOption };
+    const { time: _legacyTime, ...deliveryWithoutTime } = delivery as TDelivery & {
+      time?: TSelectOption;
+    };
     const resolvedTime: TSelectOption = time ??
       legacyDeliveryTime ?? { label: "Doručit teď", value: null };
     const { cutleryPrice } = await shop.getSettings();
@@ -206,4 +192,11 @@ const cart = {
   },
 };
 
-export { cart, getCategoryDiscount, getCutleryPrice, getDeliveryDiscount, getDeliveryPrice, getProductsPrice };
+export {
+  cart,
+  getCategoryDiscount,
+  getCutleryPrice,
+  getDeliveryDiscount,
+  getDeliveryPrice,
+  getProductsPrice,
+};

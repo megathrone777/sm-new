@@ -1,6 +1,5 @@
 "use client";
 import React, { startTransition, useMemo } from "react";
-import moment from "moment";
 
 import { updateDeliveryTime } from "@/app/(web)/_actions";
 import { Icon, Selectbox } from "@/ui";
@@ -23,25 +22,37 @@ const WEEKDAY_LOOKUP: TWeekDay[] = [
   "saturday",
 ];
 
-const generateOptions = (day: TScheduleDay): string[] => {
-  const earliest = moment().add(MIN_LEAD_MINUTES, "minutes");
-  const open = moment(day.openTime, "HH:mm");
-  const lastSlot = moment(day.closeTime, "HH:mm").subtract(SLOT_END_OFFSET_MINUTES, "minutes");
-  const remainder = earliest.minute() % SLOT_INTERVAL_MINUTES;
-  const snappedEarliest =
-    remainder === 0
-      ? earliest.clone().seconds(0).milliseconds(0)
-      : earliest
-          .clone()
-          .add(SLOT_INTERVAL_MINUTES - remainder, "minutes")
-          .seconds(0)
-          .milliseconds(0);
-  const cursor = snappedEarliest.isAfter(open) ? snappedEarliest : open;
+const toHHMM = (date: Date): string =>
+  `${date.getHours().toString().padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+
+const parseHHMM = (time: string): Date => {
+  const [hours = 0, minutes = 0] = time.split(":").map(Number);
+  const date = new Date();
+
+  date.setHours(hours, minutes, 0, 0);
+
+  return date;
+};
+
+const generateOptions = ({ closeTime, openTime }: TScheduleDay): string[] => {
+  const earliest = new Date(Date.now() + MIN_LEAD_MINUTES * 60 * 1000);
+  const open = parseHHMM(openTime);
+  const lastSlot = parseHHMM(closeTime);
+
+  lastSlot.setMinutes(lastSlot.getMinutes() - SLOT_END_OFFSET_MINUTES);
+
+  const remainder = earliest.getMinutes() % SLOT_INTERVAL_MINUTES;
+
+  if (remainder !== 0)
+    earliest.setMinutes(earliest.getMinutes() + (SLOT_INTERVAL_MINUTES - remainder));
+  earliest.setSeconds(0, 0);
+
+  const cursor = new Date(earliest > open ? earliest : open);
   const options: string[] = [];
 
-  while (!cursor.isAfter(lastSlot)) {
-    options.push(cursor.format("HH:mm"));
-    cursor.add(SLOT_INTERVAL_MINUTES, "minutes");
+  while (cursor <= lastSlot) {
+    options.push(toHHMM(cursor));
+    cursor.setMinutes(cursor.getMinutes() + SLOT_INTERVAL_MINUTES);
   }
 
   return options;
