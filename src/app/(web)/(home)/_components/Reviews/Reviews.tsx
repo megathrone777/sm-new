@@ -48,10 +48,12 @@ const Reviews: React.FC = async () => {
                 <p className={countClass}>{count}</p>
                 <p className={textClass}>{text}</p>
 
-                <img
+                <Image
                   alt="Rating."
                   className={ratingImageClass}
+                  height={24}
                   src="/images/rating_img.jpg"
+                  width={120}
                 />
 
                 <a
