@@ -1,7 +1,6 @@
 import localFont from "next/font/local";
 
 const avenir = localFont({
-  display: "block",
   src: [
     {
       path: "./AvenirNext-Regular.woff2",
@@ -28,14 +27,12 @@ const avenir = localFont({
 });
 
 const franklin = localFont({
-  display: "block",
   src: "./Franklin-Gothic-Medium.woff2",
   variable: "--font-franklin",
   weight: "500",
 });
 
 const akrobat = localFont({
-  display: "block",
   src: "./Akrobat-Black.woff2",
   variable: "--font-akrobat",
   weight: "900",

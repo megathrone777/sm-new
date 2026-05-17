@@ -1,9 +1,14 @@
+import withBundleAnalyzer from "@next/bundle-analyzer";
 import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 
 import type { NextConfig } from "next";
 
 const withVanillaExtract = createVanillaExtractPlugin({
   unstable_turbopack: { mode: "auto" },
+});
+
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
 });
 
 const config: NextConfig = {
@@ -36,4 +41,4 @@ const config: NextConfig = {
   typedRoutes: true,
 };
 
-export default withVanillaExtract(config);
+export default bundleAnalyzer(withVanillaExtract(config));
