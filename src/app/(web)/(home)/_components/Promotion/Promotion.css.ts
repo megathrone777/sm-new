@@ -15,7 +15,7 @@ export const wrapperClass = css(({ devices }) => ({
 }));
 
 export const imageClass = css({
-  height: "100%",
+  height: "auto",
   objectFit: "cover",
   width: "100%",
 });
