@@ -13,12 +13,13 @@ const Logo: React.FC<TProps> = ({ imageUrl }) => (
       href="/"
     >
       <Image
-        alt="Sushi man."
+        alt="Logo header."
         className={imageClass}
-        height={98}
-        sizes="98px"
+        height={0}
+        priority
+        sizes="100vw"
         src={imageUrl}
-        width={98}
+        width={0}
       />
     </Link>
   </div>

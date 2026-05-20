@@ -35,7 +35,4 @@ export const linkClass = css({
 export const imageClass = css({
   height: "auto",
   width: "100%",
-  // height: "100%",
-  // maxWidth: "100%",
-  // width: "auto",
 });

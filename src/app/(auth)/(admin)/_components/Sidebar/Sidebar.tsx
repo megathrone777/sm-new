@@ -3,8 +3,6 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { toKey } from "@/utils";
-
 import {
   dividerClass,
   itemClass,
@@ -116,7 +114,7 @@ const Sidebar: React.FC<TProps> = ({ isOpened }) => {
           {menuItems.map<React.ReactElement>(({ href, label }: TMenuItem) => (
             <li
               className={itemClass}
-              key={`admin-menu-item-${toKey(label)}`}
+              key={`admin-menu-item-${href}`}
             >
               <Link
                 {...{ href }}
@@ -134,7 +132,7 @@ const Sidebar: React.FC<TProps> = ({ isOpened }) => {
           {menuItems2.map<React.ReactElement>(({ href, label }: TMenuItem) => (
             <li
               className={itemClass}
-              key={`admin-menu-item2-${toKey(label)}`}
+              key={`admin-menu-item2-${href}`}
             >
               <Link
                 {...{ href }}

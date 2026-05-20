@@ -5,5 +5,5 @@ export { isMissedStreetNumber } from "./isMissedStreetNumber";
 export { isShopOpened } from "./isShopOpened";
 export { slugify } from "./slugify";
 export { sortByOrder } from "./sortByOrder";
-export { toKey } from "./toKey";
+export { uuid } from "./uuid";
 export { hashPassword, verifyPassword } from "./verifyPassword";

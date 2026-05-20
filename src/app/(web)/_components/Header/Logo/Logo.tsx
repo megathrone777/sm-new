@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { imageClass, wrapperClass, linkClass } from "./Logo.css";
+import { wrapperClass, imageClass, linkClass } from "./Logo.css";
 
 import type { TProps } from "./Logo.types";
 
@@ -13,13 +13,13 @@ const Logo: React.FC<TProps> = ({ imageUrl }) => (
       href="/"
     >
       <Image
-        alt="Logo."
+        alt="Logo header."
         className={imageClass}
-        height={98}
+        height={0}
         priority
-        sizes="98px"
+        sizes="100vw"
         src={imageUrl}
-        width={98}
+        width={0}
       />
     </Link>
   </div>

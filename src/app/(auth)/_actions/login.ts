@@ -1,5 +1,5 @@
 "use server";
-import crypto from "crypto";
+import { randomBytes } from "crypto";
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -11,7 +11,7 @@ const COOKIE_NAME = "session";
 const SESSION_TTL = 60 * 60 * 24 * 30;
 
 const createSession = async (data: TSessionData): Promise<void> => {
-  const sessionId = crypto.randomBytes(32).toString("hex");
+  const sessionId = randomBytes(32).toString("hex");
 
   await store.sessions.set(sessionId, data, SESSION_TTL);
   const cookieStore = await cookies();

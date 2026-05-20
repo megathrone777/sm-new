@@ -10,7 +10,6 @@ import {
 } from "@/app/(web)/_components/Controls/shopClosed";
 import { useTranslation } from "@/hooks";
 import { Button } from "@/ui";
-import { toKey } from "@/utils";
 
 import { footerClass, totalPriceClass, totalPriceValueClass } from "./DetailsForm.css";
 
@@ -108,7 +107,7 @@ const DetailsForm: React.FC<TProps> = ({
   useEffect((): void => {
     if (searchParams.get("requiredModifier")) {
       toast(modifiersTitle, {
-        toastId: toKey(`requiredModifier-toast-${modifiersTitle}`),
+        toastId: "requiredModifier-toast",
         type: "error",
       });
     }

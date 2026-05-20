@@ -21,13 +21,13 @@ export const wrapperClass = cssVariant(
     },
     small: {
       borderWidth: 4,
-      height: 25,
-      width: 25,
+      height: 22,
+      width: 22,
     },
   },
   (template) => [
     {
-      animationDuration: "0.5s",
+      animationDuration: ".5s",
       animationIterationCount: "infinite",
       animationName: spin,
       animationTimingFunction: "linear",

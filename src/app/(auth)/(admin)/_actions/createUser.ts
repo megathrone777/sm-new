@@ -1,5 +1,5 @@
 "use server";
-import crypto from "crypto";
+import { randomUUID } from "crypto";
 
 import { revalidatePath } from "next/cache";
 
@@ -56,7 +56,7 @@ const createUser = async (
   const { hash, salt } = hashPassword(password);
 
   await store.users.set({
-    id: crypto.randomUUID(),
+    id: randomUUID(),
     login,
     passwordHash: hash,
     role,
