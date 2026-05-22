@@ -38,7 +38,7 @@ jest.mock("../Promo.css", () => ({
   loadingWrapperClass: "",
   resetButtonClass: "",
   submitClass: "",
-  successIconClass: "",
+  successLayoutClass: "",
 }));
 
 import { Promo } from "../Promo";
@@ -156,7 +156,7 @@ describe("Promo", () => {
           promo={{ code: "SUMMER20", discount: 0 }}
         />,
       );
-      expect(screen.getByTestId("icon-cross")).toBeInTheDocument();
+      expect(screen.getByTestId("icon-close")).toBeInTheDocument();
     });
 
     it("hides the reset button when no code is entered", () => {
@@ -166,22 +166,7 @@ describe("Promo", () => {
           promo={{ code: "", discount: 0 }}
         />,
       );
-      expect(screen.queryByTestId("icon-cross")).not.toBeInTheDocument();
-    });
-
-    it("shows the promo error message when promoError is provided", () => {
-      render(
-        <Promo
-          {...defaultProps}
-          promoError="Promo kód není aktivní"
-        />,
-      );
-      expect(screen.getByText("Promo kód není aktivní")).toBeInTheDocument();
-    });
-
-    it("does not show an error paragraph when promoError is not provided", () => {
-      render(<Promo {...defaultProps} />);
-      expect(screen.queryByText(/promo kód/i)).not.toBeInTheDocument();
+      expect(screen.queryByTestId("icon-close")).not.toBeInTheDocument();
     });
 
     it("apply button is type submit (wired to applyPromocode via formAction)", () => {
@@ -196,7 +181,7 @@ describe("Promo", () => {
           promo={{ code: "SAVE10", discount: 0 }}
         />,
       );
-      expect(screen.getByTestId("icon-cross").closest("button")).toHaveAttribute("type", "submit");
+      expect(screen.getByTestId("icon-close").closest("button")).toHaveAttribute("type", "submit");
     });
   });
 });

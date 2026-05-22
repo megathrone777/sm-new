@@ -84,9 +84,9 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 
 beforeEach(() => {
   jest.clearAllMocks();
-
   jest.mocked(store.cart.getSessionId).mockResolvedValue("session-abc" as never);
   jest.mocked(store.cart.get).mockResolvedValue(makeCart() as never);
+
   jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
     {
       distanceFrom: 0,
@@ -257,13 +257,11 @@ describe("validateAndSubmitCart", () => {
     });
 
     it("does NOT save errors and does NOT redirect to /cart when all fields are valid", async () => {
-      // On success the action still calls redirect('/order-confirmed/...'),
-      // which throws our mock error — just not '/cart'.
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow(
         "REDIRECT:/order-confirmed/42",
       );
 
-      expect(saveCart).not.toHaveBeenCalled();
+      expect(saveCart).toHaveBeenCalledWith(expect.objectContaining({ errors: {} }));
     });
   });
 

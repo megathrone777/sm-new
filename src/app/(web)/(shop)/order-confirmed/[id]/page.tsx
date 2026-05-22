@@ -53,15 +53,19 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
     const {
       additionals,
       clientPhoneNumber,
+      courier,
       cutleryCount,
       deliveryAddress,
+      deliveryCoordinates,
       deliveryTime,
       deliveryType,
+      id: orderId,
       note,
       paymentType,
       products,
       promocode,
       promocodeDiscountPrice,
+      status,
       tipsAmount,
       tipsPrice,
       totalPrice,
@@ -177,10 +181,10 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
               </p>
 
               {deliveryType === "delivery" && (
-                <>
-                  <p className={itemClass}>Připravuje se...</p>
-                  <Progress />
-                </>
+                <Progress
+                  {...{ courier, deliveryCoordinates, orderId }}
+                  initialStatus={status}
+                />
               )}
             </div>
 

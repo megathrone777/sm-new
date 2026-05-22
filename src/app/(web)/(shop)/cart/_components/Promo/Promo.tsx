@@ -29,7 +29,8 @@ const Promo: React.FC<TProps> = ({
     Boolean(addressError) ||
     phoneNumber.length === 0 ||
     Boolean(phoneError);
-  const isApplied = promo.discount > 0;
+  const { code, discount } = promo;
+  const isApplied = discount > 0;
 
   return (
     <fieldset
@@ -39,19 +40,19 @@ const Promo: React.FC<TProps> = ({
     >
       <Input
         autoComplete="off"
-        defaultValue={promo.code}
+        defaultValue={code}
         enterKeyHint="done"
         form="promo-form"
         iconId="promo"
         isError={Boolean(promoError)}
-        key={`promo-${promo.code}`}
+        key={`promo-${code}`}
         name="promo"
         placeholder={t<string>("promoTitle")}
         restrictCyrillic
         type="text"
       />
 
-      {promo.code.length > 0 && (
+      {code.length > 0 && (
         <button
           className={resetButtonClass}
           form="promo-form"

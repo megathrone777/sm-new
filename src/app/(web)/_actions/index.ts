@@ -1,7 +1,8 @@
 export { addToCart } from "./addToCart";
-export { clearPromoError } from "./clearPromoError";
 export { applyPromocode } from "./applyPromocode";
+export { clearPromoError } from "./clearPromoError";
 export { getAddressSuggestions } from "./getAddressSuggestions";
+export { getCourierPosition } from "./getCourierPosition";
 export { markOrderCancelled } from "./markOrderCancelled";
 export { markOrderPaid } from "./markOrderPaid";
 export { removeFromCart } from "./removeFromCart";
