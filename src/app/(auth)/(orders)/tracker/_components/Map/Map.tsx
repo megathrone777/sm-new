@@ -74,7 +74,7 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
     <>
       <FitBounds {...{ positions }} />
 
-      {couriers.map(({ id, latitude, longitude, name, online }, index) => (
+      {couriers.map(({ id, latitude, longitude, name }, index) => (
         <Marker
           anchor="center"
           key={`${id}-courier-marker`}
@@ -82,9 +82,9 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
           longitude={longitude}
         >
           <svg
-            height={28}
+            height={30}
             style={{
-              color: online ? "#ffd43b" : "gray",
+              color: "#ffd43b",
               fill: "none",
               stroke: "currentColor",
               strokeLinecap: "round",
@@ -92,7 +92,7 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
               strokeWidth: 2,
             }}
             viewBox="0 0 24 24"
-            width={28}
+            width={30}
             xmlns="http://www.w3.org/2000/svg"
           >
             <title>{name}</title>
@@ -112,7 +112,7 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
               dy=".35em"
               style={{
                 fill: "currentColor",
-                fontSize: 8,
+                fontSize: 10,
                 fontWeight: "bold",
                 stroke: "none",
               }}

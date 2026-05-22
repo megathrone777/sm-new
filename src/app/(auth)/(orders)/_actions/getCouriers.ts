@@ -5,7 +5,6 @@ interface TGpsWoxDevice {
   lat: null | number;
   lng: null | number;
   name: string;
-  online: string;
 }
 
 interface TGpsWoxGroup {
@@ -33,12 +32,11 @@ const getCouriers = async (): Promise<TCourier[]> => {
           device.lat !== null && device.lng !== null,
       )
       .map(
-        ({ id, lat, lng, name, online }): TCourier => ({
+        ({ id, lat, lng, name }): TCourier => ({
           id,
           latitude: lat,
           longitude: lng,
           name,
-          online: online === "online",
         }),
       );
   } catch {
