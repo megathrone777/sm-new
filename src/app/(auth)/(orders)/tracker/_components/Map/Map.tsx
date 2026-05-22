@@ -82,12 +82,15 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
           longitude={longitude}
         >
           <svg
-            fill="none"
             height={28}
-            stroke={online ? "#ffd43b" : "gray"}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
+            style={{
+              color: online ? "#ffd43b" : "gray",
+              fill: "none",
+              stroke: "currentColor",
+              strokeLinecap: "round",
+              strokeLinejoin: "round",
+              strokeWidth: 2,
+            }}
             viewBox="0 0 24 24"
             width={28}
             xmlns="http://www.w3.org/2000/svg"
@@ -106,11 +109,13 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
               r="2"
             />
             <text
-              dominantBaseline="middle"
-              fill={online ? "#ffd43b" : "gray"}
-              fontSize="7"
-              fontWeight="bold"
-              stroke="none"
+              dy=".35em"
+              style={{
+                fill: "currentColor",
+                fontSize: 8,
+                fontWeight: "bold",
+                stroke: "none",
+              }}
               textAnchor="middle"
               x="11"
               y="13"

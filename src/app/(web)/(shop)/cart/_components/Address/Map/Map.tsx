@@ -106,7 +106,7 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
               type="geojson"
             >
               <Layer
-                paint={{ "line-color": "#a07000", "line-width": 3 }}
+                paint={{ "line-color": "#b38200", "line-width": 3 }}
                 type="line"
               />
             </Source>
