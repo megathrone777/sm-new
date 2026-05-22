@@ -142,6 +142,14 @@ const cart = {
     };
   },
 
+  getDelivery: async (): Promise<null | TDelivery> => {
+    const sessionId = await cart.getSessionId();
+
+    if (!sessionId) return null;
+
+    return redis.hget<TDelivery>(sessionId, "delivery");
+  },
+
   getOrCreateSessionId: async (): Promise<string> => {
     const { cookies } = await import("next/headers");
     const cookieStore = await cookies();
