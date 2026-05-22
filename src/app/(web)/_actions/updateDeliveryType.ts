@@ -9,12 +9,13 @@ const updateDeliveryType = async (formData: FormData): Promise<void> => {
   const type = formData.get("deliveryType") as null | TDeliveryType;
 
   if (!type) return;
-  const cart = await store.cart.get();
 
-  if (!cart || cart.delivery.type === type) return;
+  const delivery = await store.cart.getDelivery();
+
+  if (!delivery || delivery.type === type) return;
 
   await saveCart({
-    delivery: { ...cart.delivery, type },
+    delivery: { ...delivery, type },
   });
   revalidatePath("/cart");
 };
