@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Layer, Marker, Source, useMap } from "react-map-gl/maplibre";
 
 import { bbox } from "@/utils";
@@ -23,6 +23,26 @@ const toLngLatBounds = (
 
 const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
   const { current: map } = useMap();
+  const [drawProgress, setDrawProgress] = useState(0);
+  const rafRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (type !== "delivery" || !position || position.length === 0) return;
+
+    setDrawProgress(0);
+    const start = performance.now();
+    const duration = 900;
+
+    const animate = (now: number): void => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 2);
+      setDrawProgress(eased);
+      if (p < 1) rafRef.current = requestAnimationFrame(animate);
+    };
+
+    rafRef.current = requestAnimationFrame(animate);
+    return () => { if (rafRef.current !== null) cancelAnimationFrame(rafRef.current); };
+  }, [type, position]);
 
   useEffect((): void => {
     if (!map) return;
@@ -54,11 +74,19 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
             }}
             type="geojson"
           >
-            <Layer paint={{ "line-color": "#e63946", "line-width": 2 }} type="line" />
+            <Layer
+              layout={{ "line-cap": "round", "line-join": "round" }}
+              paint={{
+                "line-color": "#e63946",
+                "line-dasharray": [drawProgress * 1000, Math.max(0.001, 1000 * (1 - drawProgress))],
+                "line-width": 2,
+              }}
+              type="line"
+            />
           </Source>
 
           <Marker
-            anchor="top" latitude={kitchenCoords[0]}
+            anchor="center" latitude={kitchenCoords[0]}
             longitude={kitchenCoords[1]}
           >
             <svg

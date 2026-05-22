@@ -6,4 +6,7 @@ export const mapContainerClass = css({
   position: "relative",
   width: "100%",
   zIndex: 8,
+  "& .maplibregl-canvas": {
+    filter: "brightness(1.2)",
+  },
 });
