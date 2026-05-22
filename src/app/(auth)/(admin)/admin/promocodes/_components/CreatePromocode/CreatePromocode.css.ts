@@ -5,6 +5,11 @@ export const formClass = css({
   columnGap: 10,
   display: "grid",
   gridAutoFlow: "column",
-  gridTemplateColumns: "1fr 120px 1fr",
+  gridTemplateColumns: "1fr auto",
+  justifyItems: "end",
   marginBottom: 40,
+});
+
+export const formLayoutClass = css({
+  minWidth: 400,
 });

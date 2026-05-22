@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Layer, Marker, Source, useMap } from "react-map-gl/maplibre";
 
+import { Icon } from "@/ui";
 import { bbox } from "@/utils";
 
 import { markerClass } from "./Map.css";
@@ -54,7 +55,7 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
     const lngLat = (position as [number, number][]).map(
       ([lat, lng]) => [lng, lat] as [number, number],
     );
-    const duration = 900;
+    const duration = 800;
     let startTime: null | number = null;
     let rafId: number | undefined;
 
@@ -120,65 +121,31 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
 
           <Marker
             anchor="center"
+            className={markerClass}
             latitude={kitchenCoords[0]}
             longitude={kitchenCoords[1]}
             offset={[3, 0]}
           >
-            <svg
-              className={markerClass}
-              height={30}
-              viewBox="0 0 512 512"
-              width={17}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"
-                fill="currentColor"
-              />
-            </svg>
+            <Icon id="point" />
           </Marker>
 
           <Marker
             anchor="center"
+            className={markerClass}
             latitude={lastCoord[0]}
             longitude={lastCoord[1]}
           >
-            <svg
-              className={markerClass}
-              height={30}
-              viewBox="0 0 384 512"
-              width={17}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0
-                  192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64
-                  0 1 1 0 128 64 64 0 1 1 0-128z"
-                fill="currentColor"
-              />
-            </svg>
+            <Icon id="address" />
           </Marker>
         </>
       ) : (
         <Marker
           anchor="center"
+          className={markerClass}
           latitude={kitchenCoords[0]}
           longitude={kitchenCoords[1]}
         >
-          <svg
-            className={markerClass}
-            height={30}
-            viewBox="0 0 384 512"
-            width={17}
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0
-                192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 128a64 64
-                0 1 1 0 128 64 64 0 1 1 0-128z"
-              fill="currentColor"
-            />
-          </svg>
+          <Icon id="address" />
         </Marker>
       )}
     </>

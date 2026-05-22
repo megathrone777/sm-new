@@ -13,7 +13,7 @@ const deletePromocode = async (
     return { message: "Unauthorized", type: "error" };
   }
 
-  const code = `${formData.get("code") ?? ""}`.trim().toUpperCase();
+  const code = `${formData.get("id") ?? ""}`.trim().toUpperCase();
 
   if (!code) {
     return { message: "Code is required", type: "error" };

@@ -16,7 +16,6 @@ export const inputClass = cssVariant(
   ({ colors }) => ({
     default: {
       color: "black",
-
       selectors: {
         "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
           {
@@ -27,7 +26,6 @@ export const inputClass = cssVariant(
 
     error: {
       color: colors.red,
-
       selectors: {
         "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
           {
@@ -48,7 +46,6 @@ export const inputClass = cssVariant(
       fontWeight: fonts.medium,
       height: "100%",
       position: "relative",
-
       selectors: {
         "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
           {
@@ -57,7 +54,6 @@ export const inputClass = cssVariant(
             WebkitBoxShadow: "0 0 0 1000px white inset",
           },
       },
-
       width: "100%",
       zIndex: 3,
 
@@ -86,11 +82,11 @@ export const layoutClass = css(({ colors }) => ({
     background: "transparent",
     border: "none",
     borderColor: colors.red,
-    borderRadius: 8,
+    borderRadius: "8px",
     cursor: "pointer",
     inset: 0,
     margin: 0,
-    minHeight: 17,
+    minHeight: "17px",
     opacity: 0,
     outline: "none",
     padding: 0,
@@ -152,9 +148,9 @@ export const searchInputClass = css(({ fonts }) => ({
 
 export const popupClass = css(({ colors, fonts }) => ({
   ".rc-select-item-empty": {
-    fontSize: 15,
+    fontSize: "15px",
     fontWeight: fonts.medium,
-    paddingBlock: 4,
+    paddingBlock: "4px",
     textAlign: "center",
   },
 
@@ -162,7 +158,7 @@ export const popupClass = css(({ colors, fonts }) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "grid",
-    fontSize: 15,
+    fontSize: "15px",
     fontWeight: fonts.bold,
     gridAutoFlow: "column",
     justifySelf: "start",
@@ -184,7 +180,7 @@ export const popupClass = css(({ colors, fonts }) => ({
   },
 
   ".rc-select-item-option-content": {
-    paddingLeft: 8,
+    paddingLeft: "8px",
 
     ":hover": {
       backgroundColor: "transparent",
@@ -197,24 +193,24 @@ export const popupClass = css(({ colors, fonts }) => ({
     justifyContent: "center",
     pointerEvents: "none",
     position: "absolute",
-    right: 16,
+    right: "16px",
     top: "50%",
     transform: "translateY(-50%)",
   },
 
   ".rc-select-selection-item-remove": {
     cursor: "pointer",
-    height: 18,
-    width: 18,
+    height: "18px",
+    width: "18px",
   },
 
   backgroundColor: "white",
   border: `2px solid ${colors.red}`,
-  borderRadius: 6,
-  minWidth: 280,
+  borderRadius: "6px",
+  minWidth: "280px",
   overflow: "hidden",
   position: "absolute",
-  width: 280,
+  width: "280px",
   zIndex: 100,
 
   "&.rc-select-dropdown-hidden": {

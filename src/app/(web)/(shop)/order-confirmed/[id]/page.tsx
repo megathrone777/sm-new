@@ -6,7 +6,7 @@ import { useTranslation } from "@/hooks";
 import { store } from "@/store";
 import { Button, Container, Icon } from "@/ui";
 
-import { Additionals, Products } from "./_components";
+import { Additionals, Products, Progress } from "./_components";
 
 import {
   columnClass,
@@ -175,6 +175,13 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                 <b>Cena: </b>
                 {totalPrice} {t<string>("currency")}
               </p>
+
+              {deliveryType === "delivery" && (
+                <>
+                  <p className={itemClass}>Připravuje se...</p>
+                  <Progress />
+                </>
+              )}
             </div>
 
             <div className={contentClass}>

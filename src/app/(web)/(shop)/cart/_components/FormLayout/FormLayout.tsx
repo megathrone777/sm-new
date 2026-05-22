@@ -39,10 +39,12 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
   };
 
   const handleFormKeyDown = (event: React.KeyboardEvent<HTMLFormElement>): void => {
-    const target = event.target as HTMLElement;
+    const target = event.target as HTMLInputElement;
 
     if (event.key === "Enter" && target.tagName === "INPUT") {
-      event.preventDefault();
+      if (target.form === event.currentTarget) {
+        event.preventDefault();
+      }
     }
   };
 

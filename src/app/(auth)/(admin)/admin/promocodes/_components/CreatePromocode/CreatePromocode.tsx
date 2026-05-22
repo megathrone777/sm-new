@@ -2,14 +2,15 @@ import React from "react";
 
 import { createPromocode } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout } from "@/app/(auth)/(admin)/_components";
-import { Input } from "@/ui";
+import { Checkbox, Input } from "@/ui";
 
-import { formClass } from "./CreatePromocode.css";
+import { formClass, formLayoutClass } from "./CreatePromocode.css";
 
 const CreatePromocode: React.FC = () => (
   <FormLayout
     className={formClass}
     formAction={createPromocode}
+    layoutClassName={formLayoutClass}
   >
     <Input
       label="Code"
@@ -29,6 +30,12 @@ const CreatePromocode: React.FC = () => (
       label="Activate at (optional)"
       name="activatedAt"
       type="datetime-local"
+    />
+
+    <Checkbox
+      label="One-time"
+      name="oneTime"
+      type="checkbox"
     />
   </FormLayout>
 );

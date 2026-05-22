@@ -5,23 +5,28 @@ import { store } from "@/store";
 
 import { saveCart } from "./saveCart";
 
-const applyPromocode = async (formData: FormData): Promise<void> => {
+const applyPromocode = async (
+  _state: null | TActionResult,
+  formData: FormData,
+): Promise<TActionResult> => {
   const cart = await store.cart.get();
 
-  if (!cart) return;
+  if (!cart) return { message: "Chyba košíku", type: "error" };
 
   const code = `${formData.get("promo") ?? ""}`.trim().toUpperCase();
 
-  if (!code) return;
+  if (!code) return { message: "Zadejte promo kód", type: "error" };
 
   const { promo: _existing, ...errors } = cart.errors;
 
-  const fail = async (message: string): Promise<void> => {
+  const fail = async (message: string): Promise<TActionResult> => {
     await saveCart({
       errors: { ...errors, promo: message },
       promo: { code: "", discount: 0 },
     });
     revalidatePath("/cart");
+
+    return { message, type: "error" };
   };
 
   const phoneInvalid = cart.client.phoneNumber.length === 0 || Boolean(cart.errors.phone);
@@ -37,7 +42,7 @@ const applyPromocode = async (formData: FormData): Promise<void> => {
   const record = (await store.promocodes.getByCode(code)) as unknown as null | TPromoCode;
 
   if (!record || !record.code) {
-    return fail("Neplatný promo kód");
+    return fail("Promo kód nebyl nalezen");
   }
 
   const isActive =
@@ -74,6 +79,8 @@ const applyPromocode = async (formData: FormData): Promise<void> => {
     promo: { code, discount: +record.discount },
   });
   revalidatePath("/cart");
+
+  return { message: "Promo kód byl použit", type: "success" };
 };
 
 export { applyPromocode };

@@ -1,15 +1,14 @@
-import { calc } from "@vanilla-extract/css-utils";
-
 import { css } from "@/theme";
 
 export const layoutClass = css({
   alignContent: "start",
   alignItems: "start",
   border: "none",
-  columnGap: 20,
+  columnGap: 10,
   display: "grid",
   gridAutoFlow: "column",
   gridTemplateColumns: "1fr auto",
+  maxWidth: 450,
   paddingTop: 10,
   position: "relative",
 
@@ -21,18 +20,20 @@ export const layoutClass = css({
 
 export const loadingWrapperClass = css({
   height: 25,
-  left: -5,
   position: "absolute",
   top: "50%",
   transform: "translateY(-50%)",
   width: 25,
 });
 
-export const successIconClass = css({
-  color: "green",
+export const successLayoutClass = css({
+  backgroundColor: "green",
+  borderRadius: "50%",
+  color: "white",
   display: "block",
   height: 25,
-  left: -5,
+  overflow: "hidden",
+  paddingInline: 6,
   position: "absolute",
   top: "50%",
   transform: "translateY(-50%)",
@@ -41,18 +42,24 @@ export const successIconClass = css({
 
 export const resetButtonClass = css(({ colors }) => ({
   backgroundColor: "transparent",
-  color: colors.red,
+  border: "none",
+  bottom: 6,
+  color: colors.black,
   cursor: "pointer",
   display: "block",
   height: 25,
-  left: `${calc("100%").subtract("170px")}`,
   position: "absolute",
-  top: "50%",
-  transform: "translateY(-50%)",
+  right: 50,
   width: 25,
+
+  ":focus": {
+    opacity: 0,
+  },
 }));
 
 export const submitClass = css({
+  height: "100%",
+  minWidth: 25,
   position: "relative",
 });
 

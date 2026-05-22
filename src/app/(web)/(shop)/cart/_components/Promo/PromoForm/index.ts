@@ -1,2 +1,1 @@
-export { Promo } from "./Promo";
 export { PromoForm } from "./PromoForm";

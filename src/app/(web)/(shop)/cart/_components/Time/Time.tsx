@@ -72,6 +72,7 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
     const formData = new FormData();
 
     formData.set("time", value);
+
     startTransition((): void => {
       updateDeliveryTime(formData);
     });

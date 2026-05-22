@@ -18,6 +18,7 @@ import {
   Payment,
   Placeholder,
   Promo,
+  PromoForm,
   Time,
   Queue,
   SectionLayout,
@@ -57,96 +58,100 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
       } = cart;
 
       return (
-        <CartLayout
-          {...{ categoryDiscount }}
-          initialProducts={products}
-          placeholder={<Placeholder />}
-          productsTitle={t<string>("order")}
-          queue={<Queue />}
-        >
-          <FormLayout {...{ errors }}>
-            <SectionLayout
-              gridArea="delivery"
-              title={t<string>("delivery")}
-            >
-              <Delivery
-                {...{ totalPrice }}
-                type={delivery.type}
-              />
+        <>
+          <PromoForm />
 
-              <Time
-                {...{ schedule, time }}
-                deliveryType={delivery.type}
-              />
-
-              <Client
-                {...client}
-                errors={{
-                  email: errors.email,
-                  name: errors.name,
-                  phone: errors.phone,
-                }}
+          <CartLayout
+            {...{ categoryDiscount }}
+            initialProducts={products}
+            placeholder={<Placeholder />}
+            productsTitle={t<string>("order")}
+            queue={<Queue />}
+          >
+            <FormLayout {...{ errors }}>
+              <SectionLayout
+                gridArea="delivery"
+                title={t<string>("delivery")}
               >
-                <Suspense>
-                  <History phoneNumber={client.phoneNumber} />
-                </Suspense>
-              </Client>
+                <Delivery
+                  {...{ totalPrice }}
+                  type={delivery.type}
+                />
 
-              <Address
-                {...{ delivery }}
-                addressError={errors.addressFormat ?? errors.addressRange}
-              />
-            </SectionLayout>
+                <Time
+                  {...{ schedule, time }}
+                  deliveryType={delivery.type}
+                />
 
-            <SectionLayout
-              gridArea="cutlery"
-              id="cart-cutlery"
-              title={t<string>("cutleryQuantity")}
-            >
-              <Cutlery
-                {...cutlery}
-                isError={Boolean(errors.cutlery)}
-              />
-            </SectionLayout>
+                <Client
+                  {...client}
+                  errors={{
+                    email: errors.email,
+                    name: errors.name,
+                    phone: errors.phone,
+                  }}
+                >
+                  <Suspense>
+                    <History phoneNumber={client.phoneNumber} />
+                  </Suspense>
+                </Client>
 
-            <SectionLayout
-              gridArea="additionals"
-              title={t<string>("addMore")}
-            >
-              <Additionals {...{ additionals, cartAdditionals }} />
-            </SectionLayout>
+                <Address
+                  {...{ delivery }}
+                  addressError={errors.addressFormat ?? errors.addressRange}
+                />
+              </SectionLayout>
 
-            <SectionLayout
-              gridArea="note"
-              title={t<string>("note")}
-            >
-              <Note defaultValue={note} />
-            </SectionLayout>
+              <SectionLayout
+                gridArea="cutlery"
+                id="cart-cutlery"
+                title={t<string>("cutleryQuantity")}
+              >
+                <Cutlery
+                  {...cutlery}
+                  isError={Boolean(errors.cutlery)}
+                />
+              </SectionLayout>
 
-            <SectionLayout
-              gridArea="promo"
-              title={t<string>("promoTitle")}
-            >
-              <Promo
-                {...{ delivery, promo }}
-                addressError={errors.addressFormat ?? errors.addressRange}
-                phoneError={errors.phone}
-                phoneNumber={client.phoneNumber}
-                promoError={errors.promo}
-              />
-            </SectionLayout>
+              <SectionLayout
+                gridArea="additionals"
+                title={t<string>("addMore")}
+              >
+                <Additionals {...{ additionals, cartAdditionals }} />
+              </SectionLayout>
 
-            <SectionLayout
-              gridArea="payment"
-              title={t<string>("paymentMethods")}
-            >
-              <Payment
-                {...{ payment, tips, totalPrice }}
-                deliveryType={delivery.type}
-              />
-            </SectionLayout>
-          </FormLayout>
-        </CartLayout>
+              <SectionLayout
+                gridArea="note"
+                title={t<string>("note")}
+              >
+                <Note defaultValue={note} />
+              </SectionLayout>
+
+              <SectionLayout
+                gridArea="promo"
+                title={t<string>("promoTitle")}
+              >
+                <Promo
+                  {...{ delivery, promo }}
+                  addressError={errors.addressFormat ?? errors.addressRange}
+                  phoneError={errors.phone}
+                  phoneNumber={client.phoneNumber}
+                  promoError={errors.promo}
+                />
+              </SectionLayout>
+
+              <SectionLayout
+                gridArea="payment"
+                title={t<string>("paymentMethods")}
+              >
+                <Payment
+                  {...{ payment, tips, totalPrice }}
+                  deliveryType={delivery.type}
+                />
+              </SectionLayout>
+            </FormLayout>
+          </CartLayout>
+        </>
       );
     }
 

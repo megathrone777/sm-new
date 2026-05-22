@@ -1,6 +1,5 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 
@@ -9,8 +8,6 @@ import { realtime, store } from "@/store";
 import { isMissedStreetNumber } from "@/utils";
 
 import { saveCart } from "./saveCart";
-
-const CART_COOKIE = "sid";
 
 const validateAndSubmitCart = async (
   _state: null | TActionResult,
@@ -211,8 +208,34 @@ const validateAndSubmitCart = async (
   };
 
   await store.orders.registerNewOrder(order, cartSessionId);
-  (await cookies()).delete(CART_COOKIE);
-
+  await saveCart({
+    additionals: [],
+    categoryDiscount: 0,
+    client: {
+      email: order.clientEmail,
+      name: order.clientName,
+      phoneNumber: "",
+    },
+    cutlery: { quantity: 0, totalPrice: 0 },
+    delivery: {
+      address: "",
+      conditions: [],
+      distanceInM: 0,
+      position: null,
+      price: null,
+      title: "",
+      type: "delivery",
+    },
+    errors: {},
+    note: "",
+    payment: { change: null, type: "cash" },
+    products: [],
+    promo: { code: "", discount: 0 },
+    time: { label: "Doručit teď", value: null },
+    tips: { percentage: 0, price: 0 },
+    totalPrice: 0,
+  });
+  revalidatePath("/", "layout");
   after(async (): Promise<void> => {
     realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
     if (payment.type === "card") return;

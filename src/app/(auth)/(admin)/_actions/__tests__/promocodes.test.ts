@@ -27,7 +27,7 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
   const defaults: Record<string, string> = {
     code: "SUMMER20",
     discount: "20",
-    type: "reusable",
+    id: "SUMMER20",
   };
 
   for (const [k, v] of Object.entries({ ...defaults, ...overrides })) {
@@ -88,14 +88,22 @@ describe("createPromocode", () => {
       expect(store.promocodes.set).toHaveBeenCalledWith(expect.objectContaining({ code: "HELLO" }));
     });
 
-    it("defaults type to reusable when not provided", async () => {
-      const formData = makeFormData();
-
-      formData.delete("type");
-      await createPromocode(null, formData);
+    it("defaults type to reusable when oneTime is unchecked", async () => {
+      await createPromocode(null, makeFormData());
 
       expect(store.promocodes.set).toHaveBeenCalledWith(
         expect.objectContaining({ type: "reusable" }),
+      );
+    });
+
+    it("sets type to oneTime when oneTime checkbox is checked", async () => {
+      const formData = makeFormData();
+
+      formData.set("oneTime", "on");
+      await createPromocode(null, formData);
+
+      expect(store.promocodes.set).toHaveBeenCalledWith(
+        expect.objectContaining({ type: "oneTime" }),
       );
     });
 
@@ -274,16 +282,16 @@ describe("deletePromocode", () => {
   });
 
   describe("validation", () => {
-    it("returns error when code is empty", async () => {
-      const result = await deletePromocode(null, makeFormData({ code: "" }));
+    it("returns error when id is empty", async () => {
+      const result = await deletePromocode(null, makeFormData({ id: "" }));
 
       expect(result).toEqual({ message: "Code is required", type: "error" });
     });
   });
 
   describe("success", () => {
-    it("deletes the promocode by uppercased code", async () => {
-      await deletePromocode(null, makeFormData({ code: "summer20" }));
+    it("deletes the promocode by uppercased id", async () => {
+      await deletePromocode(null, makeFormData({ id: "summer20" }));
 
       expect(store.promocodes.delete).toHaveBeenCalledWith("SUMMER20");
     });
@@ -295,7 +303,7 @@ describe("deletePromocode", () => {
     });
 
     it("returns success with code in the message", async () => {
-      const result = await deletePromocode(null, makeFormData({ code: "WINTER10" }));
+      const result = await deletePromocode(null, makeFormData({ id: "WINTER10" }));
 
       expect(result).toEqual({
         message: "Promocode WINTER10 successfully deleted",

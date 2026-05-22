@@ -2,8 +2,6 @@
 import React from "react";
 import ReactMap from "react-map-gl/maplibre";
 
-import "maplibre-gl/dist/maplibre-gl.css";
-
 import type { TProps } from "./MapLayout.types";
 
 const MapLayout: React.FC<TProps> = ({ children }) => (

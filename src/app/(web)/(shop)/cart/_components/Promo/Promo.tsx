@@ -1,6 +1,6 @@
 import React from "react";
 
-import { applyPromocode, resetPromocode } from "@/app/(web)/_actions";
+import { resetPromocode } from "@/app/(web)/_actions";
 import { useTranslation } from "@/hooks";
 import { Icon, Input } from "@/ui";
 
@@ -9,7 +9,7 @@ import {
   layoutClass,
   resetButtonClass,
   submitClass,
-  successIconClass,
+  successLayoutClass,
 } from "./Promo.css";
 
 import type { TProps } from "./Promo.types";
@@ -41,6 +41,7 @@ const Promo: React.FC<TProps> = ({
         autoComplete="off"
         defaultValue={promo.code}
         enterKeyHint="done"
+        form="promo-form"
         iconId="promo"
         isError={Boolean(promoError)}
         key={`promo-${promo.code}`}
@@ -53,31 +54,29 @@ const Promo: React.FC<TProps> = ({
       {promo.code.length > 0 && (
         <button
           className={resetButtonClass}
+          form="promo-form"
           formAction={resetPromocode}
           type="submit"
         >
-          <Icon id="cross" />
+          <Icon id="close" />
         </button>
       )}
 
       <div className={submitClass}>
         {isApplied ? (
-          <Icon
-            className={successIconClass}
-            id="checkmark"
-          />
+          <div className={successLayoutClass}>
+            <Icon id="checkmark" />
+          </div>
         ) : (
           <button
             className={buttonClass}
-            formAction={applyPromocode}
+            form="promo-form"
             type="submit"
           >
             {t<string>("promoUse")}
           </button>
         )}
       </div>
-
-      {promoError && <p>{promoError}</p>}
     </fieldset>
   );
 };

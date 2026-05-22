@@ -21,7 +21,9 @@ export const descriptionClass = css({
 });
 
 export const labelClass = css(({ fonts }) => ({
+  cursor: "pointer",
   fontWeight: fonts.bold,
+  lineHeight: "25px",
 }));
 
 export const rowClass = css({

@@ -4,15 +4,17 @@ import Link from "next/link";
 import { activatePromocode, deletePromocode, updatePromocode } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
 import { store } from "@/store";
-import { Button, Input } from "@/ui";
+import { Button, Checkbox, Input } from "@/ui";
 
 import { PromocodeOrders } from "./PromocodeOrders";
 
 import {
   activeBadgeClass,
   activateFormClass,
+  activateFormLayoutClass,
   codeClass,
   editFormClass,
+  editFormLayoutClass,
   inactiveBadgeClass,
   itemClass,
   linkClass,
@@ -55,8 +57,46 @@ const PromocodesList: React.FC = async () => {
               >
                 <div className={rowClass}>
                   <FormLayout
+                    className={editFormClass}
                     formAction={updatePromocode}
-                    layoutClassName={editFormClass}
+                  >
+                    <div className={editFormLayoutClass}>
+                      <input
+                        name="code"
+                        type="hidden"
+                        value={promo.code}
+                      />
+
+                      <span className={codeClass}>{promo.code}</span>
+
+                      <Input
+                        defaultValue={promo.discount}
+                        label="Discount %"
+                        name="discount"
+                        type="number"
+                      />
+
+                      <span className={statusClass}>{statusBadge}</span>
+
+                      <input
+                        name="isActive"
+                        type="hidden"
+                        value={`${promo.isActive}`}
+                      />
+
+                      <Checkbox
+                        defaultChecked={promo.type === "oneTime"}
+                        label="One-time"
+                        name="oneTime"
+                        type="checkbox"
+                      />
+                    </div>
+                  </FormLayout>
+
+                  <FormLayout
+                    className={activateFormClass}
+                    formAction={activatePromocode}
+                    layoutClassName={activateFormLayoutClass}
                   >
                     <input
                       name="code"
@@ -64,27 +104,15 @@ const PromocodesList: React.FC = async () => {
                       value={promo.code}
                     />
 
-                    <span className={codeClass}>{promo.code}</span>
-
                     <Input
-                      defaultValue={promo.discount}
-                      label="Discount %"
-                      name="discount"
-                      type="number"
-                    />
-
-                    <span className={statusClass}>{statusBadge}</span>
-
-                    <input
-                      name="isActive"
-                      type="hidden"
-                      value={`${promo.isActive}`}
-                    />
-
-                    <input
-                      name="type"
-                      type="hidden"
-                      value={promo.type}
+                      defaultValue={
+                        promo.activatedAt
+                          ? new Date(promo.activatedAt).toISOString().slice(0, 16)
+                          : ""
+                      }
+                      label="Activate at"
+                      name="activatedAt"
+                      type="datetime-local"
                     />
                   </FormLayout>
 
@@ -99,28 +127,6 @@ const PromocodesList: React.FC = async () => {
                     />
                   </Link>
                 </div>
-
-                <FormLayout
-                  formAction={activatePromocode}
-                  layoutClassName={activateFormClass}
-                >
-                  <input
-                    name="code"
-                    type="hidden"
-                    value={promo.code}
-                  />
-
-                  <Input
-                    defaultValue={
-                      promo.activatedAt
-                        ? new Date(promo.activatedAt).toISOString().slice(0, 16)
-                        : ""
-                    }
-                    label="Activate at"
-                    name="activatedAt"
-                    type="datetime-local"
-                  />
-                </FormLayout>
 
                 <PromocodeOrders code={promo.code} />
               </div>

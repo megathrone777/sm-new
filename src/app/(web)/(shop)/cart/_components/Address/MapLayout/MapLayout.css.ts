@@ -3,6 +3,7 @@ import { css, globalStyle } from "@/theme";
 export const wrapperClass = css({
   borderRadius: 5,
   height: 200,
+  minHeight: 200,
   overflow: "hidden",
   position: "relative",
   width: "100%",

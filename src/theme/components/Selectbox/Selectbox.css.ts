@@ -9,28 +9,28 @@ export const wrapperClass = css({
 export const layoutClass = css(({ colors, fonts }) => ({
   ".rc-select-content": {
     display: "grid",
-    gap: 4,
+    gap: "4px",
     gridAutoFlow: "row",
     justifyContent: "start",
     lineHeight: "26px",
-    minHeight: 34,
-    paddingInline: 4,
-    paddingTop: 4,
+    minHeight: "34px",
+    paddingInline: "4px",
+    paddingTop: "4px",
   },
 
   ".rc-select-input": {
     background: "transparent",
     border: "none",
     borderColor: colors.red,
-    borderRadius: 8,
+    borderRadius: "8px",
     cursor: "pointer",
     inset: 0,
     margin: 0,
-    minHeight: 34,
+    minHeight: "34px",
     opacity: 0,
     outline: "none",
     paddingBlock: 0,
-    paddingInline: 4,
+    paddingInline: "4px",
     position: "absolute",
 
     ":focus": {
@@ -44,11 +44,11 @@ export const layoutClass = css(({ colors, fonts }) => ({
   color: "black",
   display: "grid",
   fontFamily: "inherit",
-  fontSize: 16,
+  fontSize: "16px",
   fontWeight: fonts.medium,
   gridAutoFlow: "column",
   height: "100%",
-  minHeight: 34,
+  minHeight: "34px",
   position: "relative",
   width: "100%",
 }));
@@ -150,9 +150,9 @@ export const searchInputClass = css(({ fonts }) => ({
 
 export const popupClass = css(({ colors, fonts }) => ({
   ".rc-select-item-empty": {
-    fontSize: 15,
+    fontSize: "15px",
     fontWeight: fonts.medium,
-    paddingBlock: 4,
+    paddingBlock: "4px",
     textAlign: "center",
   },
 
@@ -160,7 +160,7 @@ export const popupClass = css(({ colors, fonts }) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "grid",
-    fontSize: 15,
+    fontSize: "15px",
     fontWeight: fonts.bold,
     gridAutoFlow: "column",
     justifySelf: "start",
@@ -182,7 +182,7 @@ export const popupClass = css(({ colors, fonts }) => ({
   },
 
   ".rc-select-item-option-content": {
-    paddingLeft: 8,
+    paddingLeft: "8px",
 
     ":hover": {
       backgroundColor: "transparent",
@@ -195,20 +195,20 @@ export const popupClass = css(({ colors, fonts }) => ({
     justifyContent: "center",
     pointerEvents: "none",
     position: "absolute",
-    right: 16,
+    right: "16px",
     top: "50%",
     transform: "translateY(-50%)",
   },
 
   ".rc-select-selection-item-remove": {
     cursor: "pointer",
-    height: 18,
-    width: 18,
+    height: "18px",
+    width: "18px",
   },
 
   backgroundColor: "white",
   border: `2px solid ${colors.red}`,
-  borderRadius: 6,
+  borderRadius: "6px",
   overflow: "hidden",
   position: "absolute",
   zIndex: 100,

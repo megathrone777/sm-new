@@ -1,10 +1,12 @@
 import { css } from "@/theme";
 
 export const listClass = css({
+  alignContent: "center",
+  alignItems: "center",
   display: "grid",
   gridAutoFlow: "row",
   marginBottom: 30,
-  rowGap: 24,
+  rowGap: 30,
 });
 
 export const itemClass = css({
@@ -13,28 +15,44 @@ export const itemClass = css({
 });
 
 export const rowClass = css({
-  alignItems: "end",
-  columnGap: 10,
+  alignContent: "center",
+  alignItems: "center",
+  columnGap: 30,
   display: "grid",
   gridAutoFlow: "column",
-  gridTemplateColumns: "1fr auto",
+  gridTemplateColumns: "1fr 1fr auto",
+  justifyContent: "start",
 });
 
 export const editFormClass = css({
-  alignItems: "end",
-  columnGap: 10,
+  alignContent: "center",
+  alignItems: "center",
+  columnGap: 15,
   display: "grid",
   gridAutoFlow: "column",
-  gridTemplateColumns: "max-content 80px max-content 1fr",
+});
+
+export const editFormLayoutClass = css({
+  alignContent: "center",
+  alignItems: "center",
+  display: "grid",
+  gap: "10px 30px",
+  gridAutoFlow: "column",
 });
 
 export const activateFormClass = css({
-  alignItems: "end",
-  columnGap: 10,
+  alignItems: "center",
+  columnGap: 15,
   display: "grid",
   gridAutoFlow: "column",
   gridTemplateColumns: "max-content 1fr",
-  marginTop: 8,
+});
+
+export const activateFormLayoutClass = css({
+  alignItems: "center",
+  columnGap: 10,
+  display: "grid",
+  gridAutoFlow: "column",
 });
 
 export const codeClass = css(({ fonts }) => ({

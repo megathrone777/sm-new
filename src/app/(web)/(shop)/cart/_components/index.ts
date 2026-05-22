@@ -9,7 +9,7 @@ export { Note } from "./Note";
 export { Payment } from "./Payment";
 export { Placeholder } from "./Placeholder";
 export { ProductsList } from "./ProductsList";
-export { Promo } from "./Promo";
+export { Promo, PromoForm } from "./Promo";
 export { Queue } from "./Queue";
 export { SectionLayout } from "./SectionLayout";
 export { Time } from "./Time";

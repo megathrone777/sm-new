@@ -15,7 +15,7 @@ const createPromocode = async (
 
   const code = `${formData.get("code")}`.trim().toUpperCase();
   const discount = +(formData.get("discount") ?? 0);
-  const type = formData.get("type") as TPromoCode["type"];
+  const type: TPromoCode["type"] = formData.get("oneTime") !== null ? "oneTime" : "reusable";
   const activatedAt = `${formData.get("activatedAt") ?? ""}`;
 
   if (!code || !discount) {

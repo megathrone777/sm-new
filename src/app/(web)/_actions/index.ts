@@ -1,4 +1,5 @@
 export { addToCart } from "./addToCart";
+export { clearPromoError } from "./clearPromoError";
 export { applyPromocode } from "./applyPromocode";
 export { getAddressSuggestions } from "./getAddressSuggestions";
 export { markOrderCancelled } from "./markOrderCancelled";

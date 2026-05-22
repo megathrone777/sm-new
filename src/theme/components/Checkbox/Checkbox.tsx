@@ -54,7 +54,7 @@ const Checkbox: React.FC<TProps> = ({
       </span>
 
       <label
-        className={`${labelClass[template]} ${labelClassName ? labelClassName : ""}`}
+        className={labelClassName ?? labelClass[template]}
         htmlFor={inputId}
       >
         <span>

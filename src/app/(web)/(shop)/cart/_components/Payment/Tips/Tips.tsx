@@ -9,7 +9,7 @@ import { descriptionClass, labelClass, rowClass, titleClass, wrapperClass } from
 
 import type { TProps } from "./Tips.types";
 
-const TIP_PERCENTAGES: number[] = [2, 5, 10, 15];
+const tipPercentages: number[] = [2, 5, 10, 15];
 
 const Tips: React.FC<TProps> = ({ tips }) => {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ const Tips: React.FC<TProps> = ({ tips }) => {
       <p className={descriptionClass}>{t<string>("tipsDescription")}</p>
 
       <div className={rowClass}>
-        {TIP_PERCENTAGES.map<React.ReactElement>((amount: number) => {
+        {tipPercentages.map<React.ReactElement>((amount: number) => {
           const tipId = `cart-tip-${amount}`;
 
           return (
