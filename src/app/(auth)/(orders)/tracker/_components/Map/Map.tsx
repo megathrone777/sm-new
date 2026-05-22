@@ -1,7 +1,8 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Marker } from "react-map-gl/maplibre";
 
+import { getCouriers } from "@/app/(auth)/(orders)/_actions";
 import { useRealtime } from "@/hooks";
 
 import { DeliveryMarkers, isPaymentVisible, toDeliveryOrder } from "./DeliveryMarkers";
@@ -9,16 +10,13 @@ import { FitBounds } from "./FitBounds";
 
 import { markerClass } from "./Map.css";
 
-import type { TCourierState, TProps } from "./Map.types";
+import type { TProps } from "./Map.types";
 
 const kitchenPosition: [number, number] = [50.0861328, 14.4518119];
-const courierColors = ["greenyellow", "orange"] as const;
+const POLL_INTERVAL_MS = 10000;
 
 const Map: React.FC<TProps> = ({ initialOrders }) => {
-  const [courierState] = useState<TCourierState>({
-    "courier-1": { latitude: 0, longitude: 0 },
-    "courier-2": { latitude: 0, longitude: 0 },
-  });
+  const [couriers, setCouriers] = useState<TCourier[]>([]);
   const [orders, setOrders] = useState<TOrder[]>(initialOrders);
 
   useRealtime({
@@ -38,6 +36,24 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
     },
   });
 
+  useEffect(() => {
+    let active = true;
+
+    const fetchCouriers = async (): Promise<void> => {
+      const data = await getCouriers();
+
+      if (active) setCouriers(data);
+    };
+
+    fetchCouriers();
+    const interval = setInterval(fetchCouriers, POLL_INTERVAL_MS);
+
+    return (): void => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, []);
+
   const positions = useMemo<[number, number][]>(() => {
     const deliveryPositions = orders
       .map(toDeliveryOrder)
@@ -47,45 +63,44 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
       )
       .map((o) => o.position);
 
-    const courierPositions = Object.values(courierState)
-      .filter(({ latitude, longitude }) => latitude !== 0 || longitude !== 0)
-      .map(({ latitude, longitude }): [number, number] => [latitude, longitude]);
+    const courierPositions = couriers.map(
+      ({ latitude, longitude }): [number, number] => [latitude, longitude],
+    );
 
     return [kitchenPosition, ...deliveryPositions, ...courierPositions];
-  }, [orders, courierState]);
+  }, [orders, couriers]);
 
   return (
     <>
       <FitBounds {...{ positions }} />
 
-      {Object.entries(courierState).map(
-        ([courierId, { latitude, longitude }], index) =>
-          (latitude !== 0 || longitude !== 0) && (
-            <Marker
-              anchor="center"
-              key={`${courierId}-courier-marker`}
-              latitude={latitude}
-              longitude={longitude}
-            >
-              <i
-                style={{
-                  backgroundColor: courierColors[index] ?? "greenyellow",
-                  borderRadius: "50%",
-                  display: "block",
-                  fontSize: 17,
-                  fontStyle: "normal",
-                  fontWeight: "bold",
-                  height: 25,
-                  lineHeight: "25px",
-                  textAlign: "center",
-                  width: 25,
-                }}
-              >
-                {index + 1}
-              </i>
-            </Marker>
-          ),
-      )}
+      {couriers.map(({ id, latitude, longitude, name, online }, index) => (
+        <Marker
+          anchor="center"
+          key={`${id}-courier-marker`}
+          latitude={latitude}
+          longitude={longitude}
+        >
+          <i
+            style={{
+              backgroundColor: online ? "greenyellow" : "gray",
+              borderRadius: "50%",
+              color: "#000",
+              display: "block",
+              fontSize: 17,
+              fontStyle: "normal",
+              fontWeight: "bold",
+              height: 25,
+              lineHeight: "25px",
+              textAlign: "center",
+              width: 25,
+            }}
+            title={name}
+          >
+            {index + 1}
+          </i>
+        </Marker>
+      ))}
 
       <DeliveryMarkers {...{ orders }} />
 
