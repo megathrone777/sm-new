@@ -4,7 +4,6 @@ declare global {
     latitude: number;
     longitude: number;
     name: string;
-    online: boolean;
   }
 }
 
