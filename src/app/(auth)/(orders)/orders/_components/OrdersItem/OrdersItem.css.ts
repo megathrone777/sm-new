@@ -39,7 +39,6 @@ export const itemClass = css({
   display: "flex",
   fontSize: 17,
   marginBottom: 15,
-
   selectors: {
     "&.wrap": { flexWrap: "wrap" },
   },

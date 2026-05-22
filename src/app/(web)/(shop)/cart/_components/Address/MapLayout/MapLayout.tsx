@@ -1,23 +1,57 @@
 "use client";
 import React from "react";
-import { MapContainer } from "react-leaflet";
+import ReactMap from "react-map-gl/maplibre";
+
+import "maplibre-gl/dist/maplibre-gl.css";
+
+import { bbox } from "@/utils";
 
 import { mapContainerClass } from "./MapLayout.css";
 
 import type { TProps } from "./MapLayout.types";
 
-const MapLayout: React.FC<TProps> = ({ children }) => (
-  <MapContainer
-    attributionControl={false}
-    center={[50.0861328, 14.4518119]}
-    className={mapContainerClass}
-    dragging={false}
-    id="delivery-map"
-    zoom={18}
-    zoomControl={false}
-  >
-    {children}
-  </MapContainer>
-);
+const KITCHEN_BBOX: [number, number][] = [
+  [50.0861328, 14.4518119],
+  [50.0993822, 14.4309572],
+];
+
+const toBounds = (points: [number, number][]): [[number, number], [number, number]] => {
+  const bounds = bbox(points);
+  const sw = bounds[0]!;
+  const ne = bounds[1]!;
+
+  return [
+    [sw[1], sw[0]],
+    [ne[1], ne[0]],
+  ];
+};
+
+const MapLayout: React.FC<TProps> = ({ children, delivery: { position, type } }) => {
+  const initialBounds =
+    type === "delivery" && position && position.length > 0
+      ? toBounds(position as [number, number][])
+      : toBounds(KITCHEN_BBOX);
+
+  return (
+    <div
+      className={mapContainerClass}
+      id="delivery-map"
+    >
+      <ReactMap
+        attributionControl={false}
+        initialViewState={{
+          bounds: initialBounds,
+          fitBoundsOptions: { padding: 20 },
+        }}
+        interactive={false}
+        mapStyle="https://tiles.openfreemap.org/styles/fiord"
+        padding={{ bottom: 20, left: 20, right: 20, top: 20 }}
+        style={{ height: "100%", width: "100%" }}
+      >
+        {children}
+      </ReactMap>
+    </div>
+  );
+};
 
 export { MapLayout };

@@ -7,6 +7,8 @@ import { Button } from "@/ui";
 
 import { CategoryFilter, ProductsList, ProductsSearch } from "./_components";
 
+import { layoutClass } from "./page.css";
+
 const Page: React.FC<PageProps<"/admin/products">> = async ({ searchParams }) => {
   const { categoryId } = await searchParams;
   const categories = await store.categories.getAll();
@@ -20,15 +22,17 @@ const Page: React.FC<PageProps<"/admin/products">> = async ({ searchParams }) =>
   return (
     <>
       <Header title="Products">
-        <CategoryFilter {...{ options }} />
-        <ProductsSearch />
+        <div className={layoutClass}>
+          <CategoryFilter {...{ options }} />
+          <ProductsSearch />
 
-        <Link href="/admin/product/create">
-          <Button
-            iconId="plus"
-            template="small"
-          />
-        </Link>
+          <Link href="/admin/product/create">
+            <Button
+              iconId="plus"
+              template="small"
+            />
+          </Link>
+        </div>
       </Header>
 
       <Suspense>

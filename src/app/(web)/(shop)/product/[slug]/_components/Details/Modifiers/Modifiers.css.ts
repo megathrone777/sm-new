@@ -5,6 +5,7 @@ export const wrapperClass = cssVariant(
     "1": "repeat(1, 1fr)",
     "2": "repeat(2, 1fr)",
   },
+
   (gridTemplateColumns) => [
     {
       display: "grid",

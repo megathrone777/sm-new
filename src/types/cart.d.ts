@@ -1,5 +1,3 @@
-import type { LatLngExpression } from "leaflet";
-
 declare global {
   type TDeliveryType = "delivery" | "pickup";
   type TPaymentType = "card" | "cardAfterDelivery" | "cash";
@@ -36,7 +34,7 @@ declare global {
     address: string;
     conditions: TDeliveryCondition[];
     distanceInM: number;
-    position: LatLngExpression[] | null;
+    position: [number, number][] | null;
     price: null | number;
     title: string;
     type: TDeliveryType;

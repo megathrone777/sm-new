@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { wrapperClass, linkClass, listClass } from "./Menu.css";
 
@@ -9,14 +9,17 @@ import type { TProps } from "./Menu.types";
 
 const Menu: React.FC<TProps> = ({ items }) => {
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleLinkClick = (event: React.SyntheticEvent<HTMLAnchorElement>): void => {
     const { currentTarget } = event;
     const { hash } = currentTarget;
 
-    if (hash && pathname === "/") {
-      event.preventDefault();
-      const section = document.getElementById(currentTarget.hash.replace("#", ""));
+    if (!hash) return;
+    event.preventDefault();
+
+    if (pathname === "/") {
+      const section = document.getElementById(hash.replace("#", ""));
 
       if (section) {
         section.scrollIntoView({
@@ -24,6 +27,8 @@ const Menu: React.FC<TProps> = ({ items }) => {
           block: "start",
         });
       }
+    } else {
+      router.push(("/" + hash) as TNavItem["href"]);
     }
   };
 

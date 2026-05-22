@@ -6,8 +6,6 @@ import { store } from "@/store";
 import { Container } from "@/ui";
 import { isShopOpened } from "@/utils";
 
-import "leaflet/dist/leaflet.css";
-
 import {
   Additionals,
   Address,

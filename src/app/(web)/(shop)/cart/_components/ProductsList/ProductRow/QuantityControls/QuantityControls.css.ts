@@ -36,6 +36,7 @@ export const quantityClass = css({
 export const quantityAmountClass = css(({ fonts }) => ({
   fontSize: 18,
   fontWeight: fonts.bold,
+  userSelect: "none",
 }));
 
 export const optionsClass = css(({ devices }) => ({

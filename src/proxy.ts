@@ -34,9 +34,13 @@ export const proxy = async (request: NextRequest): Promise<NextResponse> => {
     return NextResponse.redirect(new URL("/orders", request.url));
   }
 
+  if (pathname.startsWith("/tracker") && session.role !== "admin") {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
   return NextResponse.next();
 };
 
 export const config = {
-  matcher: ["/login", "/admin/:path*", "/orders/:path*"],
+  matcher: ["/login", "/admin/:path*", "/tracker/:path*", "/orders/:path*"],
 };

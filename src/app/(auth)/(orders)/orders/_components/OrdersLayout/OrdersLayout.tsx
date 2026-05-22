@@ -3,7 +3,7 @@ import React, { useState } from "react";
 
 import { useNewOrderAlert, useRealtime } from "@/hooks";
 
-import { Item } from "../Item";
+import { OrdersItem } from "../OrdersItem";
 
 import { listClass } from "./OrdersLayout.css";
 
@@ -45,7 +45,7 @@ const OrdersLayout: React.FC<TProps> = ({ initialOrders, isAdmin, placeholder })
       {orders.length > 0 ? (
         <div className={listClass}>
           {orders.map<React.ReactElement>((order: TOrder) => (
-            <Item
+            <OrdersItem
               key={`${order.id}-order-${order.status}`}
               {...order}
               {...{ isAdmin }}

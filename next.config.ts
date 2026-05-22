@@ -1,13 +1,8 @@
-import withBundleAnalyzer from "@next/bundle-analyzer";
 import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 
 import type { NextConfig } from "next";
 
 const withVanillaExtract = createVanillaExtractPlugin();
-
-const bundleAnalyzer = withBundleAnalyzer({
-  enabled: process.env.ANALYZE === "true",
-});
 
 const config: NextConfig = {
   allowedDevOrigins: ["192.168.0.227", "192.168.137.74", "172.17.208.1"],
@@ -36,7 +31,8 @@ const config: NextConfig = {
       source: "/:path*",
     },
   ],
+  serverExternalPackages: ["pug"],
   typedRoutes: true,
 };
 
-export default bundleAnalyzer(withVanillaExtract(config));
+export default withVanillaExtract(config);

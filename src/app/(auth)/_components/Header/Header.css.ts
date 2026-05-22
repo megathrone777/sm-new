@@ -1,20 +1,29 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css(({ colors }) => ({
+  alignContent: "center",
   alignItems: "center",
   backgroundColor: colors.black,
   display: "grid",
   gridAutoFlow: "column",
   height: 80,
   justifyContent: "space-between",
-  paddingBlock: 4,
-  paddingInline: 16,
+  padding: "4px 16px",
   position: "sticky",
   top: 0,
   zIndex: 100,
 }));
 
-export const linkClass = css({
+export const layoutClass = css({
+  alignContent: "center",
+  alignItems: "center",
+  columnGap: 30,
+  display: "grid",
+  gridAutoFlow: "column",
+  justifyContent: "end",
+});
+
+export const logoLinkClass = css({
   display: "block",
   height: "90%",
   overflow: "hidden",
@@ -25,28 +34,27 @@ export const imageClass = css({
   height: "100%",
 });
 
-export const sideClass = css({
-  alignItems: "center",
-  columnGap: 40,
-  display: "grid",
-  gridAutoFlow: "column",
+export const buttonClass = css({
+  boxShadow: "none",
 });
 
-export const goLinkClass = css(({ colors, easing, fonts }) => ({
-  alignItems: "center",
-  color: "white",
-  columnGap: 8,
-  display: "inline-grid",
-  fontSize: 15,
-  fontWeight: fonts.medium,
-  gridAutoFlow: "column",
-  transition: `color .25s ${easing}`,
+export const buttonLabelClass = css(({ devices }) => ({
+  display: "none",
 
-  ":hover": {
-    color: colors.red,
+  "@media": {
+    [devices.tablet]: {
+      display: "inline-grid",
+    },
   },
 }));
 
-export const iconClass = css({
-  height: 18,
-});
+export const buttonIconClass = css(({ devices }) => ({
+  display: "inline-block",
+  height: 20,
+
+  "@media": {
+    [devices.tablet]: {
+      display: "none",
+    },
+  },
+}));

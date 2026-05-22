@@ -10,7 +10,7 @@ const Placeholder: React.FC = async () => {
 
   return (
     <div className={wrapperClass}>
-      <h2 className={titleClass}>Нет заказов</h2>
+      <h2 className={titleClass}>No orders</h2>
 
       <Image
         alt="Logo."

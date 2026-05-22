@@ -16,7 +16,7 @@
     "noUnusedLocals": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@/ui": ["./src/theme/components/index.ts"]
+      "@/ui": ["./src/theme/components/"]
     },
     "plugins": [
       {
@@ -28,15 +28,6 @@
     "strict": true,
     "target": "es2017"
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    "jest.setup.ts",
-    "jest.config.ts",
-    ".next/dev/types/**/*.ts",
-    ".next/types/**/*.ts",
-    "next-env.d.ts",
-    "types/*.d.ts"
-  ],
+  "include": ["**/*.ts", "**/*.tsx", ".next/dev/types/**/*.ts", ".next/types/**/*.ts"],
   "exclude": ["build", "node_modules"]
 }

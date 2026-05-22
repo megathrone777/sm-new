@@ -9,8 +9,12 @@ export const layoutClass = css(({ devices }) => ({
 
   "@media": {
     [devices.tablet]: {
-      columnGap: 30,
+      columnGap: 20,
       gridTemplateColumns: "220px 1fr",
+    },
+
+    [devices.desktop]: {
+      columnGap: 30,
     },
   },
 }));
@@ -31,6 +35,10 @@ export const burgerWrapperClass = css(({ colors, devices }) => ({
   width: 44,
 
   "@media": {
+    [devices.mobile]: {
+      marginBottom: 0,
+    },
+
     [devices.tablet]: {
       display: "none",
     },
@@ -38,11 +46,8 @@ export const burgerWrapperClass = css(({ colors, devices }) => ({
 }));
 
 export const overlayClass = css({
-  backgroundColor: "rgba(0,0,0,0.45)",
-  bottom: 0,
-  left: 0,
+  backgroundColor: "rgba(0, 0, 0, .45)",
+  inset: 0,
   position: "fixed",
-  right: 0,
-  top: 0,
-  zIndex: 98,
+  zIndex: 101,
 });

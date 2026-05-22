@@ -49,6 +49,13 @@ declare global {
     totalPrice: number;
     totalProductsPrice: number;
   }
+
+  interface TDeliveryOrder extends Pick<
+    TOrder,
+    "deliveryTime" | "id" | "onlinePaymentStatus" | "paymentType" | "status"
+  > {
+    position: [number, number];
+  }
 }
 
 export {};

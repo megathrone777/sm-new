@@ -12,6 +12,7 @@ export const layoutClass = cssVariant(
     default: {
       color: colors.black,
     },
+
     error: {
       color: colors.red,
       selectors: {
@@ -21,6 +22,7 @@ export const layoutClass = cssVariant(
       },
     },
   }),
+
   (variant) => [
     {
       alignItems: "center",

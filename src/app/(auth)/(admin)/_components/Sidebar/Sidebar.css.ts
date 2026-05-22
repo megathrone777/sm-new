@@ -12,7 +12,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
   transform: "translateX(-100%)",
   transition: "transform 0.3s ease",
   width: 260,
-  zIndex: 101,
+  zIndex: 102,
 
   "@media": {
     [devices.tablet]: {

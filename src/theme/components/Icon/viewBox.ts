@@ -17,6 +17,7 @@ export const viewBox: Record<TIconID, string> = {
   history: "0 0 24 24",
   invoice: "0 0 24 24",
   locate: "0 0 24 24",
+  logout: "0 0 24 24",
   minus: "0 0 448 512",
   note: "0 0 512 512",
   phone: "0 0 24 24",

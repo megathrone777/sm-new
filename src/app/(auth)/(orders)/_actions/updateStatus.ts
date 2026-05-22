@@ -9,6 +9,7 @@ const updateStatus = async (id: TOrder["id"], status: TOrderStatus): Promise<voi
   const session = await store.sessions.get();
 
   if (!session) return;
+
   const order = await store.orders.getById(id);
 
   if (!order) return;

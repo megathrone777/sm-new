@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 import { Burger } from "@/ui";
 
@@ -19,6 +19,7 @@ import type { TProps } from "./Menu.types";
 
 const Menu: React.FC<TProps> = ({ items, phone }) => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isOpened, toggleOpened] = useState<boolean>(false);
 
   const checkMenu = (): void => {
@@ -34,9 +35,12 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
 
     checkMenu();
 
-    if (hash && pathname === "/") {
-      event.preventDefault();
-      const section = document.getElementById(currentTarget.hash.replace("#", ""));
+    if (!hash) return;
+
+    event.preventDefault();
+
+    if (pathname === "/") {
+      const section = document.getElementById(hash.replace("#", ""));
 
       if (section) {
         section.scrollIntoView({
@@ -44,6 +48,8 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
           block: "start",
         });
       }
+    } else {
+      router.push(("/" + hash) as TNavItem["href"]);
     }
   };
 

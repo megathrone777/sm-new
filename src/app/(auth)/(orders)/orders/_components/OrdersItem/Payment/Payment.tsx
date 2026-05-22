@@ -2,7 +2,7 @@ import React from "react";
 
 import { useTranslation } from "@/hooks";
 
-import { itemClass, labelClass, valueClass } from "../Item.css";
+import { itemClass, labelClass, valueClass } from "../OrdersItem.css";
 import { typeClass } from "./Payment.css";
 
 import type { TProps } from "./Payment.types";

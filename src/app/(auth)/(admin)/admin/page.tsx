@@ -20,7 +20,6 @@ const Page: React.FC<PageProps<"/admin">> = async () => {
   return (
     <>
       <Header title={getGreeting()} />
-
       <AvailabilityToggle initialValue={isAvailable} />
     </>
   );

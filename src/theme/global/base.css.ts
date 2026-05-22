@@ -41,8 +41,3 @@ globalStyle("object", {
 globalStyle("b", ({ fonts }) => ({
   fontWeight: fonts.demi,
 }));
-
-globalStyle(".leaflet-zoom-animated", {
-  height: "auto",
-  width: "auto",
-});

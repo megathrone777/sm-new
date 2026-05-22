@@ -4,8 +4,6 @@ import { store } from "@/store";
 
 import { OrdersLayout, Placeholder } from "./_components";
 
-import { wrapperClass } from "./page.css";
-
 const Page: React.FC<PageProps<"/orders">> = async () => {
   const [initialOrders, session] = await Promise.all([
     store.orders.getActive(),
@@ -14,12 +12,10 @@ const Page: React.FC<PageProps<"/orders">> = async () => {
   const isAdmin = session?.role === "admin";
 
   return (
-    <div className={wrapperClass}>
-      <OrdersLayout
-        {...{ initialOrders, isAdmin }}
-        placeholder={<Placeholder />}
-      />
-    </div>
+    <OrdersLayout
+      {...{ initialOrders, isAdmin }}
+      placeholder={<Placeholder />}
+    />
   );
 };
 

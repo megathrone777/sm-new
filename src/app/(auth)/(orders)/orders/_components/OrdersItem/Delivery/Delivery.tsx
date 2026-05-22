@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 
-import { itemClass, labelClass, valueClass } from "../Item.css";
+import { itemClass, labelClass, valueClass } from "../OrdersItem.css";
 import { linkClass, wazeClass } from "./Delivery.css";
 
 import type { TProps } from "./Delivery.types";

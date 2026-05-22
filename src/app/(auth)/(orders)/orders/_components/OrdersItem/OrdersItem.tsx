@@ -8,11 +8,11 @@ import { Heading } from "./Heading";
 import { Payment } from "./Payment";
 import { Products } from "./Products";
 
-import { contentClass, noteClass, wrapperClass } from "./Item.css";
+import { contentClass, noteClass, wrapperClass } from "./OrdersItem.css";
 
-import type { TProps } from "./Item.types";
+import type { TProps } from "./OrdersItem.types";
 
-const Item: React.FC<TProps> = ({
+const OrdersItem: React.FC<TProps> = ({
   additionals,
   clientEmail,
   clientName,
@@ -88,4 +88,4 @@ const Item: React.FC<TProps> = ({
   </div>
 );
 
-export { Item };
+export { OrdersItem };

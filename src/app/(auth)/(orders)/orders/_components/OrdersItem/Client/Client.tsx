@@ -1,6 +1,6 @@
 import React from "react";
 
-import { itemClass, labelClass, valueClass } from "../Item.css";
+import { itemClass, labelClass, valueClass } from "../OrdersItem.css";
 import { typeClass } from "./Client.css";
 
 import type { TProps } from "./Client.types";
