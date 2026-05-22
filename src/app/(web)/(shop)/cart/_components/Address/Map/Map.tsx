@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Layer, Marker, Source, useMap } from "react-map-gl/maplibre";
 
 import { bbox } from "@/utils";
@@ -24,6 +24,7 @@ const toLngLatBounds = (points: [number, number][]): [[number, number], [number,
 const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
   const { current: map } = useMap();
   const [animCoords, setAnimCoords] = useState<[number, number][]>([]);
+  const animKeyRef = useRef<string>("");
 
   useEffect((): void => {
     if (!map) return;
@@ -38,6 +39,11 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
   }, [type, position, map]);
 
   useEffect(() => {
+    const animKey = `${Boolean(map)}:${type}:${JSON.stringify(position)}`;
+
+    if (animKey === animKeyRef.current) return;
+    animKeyRef.current = animKey;
+
     if (!map || !position || position.length < 2 || type !== "delivery") {
       setAnimCoords([]);
 
