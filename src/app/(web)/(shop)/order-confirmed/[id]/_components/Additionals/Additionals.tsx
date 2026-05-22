@@ -1,6 +1,6 @@
 import React from "react";
 
-import { countClass, listClass, itemClass } from "./Additionals.css";
+import { quantityClass, listClass, itemClass } from "./Additionals.css";
 
 import type { TProps } from "./Additionals.types";
 
@@ -11,8 +11,8 @@ const Additionals: React.FC<TProps> = ({ additionals }) => (
         className={itemClass}
         key={`${id}-order-additional`}
       >
-        {title}
-        <b className={countClass}>x{quantity}</b>
+        <span>{title}</span>
+        <b className={quantityClass}>(x{quantity})</b>
       </li>
     ))}
   </ul>

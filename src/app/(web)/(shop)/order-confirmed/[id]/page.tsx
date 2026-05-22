@@ -17,11 +17,14 @@ import {
   imageClass,
   imageHolderClass,
   itemClass,
+  itemLinkClass,
   layoutClass,
+  labelClass,
   linkClass,
   subitemClass,
   subtitleClass,
   titleClass,
+  valueClass,
   wrapperClass,
 } from "./page.css";
 
@@ -88,58 +91,85 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
               </p>
 
               <p className={subitemClass}>
-                <b>Objednávka: </b>#{id}
+                <span className={labelClass}>Objednávka:</span>
+                <span className={valueClass}>#{id}</span>
               </p>
 
               {products && !!products.length && <Products {...{ products }} />}
               {additionals && !!additionals.length && <Additionals {...{ additionals }} />}
 
               <p className={itemClass}>
-                <b>Příbory: </b>
-                {cutleryCount}
+                <span className={labelClass}>Příbory:</span>
+                <span className={valueClass}>{cutleryCount}</span>
               </p>
 
               <p className={itemClass}>
-                <b>Způsob platby: </b>
+                <span className={labelClass}>Způsob platby:</span>
 
-                {paymentType === "cash"
-                  ? "Hotovost"
-                  : paymentType === "card"
-                    ? "Kartou on-line"
-                    : "Kartou na místě"}
+                <span className={valueClass}>
+                  {paymentType === "cash"
+                    ? "Hotovost"
+                    : paymentType === "card"
+                      ? "Kartou on-line"
+                      : "Kartou na místě"}
+                </span>
               </p>
 
               <p className={itemClass}>
-                <b>Doprava: </b>
-                {deliveryType === "pickup" ? "Vyzvednutí" : "Kurýr"}
+                <span className={labelClass}>Doprava:</span>
+
+                <span className={valueClass}>
+                  {deliveryType === "pickup" ? "Vyzvednutí" : "Kurýr"}
+                </span>
               </p>
 
               {deliveryType === "pickup" && (
                 <p className={itemClass}>
-                  <b>Adresa vyzvednutí: </b>
-                  Milíčova 471/25, Praha 3
+                  <span className={labelClass}>Adresa vyzvednutí:</span>
+                  <span className={valueClass}>Milíčova 471/25, Praha 3</span>
                 </p>
               )}
 
               {deliveryType === "delivery" && (
                 <p className={itemClass}>
-                  <b>Adresa doručení:</b> {deliveryAddress}
+                  <span className={labelClass}>Adresa doručení:</span>
+
+                  <span className={valueClass}>
+                    <a
+                      className={itemLinkClass}
+                      href={`https://maps.google.com/?q=${encodeURIComponent(deliveryAddress)}`}
+                      target="_blank"
+                    >
+                      {deliveryAddress}
+                    </a>
+                  </span>
                 </p>
               )}
 
               <p className={itemClass}>
-                <b>Telefon: </b>+{clientPhoneNumber}
+                <span className={labelClass}>Telefon:</span>
+
+                <span className={valueClass}>
+                  <a
+                    className={itemLinkClass}
+                    href={`tel:+${clientPhoneNumber}`}
+                  >
+                    +{clientPhoneNumber}
+                  </a>
+                </span>
               </p>
 
               {deliveryType === "delivery" ? (
                 <>
                   {deliveryTime ? (
                     <p className={itemClass}>
-                      <b>Doručit v:</b> {deliveryTime}
+                      <span className={labelClass}>Doručit v:</span>
+                      <span className={valueClass}>{deliveryTime}</span>
                     </p>
                   ) : (
                     <p className={itemClass}>
-                      <b>Doručit v:</b> teď
+                      <span className={labelClass}>Doručit v:</span>
+                      <span className={valueClass}>teď</span>
                     </p>
                   )}
                 </>
@@ -147,11 +177,13 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                 <>
                   {deliveryTime ? (
                     <p className={itemClass}>
-                      <b>Čas vyzvednutí:</b> {deliveryTime}
+                      <span className={labelClass}>Čas vyzvednutí:</span>
+                      <span className={valueClass}>{deliveryTime}</span>
                     </p>
                   ) : (
                     <p className={itemClass}>
-                      <b>Čas vyzvednutí:</b> teď
+                      <span className={labelClass}>Čas vyzvednutí:</span>
+                      <span className={valueClass}>teď</span>
                     </p>
                   )}
                 </>
@@ -159,25 +191,37 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
 
               {note && (
                 <p className={itemClass}>
-                  <b>Poznámka:</b> {note}
+                  <span className={labelClass}>Poznámka:</span>
+                  <span className={valueClass}>{note}</span>
                 </p>
               )}
 
               {promocode && (
                 <p className={itemClass}>
-                  <b>Promo:</b> {promocode} ({promocodeDiscountPrice} {t<string>("currency")})
+                  <span className={labelClass}>Promo:</span>
+
+                  <span className={valueClass}>
+                    {promocode} ({promocodeDiscountPrice} {t<string>("currency")})
+                  </span>
                 </p>
               )}
 
               {tipsPrice && tipsPrice > 0 ? (
                 <p className={itemClass}>
-                  <b>Tips:</b> {tipsPrice} {t<string>("currency")} ({tipsAmount}%)
+                  <span className={labelClass}>Tips:</span>
+
+                  <span className={valueClass}>
+                    {tipsPrice} {t<string>("currency")} ({tipsAmount}%)
+                  </span>
                 </p>
               ) : null}
 
               <p className={itemClass}>
-                <b>Cena: </b>
-                {totalPrice} {t<string>("currency")}
+                <span className={labelClass}>Cena:</span>
+
+                <span className={valueClass}>
+                  {totalPrice} {t<string>("currency")}
+                </span>
               </p>
 
               {deliveryType === "delivery" && (

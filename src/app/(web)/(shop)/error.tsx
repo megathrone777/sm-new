@@ -1,8 +1,9 @@
+"use client";
 import React from "react";
 
 import { Button } from "@/ui";
 
-const Page: React.FC = () => (
+const Error: React.FC = () => (
   <div className="error">
     <h1 className="error__title">Stránka nenalezena</h1>
 
@@ -16,4 +17,4 @@ const Page: React.FC = () => (
   </div>
 );
 
-export default Page;
+export default Error;

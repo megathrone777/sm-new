@@ -4,14 +4,35 @@ export const wrapperClass = css({
   display: "grid",
 });
 
-export const layoutClass = css(({ colors }) => ({
-  alignItems: "center",
-  borderBottom: `2px solid ${colors.red}`,
-  display: "grid",
-  gridAutoFlow: "column",
-  height: 36,
-  justifyContent: "start",
-}));
+export const layoutClass = cssVariant(
+  ({ devices }) => ({
+    default: {
+      height: 36,
+    },
+
+    light: {
+      height: 36,
+
+      "@media": {
+        [devices.desktop]: {
+          fontSize: 19,
+          height: 42,
+        },
+      },
+    },
+  }),
+
+  (variant, { colors }) => [
+    {
+      alignItems: "center",
+      borderBottom: `2px solid ${colors.red}`,
+      display: "grid",
+      gridAutoFlow: "column",
+      justifyContent: "start",
+    },
+    variant,
+  ],
+);
 
 export const labelClass = css(({ fonts }) => ({
   cursor: "pointer",
@@ -22,11 +43,15 @@ export const labelClass = css(({ fonts }) => ({
 }));
 
 export const inputClass = cssVariant(
-  ({ colors }) => ({
+  ({ colors, devices }) => ({
     default: {
+      color: "black",
       selectors: {
         "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
           {
+            caretColor: "black",
+            transition: "background-color 9999s ease-out",
+            WebkitBoxShadow: "0 0 0 1000px white inset",
             WebkitTextFillColor: "black",
           },
       },
@@ -37,15 +62,42 @@ export const inputClass = cssVariant(
     },
 
     error: {
+      color: "black",
       selectors: {
         "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
           {
+            caretColor: "black",
+            transition: "background-color 9999s ease-out",
+            WebkitBoxShadow: "0 0 0 1000px white inset",
             WebkitTextFillColor: colors.red,
           },
       },
 
       "::placeholder": {
         color: colors.red,
+      },
+    },
+
+    light: {
+      color: "white",
+      selectors: {
+        "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
+          {
+            caretColor: "white",
+            transition: "background-color 9999s ease-out",
+            WebkitBoxShadow: "0 0 0 1000px black inset",
+            WebkitTextFillColor: "white",
+          },
+      },
+
+      "::placeholder": {
+        color: "rgba(255, 255, 255, .5)",
+      },
+
+      "@media": {
+        [devices.desktop]: {
+          fontSize: 18,
+        },
       },
     },
   }),
@@ -56,19 +108,10 @@ export const inputClass = cssVariant(
       backgroundColor: "transparent",
       border: "none",
       borderRadius: 0,
-      color: "black",
       fontFamily: "inherit",
       fontSize: 16,
       fontWeight: fonts.medium,
       height: "100%",
-      selectors: {
-        "&:-webkit-autofill, &:-webkit-autofill:hover, &:-webkit-autofill:focus, &:-webkit-autofill:active":
-          {
-            caretColor: "black",
-            transition: "background-color 9999s ease-out",
-            WebkitBoxShadow: "0 0 0 1000px white inset",
-          },
-      },
       width: "100%",
 
       ":disabled": {
@@ -78,6 +121,10 @@ export const inputClass = cssVariant(
 
       ":focus": {
         outline: "none",
+
+        "::placeholder": {
+          color: "transparent",
+        },
       },
 
       ":read-only": {
@@ -110,7 +157,7 @@ export const errorIconClass = css(({ colors }) => ({
   marginLeft: 4,
   minWidth: 20,
   selectors: {
-    [`${layoutClass}:focus-within &`]: {
+    [`${wrapperClass}:focus-within &`]: {
       display: "none",
     },
   },

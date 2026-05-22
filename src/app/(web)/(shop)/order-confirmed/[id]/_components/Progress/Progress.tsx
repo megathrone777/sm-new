@@ -20,8 +20,7 @@ import type { TProps } from "./Progress.types";
 
 const kitchenPosition: [number, number] = [50.0861328, 14.4518119];
 const pollIntervalMs = 5000;
-// const proximityMeters = 500;
-const proximityMeters = 150;
+const proximityMeters = 500;
 
 const haversine = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
   const R = 6371000;
@@ -42,33 +41,21 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
   } | null>(null);
   const [status, setStatus] = useState<TOrderStatus>(initialStatus);
 
-  useRealtime({
-    events: ["orderStatusChanged"],
-
-    onData: ({ data, event }): void => {
-      if (event === "orderStatusChanged" && data.id === orderId) {
-        setStatus(data.status);
-      }
-    },
-  });
-
   const parts = deliveryCoordinates?.split(",").map(Number) ?? [];
   const deliveryLat = parts[0];
   const deliveryLng = parts[1];
   const hasDelivery =
     deliveryLat != null && deliveryLng != null && !isNaN(deliveryLat) && !isNaN(deliveryLng);
-
   const isNearby =
     courierPosition && hasDelivery
       ? haversine(courierPosition.latitude, courierPosition.longitude, deliveryLat!, deliveryLng!) <
         proximityMeters
       : false;
-
   const label = isNearby
     ? "Kurýr již přijíždí, buďte připraveni"
     : status === "took"
       ? "Kurýr vyzvedl objednávku, a už na cestě k Vám."
-      : "Připravuje se...";
+      : "Objednávka se připravuje...";
   const isMuted = status !== "took";
 
   const initialBounds: [[number, number], [number, number]] | undefined = hasDelivery
@@ -83,6 +70,16 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
         ],
       ]
     : undefined;
+
+  useRealtime({
+    events: ["orderStatusChanged"],
+
+    onData: ({ data, event }): void => {
+      if (event === "orderStatusChanged" && data.id === orderId) {
+        setStatus(data.status);
+      }
+    },
+  });
 
   useEffect((): (() => void) | void => {
     if (status !== "took") {
@@ -119,6 +116,8 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
       zoom: 15,
     });
   }, [courierPosition]);
+
+  if (status === "placed") return null;
 
   return (
     <div className={wrapperClass}>

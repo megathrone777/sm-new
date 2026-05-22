@@ -21,6 +21,7 @@ const Input: React.FC<TProps> = ({
   iconId,
   isError,
   label,
+  light,
   onBeforeInput,
   onBlur,
   restrictCyrillic,
@@ -69,7 +70,7 @@ const Input: React.FC<TProps> = ({
       )}
 
       <div
-        className={layoutClass}
+        className={layoutClass[Boolean(light) ? "light" : "default"]}
         style={{
           gridTemplateColumns: iconId
             ? showError
@@ -91,7 +92,7 @@ const Input: React.FC<TProps> = ({
 
         <input
           autoComplete="new-password"
-          className={inputClass[showError ? "error" : "default"]}
+          className={inputClass[showError ? "error" : Boolean(light) ? "light" : "default"]}
           id={inputId}
           onBeforeInput={handleBeforeInput}
           onBlur={handleBlur}

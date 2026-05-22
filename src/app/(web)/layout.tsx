@@ -49,6 +49,7 @@ const Layout: React.FC<LayoutProps<"/">> = async ({ children }) => {
 
       {shopIsOpen && <Cart />}
       {authSession && authSession.role === "admin" && <Admin />}
+
       <Controls
         {...{ closedText, closedTitle, contactItems, title }}
         isOpened={shopIsOpen}

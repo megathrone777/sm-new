@@ -1,10 +1,17 @@
 import { css } from "@/theme";
 
-export const wrapperClass = css({
-  paddingBlock: 30,
-});
+export const wrapperClass = css(({ devices }) => ({
+  padding: "20px 8px 30px",
+
+  "@media": {
+    [devices.mobile]: {
+      paddingTop: 30,
+    },
+  },
+}));
 
 export const layoutClass = css(({ devices }) => ({
+  alignItems: "start",
   display: "grid",
   gridAutoFlow: "row",
   justifyItems: "stretch",
@@ -12,7 +19,7 @@ export const layoutClass = css(({ devices }) => ({
   rowGap: 10,
 
   "@media": {
-    [devices.tablet]: {
+    [devices.desktop]: {
       gridAutoFlow: "column",
       gridTemplateColumns: "repeat(3, 1fr)",
       justifyContent: "space-around",
@@ -21,12 +28,15 @@ export const layoutClass = css(({ devices }) => ({
 }));
 
 export const contentClass = css(({ devices }) => ({
+  display: "grid",
+  gridAutoFlow: "row",
   marginBottom: 15,
+
   selectors: {
     "&:first-of-type": {
+      justifyItems: "start",
       justifySelf: "stretch",
       order: 1,
-      paddingLeft: 10,
       width: "100%",
     },
 
@@ -57,6 +67,7 @@ export const contentClass = css(({ devices }) => ({
 export const titleClass = css(({ devices, fonts }) => ({
   fontSize: 24,
   fontWeight: fonts.medium,
+  lineHeight: 1.2,
   marginBottom: 15,
   textAlign: "center",
   textWrap: "balance",
@@ -75,11 +86,12 @@ export const subtitleClass = css({
 });
 
 export const imageHolderClass = css({
-  height: 450,
+  height: "auto",
   marginInline: "auto",
+  maxWidth: 260,
   position: "relative",
   textAlign: "center",
-  width: "auto",
+  width: "100%",
 });
 
 export const linkClass = css({
@@ -98,12 +110,40 @@ export const footerClass = css({
 });
 
 export const itemClass = css({
+  alignItems: "start",
+  columnGap: 6,
+  display: "inline-grid",
   fontSize: 18,
+  gridAutoFlow: "column",
   marginBottom: 10,
 });
 
+export const itemLinkClass = css(({ colors, easing }) => ({
+  color: colors.black,
+  transition: `color .25s ${easing}`,
+
+  ":hover": {
+    color: colors.red,
+  },
+}));
+
+export const labelClass = css(({ fonts }) => ({
+  fontWeight: fonts.demi,
+  lineHeight: "26px",
+}));
+
+export const valueClass = css(({ devices, fonts }) => ({
+  fontWeight: fonts.normal,
+
+  "@media": {
+    [devices.desktopLg]: {
+      whiteSpace: "nowrap",
+    },
+  },
+}));
+
 export const descriptionClass = css(({ devices }) => ({
-  fontSize: 16,
+  fontSize: 17,
   marginBottom: 15,
   maxWidth: 500,
   paddingLeft: 40,
@@ -113,22 +153,29 @@ export const descriptionClass = css(({ devices }) => ({
     [devices.mobile]: {
       fontSize: 18,
     },
+
+    [devices.tablet]: {
+      maxWidth: "none",
+    },
   },
 }));
 
 export const iconClass = css({
   color: "lightgreen",
   display: "inline-block",
+  height: 30,
   left: 0,
   maxWidth: 30,
   position: "absolute",
-  top: "50%",
-  transform: "translateY(-50%)",
-  verticalAlign: "middle",
+  top: -2,
 });
 
 export const subitemClass = css({
+  alignItems: "center",
+  columnGap: 6,
+  display: "inline-grid",
   fontSize: 20,
+  gridAutoFlow: "column",
   marginBottom: 10,
 });
 

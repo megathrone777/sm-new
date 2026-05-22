@@ -27,12 +27,12 @@ const createSession = async (data: TSessionData): Promise<void> => {
 
 const login = async (formData: FormData): Promise<void> => {
   const loginValue = formData.get("login");
-  const password = formData.get("password");
+  const passwordValue = formData.get("password");
 
-  if (typeof loginValue !== "string" || typeof password !== "string") return;
-  const user = await store.users.get(loginValue);
+  if (typeof loginValue !== "string" || typeof passwordValue !== "string") return;
+  const user = await store.users.get(loginValue.trim().toLowerCase());
 
-  if (!user || !verifyPassword(password, user.passwordHash, user.salt)) return;
+  if (!user || !verifyPassword(passwordValue.trim(), user.passwordHash, user.salt)) return;
   await createSession({ role: user.role, userId: user.id });
 
   if (user.role === "admin") {

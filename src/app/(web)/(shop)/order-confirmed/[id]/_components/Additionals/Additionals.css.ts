@@ -1,7 +1,7 @@
 import { css } from "@/theme";
 
 export const listClass = css({
-  marginBottom: 10,
+  marginBottom: 8,
   paddingLeft: 10,
 });
 
@@ -10,7 +10,7 @@ export const itemClass = css({
   marginBottom: 5,
 });
 
-export const countClass = css({
+export const quantityClass = css({
   display: "inline-block",
-  marginLeft: 5,
+  paddingLeft: 5,
 });

@@ -1,13 +1,24 @@
 import { css, cssVariant } from "@/theme";
 
-export const wrapperClass = css({
-  marginTop: 20,
-});
+export const wrapperClass = css(({ devices }) => ({
+  display: "grid",
+  gridAutoFlow: "row",
+  paddingTop: 10,
+  rowGap: 10,
+  textAlign: "center",
+  width: "100%",
 
-export const labelClass = css(({ fonts }) => ({
-  fontSize: 17,
+  "@media": {
+    [devices.tablet]: {
+      minWidth: 540,
+    },
+  },
+}));
+
+export const labelClass = css(({ colors, fonts }) => ({
+  color: colors.greenLighter,
+  fontSize: 18,
   fontWeight: fonts.demi,
-  marginBottom: 8,
 }));
 
 export const mapClass = cssVariant(

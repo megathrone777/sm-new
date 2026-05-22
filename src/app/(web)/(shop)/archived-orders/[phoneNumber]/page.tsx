@@ -20,14 +20,15 @@ const Page: React.FC<PageProps<"/archived-orders/[phoneNumber]">> = async ({ par
     (order: TOrder): TArchivedOrder => ({
       ...order,
       canRepeat:
-        order.products.length > 0 &&
-        order.products.every((product) => allProducts?.[product.slug]?.isAvailable === true),
+        (order.products?.length ?? 0) > 0 &&
+        order.products?.every((product) => allProducts?.[product.slug]?.isAvailable === true) ===
+          true,
       hasInvoice:
         order.status === "placed" &&
         (order.paymentType === "cash" ||
           order.paymentType === "cardAfterDelivery" ||
           (order.paymentType === "card" && order.onlinePaymentStatus === "PAID")),
-      products: order.products.map((p) => ({
+      products: (order.products ?? []).map((p) => ({
         ...p,
         imageUrl: allProducts?.[p.slug]?.imageUrl ?? p.imageUrl,
       })),

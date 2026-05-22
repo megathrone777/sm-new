@@ -9,5 +9,6 @@ export interface TProps extends DetailedHTMLProps<
   iconId?: TIconID;
   isError?: boolean;
   label?: string;
+  light?: true;
   restrictCyrillic?: boolean;
 }
