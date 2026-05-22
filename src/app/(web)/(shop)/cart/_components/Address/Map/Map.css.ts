@@ -1,6 +1,6 @@
 import { css } from "@/theme";
 
-export const markerClass = css(({ colors }) => ({
+export const markerClass = css(() => ({
   background: "none",
-  color: colors.red,
+  color: "#ffd43b",
 }));
