@@ -7,9 +7,11 @@ import { useRealtime } from "@/hooks";
 import { DeliveryMarkers, isPaymentVisible, toDeliveryOrder } from "./DeliveryMarkers";
 import { FitBounds } from "./FitBounds";
 
+import { markerClass } from "./Map.css";
+
 import type { TCourierState, TProps } from "./Map.types";
 
-const KITCHEN_POSITION: [number, number] = [50.0861328, 14.4518119];
+const kitchenPosition: [number, number] = [50.0861328, 14.4518119];
 const courierColors = ["greenyellow", "orange"] as const;
 
 const Map: React.FC<TProps> = ({ initialOrders }) => {
@@ -49,7 +51,7 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
       .filter(({ latitude, longitude }) => latitude !== 0 || longitude !== 0)
       .map(({ latitude, longitude }): [number, number] => [latitude, longitude]);
 
-    return [KITCHEN_POSITION, ...deliveryPositions, ...courierPositions];
+    return [kitchenPosition, ...deliveryPositions, ...courierPositions];
   }, [orders, courierState]);
 
   return (
@@ -89,18 +91,21 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
 
       <Marker
         anchor="center"
-        latitude={KITCHEN_POSITION[0]}
-        longitude={KITCHEN_POSITION[1]}
+        latitude={kitchenPosition[0]}
+        longitude={kitchenPosition[1]}
       >
-        <i
-          style={{
-            background: "#e63946",
-            borderRadius: "50%",
-            display: "block",
-            height: 10,
-            width: 10,
-          }}
-        />
+        <svg
+          className={markerClass}
+          height={30}
+          viewBox="0 0 512 512"
+          width={17}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-352a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"
+            fill="currentColor"
+          />
+        </svg>
       </Marker>
     </>
   );

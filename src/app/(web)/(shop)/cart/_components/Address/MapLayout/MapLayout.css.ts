@@ -1,12 +1,14 @@
-import { css } from "@/theme";
+import { css, globalStyle } from "@/theme";
 
-export const mapContainerClass = css({
+export const wrapperClass = css({
+  borderRadius: 5,
   height: 200,
   overflow: "hidden",
   position: "relative",
   width: "100%",
   zIndex: 8,
-  "& .maplibregl-canvas": {
-    filter: "brightness(1.2)",
-  },
+});
+
+globalStyle(`.${wrapperClass} .maplibregl-canvas`, {
+  filter: "brightness(1.7)",
 });

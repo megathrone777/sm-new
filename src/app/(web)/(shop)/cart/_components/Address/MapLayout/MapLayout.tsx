@@ -6,7 +6,7 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import { bbox } from "@/utils";
 
-import { mapContainerClass } from "./MapLayout.css";
+import { wrapperClass } from "./MapLayout.css";
 
 import type { TProps } from "./MapLayout.types";
 
@@ -34,19 +34,18 @@ const MapLayout: React.FC<TProps> = ({ children, delivery: { position, type } })
 
   return (
     <div
-      className={mapContainerClass}
+      className={wrapperClass}
       id="delivery-map"
     >
       <ReactMap
         attributionControl={false}
         initialViewState={{
           bounds: initialBounds,
-          fitBoundsOptions: { padding: 20 },
+          fitBoundsOptions: { maxZoom: 15, padding: 40 },
         }}
         interactive={false}
         mapStyle="https://tiles.openfreemap.org/styles/fiord"
-        padding={{ bottom: 20, left: 20, right: 20, top: 20 }}
-        style={{ height: "100%", width: "100%" }}
+        style={{ height: "100%", maxHeight: "100%", width: "100%" }}
       >
         {children}
       </ReactMap>

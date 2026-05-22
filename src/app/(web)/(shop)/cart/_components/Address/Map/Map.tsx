@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Layer, Marker, Source, useMap } from "react-map-gl/maplibre";
 
 import { bbox } from "@/utils";
@@ -9,40 +9,21 @@ import { markerClass } from "./Map.css";
 import type { TProps } from "./Map.types";
 
 const kitchenCoords: [number, number] = [50.0861328, 14.4518119];
-const kitchenBbox: [number, number][] = [kitchenCoords, [50.0993822, 14.4309572]];
 
-const toLngLatBounds = (
-  points: [number, number][],
-): [[number, number], [number, number]] => {
+const toLngLatBounds = (points: [number, number][]): [[number, number], [number, number]] => {
   const bounds = bbox(points);
   const sw = bounds[0]!;
   const ne = bounds[1]!;
 
-  return [[sw[1], sw[0]], [ne[1], ne[0]]];
+  return [
+    [sw[1], sw[0]],
+    [ne[1], ne[0]],
+  ];
 };
 
 const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
   const { current: map } = useMap();
-  const [drawProgress, setDrawProgress] = useState(0);
-  const rafRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    if (type !== "delivery" || !position || position.length === 0) return;
-
-    setDrawProgress(0);
-    const start = performance.now();
-    const duration = 900;
-
-    const animate = (now: number): void => {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 2);
-      setDrawProgress(eased);
-      if (p < 1) rafRef.current = requestAnimationFrame(animate);
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-    return () => { if (rafRef.current !== null) cancelAnimationFrame(rafRef.current); };
-  }, [type, position]);
+  const [animCoords, setAnimCoords] = useState<[number, number][]>([]);
 
   useEffect((): void => {
     if (!map) return;
@@ -53,8 +34,57 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
       return;
     }
 
-    map.fitBounds(toLngLatBounds(kitchenBbox));
+    map.flyTo({ center: [kitchenCoords[1], kitchenCoords[0]], zoom: 13 });
   }, [type, position, map]);
+
+  useEffect(() => {
+    if (!map || !position || position.length < 2 || type !== "delivery") {
+      setAnimCoords([]);
+
+      return;
+    }
+
+    const gl = map.getMap();
+    const lngLat = (position as [number, number][]).map(
+      ([lat, lng]) => [lng, lat] as [number, number],
+    );
+    const duration = 900;
+    let startTime: null | number = null;
+    let rafId: number | undefined;
+
+    const animate = (timestamp: number): void => {
+      if (startTime === null) startTime = timestamp;
+
+      const t = Math.min((timestamp - startTime) / duration, 1);
+      const idx = t * (lngLat.length - 1);
+      const floor = Math.floor(idx);
+      const frac = idx - floor;
+      const visible = lngLat.slice(0, floor + 1) as [number, number][];
+
+      if (floor < lngLat.length - 1) {
+        const a = lngLat[floor]!;
+        const b = lngLat[floor + 1]!;
+
+        visible.push([a[0] + (b[0] - a[0]) * frac, a[1] + (b[1] - a[1]) * frac]);
+      }
+
+      setAnimCoords(visible);
+
+      if (t < 1) rafId = requestAnimationFrame(animate);
+    };
+
+    const startAnimation = (): void => {
+      rafId = requestAnimationFrame(animate);
+    };
+
+    gl.once("moveend", startAnimation);
+
+    return (): void => {
+      gl.off("moveend", startAnimation);
+
+      if (rafId !== undefined) cancelAnimationFrame(rafId);
+    };
+  }, [position, type, map]);
 
   const routeCoords = position as [number, number][] | null;
   const lastCoord = routeCoords?.[routeCoords.length - 1];
@@ -63,35 +93,35 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
     <>
       {type === "delivery" && routeCoords && routeCoords.length > 0 && lastCoord ? (
         <>
-          <Source
-            data={{
-              geometry: {
-                coordinates: routeCoords.map(([lat, lng]) => [lng, lat]),
-                type: "LineString",
-              },
-              properties: {},
-              type: "Feature",
-            }}
-            type="geojson"
-          >
-            <Layer
-              layout={{ "line-cap": "round", "line-join": "round" }}
-              paint={{
-                "line-color": "#e63946",
-                "line-dasharray": [drawProgress * 1000, Math.max(0.001, 1000 * (1 - drawProgress))],
-                "line-width": 2,
+          {animCoords.length >= 2 && (
+            <Source
+              data={{
+                geometry: {
+                  coordinates: animCoords,
+                  type: "LineString",
+                },
+                properties: {},
+                type: "Feature",
               }}
-              type="line"
-            />
-          </Source>
+              type="geojson"
+            >
+              <Layer
+                paint={{ "line-color": "#8c171a", "line-width": 3 }}
+                type="line"
+              />
+            </Source>
+          )}
 
           <Marker
-            anchor="center" latitude={kitchenCoords[0]}
+            anchor="center"
+            latitude={kitchenCoords[0]}
             longitude={kitchenCoords[1]}
           >
             <svg
-              className={markerClass} height={30}
-              viewBox="0 0 512 512" width={17}
+              className={markerClass}
+              height={30}
+              viewBox="0 0 512 512"
+              width={17}
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -102,12 +132,15 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
           </Marker>
 
           <Marker
-            anchor="bottom" latitude={lastCoord[0]}
+            anchor="center"
+            latitude={lastCoord[0]}
             longitude={lastCoord[1]}
           >
             <svg
-              className={markerClass} height={30}
-              viewBox="0 0 384 512" width={17}
+              className={markerClass}
+              height={30}
+              viewBox="0 0 384 512"
+              width={17}
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -121,12 +154,15 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
         </>
       ) : (
         <Marker
-          anchor="bottom" latitude={kitchenCoords[0]}
+          anchor="center"
+          latitude={kitchenCoords[0]}
           longitude={kitchenCoords[1]}
         >
           <svg
-            className={markerClass} height={30}
-            viewBox="0 0 384 512" width={17}
+            className={markerClass}
+            height={30}
+            viewBox="0 0 384 512"
+            width={17}
             xmlns="http://www.w3.org/2000/svg"
           >
             <path

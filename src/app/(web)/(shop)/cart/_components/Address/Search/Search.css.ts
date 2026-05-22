@@ -71,7 +71,7 @@ export const resetButtonClass = css({
   height: 25,
   padding: 0,
   position: "absolute",
-  right: 52,
+  right: 76,
   top: 5,
   width: 25,
 });
