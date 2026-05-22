@@ -116,6 +116,7 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
             anchor="center"
             latitude={kitchenCoords[0]}
             longitude={kitchenCoords[1]}
+            offset={[3, 0]}
           >
             <svg
               className={markerClass}
