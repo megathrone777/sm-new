@@ -74,50 +74,50 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
     <>
       <FitBounds {...{ positions }} />
 
-      {couriers.map(({ id, latitude, longitude, name, online }) => (
+      {couriers.map(({ id, latitude, longitude, name, online }, index) => (
         <Marker
           anchor="center"
           key={`${id}-courier-marker`}
           latitude={latitude}
           longitude={longitude}
         >
-          <span
-            style={{
-              alignItems: "center",
-              backgroundColor: online ? "greenyellow" : "gray",
-              borderRadius: "50%",
-              display: "flex",
-              height: 32,
-              justifyContent: "center",
-              width: 32,
-            }}
+          <svg
+            fill="none"
+            height={28}
+            stroke={online ? "#ffd43b" : "gray"}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
             title={name}
+            viewBox="0 0 24 24"
+            width={28}
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <svg
-              fill="none"
-              height={18}
-              stroke="#000"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-              width={18}
-              xmlns="http://www.w3.org/2000/svg"
+            <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+            <circle
+              cx="7"
+              cy="17"
+              r="2"
+            />
+            <path d="M9 17h6" />
+            <circle
+              cx="17"
+              cy="17"
+              r="2"
+            />
+            <text
+              dominantBaseline="middle"
+              fill={online ? "#ffd43b" : "gray"}
+              fontSize="7"
+              fontWeight="bold"
+              stroke="none"
+              textAnchor="middle"
+              x="11"
+              y="13"
             >
-              <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
-              <circle
-                cx="7"
-                cy="17"
-                r="2"
-              />
-              <path d="M9 17h6" />
-              <circle
-                cx="17"
-                cy="17"
-                r="2"
-              />
-            </svg>
-          </span>
+              {index + 1}
+            </text>
+          </svg>
         </Marker>
       ))}
 
