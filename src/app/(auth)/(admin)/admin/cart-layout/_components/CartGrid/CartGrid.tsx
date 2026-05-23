@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import GridLayout from "react-grid-layout";
+import GridLayout, { useContainerWidth } from "react-grid-layout";
 
 import { Button, Spinner } from "@/ui";
 
@@ -67,6 +67,7 @@ const CartGrid: React.FC<TProps> = ({
   const [layout, setLayout] = useState<Layout>(toLayoutItems(initialLayout));
   const [status, setStatus] = useState<null | TActionResult>(null);
   const [isLoading, startTransition] = useTransition();
+  const { containerRef, mounted, width } = useContainerWidth();
 
   const handleDragStop: EventCallback = (newLayout: Layout): void => {
     if (layoutIsEqual(layout, newLayout)) return;
@@ -108,42 +109,45 @@ const CartGrid: React.FC<TProps> = ({
         </div>
       </div>
 
-      <div className={gridWrapperClass}>
-        <GridLayout
-          {...{ layout }}
-          // compactor={getCompactor(null, true, true)}
-          dragConfig={{
-            enabled: true,
-          }}
-          dropConfig={{
-            enabled: true,
-          }}
-          gridConfig={{
-            cols,
-            maxRows: 6,
-            rowHeight: 80,
-          }}
-          onDragStop={handleDragStop}
-          onLayoutChange={handleLayoutChange}
-          resizeConfig={{
-            enabled: false,
-          }}
-          width={200}
-        >
-          {layout.map<React.ReactElement>((layoutItem: LayoutItem) => {
-            const { i } = layoutItem;
+      <div
+        className={gridWrapperClass}
+        ref={containerRef}
+      >
+        {mounted && (
+          <GridLayout
+            {...{ layout, width }}
+            dragConfig={{
+              enabled: true,
+            }}
+            dropConfig={{
+              enabled: true,
+            }}
+            gridConfig={{
+              cols,
+              maxRows: 6,
+              rowHeight: 80,
+            }}
+            onDragStop={handleDragStop}
+            onLayoutChange={handleLayoutChange}
+            resizeConfig={{
+              enabled: false,
+            }}
+          >
+            {layout.map<React.ReactElement>((layoutItem: LayoutItem) => {
+              const { i } = layoutItem;
 
-            return (
-              <div
-                className={blockClass}
-                key={i}
-              >
-                <span className={blockLabelClass}>{gridLabels[i] ?? i}</span>
-                <span className={blockHintClass}>{getBlockHint(layoutItem, cols)}</span>
-              </div>
-            );
-          })}
-        </GridLayout>
+              return (
+                <div
+                  className={blockClass}
+                  key={i}
+                >
+                  <span className={blockLabelClass}>{gridLabels[i] ?? i}</span>
+                  <span className={blockHintClass}>{getBlockHint(layoutItem, cols)}</span>
+                </div>
+              );
+            })}
+          </GridLayout>
+        )}
       </div>
 
       {status && <p className={statusClass[status.type]}>{status.message}</p>}
