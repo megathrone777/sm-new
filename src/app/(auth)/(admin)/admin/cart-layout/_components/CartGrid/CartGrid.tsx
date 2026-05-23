@@ -120,7 +120,7 @@ const CartGrid: React.FC<TProps> = ({
           }}
           gridConfig={{
             cols: 2,
-            maxRows: 5,
+            maxRows: 6,
             rowHeight: 80,
           }}
           onDragStop={handleDragStop}
