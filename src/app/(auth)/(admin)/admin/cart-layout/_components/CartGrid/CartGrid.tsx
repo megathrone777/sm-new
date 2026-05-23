@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useTransition } from "react";
+import React, { useRef, useState, useTransition } from "react";
 import GridLayout, { useContainerWidth } from "react-grid-layout";
 
 import { Button, Spinner } from "@/ui";
@@ -68,15 +68,22 @@ const CartGrid: React.FC<TProps> = ({
   const [status, setStatus] = useState<null | TActionResult>(null);
   const [isLoading, startTransition] = useTransition();
   const { containerRef, mounted, width } = useContainerWidth();
+  const savedLayoutRef = useRef<Layout>(toLayoutItems(initialLayout));
 
-  const handleDragStop: EventCallback = (newLayout: Layout): void => {
-    if (layoutIsEqual(layout, newLayout)) return;
+  const persistLayout = (nextLayout: Layout): void => {
+    if (layoutIsEqual(savedLayoutRef.current, nextLayout)) return;
+
+    savedLayoutRef.current = nextLayout;
 
     startTransition(async () => {
-      const responseStatus = await onSave(newLayout.map<LayoutItem>((layoutItem) => layoutItem));
+      const responseStatus = await onSave(nextLayout);
 
       setStatus(responseStatus);
     });
+  };
+
+  const handleDragStop: EventCallback = (newLayout: Layout): void => {
+    persistLayout(toLayoutItems(newLayout));
   };
 
   const handleLayoutChange = (newLayout: Layout): void => {
@@ -85,8 +92,10 @@ const CartGrid: React.FC<TProps> = ({
   };
 
   const handleResetClick = (): void => {
-    setLayout(toLayoutItems(defaultLayout));
-    setStatus(null);
+    const resetLayout = toLayoutItems(defaultLayout);
+
+    setLayout(resetLayout);
+    persistLayout(resetLayout);
   };
 
   return (
