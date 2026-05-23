@@ -46,6 +46,9 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
     const animKey = `${Boolean(map)}:${type}:${JSON.stringify(position)}`;
 
     if (animKey === animKeyRef.current) return;
+
+    const prevAnimKey = animKeyRef.current;
+
     animKeyRef.current = animKey;
 
     if (!map || !position || position.length < 2 || type !== "delivery") {
@@ -58,6 +61,15 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
     const lngLat = (position as [number, number][]).map(
       ([lat, lng]) => [lng, lat] as [number, number],
     );
+
+    // Returning to page: map wasn't ready when position loaded, so initialViewState
+    // already placed the camera — show the full line without animation.
+    if (!prevAnimKey.startsWith("true:")) {
+      setAnimCoords(lngLat);
+
+      return;
+    }
+
     const duration = 800;
     let startTime: null | number = null;
     let rafId: number | undefined;
@@ -95,7 +107,6 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
 
     return (): void => {
       gl.off("moveend", startAnimation);
-
       if (rafId !== undefined) cancelAnimationFrame(rafId);
     };
   }, [position, type, map]);
