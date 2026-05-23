@@ -1,19 +1,18 @@
 "use client";
-import React, { useState, useTransition } from "react";
-import GridLayout from "react-grid-layout";
+import React, { useRef, useState, useTransition } from "react";
+import GridLayout, { useContainerWidth } from "react-grid-layout";
+import { toast } from "react-toastify";
 
 import { Button, Spinner } from "@/ui";
 
 import {
   actionsClass,
   blockClass,
-  blockHintClass,
   blockLabelClass,
   gridWrapperClass,
   headerClass,
   hintClass,
   spinnerClass,
-  statusClass,
   titleClass,
   wrapperClass,
 } from "./CartGrid.css";
@@ -28,13 +27,6 @@ const gridLabels: Record<string, string> = {
   note: "Poznámka",
   payment: "Způsoby platby",
   promo: "Promo code",
-};
-
-const getBlockHint = ({ h, w, x, y }: LayoutItem, cols: number): string => {
-  if (cols === 1) return `#${y + 1}`;
-  const span = w === 2 ? "full width" : x === 0 ? "left" : "right";
-
-  return `${span} · ${h} ${h === 1 ? "row" : "rows"}`;
 };
 
 const layoutIsEqual = (layoutA: Layout, layoutB: Layout): boolean => {
@@ -65,30 +57,36 @@ const CartGrid: React.FC<TProps> = ({
   title,
 }) => {
   const [layout, setLayout] = useState<Layout>(toLayoutItems(initialLayout));
-  const [status, setStatus] = useState<null | TActionResult>(null);
   const [isLoading, startTransition] = useTransition();
+  const { containerRef, mounted, width } = useContainerWidth();
+  const savedLayoutRef = useRef<Layout>(toLayoutItems(initialLayout));
 
-  const handleDragStop: EventCallback = (newLayout: Layout): void => {
-    if (layoutIsEqual(layout, newLayout)) return;
+  const persistLayout = (nextLayout: Layout): void => {
+    if (layoutIsEqual(savedLayoutRef.current, nextLayout)) return;
+
+    savedLayoutRef.current = nextLayout;
 
     startTransition(async () => {
-      const responseStatus = await onSave(newLayout.map<LayoutItem>((layoutItem) => layoutItem));
+      const { message, type } = await onSave(nextLayout);
 
-      setStatus(responseStatus);
+      toast(message, { type });
     });
+  };
+
+  const handleDragStop: EventCallback = (newLayout: Layout): void => {
+    persistLayout(toLayoutItems(newLayout));
   };
 
   const handleLayoutChange = (newLayout: Layout): void => {
     setLayout([...newLayout]);
-    setStatus(null);
   };
 
   const handleResetClick = (): void => {
-    setLayout(toLayoutItems(defaultLayout));
-    setStatus(null);
-  };
+    const resetLayout = toLayoutItems(defaultLayout);
 
-  console.log(layout);
+    setLayout(resetLayout);
+    persistLayout(resetLayout);
+  };
 
   return (
     <div className={wrapperClass}>
@@ -108,45 +106,42 @@ const CartGrid: React.FC<TProps> = ({
         </div>
       </div>
 
-      <div className={gridWrapperClass}>
-        <GridLayout
-          {...{ layout }}
-          // compactor={getCompactor(null, true, true)}
-          dragConfig={{
-            enabled: true,
-          }}
-          dropConfig={{
-            enabled: true,
-          }}
-          gridConfig={{
-            cols: 2,
-            maxRows: 5,
-            rowHeight: 80,
-          }}
-          onDragStop={handleDragStop}
-          onLayoutChange={handleLayoutChange}
-          resizeConfig={{
-            enabled: false,
-          }}
-          width={200}
-        >
-          {layout.map<React.ReactElement>((layoutItem: LayoutItem) => {
-            const { i } = layoutItem;
-
-            return (
+      <div
+        className={gridWrapperClass}
+        ref={containerRef}
+      >
+        {mounted && (
+          <GridLayout
+            {...{ layout, width }}
+            dragConfig={{
+              enabled: true,
+            }}
+            dropConfig={{
+              enabled: true,
+            }}
+            gridConfig={{
+              cols,
+              maxRows: 6,
+              rowHeight: 80,
+            }}
+            onDragStop={handleDragStop}
+            onLayoutChange={handleLayoutChange}
+            resizeConfig={{
+              enabled: false,
+            }}
+          >
+            {layout.map<React.ReactElement>(({ i }: LayoutItem) => (
               <div
                 className={blockClass}
                 key={i}
               >
                 <span className={blockLabelClass}>{gridLabels[i] ?? i}</span>
-                <span className={blockHintClass}>{getBlockHint(layoutItem, cols)}</span>
               </div>
-            );
-          })}
-        </GridLayout>
+            ))}
+          </GridLayout>
+        )}
       </div>
 
-      {status && <p className={statusClass[status.type]}>{status.message}</p>}
       <p className={hintClass}>{hint}</p>
     </div>
   );
