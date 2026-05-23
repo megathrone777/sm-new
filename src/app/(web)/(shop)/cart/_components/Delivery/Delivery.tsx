@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "@/hooks";
 import { Checkbox } from "@/ui";
 
-import { labelClass, wrapperClass } from "./Delivery.css";
+import { wrapperClass } from "./Delivery.css";
 
 import type { TProps } from "./Delivery.types";
 
@@ -23,7 +23,7 @@ const Delivery: React.FC<TProps> = ({ totalPrice, type }) => {
       <Checkbox
         defaultChecked={type === "delivery"}
         label={t<string>("deliveryLabel")}
-        labelClassName={labelClass}
+        // labelClassName={labelClass}
         name="deliveryType"
         type="radio"
         value="delivery"
@@ -33,7 +33,7 @@ const Delivery: React.FC<TProps> = ({ totalPrice, type }) => {
         defaultChecked={type === "pickup"}
         hint={checkPickupDiscount() > 0 ? `-50 ${t<string>("currency")}` : ""}
         label={t<string>("pickupLabel")}
-        labelClassName={labelClass}
+        // labelClassName={labelClass}
         name="deliveryType"
         type="radio"
         value="pickup"
