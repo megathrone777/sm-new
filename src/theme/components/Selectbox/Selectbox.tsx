@@ -49,12 +49,21 @@ const Selectbox: React.FC<TProps> = ({
     setSearchValue(currentTarget.value);
   };
 
+  const handleChange: NonNullable<TProps["onChange"]> = (value, option): void => {
+    setSearchValue("");
+    onChange?.(value, option);
+  };
+
+  const filteredOptions = options?.filter((option) =>
+    `${option?.label ?? ""}`.toLowerCase().includes(searchValue.toLowerCase()),
+  );
+
   return (
     <div className={wrapperClass}>
       {label && <p className={labelClass}>{label}</p>}
 
       <Select
-        {...{ defaultValue, id, mode, onChange, optionRender, options, placeholder, style }}
+        {...{ defaultValue, id, mode, optionRender, placeholder, style }}
         className={layoutClass}
         maxTagTextLength={80}
         menuItemSelectedIcon={
@@ -64,7 +73,9 @@ const Selectbox: React.FC<TProps> = ({
           />
         }
         notFoundContent="Nenalezeno"
+        onChange={handleChange}
         onPopupVisibleChange={handleDropdownVisibleChange}
+        options={filteredOptions}
         popupClassName={popupClass}
         popupRender={(menu): React.ReactElement => (
           <>
@@ -92,13 +103,7 @@ const Selectbox: React.FC<TProps> = ({
           />
         }
         showAction={["click"]}
-        showSearch={{
-          autoClearSearchValue: true,
-          filterOption: (input: string, option) =>
-            `${option?.label ?? ""}`.toLowerCase().includes(input.toLowerCase()),
-          onSearch: setSearchValue,
-          searchValue,
-        }}
+        showSearch={false}
         suffix={
           <Icon
             className={suffixClass}
