@@ -107,6 +107,13 @@ const Sidebar: React.FC<TProps> = ({ isOpened }) => {
     },
   ];
 
+  const menuItems3: TMenuItem[] = [
+    {
+      href: "/admin/cart-layout",
+      label: "Cart layout",
+    },
+  ];
+
   return (
     <div className={`${wrapperClass} ${isOpened ? openClass : ""}`}>
       <div className={layoutClass}>
@@ -130,6 +137,24 @@ const Sidebar: React.FC<TProps> = ({ isOpened }) => {
 
         <ul>
           {menuItems2.map<React.ReactElement>(({ href, label }: TMenuItem) => (
+            <li
+              className={itemClass}
+              key={`admin-menu-item2-${href}`}
+            >
+              <Link
+                {...{ href }}
+                className={linkClass[pathname === href ? "isActive" : "default"]}
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <hr className={dividerClass} />
+
+        <ul>
+          {menuItems3.map<React.ReactElement>(({ href, label }: TMenuItem) => (
             <li
               className={itemClass}
               key={`admin-menu-item2-${href}`}

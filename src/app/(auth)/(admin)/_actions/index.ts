@@ -20,6 +20,7 @@ export { deletePromocode } from "./deletePromocode";
 export { deleteReview } from "./deleteReview";
 export { deleteSubmodifier } from "./deleteSubmodifier";
 export { deleteUser } from "./deleteUser";
+export { saveCartLayout } from "./saveCartLayout";
 export { searchClients } from "./searchClients";
 export { searchModifiers } from "./searchModifiers";
 export { searchOrders } from "./searchOrders";
