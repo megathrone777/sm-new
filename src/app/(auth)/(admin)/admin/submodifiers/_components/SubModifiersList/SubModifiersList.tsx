@@ -43,7 +43,7 @@ const SubModifiersList: React.FC = async () => {
 
                 <Input
                   defaultValue={sortOrder}
-                  label="Sort order"
+                  label="Order"
                   name="sortOrder"
                   type="number"
                 />

@@ -2,8 +2,6 @@
 import React from "react";
 import ReactMap from "react-map-gl/maplibre";
 
-import "maplibre-gl/dist/maplibre-gl.css";
-
 import { bbox } from "@/utils";
 
 import { wrapperClass } from "./MapLayout.css";

@@ -52,7 +52,7 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
 
         <Input
           defaultValue={modifier.sortOrder}
-          label="Sort order"
+          label="Order"
           name="sortOrder"
           type="number"
         />

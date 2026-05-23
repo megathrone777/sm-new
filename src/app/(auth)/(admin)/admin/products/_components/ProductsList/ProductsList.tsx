@@ -33,8 +33,8 @@ const ProductsList: React.FC<TProps> = async ({ categoryId }) => {
         <p>ID</p>
         <p>Image</p>
         <p>Title</p>
-        <p>Sort order</p>
-        <p>Price (CZK)</p>
+        <p>Order</p>
+        <p>Price</p>
         <p>Actions</p>
       </div>
 

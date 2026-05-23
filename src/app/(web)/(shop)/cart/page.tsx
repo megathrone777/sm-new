@@ -25,6 +25,7 @@ import {
 } from "./_components";
 import { History } from "./_components/Client/History";
 
+import "maplibre-gl/dist/maplibre-gl.css";
 import { wrapperClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/cart">> = async () => {

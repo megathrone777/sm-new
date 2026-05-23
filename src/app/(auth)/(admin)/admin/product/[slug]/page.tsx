@@ -71,7 +71,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
 
         <Input
           defaultValue={product.sortOrder}
-          label="Sort order"
+          label="Order"
           name="sortOrder"
           type="number"
         />
