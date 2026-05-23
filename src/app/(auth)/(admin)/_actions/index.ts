@@ -21,6 +21,7 @@ export { deleteReview } from "./deleteReview";
 export { deleteSubmodifier } from "./deleteSubmodifier";
 export { deleteUser } from "./deleteUser";
 export { saveCartLayout } from "./saveCartLayout";
+export { saveCartLayoutMobile } from "./saveCartLayoutMobile";
 export { searchClients } from "./searchClients";
 export { searchModifiers } from "./searchModifiers";
 export { searchOrders } from "./searchOrders";

@@ -5,5 +5,6 @@ export interface TProps {
   gridArea?: React.CSSProperties["gridArea"];
   heroChildren?: React.ReactNode;
   id?: React.HTMLAttributes<HTMLDivElement>["id"];
+  order?: number;
   title: string;
 }

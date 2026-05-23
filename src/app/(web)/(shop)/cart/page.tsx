@@ -3,7 +3,7 @@ import React, { Suspense } from "react";
 import { Products } from "@/app/(web)/_components";
 import { useTranslation } from "@/hooks";
 import { store } from "@/store";
-import { computeGridTemplateAreas } from "@/store/cartLayout";
+import { computeGridTemplateAreas, computeMobileOrder } from "@/store/cartLayout";
 import { Container } from "@/ui";
 import { isShopOpened } from "@/utils";
 
@@ -29,13 +29,15 @@ import { History } from "./_components/Client/History";
 import { wrapperClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/cart">> = async () => {
-  const [cart, additionals, settings, layout] = await Promise.all([
+  const [cart, additionals, settings, layout, mobileLayout] = await Promise.all([
     store.cart.get(),
     store.additionals.getAll(),
     store.shop.getSettings(),
     store.cartLayout.get(),
+    store.cartLayout.getMobile(),
   ]);
   const gridTemplateAreas = computeGridTemplateAreas(layout);
+  const mobileOrder = computeMobileOrder(mobileLayout);
   const { isAvailable, schedule } = settings;
   const shopIsOpen = isShopOpened(schedule, isAvailable);
   const { t } = useTranslation();
@@ -74,6 +76,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
             <FormLayout {...{ errors, gridTemplateAreas }}>
               <SectionLayout
                 gridArea="delivery"
+                order={mobileOrder.delivery}
                 title={t<string>("delivery")}
               >
                 <Delivery
@@ -108,6 +111,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <SectionLayout
                 gridArea="cutlery"
                 id="cart-cutlery"
+                order={mobileOrder.cutlery}
                 title={t<string>("cutleryQuantity")}
               >
                 <Cutlery
@@ -118,6 +122,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
 
               <SectionLayout
                 gridArea="additionals"
+                order={mobileOrder.additionals}
                 title={t<string>("addMore")}
               >
                 <Additionals {...{ additionals, cartAdditionals }} />
@@ -125,6 +130,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
 
               <SectionLayout
                 gridArea="note"
+                order={mobileOrder.note}
                 title={t<string>("note")}
               >
                 <Note defaultValue={note} />
@@ -132,6 +138,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
 
               <SectionLayout
                 gridArea="promo"
+                order={mobileOrder.promo}
                 title={t<string>("promoTitle")}
               >
                 <Promo
@@ -145,6 +152,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
 
               <SectionLayout
                 gridArea="payment"
+                order={mobileOrder.payment}
                 title={t<string>("paymentMethods")}
               >
                 <Payment
