@@ -89,8 +89,6 @@ const CartGrid: React.FC<TProps> = ({
     setStatus(null);
   };
 
-  console.log(layout);
-
   return (
     <div className={wrapperClass}>
       <div className={headerClass}>
