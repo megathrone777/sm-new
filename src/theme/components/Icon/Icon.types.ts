@@ -3,6 +3,7 @@ export type TIconID =
   | "angle"
   | "arrow"
   | "buy"
+  | "car"
   | "cart"
   | "chat"
   | "checkmark"

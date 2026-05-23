@@ -5,6 +5,7 @@ export const viewBox: Record<TIconID, string> = {
   angle: "0 0 20 20",
   arrow: "0 0 448 512",
   buy: "0 0 24 24",
+  car: "0 0 24 24",
   cart: "0 0 24 24",
   chat: "0 0 512 512",
   checkmark: "0 0 24 24",

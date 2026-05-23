@@ -5,6 +5,8 @@ import { store } from "@/store";
 
 import { saveCart } from "./saveCart";
 
+import type { LngLatLike } from "react-map-gl/maplibre";
+
 type TMatrixResponse = {
   matrix: [[{ duration: number; length: number }]];
 };
@@ -17,7 +19,10 @@ type TRouteResponse = {
   };
 };
 
-const KITCHEN_LON_LAT: [number, number] = [14.4518119, 50.0861328];
+const kitchenCoords: LngLatLike = {
+  lat: 50.0861328,
+  lon: 14.4518119,
+};
 
 const selectDeliveryAddress = async (
   address: string,
@@ -34,7 +39,7 @@ const selectDeliveryAddress = async (
 
   matrixUrl.searchParams.set("apikey", apikey);
   matrixUrl.searchParams.set("lang", "cs");
-  matrixUrl.searchParams.append("starts", KITCHEN_LON_LAT.join(","));
+  matrixUrl.searchParams.append("starts", `${kitchenCoords.lon},${kitchenCoords.lat}`);
   matrixUrl.searchParams.append("ends", clientLonLat.join(","));
   matrixUrl.searchParams.set("routeType", "car_fast_traffic");
 
@@ -42,7 +47,7 @@ const selectDeliveryAddress = async (
 
   routeUrl.searchParams.set("apikey", apikey);
   routeUrl.searchParams.set("lang", "cs");
-  routeUrl.searchParams.set("start", KITCHEN_LON_LAT.join(","));
+  routeUrl.searchParams.set("start", `${kitchenCoords.lon},${kitchenCoords.lat}`);
   routeUrl.searchParams.set("end", clientLonLat.join(","));
   routeUrl.searchParams.set("routeType", "car_fast_traffic");
 
@@ -62,7 +67,7 @@ const selectDeliveryAddress = async (
     routeCoordsLonLat.length > 0
       ? routeCoordsLonLat.map(([lon, lat]) => [lat, lon])
       : [
-          [KITCHEN_LON_LAT[1], KITCHEN_LON_LAT[0]],
+          [kitchenCoords.lat, kitchenCoords.lon],
           [position.lat, position.lng],
         ];
 
