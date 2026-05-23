@@ -20,12 +20,6 @@ export const descriptionClass = css({
   width: "100%",
 });
 
-export const labelClass = css(({ fonts }) => ({
-  cursor: "pointer",
-  fontWeight: fonts.bold,
-  lineHeight: "25px",
-}));
-
 export const rowClass = css({
   columnGap: 30,
   display: "grid",

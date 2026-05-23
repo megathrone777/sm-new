@@ -1,29 +1,27 @@
 "use client";
 import React, { useState, useTransition } from "react";
-import ReactGridLayout, { WidthProvider } from "react-grid-layout/legacy";
+import GridLayout from "react-grid-layout";
 
-import type { TCartLayoutItem } from "@/store/cartLayout";
+import { Button, Spinner } from "@/ui";
 
 import {
   actionsClass,
   blockClass,
   blockHintClass,
   blockLabelClass,
-  containerClass,
   gridWrapperClass,
   headerClass,
   hintClass,
-  resetButtonClass,
-  saveButtonClass,
+  spinnerClass,
   statusClass,
   titleClass,
+  wrapperClass,
 } from "./CartGrid.css";
 
-import type { Layout, LayoutItem } from "react-grid-layout/legacy";
+import type { EventCallback, Layout, LayoutItem } from "react-grid-layout";
+import type { TProps } from "./CartGrid.types";
 
-const ResponsiveGrid = WidthProvider(ReactGridLayout);
-
-const BLOCK_LABELS: Record<string, string> = {
+const gridLabels: Record<string, string> = {
   additionals: "Přidat navíc",
   cutlery: "Příbory",
   delivery: "Doručení",
@@ -32,115 +30,123 @@ const BLOCK_LABELS: Record<string, string> = {
   promo: "Promo code",
 };
 
-interface TProps {
-  cols: number;
-  defaultLayout: TCartLayoutItem[];
-  hint: string;
-  initialLayout: TCartLayoutItem[];
-  isResizable?: boolean;
-  onSave: (layout: TCartLayoutItem[]) => Promise<TActionResult>;
-  title: string;
-}
+const getBlockHint = ({ h, w, x, y }: LayoutItem, cols: number): string => {
+  if (cols === 1) return `#${y + 1}`;
+  const span = w === 2 ? "full width" : x === 0 ? "left" : "right";
 
-const toLayoutItems = (items: TCartLayoutItem[]): LayoutItem[] =>
-  items.map(({ h, i, w, x, y }) => ({ h, i, w, x, y }));
-
-const getBlockHint = (item: LayoutItem, cols: number): string => {
-  if (cols === 1) return `#${item.y + 1}`;
-
-  const span = item.w === 2 ? "full width" : item.x === 0 ? "left" : "right";
-
-  return `${span} · ${item.h} ${item.h === 1 ? "row" : "rows"}`;
+  return `${span} · ${h} ${h === 1 ? "row" : "rows"}`;
 };
+
+const layoutIsEqual = (layoutA: Layout, layoutB: Layout): boolean => {
+  if (layoutA.length !== layoutB.length) return false;
+
+  return layoutA.every((layoutItemA: LayoutItem) => {
+    const layoutItemB = layoutB.find(({ i }: LayoutItem) => i === layoutItemA.i);
+
+    return (
+      layoutItemB &&
+      layoutItemA.x === layoutItemB.x &&
+      layoutItemA.y === layoutItemB.y &&
+      layoutItemA.w === layoutItemB.w &&
+      layoutItemA.h === layoutItemB.h
+    );
+  });
+};
+
+const toLayoutItems = (layout: Layout): Layout =>
+  layout.map<LayoutItem>(({ h, i, w, x, y }) => ({ h, i, w, x, y }));
 
 const CartGrid: React.FC<TProps> = ({
   cols,
   defaultLayout,
   hint,
   initialLayout,
-  isResizable = false,
   onSave,
   title,
 }) => {
-  const [layout, setLayout] = useState<LayoutItem[]>(toLayoutItems(initialLayout));
+  const [layout, setLayout] = useState<Layout>(toLayoutItems(initialLayout));
   const [status, setStatus] = useState<null | TActionResult>(null);
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, startTransition] = useTransition();
+
+  const handleDragStop: EventCallback = (newLayout: Layout): void => {
+    if (layoutIsEqual(layout, newLayout)) return;
+
+    startTransition(async () => {
+      const responseStatus = await onSave(newLayout.map<LayoutItem>((layoutItem) => layoutItem));
+
+      setStatus(responseStatus);
+    });
+  };
 
   const handleLayoutChange = (newLayout: Layout): void => {
     setLayout([...newLayout]);
     setStatus(null);
   };
 
-  const handleSave = (): void => {
-    startTransition(async () => {
-      const result = await onSave(layout.map(({ h, i, w, x, y }) => ({ h, i, w, x, y })));
-
-      setStatus(result);
-    });
-  };
-
-  const handleReset = (): void => {
+  const handleResetClick = (): void => {
     setLayout(toLayoutItems(defaultLayout));
     setStatus(null);
   };
 
+  console.log(layout);
+
   return (
-    <div className={containerClass}>
+    <div className={wrapperClass}>
       <div className={headerClass}>
         <h1 className={titleClass}>{title}</h1>
 
         <div className={actionsClass}>
-          <button
-            className={resetButtonClass}
-            onClick={handleReset}
+          <Button
+            onClick={handleResetClick}
+            template="small"
             type="button"
           >
-            Reset to default
-          </button>
+            Reset
+          </Button>
 
-          <button
-            className={saveButtonClass}
-            disabled={isPending}
-            onClick={handleSave}
-            type="button"
-          >
-            {isPending ? "Saving…" : "Save Layout"}
-          </button>
+          <div className={spinnerClass}>{isLoading && <Spinner template="small" />}</div>
         </div>
       </div>
 
       <div className={gridWrapperClass}>
-        <ResponsiveGrid
-          cols={cols}
-          isDraggable
-          isResizable={isResizable}
-          layout={layout}
-          measureBeforeMount={false}
+        <GridLayout
+          {...{ layout }}
+          // compactor={getCompactor(null, true, true)}
+          dragConfig={{
+            enabled: true,
+          }}
+          dropConfig={{
+            enabled: true,
+          }}
+          gridConfig={{
+            cols: 2,
+            maxRows: 5,
+            rowHeight: 80,
+          }}
+          onDragStop={handleDragStop}
           onLayoutChange={handleLayoutChange}
-          rowHeight={80}
+          resizeConfig={{
+            enabled: false,
+          }}
+          width={200}
         >
-          {layout.map((item) => (
-            <div
-              className={blockClass}
-              key={item.i}
-            >
-              <span className={blockLabelClass}>{BLOCK_LABELS[item.i] ?? item.i}</span>
+          {layout.map<React.ReactElement>((layoutItem: LayoutItem) => {
+            const { i } = layoutItem;
 
-              <span className={blockHintClass}>{getBlockHint(item, cols)}</span>
-            </div>
-          ))}
-        </ResponsiveGrid>
+            return (
+              <div
+                className={blockClass}
+                key={i}
+              >
+                <span className={blockLabelClass}>{gridLabels[i] ?? i}</span>
+                <span className={blockHintClass}>{getBlockHint(layoutItem, cols)}</span>
+              </div>
+            );
+          })}
+        </GridLayout>
       </div>
 
-      {status && (
-        <p
-          className={statusClass}
-          data-type={status.type}
-        >
-          {status.message}
-        </p>
-      )}
-
+      {status && <p className={statusClass[status.type]}>{status.message}</p>}
       <p className={hintClass}>{hint}</p>
     </div>
   );

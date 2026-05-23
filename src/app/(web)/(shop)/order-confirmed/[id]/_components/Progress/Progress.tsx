@@ -132,7 +132,7 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
               : { latitude: kitchenPosition[0], longitude: kitchenPosition[1], zoom: 13 }
           }
           interactive={false}
-          mapStyle="https://tiles.openfreemap.org/styles/fiord"
+          mapStyle="/api/tiles/styles/fiord"
           ref={mapRef}
           style={{ height: "100%", width: "100%" }}
         >

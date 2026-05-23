@@ -14,13 +14,13 @@ import {
 import type { TProps } from "./Checkbox.types";
 
 const Checkbox: React.FC<TProps> = ({
+  bold,
   checked,
   className,
   defaultChecked,
   disabled,
   hint,
   label,
-  labelClassName,
   labelImage,
   name,
   onChange,
@@ -54,7 +54,7 @@ const Checkbox: React.FC<TProps> = ({
       </span>
 
       <label
-        className={labelClassName ?? labelClass[template]}
+        className={labelClass[Boolean(bold) ? "bold" : template]}
         htmlFor={inputId}
       >
         <span>

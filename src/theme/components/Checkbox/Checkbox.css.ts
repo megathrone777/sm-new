@@ -86,18 +86,26 @@ export const iconClass = cssVariant(
 );
 
 export const labelClass = cssVariant(
-  {
-    normal: {
+  ({ fonts }) => ({
+    bold: {
+      fontWeight: fonts.bold,
       lineHeight: "25px",
     },
+
+    normal: {
+      fontWeight: fonts.medium,
+      lineHeight: "25px",
+    },
+
     small: {
+      fontWeight: fonts.medium,
       lineHeight: "21px",
     },
-  },
-  (template, { fonts }) => [
+  }),
+
+  (template) => [
     {
       cursor: "pointer",
-      fontWeight: fonts.medium,
       userSelect: "none",
     },
     template,

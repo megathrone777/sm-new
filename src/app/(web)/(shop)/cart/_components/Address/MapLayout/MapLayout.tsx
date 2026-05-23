@@ -44,7 +44,7 @@ const MapLayout: React.FC<TProps> = ({ children, delivery: { position, type } })
           fitBoundsOptions: { maxZoom: 15, padding: 40 },
         }}
         interactive={false}
-        mapStyle="https://tiles.openfreemap.org/styles/fiord"
+        mapStyle="/api/tiles/styles/fiord"
         style={{ height: "100%", maxHeight: "100%", width: "100%" }}
       >
         {children}
