@@ -63,7 +63,7 @@ const Page: React.FC<PageProps<"/admin/category/[id]">> = async ({ params }) => 
         {category.id !== 0 && (
           <Input
             defaultValue={category.sortOrder}
-            label="Sort order"
+            label="Order"
             name="sortOrder"
             type="number"
           />

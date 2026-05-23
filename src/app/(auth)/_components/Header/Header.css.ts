@@ -11,7 +11,7 @@ export const wrapperClass = css(({ colors }) => ({
   padding: "4px 16px",
   position: "sticky",
   top: 0,
-  zIndex: 100,
+  zIndex: 105,
 }));
 
 export const layoutClass = css({

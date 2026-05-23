@@ -20,7 +20,7 @@ const CreateSubModifier: React.FC = () => (
 
     <Input
       defaultValue={0}
-      label="Sort order"
+      label="Order"
       name="sortOrder"
       type="number"
     />

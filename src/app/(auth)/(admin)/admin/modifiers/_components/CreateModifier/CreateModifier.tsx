@@ -33,7 +33,7 @@ const CreateModifier: React.FC = async () => {
 
       <Input
         defaultValue="0"
-        label="Sort order"
+        label="Order"
         name="sortOrder"
         type="number"
       />

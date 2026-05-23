@@ -28,7 +28,7 @@ const CategoriesList: React.FC = async () => {
         <p>ID</p>
         <p>Image</p>
         <p>Title</p>
-        <p>Sort order</p>
+        <p>Order</p>
         <p>Products total</p>
         <p>Actions</p>
       </div>
