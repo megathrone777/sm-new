@@ -5,7 +5,7 @@ import type { NextConfig } from "next";
 const withVanillaExtract = createVanillaExtractPlugin();
 
 const config: NextConfig = {
-  allowedDevOrigins: ["192.168.0.227", "192.168.137.74", "172.17.208.1"],
+  allowedDevOrigins: ["192.168.0.227"],
   images: {
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
