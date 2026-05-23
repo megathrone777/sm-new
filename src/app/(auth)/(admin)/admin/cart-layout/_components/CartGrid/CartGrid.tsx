@@ -2,8 +2,6 @@
 import React, { useState, useTransition } from "react";
 import ReactGridLayout, { WidthProvider } from "react-grid-layout/legacy";
 
-import { saveCartLayout } from "@/app/(auth)/(admin)/_actions";
-import { DEFAULT_LAYOUT } from "@/store/cartLayout";
 import type { TCartLayoutItem } from "@/store/cartLayout";
 
 import {
@@ -35,13 +33,35 @@ const BLOCK_LABELS: Record<string, string> = {
 };
 
 interface TProps {
+  cols: number;
+  defaultLayout: TCartLayoutItem[];
+  hint: string;
   initialLayout: TCartLayoutItem[];
+  isResizable?: boolean;
+  onSave: (layout: TCartLayoutItem[]) => Promise<TActionResult>;
+  title: string;
 }
 
 const toLayoutItems = (items: TCartLayoutItem[]): LayoutItem[] =>
   items.map(({ h, i, w, x, y }) => ({ h, i, w, x, y }));
 
-const CartGrid: React.FC<TProps> = ({ initialLayout }) => {
+const getBlockHint = (item: LayoutItem, cols: number): string => {
+  if (cols === 1) return `#${item.y + 1}`;
+
+  const span = item.w === 2 ? "full width" : item.x === 0 ? "left" : "right";
+
+  return `${span} · ${item.h} ${item.h === 1 ? "row" : "rows"}`;
+};
+
+const CartGrid: React.FC<TProps> = ({
+  cols,
+  defaultLayout,
+  hint,
+  initialLayout,
+  isResizable = false,
+  onSave,
+  title,
+}) => {
   const [layout, setLayout] = useState<LayoutItem[]>(toLayoutItems(initialLayout));
   const [status, setStatus] = useState<null | TActionResult>(null);
   const [isPending, startTransition] = useTransition();
@@ -53,21 +73,21 @@ const CartGrid: React.FC<TProps> = ({ initialLayout }) => {
 
   const handleSave = (): void => {
     startTransition(async () => {
-      const result = await saveCartLayout(layout.map(({ h, i, w, x, y }) => ({ h, i, w, x, y })));
+      const result = await onSave(layout.map(({ h, i, w, x, y }) => ({ h, i, w, x, y })));
 
       setStatus(result);
     });
   };
 
   const handleReset = (): void => {
-    setLayout(toLayoutItems(DEFAULT_LAYOUT));
+    setLayout(toLayoutItems(defaultLayout));
     setStatus(null);
   };
 
   return (
     <div className={containerClass}>
       <div className={headerClass}>
-        <h1 className={titleClass}>Cart Layout</h1>
+        <h1 className={titleClass}>{title}</h1>
 
         <div className={actionsClass}>
           <button
@@ -91,9 +111,9 @@ const CartGrid: React.FC<TProps> = ({ initialLayout }) => {
 
       <div className={gridWrapperClass}>
         <ResponsiveGrid
-          cols={2}
+          cols={cols}
           isDraggable
-          isResizable={false}
+          isResizable={isResizable}
           layout={layout}
           measureBeforeMount={false}
           onLayoutChange={handleLayoutChange}
@@ -106,10 +126,7 @@ const CartGrid: React.FC<TProps> = ({ initialLayout }) => {
             >
               <span className={blockLabelClass}>{BLOCK_LABELS[item.i] ?? item.i}</span>
 
-              <span className={blockHintClass}>
-                {item.w === 2 ? "full width" : item.x === 0 ? "left" : "right"} · {item.h}{" "}
-                {item.h === 1 ? "row" : "rows"}
-              </span>
+              <span className={blockHintClass}>{getBlockHint(item, cols)}</span>
             </div>
           ))}
         </ResponsiveGrid>
@@ -124,10 +141,7 @@ const CartGrid: React.FC<TProps> = ({ initialLayout }) => {
         </p>
       )}
 
-      <p className={hintClass}>
-        Drag blocks to rearrange. Resize from the bottom-right corner to span multiple rows or
-        columns. Changes apply to desktop cart only.
-      </p>
+      <p className={hintClass}>{hint}</p>
     </div>
   );
 };

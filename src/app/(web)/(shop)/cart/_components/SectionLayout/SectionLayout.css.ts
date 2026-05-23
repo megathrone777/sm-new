@@ -1,10 +1,13 @@
-import { createVar } from "@vanilla-extract/css";
+import { createVar, fallbackVar } from "@vanilla-extract/css";
 
 import { css } from "@/theme";
 
 export const gridAreaVar = createVar();
+export const orderVar = createVar();
 
 export const wrapperClass = css(({ devices }) => ({
+  order: fallbackVar(orderVar, "0"),
+
   "@media": {
     [devices.tablet]: {
       gridArea: gridAreaVar,

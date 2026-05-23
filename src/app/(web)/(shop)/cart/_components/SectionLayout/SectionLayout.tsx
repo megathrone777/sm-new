@@ -5,17 +5,28 @@ import {
   contentClass,
   gridAreaVar,
   headerClass,
+  orderVar,
   titleClass,
   wrapperClass,
 } from "./SectionLayout.css";
 
 import type { TProps } from "./SectionLayout.types";
 
-const SectionLayout: React.FC<TProps> = ({ children, gridArea, heroChildren, id, title }) => (
+const SectionLayout: React.FC<TProps> = ({
+  children,
+  gridArea,
+  heroChildren,
+  id,
+  order,
+  title,
+}) => (
   <div
     {...{ id }}
     className={wrapperClass}
-    style={gridArea ? { ...assignInlineVars({ [gridAreaVar]: `${gridArea}` }) } : undefined}
+    style={assignInlineVars({
+      ...(gridArea ? { [gridAreaVar]: `${gridArea}` } : {}),
+      ...(order === undefined ? {} : { [orderVar]: `${order}` }),
+    })}
   >
     <div className={headerClass}>
       <h2 className={titleClass}>{title}</h2>
