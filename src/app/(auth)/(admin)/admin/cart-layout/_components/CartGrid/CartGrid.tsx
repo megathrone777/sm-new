@@ -119,7 +119,7 @@ const CartGrid: React.FC<TProps> = ({
             enabled: true,
           }}
           gridConfig={{
-            cols: 2,
+            cols,
             maxRows: 6,
             rowHeight: 80,
           }}
