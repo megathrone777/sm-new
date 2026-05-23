@@ -1,4 +1,4 @@
-import { css, cssVariant } from "@/theme";
+import { css } from "@/theme";
 
 export const wrapperClass = css({
   paddingBlock: 24,
@@ -60,31 +60,6 @@ export const blockLabelClass = css(({ colors, fonts }) => ({
   fontSize: 17,
   fontWeight: fonts.bold,
 }));
-
-export const blockHintClass = css(({ colors }) => ({
-  color: colors.gray,
-  fontSize: 13,
-}));
-
-export const statusClass = cssVariant(
-  ({ colors }) => ({
-    error: {
-      color: colors.red,
-    },
-
-    success: {
-      color: colors.greenLighter,
-    },
-  }),
-
-  (variant) => [
-    {
-      fontSize: 15,
-      marginTop: 12,
-    },
-    variant,
-  ],
-);
 
 export const hintClass = css(({ colors }) => ({
   color: colors.gray,
