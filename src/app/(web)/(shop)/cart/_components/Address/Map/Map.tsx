@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { Layer, Marker, Source, useMap } from "react-map-gl/maplibre";
+import { Layer, Marker, Source, useMap, type LngLatLike } from "react-map-gl/maplibre";
 
 import { Icon } from "@/ui";
 import { bbox } from "@/utils";
@@ -9,7 +9,10 @@ import { markerClass } from "./Map.css";
 
 import type { TProps } from "./Map.types";
 
-const kitchenCoords: [number, number] = [50.0861328, 14.4518119];
+const kitchenCoords: LngLatLike = {
+  lat: 50.0861328,
+  lon: 14.4518119,
+};
 
 const toLngLatBounds = (points: [number, number][]): [[number, number], [number, number]] => {
   const bounds = bbox(points);
@@ -36,7 +39,7 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
       return;
     }
 
-    map.flyTo({ center: [kitchenCoords[1], kitchenCoords[0]], zoom: 13 });
+    map.flyTo({ center: [kitchenCoords.lon, kitchenCoords.lat], zoom: 13 });
   }, [type, position, map]);
 
   useEffect(() => {
@@ -84,7 +87,11 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
       rafId = requestAnimationFrame(animate);
     };
 
-    gl.once("moveend", startAnimation);
+    if (gl.isMoving()) {
+      gl.once("moveend", startAnimation);
+    } else {
+      startAnimation();
+    }
 
     return (): void => {
       gl.off("moveend", startAnimation);
@@ -122,8 +129,8 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
           <Marker
             anchor="center"
             className={markerClass}
-            latitude={kitchenCoords[0]}
-            longitude={kitchenCoords[1]}
+            latitude={kitchenCoords.lat}
+            longitude={kitchenCoords.lon}
             offset={[3, 0]}
           >
             <Icon id="point" />
@@ -142,8 +149,8 @@ const Map: React.FC<TProps> = ({ delivery: { position, type } }) => {
         <Marker
           anchor="center"
           className={markerClass}
-          latitude={kitchenCoords[0]}
-          longitude={kitchenCoords[1]}
+          latitude={kitchenCoords.lat}
+          longitude={kitchenCoords.lon}
         >
           <Icon id="address" />
         </Marker>

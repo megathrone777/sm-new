@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import ReactMap, { Marker, type MapRef } from "react-map-gl/maplibre";
+import ReactMap, { Marker, type LngLatLike, type MapRef } from "react-map-gl/maplibre";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
@@ -18,7 +18,10 @@ import {
 
 import type { TProps } from "./Progress.types";
 
-const kitchenPosition: [number, number] = [50.0861328, 14.4518119];
+const kitchenCoords: LngLatLike = {
+  lat: 50.0861328,
+  lon: 14.4518119,
+};
 const pollIntervalMs = 5000;
 const proximityMeters = 500;
 
@@ -61,12 +64,12 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
   const initialBounds: [[number, number], [number, number]] | undefined = hasDelivery
     ? [
         [
-          Math.min(kitchenPosition[1], deliveryLng!) - 0.005,
-          Math.min(kitchenPosition[0], deliveryLat!) - 0.005,
+          Math.min(kitchenCoords.lon, deliveryLng!) - 0.005,
+          Math.min(kitchenCoords.lat, deliveryLat!) - 0.005,
         ],
         [
-          Math.max(kitchenPosition[1], deliveryLng!) + 0.005,
-          Math.max(kitchenPosition[0], deliveryLat!) + 0.005,
+          Math.max(kitchenCoords.lon, deliveryLng!) + 0.005,
+          Math.max(kitchenCoords.lat, deliveryLat!) + 0.005,
         ],
       ]
     : undefined;
@@ -129,7 +132,7 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
           initialViewState={
             initialBounds
               ? { bounds: initialBounds, fitBoundsOptions: { maxZoom: 14, padding: 30 } }
-              : { latitude: kitchenPosition[0], longitude: kitchenPosition[1], zoom: 13 }
+              : { latitude: kitchenCoords.lat, longitude: kitchenCoords.lon, zoom: 13 }
           }
           interactive={false}
           mapStyle="/api/tiles/styles/fiord"
@@ -143,33 +146,7 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
               latitude={courierPosition.latitude}
               longitude={courierPosition.longitude}
             >
-              <svg
-                height={30}
-                style={{
-                  color: "#ffd43b",
-                  fill: "none",
-                  stroke: "currentColor",
-                  strokeLinecap: "round",
-                  strokeLinejoin: "round",
-                  strokeWidth: 2,
-                }}
-                viewBox="0 0 24 24"
-                width={30}
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
-                <circle
-                  cx="7"
-                  cy="17"
-                  r="2"
-                />
-                <path d="M9 17h6" />
-                <circle
-                  cx="17"
-                  cy="17"
-                  r="2"
-                />
-              </svg>
+              <Icon id="car" />
             </Marker>
           )}
 

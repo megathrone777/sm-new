@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ReactMap from "react-map-gl/maplibre";
+import ReactMap, { type LngLatLike } from "react-map-gl/maplibre";
 
 import { bbox } from "@/utils";
 
@@ -8,10 +8,7 @@ import { wrapperClass } from "./MapLayout.css";
 
 import type { TProps } from "./MapLayout.types";
 
-const KITCHEN_BBOX: [number, number][] = [
-  [50.0861328, 14.4518119],
-  [50.0993822, 14.4309572],
-];
+const kitchenCoords: LngLatLike = { lat: 50.0861328, lon: 14.4518119 };
 
 const toBounds = (points: [number, number][]): [[number, number], [number, number]] => {
   const bounds = bbox(points);
@@ -25,10 +22,7 @@ const toBounds = (points: [number, number][]): [[number, number], [number, numbe
 };
 
 const MapLayout: React.FC<TProps> = ({ children, delivery: { position, type } }) => {
-  const initialBounds =
-    type === "delivery" && position && position.length > 0
-      ? toBounds(position as [number, number][])
-      : toBounds(KITCHEN_BBOX);
+  const hasRoute = type === "delivery" && position && position.length > 0;
 
   return (
     <div
@@ -37,10 +31,18 @@ const MapLayout: React.FC<TProps> = ({ children, delivery: { position, type } })
     >
       <ReactMap
         attributionControl={false}
-        initialViewState={{
-          bounds: initialBounds,
-          fitBoundsOptions: { maxZoom: 15, padding: 40 },
-        }}
+        initialViewState={
+          hasRoute
+            ? {
+              bounds: toBounds(position as [number, number][]),
+              fitBoundsOptions: { maxZoom: 15, padding: 40 },
+            }
+            : {
+              latitude: kitchenCoords.lat,
+              longitude: kitchenCoords.lon,
+              zoom: 13,
+            }
+        }
         interactive={false}
         mapStyle="/api/tiles/styles/fiord"
         style={{ height: "100%", maxHeight: "100%", width: "100%" }}

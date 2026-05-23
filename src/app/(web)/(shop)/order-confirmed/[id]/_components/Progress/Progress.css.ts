@@ -53,4 +53,5 @@ export const markerClass = css(({ colors }) => ({
 export const courierMarkerClass = css(({ colors }) => ({
   background: "none",
   color: colors.amber,
+  height: 30,
 }));
