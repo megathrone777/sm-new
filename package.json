@@ -4,11 +4,10 @@
     "name": "Andrii Taranenko"
   },
   "browserslist": [
-    "> 0.5%",
-    "last 2 years",
-    "Firefox ESR",
-    "not dead",
-    "not IE 11"
+    "chrome 111",
+    "edge 111",
+    "firefox 111",
+    "safari 16.4"
   ],
   "dependencies": {
     "@rc-component/select": "^1.6.15",
