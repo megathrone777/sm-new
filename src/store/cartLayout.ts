@@ -41,7 +41,7 @@ const computeGridTemplateAreas = (layout: TCartLayoutItem[], cols = COLS): strin
 
 const cartLayout = {
   get: async (): Promise<TCartLayoutItem[]> => {
-    const data = await redis.hgetall<Record<string, string>>(CART_LAYOUT_KEY);
+    const data = await redis.hgetall<Record<string, Partial<TCartLayoutItem>>>(CART_LAYOUT_KEY);
 
     if (!data || !Object.keys(data).length) return DEFAULT_LAYOUT;
 
@@ -50,13 +50,7 @@ const cartLayout = {
 
       if (!stored) return item;
 
-      try {
-        const parsed = JSON.parse(stored) as Partial<TCartLayoutItem>;
-
-        return { ...item, ...parsed };
-      } catch {
-        return item;
-      }
+      return { ...item, ...stored };
     });
   },
 
