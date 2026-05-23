@@ -5,7 +5,7 @@ import { updateTips } from "@/app/(web)/_actions";
 import { useTranslation } from "@/hooks";
 import { Checkbox } from "@/ui";
 
-import { descriptionClass, labelClass, rowClass, titleClass, wrapperClass } from "./Tips.css";
+import { descriptionClass, rowClass, titleClass, wrapperClass } from "./Tips.css";
 
 import type { TProps } from "./Tips.types";
 
@@ -40,11 +40,11 @@ const Tips: React.FC<TProps> = ({ tips }) => {
 
           return (
             <Checkbox
+              bold
               checked={amount === selected}
               id={tipId}
               key={tipId}
               label={`${amount}%`}
-              labelClassName={labelClass}
               name="tips"
               onChange={(event) => handleChange(amount, event)}
               type="checkbox"

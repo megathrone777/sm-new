@@ -23,10 +23,12 @@ const SectionLayout: React.FC<TProps> = ({
   <div
     {...{ id }}
     className={wrapperClass}
-    style={assignInlineVars({
-      ...(gridArea ? { [gridAreaVar]: `${gridArea}` } : {}),
-      ...(order === undefined ? {} : { [orderVar]: `${order}` }),
-    })}
+    style={{
+      ...assignInlineVars({
+        ...(gridArea ? { [gridAreaVar]: `${gridArea}` } : {}),
+        ...(order === undefined ? {} : { [orderVar]: `${order}` }),
+      }),
+    }}
   >
     <div className={headerClass}>
       <h2 className={titleClass}>{title}</h2>

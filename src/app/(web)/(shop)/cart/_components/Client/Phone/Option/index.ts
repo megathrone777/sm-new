@@ -1,2 +1,2 @@
 export { Option } from "./Option";
-export { type TOption } from "./Option.types";
+export { type TOptionData } from "./Option.types";

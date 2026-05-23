@@ -63,7 +63,7 @@
   "private": true,
   "scripts": {
     "build": "jest --ci --runInBand && yarn lint && next build --webpack",
-    "dev": "next dev --webpack --experimental-https",
+    "dev": "next dev --turbopack --experimental-https",
     "lint": "eslint ./src --config eslint.config.mjs",
     "start": "next start",
     "test": "jest",

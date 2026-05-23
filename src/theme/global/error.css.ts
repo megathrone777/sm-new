@@ -9,7 +9,7 @@ globalStyle(".error", ({ devices }) => ({
   height: "100%",
   justifyContent: "center",
   justifyItems: "center",
-  paddingInline: 10,
+  padding: "35px 10px",
   rowGap: 30,
   width: "100%",
 

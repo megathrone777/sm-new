@@ -1,46 +1,39 @@
 import { redis } from "./redis";
 
+import type { Layout, LayoutItem } from "react-grid-layout";
+
 const CART_LAYOUT_KEY = "cart:layout";
 const CART_LAYOUT_MOBILE_KEY = "cart:layout:mobile";
-const COLS = 2;
 
-type TCartLayoutItem = {
-  h: number;
-  i: string;
-  w: number;
-  x: number;
-  y: number;
-};
+const gridAreas = ["delivery", "cutlery", "additionals", "note", "promo", "payment"];
 
-const BLOCKS = ["delivery", "cutlery", "additionals", "note", "promo", "payment"] as const;
-
-const DEFAULT_LAYOUT: TCartLayoutItem[] = [
-  { h: 5, i: "delivery", w: 1, x: 0, y: 0 },
-  { h: 1, i: "cutlery", w: 1, x: 1, y: 0 },
-  { h: 1, i: "additionals", w: 1, x: 1, y: 1 },
-  { h: 1, i: "note", w: 1, x: 1, y: 2 },
-  { h: 1, i: "promo", w: 1, x: 1, y: 3 },
-  { h: 1, i: "payment", w: 1, x: 1, y: 4 },
+const desktopLayout: Layout = [
+  { h: 5, i: "delivery", minW: 1, w: 1, x: 0, y: 0 },
+  { h: 1, i: "cutlery", minW: 1, w: 1, x: 1, y: 0 },
+  { h: 1, i: "additionals", minW: 1, w: 1, x: 1, y: 1 },
+  { h: 1, i: "note", minW: 1, w: 1, x: 1, y: 2 },
+  { h: 1, i: "promo", minW: 1, w: 1, x: 1, y: 3 },
+  { h: 1, i: "payment", minW: 1, w: 1, x: 1, y: 4 },
 ];
 
-const DEFAULT_MOBILE_LAYOUT: TCartLayoutItem[] = [
-  { h: 1, i: "delivery", w: 1, x: 0, y: 0 },
-  { h: 1, i: "cutlery", w: 1, x: 0, y: 1 },
-  { h: 1, i: "additionals", w: 1, x: 0, y: 2 },
-  { h: 1, i: "note", w: 1, x: 0, y: 3 },
-  { h: 1, i: "promo", w: 1, x: 0, y: 4 },
-  { h: 1, i: "payment", w: 1, x: 0, y: 5 },
+const mobileLayout: Layout = [
+  { h: 1, i: "delivery", minW: 1, w: 1, x: 0, y: 0 },
+  { h: 1, i: "cutlery", minW: 1, w: 1, x: 0, y: 1 },
+  { h: 1, i: "additionals", minW: 1, w: 1, x: 0, y: 2 },
+  { h: 1, i: "note", minW: 1, w: 1, x: 0, y: 3 },
+  { h: 1, i: "promo", minW: 1, w: 1, x: 0, y: 4 },
+  { h: 1, i: "payment", minW: 1, w: 1, x: 0, y: 5 },
 ];
 
-const computeGridTemplateAreas = (layout: TCartLayoutItem[], cols = COLS): string => {
-  const maxRow = Math.max(...layout.map((item) => item.y + item.h));
+const calculateGridAreas = (layout: Layout, cols = 2): string => {
+  const maxRow = Math.max(...layout.map<number>(({ h, y }: LayoutItem) => y + h));
   const grid: string[][] = Array.from({ length: maxRow }, () => Array<string>(cols).fill("."));
 
-  for (const item of layout) {
-    for (let r = item.y; r < item.y + item.h; r++) {
-      for (let c = item.x; c < item.x + item.w; c++) {
+  for (const { h, i, w, x, y } of layout) {
+    for (let r = y; r < y + h; r++) {
+      for (let c = x; c < x + w; c++) {
         if (r < maxRow && c < cols) {
-          grid[r]![c] = item.i;
+          grid[r]![c] = i;
         }
       }
     }
@@ -49,38 +42,35 @@ const computeGridTemplateAreas = (layout: TCartLayoutItem[], cols = COLS): strin
   return grid.map((row) => `"${row.join(" ")}"`).join(" ");
 };
 
-const computeMobileOrder = (layout: TCartLayoutItem[]): Record<string, number> =>
+const calculateMobileOrder = (layout: Layout): Record<string, number> =>
   [...layout]
     .sort((first, second) => first.y - second.y)
-    .reduce<Record<string, number>>((order, item, index) => {
-      order[item.i] = index;
+    .reduce<Record<string, number>>((order, { i }, index: number) => {
+      order[i] = index;
 
       return order;
     }, {});
 
-const readLayout = async (
-  key: string,
-  defaultLayout: TCartLayoutItem[],
-): Promise<TCartLayoutItem[]> => {
-  const data = await redis.hgetall<Record<string, Partial<TCartLayoutItem>>>(key);
+const readLayout = async (key: string, defaultLayout: Layout): Promise<Layout> => {
+  const data = await redis.hgetall<Record<string, Partial<LayoutItem>>>(key);
 
   if (!data || !Object.keys(data).length) return defaultLayout;
 
-  return defaultLayout.map((item) => {
-    const stored = data[item.i];
+  return defaultLayout.map((layoutItem: LayoutItem) => {
+    const stored = data[layoutItem.i];
 
-    if (!stored) return item;
+    if (!stored) return layoutItem;
 
-    return { ...item, ...stored };
+    return { ...layoutItem, ...stored };
   });
 };
 
-const writeLayout = async (key: string, layout: TCartLayoutItem[]): Promise<void> => {
+const writeLayout = async (key: string, layout: Layout): Promise<void> => {
   const hash: Record<string, string> = {};
 
-  for (const item of layout) {
-    if ((BLOCKS as readonly string[]).includes(item.i)) {
-      hash[item.i] = JSON.stringify({ h: item.h, w: item.w, x: item.x, y: item.y });
+  for (const { h, i, w, x, y } of layout) {
+    if (gridAreas.includes(i)) {
+      hash[i] = JSON.stringify({ h, w, x, y });
     }
   }
 
@@ -88,22 +78,14 @@ const writeLayout = async (key: string, layout: TCartLayoutItem[]): Promise<void
 };
 
 const cartLayout = {
-  get: (): Promise<TCartLayoutItem[]> => readLayout(CART_LAYOUT_KEY, DEFAULT_LAYOUT),
-
-  getMobile: (): Promise<TCartLayoutItem[]> =>
-    readLayout(CART_LAYOUT_MOBILE_KEY, DEFAULT_MOBILE_LAYOUT),
-
-  set: (layout: TCartLayoutItem[]): Promise<void> => writeLayout(CART_LAYOUT_KEY, layout),
-
-  setMobile: (layout: TCartLayoutItem[]): Promise<void> =>
-    writeLayout(CART_LAYOUT_MOBILE_KEY, layout),
+  calculateGridAreas,
+  calculateMobileOrder,
+  desktopLayout,
+  get: (): Promise<Layout> => readLayout(CART_LAYOUT_KEY, desktopLayout),
+  getMobile: (): Promise<Layout> => readLayout(CART_LAYOUT_MOBILE_KEY, mobileLayout),
+  mobileLayout,
+  set: (layout: Layout): Promise<void> => writeLayout(CART_LAYOUT_KEY, layout),
+  setMobile: (layout: Layout): Promise<void> => writeLayout(CART_LAYOUT_MOBILE_KEY, layout),
 };
 
-export {
-  cartLayout,
-  computeGridTemplateAreas,
-  computeMobileOrder,
-  DEFAULT_LAYOUT,
-  DEFAULT_MOBILE_LAYOUT,
-};
-export type { TCartLayoutItem };
+export { calculateGridAreas, calculateMobileOrder, cartLayout };

@@ -12,6 +12,17 @@ export const inputWrapperClass = css(({ colors }) => ({
   justifySelf: "stretch",
 }));
 
+export const labelClass = css({
+  display: "block",
+  height: 15,
+  width: 20,
+});
+
+export const labelImageClass = css({
+  display: "block",
+  width: "100%",
+});
+
 export const inputClass = cssVariant(
   ({ colors }) => ({
     default: {
@@ -118,32 +129,6 @@ export const errorIconClass = css(({ colors }) => ({
     },
   },
   width: 20,
-}));
-
-export const optionClass = css({
-  paddingBlock: 0,
-  paddingRight: 8,
-});
-
-export const searchWrapperClass = css(({ colors }) => ({
-  borderBottom: `2px solid ${colors.red}`,
-  padding: 6,
-}));
-
-export const searchInputClass = css(({ fonts }) => ({
-  border: "none",
-  borderRadius: 4,
-  fontFamily: "inherit",
-  fontSize: 16,
-  fontWeight: fonts.medium,
-  outline: "none",
-  paddingBlock: 0,
-  paddingInline: 8,
-  width: "100%",
-
-  ":focus": {
-    outline: "none",
-  },
 }));
 
 export const popupClass = css(({ colors, fonts }) => ({

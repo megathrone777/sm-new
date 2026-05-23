@@ -5,9 +5,9 @@ export interface TProps extends DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 > {
+  bold?: true;
   hint?: string;
   label: React.ReactNode | string;
-  labelClassName?: string;
   labelImage?: React.ReactNode;
   template?: "normal" | "small";
 }

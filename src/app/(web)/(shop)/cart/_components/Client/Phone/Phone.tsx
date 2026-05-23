@@ -1,12 +1,13 @@
 "use client";
-import React, { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Select from "@rc-component/select";
-import { countries, getCountryFlag, useTelephone, type CountryCode } from "use-telephone";
+import { countries, useTelephone, type CountryCode } from "use-telephone";
 
 import { setCartError, updatePhone } from "@/app/(web)/_actions";
 import { Icon } from "@/ui";
 
-import { Option, type TOption } from "./Option";
+import { Popup } from "./Popup";
+import { labelRender, optionRender } from "./templates";
 
 import {
   errorIconClass,
@@ -14,14 +15,12 @@ import {
   inputWrapperClass,
   layoutClass,
   popupClass,
-  searchWrapperClass,
-  searchInputClass,
 } from "./Phone.css";
 
+import type { TOptionData } from "./Option";
 import type { TProps } from "./Phone.types";
 
 const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
-  const inputId = useId();
   const [searchValue, setSearchValue] = useState<string>("");
   const [countrySelected, setCountrySelected] = useState(false);
   const [touched, setTouched] = useState<boolean>(false);
@@ -36,13 +35,11 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     setCartError("phone", telephone.valid ? "" : "Neplatné telefonní číslo");
   };
 
-  const getOptions = (): TOption[] =>
-    countries.map(
-      ({ code, name }): TOption => ({
-        label: name,
-        value: code,
-      }),
-    );
+  const getOptions = (): TOptionData[] =>
+    countries.map<TOptionData>(({ code, name }) => ({
+      label: name,
+      value: code,
+    }));
 
   const handleCountryChange = (value: CountryCode): void => {
     setCountrySelected(true);
@@ -77,6 +74,16 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     telephone.onChange(event);
   };
 
+  const popupRender = (menu: React.ReactNode): React.ReactElement => (
+    <Popup
+      {...{ searchRef, searchValue }}
+      onInputChange={handleInputChange}
+      onMouseDown={handleMouseDown}
+    >
+      {menu}
+    </Popup>
+  );
+
   useEffect((): void => {
     if (!telephone.valid || !telephone.parsed) return;
     const { number } = telephone.parsed;
@@ -95,53 +102,16 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
       className={inputWrapperClass}
       style={{ gridTemplateColumns: showError ? "auto 1fr auto" : "auto 1fr" }}
     >
-      <Select
+      <Select<CountryCode, TOptionData>
+        {...{ labelRender, optionRender, popupRender }}
         className={layoutClass}
         id="phone-select"
-        labelRender={({ value }) => (
-          <span style={{ display: "block", height: 15, width: 20 }}>
-            <img
-              alt="Country flag."
-              src={getCountryFlag(value as CountryCode)}
-              style={{
-                display: "block",
-                width: "100%",
-              }}
-            />
-          </span>
-        )}
         menuItemSelectedIcon={null}
         notFoundContent="Nenalezeno"
         onChange={handleCountryChange}
         onPopupVisibleChange={handleDropdownVisibleChange}
-        optionRender={({ label, value }): React.ReactElement => (
-          <Option
-            {...{ label }}
-            value={value as CountryCode}
-          />
-        )}
         options={getOptions()}
         popupClassName={popupClass}
-        popupRender={(menu): React.ReactElement => (
-          <>
-            <div className={searchWrapperClass}>
-              <input
-                autoComplete="off"
-                className={searchInputClass}
-                name={`search-input-selectbox-${inputId}`}
-                onChange={handleInputChange}
-                onMouseDown={handleMouseDown}
-                placeholder="Search..."
-                ref={searchRef}
-                spellCheck="false"
-                type="text"
-                value={searchValue}
-              />
-            </div>
-
-            {menu}
-          </>
-        )}
         showAction={["click"]}
         showSearch={{
           autoClearSearchValue: true,
