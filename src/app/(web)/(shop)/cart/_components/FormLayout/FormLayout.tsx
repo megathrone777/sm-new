@@ -1,6 +1,7 @@
 "use client";
 import React, { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { assignInlineVars } from "@vanilla-extract/dynamic";
 import Form from "next/form";
 
 import {
@@ -10,11 +11,11 @@ import {
   validateAndSubmitCart,
 } from "@/app/(web)/_actions";
 
-import { wrapperClass } from "./FormLayout.css";
+import { gridTemplateAreasVar, wrapperClass } from "./FormLayout.css";
 
 import type { TProps } from "./FormLayout.types";
 
-const FormLayout: React.FC<TProps> = ({ children, errors }) => {
+const FormLayout: React.FC<TProps> = ({ children, errors, gridTemplateAreas }) => {
   const [, action] = useActionState(validateAndSubmitCart, null);
 
   const handleFormBlur = ({ currentTarget }: React.FocusEvent<HTMLFormElement>): void => {
@@ -74,6 +75,7 @@ const FormLayout: React.FC<TProps> = ({ children, errors }) => {
       onBlur={handleFormBlur}
       onChange={handleFormChange}
       onKeyDown={handleFormKeyDown}
+      style={assignInlineVars({ [gridTemplateAreasVar]: gridTemplateAreas })}
     >
       {children}
     </Form>

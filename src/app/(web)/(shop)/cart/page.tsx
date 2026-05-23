@@ -3,6 +3,7 @@ import React, { Suspense } from "react";
 import { Products } from "@/app/(web)/_components";
 import { useTranslation } from "@/hooks";
 import { store } from "@/store";
+import { computeGridTemplateAreas } from "@/store/cartLayout";
 import { Container } from "@/ui";
 import { isShopOpened } from "@/utils";
 
@@ -28,11 +29,13 @@ import { History } from "./_components/Client/History";
 import { wrapperClass } from "./page.css";
 
 const Page: React.FC<PageProps<"/cart">> = async () => {
-  const [cart, additionals, settings] = await Promise.all([
+  const [cart, additionals, settings, layout] = await Promise.all([
     store.cart.get(),
     store.additionals.getAll(),
     store.shop.getSettings(),
+    store.cartLayout.get(),
   ]);
+  const gridTemplateAreas = computeGridTemplateAreas(layout);
   const { isAvailable, schedule } = settings;
   const shopIsOpen = isShopOpened(schedule, isAvailable);
   const { t } = useTranslation();
@@ -68,7 +71,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
             productsTitle={t<string>("order")}
             queue={<Queue />}
           >
-            <FormLayout {...{ errors }}>
+            <FormLayout {...{ errors, gridTemplateAreas }}>
               <SectionLayout
                 gridArea="delivery"
                 title={t<string>("delivery")}

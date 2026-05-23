@@ -1,4 +1,8 @@
+import { createVar } from "@vanilla-extract/css";
+
 import { css } from "@/theme";
+
+export const gridTemplateAreasVar = createVar();
 
 export const wrapperClass = css(({ devices }) => ({
   display: "grid",
@@ -11,13 +15,7 @@ export const wrapperClass = css(({ devices }) => ({
       alignItems: "start",
       columnGap: 24,
       gridAutoFlow: "unset",
-      gridTemplateAreas: `
-        "delivery cutlery"
-        "delivery additionals"
-        "delivery note"
-        "delivery promo"
-        "delivery payment"
-      `,
+      gridTemplateAreas: gridTemplateAreasVar,
       gridTemplateColumns: "1fr 1fr",
     },
 
