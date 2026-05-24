@@ -2,7 +2,6 @@
 import { revalidatePath } from "next/cache";
 
 import { store } from "@/store";
-import { SMS_TEMPLATE_KEYS } from "@/store/smsTemplates";
 
 const updateSmsTemplate = async (
   _state: null | TActionResult,
@@ -16,7 +15,7 @@ const updateSmsTemplate = async (
 
   const key = `${formData.get("key") ?? ""}` as TSmsTemplateKey;
 
-  if (!SMS_TEMPLATE_KEYS.includes(key)) {
+  if (!store.smsTemplates.smsTemplateKeys.includes(key)) {
     return { message: "Invalid template key", type: "error" };
   }
 

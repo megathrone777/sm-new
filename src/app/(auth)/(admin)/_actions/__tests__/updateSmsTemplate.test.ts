@@ -8,19 +8,18 @@ import { updateSmsTemplate } from "../updateSmsTemplate";
 jest.mock("@/store", () => ({
   store: {
     sessions: { get: jest.fn() },
-    smsTemplates: { set: jest.fn() },
+    smsTemplates: {
+      set: jest.fn(),
+      smsTemplateKeys: [
+        "newOrderDelivery",
+        "newOrderDeliveryCustomDeliveryTime",
+        "newOrderPickup",
+        "newOrderPickupCustomDeliveryTime",
+        "orderIsOnTheWay",
+        "orderIsReadyToPickup",
+      ],
+    },
   },
-}));
-
-jest.mock("@/store/smsTemplates", () => ({
-  SMS_TEMPLATE_KEYS: [
-    "newOrderDelivery",
-    "newOrderDeliveryCustomDeliveryTime",
-    "newOrderPickup",
-    "newOrderPickupCustomDeliveryTime",
-    "orderIsOnTheWay",
-    "orderIsReadyToPickup",
-  ],
 }));
 
 jest.mock("next/cache", () => ({ revalidatePath: jest.fn() }));
@@ -88,13 +87,11 @@ describe("updateSmsTemplate", () => {
 
     it("saves the trimmed text", async () => {
       await updateSmsTemplate(null, makeFormData({ text: "  Hello  " }));
-
       expect(store.smsTemplates.set).toHaveBeenCalledWith("newOrderDelivery", "Hello");
     });
 
     it("revalidates the admin notifications page", async () => {
       await updateSmsTemplate(null, makeFormData());
-
       expect(revalidatePath).toHaveBeenCalledWith("/admin/notifications");
     });
 

@@ -2,6 +2,7 @@
 import React from "react";
 
 import { useTranslation } from "@/hooks";
+import { uuid } from "@/utils";
 
 import { ProductRow } from "./ProductRow";
 
@@ -56,7 +57,7 @@ const ProductsList: React.FC<TProps> = ({ categoryDiscount, onRemove, products }
       {products.map(
         ({ id, title, ...rest }: TCartProduct, index: number): React.ReactElement => (
           <ProductRow
-            key={`${id}-${crypto.randomUUID()}`}
+            key={`${id}-${uuid()}`}
             onRemove={(): void => onRemove(index)}
             {...{ id, index, title, ...rest }}
           />
