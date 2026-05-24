@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Select from "@rc-component/select";
+import { getExampleNumber, type Examples } from "libphonenumber-js";
+import examples from "libphonenumber-js/examples.mobile.json";
 import { countries, useTelephone, type CountryCode } from "use-telephone";
 
 import { setCartError, updatePhone } from "@/app/(web)/_actions";
@@ -29,17 +31,19 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     initialValue: phoneNumber ? `+${phoneNumber}` : "+420",
   });
   const showError = Boolean(isError) || (touched && !telephone.valid);
+  const selectedCountry: CountryCode =
+    !countrySelected && telephone.country === "AF" ? "CZ" : telephone.country;
+  const exampleNumber = getExampleNumber(selectedCountry, examples as Examples);
+  const phonePlaceholder = exampleNumber?.formatInternational() ?? "Vyplňte telefonní číslo";
 
   const handleBlur = (): void => {
     setTouched(true);
     setCartError("phone", telephone.valid ? "" : "Neplatné telefonní číslo");
   };
 
-  const getOptions = (): TOptionData[] =>
-    countries.map<TOptionData>(({ code, name }) => ({
-      label: name,
-      value: code,
-    }));
+  const filteredOptions = countries
+    .filter(({ name }) => name.toLowerCase().includes(searchValue.toLowerCase()))
+    .map<TOptionData>(({ code, name }) => ({ label: name, value: code }));
 
   const handleCountryChange = (value: CountryCode): void => {
     setCountrySelected(true);
@@ -53,9 +57,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   };
 
   const handleDropdownVisibleChange = (isOpened: boolean): void => {
-    if (isOpened) {
-      setTimeout(() => searchRef.current?.focus(), 0);
-    } else {
+    if (!isOpened) {
       setSearchValue("");
     }
   };
@@ -110,17 +112,11 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         notFoundContent="Nenalezeno"
         onChange={handleCountryChange}
         onPopupVisibleChange={handleDropdownVisibleChange}
-        options={getOptions()}
+        options={filteredOptions}
         popupClassName={popupClass}
         showAction={["click"]}
-        showSearch={{
-          autoClearSearchValue: true,
-          filterOption: (input: string, option) =>
-            `${option?.label ?? ""}`.toLowerCase().includes(input.toLowerCase()),
-          onSearch: setSearchValue,
-          searchValue,
-        }}
-        value={!countrySelected && telephone.country === "AF" ? "CZ" : telephone.country}
+        showSearch={false}
+        value={selectedCountry}
       />
 
       <input
@@ -131,7 +127,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         name="phone"
         onBlur={handleBlur}
         onChange={handlePhoneChange}
-        placeholder="Vyplňte telefonní číslo"
+        placeholder={phonePlaceholder}
         spellCheck="false"
         type="tel"
         value={telephone.value}
