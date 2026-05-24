@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Select from "@rc-component/select";
-import { getExampleNumber, type Examples } from "libphonenumber-js";
+import { getCountryCallingCode, getExampleNumber, type Examples } from "libphonenumber-js";
 import examples from "libphonenumber-js/examples.mobile.json";
 import { countries, useTelephone, type CountryCode } from "use-telephone";
 
@@ -35,6 +35,8 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     !countrySelected && telephone.country === "AF" ? "CZ" : telephone.country;
   const exampleNumber = getExampleNumber(selectedCountry, examples as Examples);
   const phonePlaceholder = exampleNumber?.formatInternational() ?? "Vyplňte telefonní číslo";
+  const dialCode = `+${getCountryCallingCode(telephone.country)}`;
+  const phoneValue = telephone.value === dialCode ? "" : telephone.value;
 
   const handleBlur = (): void => {
     setTouched(true);
@@ -70,7 +72,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     const { currentTarget } = event;
 
     if (!currentTarget.value.startsWith("+")) {
-      currentTarget.value = "+" + currentTarget.value;
+      currentTarget.value = dialCode + currentTarget.value;
     }
 
     telephone.onChange(event);
@@ -130,7 +132,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         placeholder={phonePlaceholder}
         spellCheck="false"
         type="tel"
-        value={telephone.value}
+        value={phoneValue}
       />
 
       {showError && (

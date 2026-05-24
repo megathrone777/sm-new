@@ -21,6 +21,9 @@ const Popup: React.FC<TProps> = ({
           className={inputClass}
           name={`search-input-phone-selectbox-${inputId}`}
           onChange={onInputChange}
+          onKeyDown={(event) => {
+            event.stopPropagation();
+          }}
           onMouseDown={onMouseDown}
           placeholder="Hledat..."
           ref={searchRef}

@@ -85,6 +85,9 @@ const Selectbox: React.FC<TProps> = ({
                 className={searchInputClass}
                 name={`search-input-selectbox-${inputId}`}
                 onChange={handleInputChange}
+                onKeyDown={(event) => {
+                  event.stopPropagation();
+                }}
                 onMouseDown={handleMouseDown}
                 placeholder="Search..."
                 spellCheck="false"
