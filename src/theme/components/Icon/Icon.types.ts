@@ -10,6 +10,7 @@ export type TIconID =
   | "close"
   | "copy"
   | "cross"
+  | "drag"
   | "email"
   | "exclamation"
   | "globe"

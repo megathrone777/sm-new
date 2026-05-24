@@ -3,7 +3,6 @@ import React from "react";
 import { updateSmsTemplate } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, Header } from "@/app/(auth)/(admin)/_components";
 import { store } from "@/store";
-import { SMS_TEMPLATE_KEYS } from "@/store/smsTemplates";
 
 import { gridClass, hintClass, itemClass, textareaClass, titleClass } from "./page.css";
 
@@ -24,7 +23,7 @@ const Page: React.FC = async () => {
       <Header title="Notifications" />
 
       <div className={gridClass}>
-        {SMS_TEMPLATE_KEYS.map((key: TSmsTemplateKey) => (
+        {store.smsTemplates.smsTemplateKeys.map<React.ReactElement>((key: TSmsTemplateKey) => (
           <div
             className={itemClass}
             key={`sms-${key}`}

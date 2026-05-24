@@ -1,5 +1,5 @@
 "use client";
-import React, { useId, useState } from "react";
+import React, { useId, useRef, useState } from "react";
 import Select from "@rc-component/select";
 
 import { Icon } from "@/ui";
@@ -32,6 +32,7 @@ const Selectbox: React.FC<TProps> = ({
 }) => {
   const inputId = useId();
   const [searchValue, setSearchValue] = useState<string>("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleMouseDown = (
     event: React.SyntheticEvent<HTMLButtonElement | HTMLInputElement>,
@@ -40,7 +41,9 @@ const Selectbox: React.FC<TProps> = ({
   };
 
   const handleDropdownVisibleChange = (isOpened: boolean): void => {
-    if (!isOpened) {
+    if (isOpened) {
+      setTimeout(() => searchInputRef.current?.focus(), 0);
+    } else {
       setSearchValue("");
     }
   };
@@ -76,6 +79,7 @@ const Selectbox: React.FC<TProps> = ({
                 onChange={handleInputChange}
                 onMouseDown={handleMouseDown}
                 placeholder="Search..."
+                ref={searchInputRef}
                 spellCheck="false"
                 type="text"
                 value={searchValue}
