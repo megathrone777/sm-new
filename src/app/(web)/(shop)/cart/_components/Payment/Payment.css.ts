@@ -40,7 +40,6 @@ export const agreeClass = css({
   display: "grid",
   gridAutoFlow: "column",
   paddingBlock: 25,
-  paddingLeft: 5,
   position: "relative",
 });
 
@@ -62,7 +61,7 @@ export const agreeLinkClass = css({
 });
 
 export const changeClass = css(({ devices }) => ({
-  columnGap: 12,
+  columnGap: 16,
   display: "grid",
   gridAutoFlow: "column",
   justifyContent: "start",

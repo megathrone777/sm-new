@@ -111,7 +111,6 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
 
               <SectionLayout
                 gridArea="cutlery"
-                id="cart-cutlery"
                 order={mobileOrder.cutlery}
                 title={t<string>("cutleryQuantity")}
               >

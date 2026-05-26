@@ -3,6 +3,7 @@ import { css } from "@/theme";
 export const wrapperClass = css({
   display: "grid",
   gridAutoFlow: "row",
+  position: "relative",
   rowGap: 4,
 });
 
@@ -39,6 +40,7 @@ export const layoutClass = css(({ colors, fonts }) => ({
     },
   },
 
+  alignItems: "end",
   backgroundColor: "white",
   borderBottom: `2px solid ${colors.red}`,
   color: "black",
@@ -51,6 +53,7 @@ export const layoutClass = css(({ colors, fonts }) => ({
   minHeight: "34px",
   position: "relative",
   width: "100%",
+  zIndex: 11,
 }));
 
 export const labelClass = css(({ fonts }) => ({
@@ -105,8 +108,8 @@ export const closeButtonClass = css({
 
 export const iconClass = css(({ colors }) => ({
   color: colors.red,
-  height: 18,
-  width: 18,
+  height: 15,
+  width: 15,
 }));
 
 export const suffixClass = css(({ colors, easing }) => ({
@@ -129,15 +132,17 @@ export const suffixClass = css(({ colors, easing }) => ({
 
 export const searchWrapperClass = css(({ colors }) => ({
   borderBottom: `2px solid ${colors.red}`,
-  padding: 6,
+  height: 35,
 }));
 
 export const searchInputClass = css(({ fonts }) => ({
+  background: "none",
   border: "none",
   borderRadius: 4,
   fontFamily: "inherit",
   fontSize: 16,
   fontWeight: fonts.medium,
+  height: 35,
   outline: "none",
   paddingBlock: 0,
   paddingInline: 8,
@@ -148,11 +153,12 @@ export const searchInputClass = css(({ fonts }) => ({
   },
 }));
 
-export const popupClass = css(({ colors, fonts }) => ({
+export const popupClass = css(({ animations, colors, easing, fonts }) => ({
   ".rc-select-item-empty": {
     fontSize: "15px",
     fontWeight: fonts.medium,
-    paddingBlock: "4px",
+    lineHeight: "38px",
+    minHeight: "38px",
     textAlign: "center",
   },
 
@@ -161,10 +167,11 @@ export const popupClass = css(({ colors, fonts }) => ({
     cursor: "pointer",
     display: "grid",
     fontSize: "15px",
-    fontWeight: fonts.bold,
+    fontWeight: fonts.medium,
     gridAutoFlow: "column",
     justifySelf: "start",
     lineHeight: "38px",
+    minHeight: "38px",
     overflow: "hidden",
     paddingBlock: 0,
     position: "relative",
@@ -195,7 +202,7 @@ export const popupClass = css(({ colors, fonts }) => ({
     justifyContent: "center",
     pointerEvents: "none",
     position: "absolute",
-    right: "16px",
+    right: "8px",
     top: "50%",
     transform: "translateY(-50%)",
   },
@@ -206,14 +213,26 @@ export const popupClass = css(({ colors, fonts }) => ({
     width: "18px",
   },
 
+  ".rc-virtual-list-holder": {
+    overflowY: "scroll",
+  },
+
+  animationDuration: "300ms",
+  animationFillMode: "forwards",
+  animationIterationCount: 1,
+  animationName: animations.fadeInDown,
+  animationTimingFunction: easing,
   backgroundColor: "white",
   border: `2px solid ${colors.red}`,
-  borderRadius: "6px",
+  borderBottomLeftRadius: "6px",
+  borderBottomRightRadius: "6px",
   overflow: "hidden",
   position: "absolute",
-  zIndex: 100,
+  zIndex: 10,
 
   "&.rc-select-dropdown-hidden": {
+    animation: "unset",
     opacity: 0,
+    transform: "translate3d(0, -4px, 0)",
   },
 }));

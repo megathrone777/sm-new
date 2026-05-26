@@ -2,10 +2,10 @@ import { css } from "@/theme";
 
 export const wrapperClass = css(({ devices }) => ({
   alignItems: "start",
-  columnGap: 12,
+  columnGap: 16,
   display: "grid",
   gridAutoFlow: "column",
-  justifyContent: "center",
+  justifyContent: "start",
   minHeight: 55,
   paddingTop: 8,
 

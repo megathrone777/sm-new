@@ -38,10 +38,11 @@ const CartLayout: React.FC<TProps> = ({
         title={productsTitle}
       >
         <ProductsList
-          categoryDiscount={categoryDiscount}
+          {...{ categoryDiscount, products }}
           onRemove={handleRemove}
-          products={products}
         />
+
+        <div id="cart-error" />
       </SectionLayout>
 
       {children}

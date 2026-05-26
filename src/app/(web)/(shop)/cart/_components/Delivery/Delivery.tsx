@@ -23,7 +23,6 @@ const Delivery: React.FC<TProps> = ({ totalPrice, type }) => {
       <Checkbox
         defaultChecked={type === "delivery"}
         label={t<string>("deliveryLabel")}
-        // labelClassName={labelClass}
         name="deliveryType"
         type="radio"
         value="delivery"
@@ -33,7 +32,6 @@ const Delivery: React.FC<TProps> = ({ totalPrice, type }) => {
         defaultChecked={type === "pickup"}
         hint={checkPickupDiscount() > 0 ? `-50 ${t<string>("currency")}` : ""}
         label={t<string>("pickupLabel")}
-        // labelClassName={labelClass}
         name="deliveryType"
         type="radio"
         value="pickup"

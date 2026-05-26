@@ -40,7 +40,7 @@ const Cutlery: React.FC<TProps> = ({ isError, quantity: initialQuantity, totalPr
 
   useEffect((): VoidFunction => {
     const scrollEnd = (): void => {
-      if (window.location.hash.includes("cart-cutlery")) {
+      if (window.location.hash.includes("cart-error")) {
         router.replace("/cart", { scroll: false });
       }
     };

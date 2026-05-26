@@ -1,6 +1,7 @@
 import { css } from "@/theme";
 
 export const wrapperClass = css({
+  marginInline: -5,
   paddingBlock: 20,
 });
 

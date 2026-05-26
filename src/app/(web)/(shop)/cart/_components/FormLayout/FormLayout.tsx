@@ -60,7 +60,7 @@ const FormLayout: React.FC<TProps> = ({ children, errors, gridTemplateAreas }) =
       }
     }
 
-    const errorsAnchor = document.getElementById("cart-cutlery");
+    const errorsAnchor = document.getElementById("cart-error");
 
     if (errorsAnchor) {
       errorsAnchor.scrollIntoView({ behavior: "smooth", block: "start" });

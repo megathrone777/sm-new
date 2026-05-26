@@ -6,7 +6,6 @@ export const wrapperClass = css(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "column",
   gridTemplateColumns: "1fr 1fr",
-  overflow: "hidden",
   paddingBottom: 20,
   paddingLeft: 6,
 

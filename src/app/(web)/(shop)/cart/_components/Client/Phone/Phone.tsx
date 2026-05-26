@@ -1,28 +1,34 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import Select from "@rc-component/select";
-import { AsYouType, getCountryCallingCode, getExampleNumber, type Examples } from "libphonenumber-js";
-import examplesJson from "libphonenumber-js/examples.mobile.json";
-import { countries, useTelephone, type CountryCode } from "use-telephone";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { AsYouType, getCountryCallingCode, getExampleNumber } from "libphonenumber-js";
+import examples from "libphonenumber-js/examples.mobile.json";
+import { useTelephone, type CountryCode } from "use-telephone";
 
 import { setCartError, updatePhone } from "@/app/(web)/_actions";
 import { Icon } from "@/ui";
 
 import { Popup } from "./Popup";
-import { labelRender, optionRender } from "./templates";
 
 import {
   errorIconClass,
   inputClass,
   inputWrapperClass,
-  layoutClass,
-  popupClass,
+  placeholderClass,
+  wrapperClass,
 } from "./Phone.css";
 
-import type { TOptionData } from "./Option";
 import type { TProps } from "./Phone.types";
 
-const examples = examplesJson as unknown as Examples;
+const getPlaceholderSplit = (value: string, placeholder: string): number => {
+  const typedDigits = value.replace(/\D/g, "").length;
+  let counted = 0;
+
+  for (let i = 0; i < placeholder.length; i++) {
+    if (/\d/.test(placeholder[i] ?? "") && ++counted === typedDigits) return i + 1;
+  }
+
+  return placeholder.length;
+};
 
 const getFormatPlaceholder = (country: CountryCode): string => {
   const example = getExampleNumber(country, examples);
@@ -30,15 +36,13 @@ const getFormatPlaceholder = (country: CountryCode): string => {
 
   if (!example) return prefix;
 
-  return prefix + example.formatInternational().slice(prefix.length).replace(/\d/g, "X");
+  return prefix + example.formatInternational().slice(prefix.length).replace(/\d/g, "0");
 };
 
 const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
-  const [searchValue, setSearchValue] = useState<string>("");
   const [countrySelected, setCountrySelected] = useState(false);
   const [partialCountry, setPartialCountry] = useState<CountryCode | undefined>();
   const [touched, setTouched] = useState<boolean>(false);
-  const searchRef = useRef<HTMLInputElement>(null);
   const telephone = useTelephone({
     initialValue: phoneNumber ? `+${phoneNumber}` : "+420",
   });
@@ -51,34 +55,10 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     setCartError("phone", telephone.valid ? "" : "Neplatné telefonní číslo");
   };
 
-  const getOptions = (): TOptionData[] =>
-    countries.map<TOptionData>(({ code, name }) => ({
-      label: name,
-      value: code,
-    }));
-
-  const handleCountryChange = (value: CountryCode): void => {
+  const handleCountryChange = (countryCode: CountryCode): void => {
     setCountrySelected(true);
     setPartialCountry(undefined);
-    telephone.onChangeCountry(value);
-  };
-
-  const handleMouseDown = (
-    event: React.SyntheticEvent<HTMLButtonElement | HTMLInputElement>,
-  ): void => {
-    event.stopPropagation();
-  };
-
-  const handleDropdownVisibleChange = (isOpened: boolean): void => {
-    if (isOpened) {
-      setTimeout(() => searchRef.current?.focus(), 0);
-    } else {
-      setSearchValue("");
-    }
-  };
-
-  const handleInputChange = ({ currentTarget }: React.SyntheticEvent<HTMLInputElement>): void => {
-    setSearchValue(currentTarget.value);
+    telephone.onChangeCountry(countryCode);
   };
 
   const handlePhoneChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -96,15 +76,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     setPartialCountry(asYouType.getCountry() as CountryCode | undefined);
   };
 
-  const popupRender = (menu: React.ReactNode): React.ReactElement => (
-    <Popup
-      {...{ searchRef, searchValue }}
-      onInputChange={handleInputChange}
-      onMouseDown={handleMouseDown}
-    >
-      {menu}
-    </Popup>
-  );
+  const placeholder = getFormatPlaceholder(effectiveCountry);
 
   useEffect((): void => {
     if (!telephone.valid || !telephone.parsed) return;
@@ -114,50 +86,43 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   }, [telephone.valid]);
 
   useLayoutEffect((): void => {
-    if (!phoneNumber || telephone.country === "AF") {
+    if (!phoneNumber) {
       telephone.onChangeCountry("CZ");
     }
   }, []);
 
   return (
     <div
-      className={inputWrapperClass}
+      className={wrapperClass}
       style={{ gridTemplateColumns: showError ? "auto 1fr auto" : "auto 1fr" }}
     >
-      <Select<CountryCode, TOptionData>
-        {...{ labelRender, optionRender, popupRender }}
-        className={layoutClass}
-        id="phone-select"
-        menuItemSelectedIcon={null}
-        notFoundContent="Nenalezeno"
-        onChange={handleCountryChange}
-        onPopupVisibleChange={handleDropdownVisibleChange}
-        options={getOptions()}
-        popupClassName={popupClass}
-        showAction={["click"]}
-        showSearch={{
-          autoClearSearchValue: true,
-          filterOption: (input: string, option) =>
-            `${option?.label ?? ""}`.toLowerCase().includes(input.toLowerCase()),
-          onSearch: setSearchValue,
-          searchValue,
-        }}
-        value={effectiveCountry}
+      <Popup
+        countryCode={telephone.country}
+        onCountryChange={handleCountryChange}
       />
 
-      <input
-        autoComplete="new-password"
-        className={inputClass[showError ? "error" : "default"]}
-        enterKeyHint="done"
-        maxLength={getFormatPlaceholder(effectiveCountry).length}
-        name="phone"
-        onBlur={handleBlur}
-        onChange={handlePhoneChange}
-        placeholder={getFormatPlaceholder(effectiveCountry)}
-        spellCheck="false"
-        type="tel"
-        value={telephone.value}
-      />
+      <div className={inputWrapperClass}>
+        <input
+          autoComplete="new-password"
+          className={inputClass[showError ? "error" : "default"]}
+          enterKeyHint="done"
+          maxLength={placeholder.length}
+          name="phone"
+          onBlur={handleBlur}
+          onChange={handlePhoneChange}
+          spellCheck="false"
+          type="tel"
+          value={telephone.value}
+        />
+
+        <p className={placeholderClass}>
+          <span style={{ color: "transparent" }}>
+            {placeholder.slice(0, getPlaceholderSplit(telephone.value, placeholder))}
+          </span>
+
+          {placeholder.slice(getPlaceholderSplit(telephone.value, placeholder))}
+        </p>
+      </div>
 
       {showError && (
         <Icon

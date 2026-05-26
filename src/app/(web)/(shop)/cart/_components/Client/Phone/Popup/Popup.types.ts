@@ -1,9 +1,11 @@
-import type React from "react";
+import type { CountryCode } from "use-telephone";
+
+export interface TOption {
+  label: string;
+  value: CountryCode;
+}
 
 export interface TProps {
-  children: React.ReactNode;
-  onInputChange: React.ChangeEventHandler<HTMLInputElement>;
-  onMouseDown: React.MouseEventHandler<HTMLButtonElement | HTMLInputElement>;
-  searchRef: React.RefObject<HTMLInputElement | null>;
-  searchValue: string;
+  countryCode: CountryCode;
+  onCountryChange: (newCountry: CountryCode) => void;
 }

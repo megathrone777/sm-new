@@ -46,9 +46,6 @@ declare global {
       EMAIL_APP_PASSWORD: string;
       EMAIL_ORDER_CONFIRMATION_ENABLED: string;
 
-      GPS_WOX_API_HASH: string;
-      GPS_WOX_API_URL: string;
-
       MAPY_CZ_API_KEY: string;
 
       PUBLIC_URL: string;

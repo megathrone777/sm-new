@@ -1,5 +1,5 @@
 "use client";
-import React, { useId, useRef, useState } from "react";
+import React, { useId, useState } from "react";
 import Select from "@rc-component/select";
 
 import { Icon } from "@/ui";
@@ -32,7 +32,6 @@ const Selectbox: React.FC<TProps> = ({
 }) => {
   const inputId = useId();
   const [searchValue, setSearchValue] = useState<string>("");
-  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleMouseDown = (
     event: React.SyntheticEvent<HTMLButtonElement | HTMLInputElement>,
@@ -41,9 +40,7 @@ const Selectbox: React.FC<TProps> = ({
   };
 
   const handleDropdownVisibleChange = (isOpened: boolean): void => {
-    if (isOpened) {
-      setTimeout(() => searchInputRef.current?.focus(), 0);
-    } else {
+    if (!isOpened) {
       setSearchValue("");
     }
   };
@@ -58,7 +55,10 @@ const Selectbox: React.FC<TProps> = ({
 
       <Select
         {...{ defaultValue, id, mode, onChange, optionRender, options, placeholder, style }}
+        autoFocus={false}
         className={layoutClass}
+        components={{ input: <input readOnly /> }}
+        getPopupContainer={(trigger): HTMLElement => trigger.parentElement ?? document.body}
         maxTagTextLength={80}
         menuItemSelectedIcon={
           <Icon
@@ -68,27 +68,31 @@ const Selectbox: React.FC<TProps> = ({
         }
         notFoundContent="Nenalezeno"
         onPopupVisibleChange={handleDropdownVisibleChange}
+        popupAlign={{ offset: [0, 0], overflow: { adjustX: false, adjustY: false } }}
         popupClassName={popupClass}
         popupRender={(menu): React.ReactElement => (
           <>
             <div className={searchWrapperClass}>
               <input
                 autoComplete="off"
+                autoFocus={false}
                 className={searchInputClass}
                 name={`search-input-selectbox-${inputId}`}
                 onChange={handleInputChange}
                 onMouseDown={handleMouseDown}
-                placeholder="Search..."
-                ref={searchInputRef}
+                placeholder="Hledat..."
                 spellCheck="false"
                 type="text"
                 value={searchValue}
               />
             </div>
 
-            {menu}
+            <React.Fragment key={`${inputId}-popup-${searchValue}`}>{menu}</React.Fragment>
           </>
         )}
+        popupStyle={{
+          top: 33,
+        }}
         removeIcon={
           <Icon
             className={iconClass}
@@ -96,6 +100,7 @@ const Selectbox: React.FC<TProps> = ({
           />
         }
         showAction={["click"]}
+        showScrollBar={false}
         showSearch={{
           autoClearSearchValue: true,
           filterOption: (input: string, option) =>
@@ -109,6 +114,7 @@ const Selectbox: React.FC<TProps> = ({
             id="angle"
           />
         }
+        tabIndex={-1}
         tagRender={({ label, onClose }): React.ReactElement => (
           <div className={tagClass}>
             <span>{label}</span>
@@ -129,6 +135,7 @@ const Selectbox: React.FC<TProps> = ({
             </button>
           </div>
         )}
+        virtual={false}
       />
     </div>
   );
