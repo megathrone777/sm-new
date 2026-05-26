@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Select from "@rc-component/select";
+import { AsYouType } from "libphonenumber-js";
 import { countries, useTelephone, type CountryCode } from "use-telephone";
 
 import { setCartError, updatePhone } from "@/app/(web)/_actions";
@@ -23,12 +24,15 @@ import type { TProps } from "./Phone.types";
 const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [countrySelected, setCountrySelected] = useState(false);
+  const [partialCountry, setPartialCountry] = useState<CountryCode | undefined>();
   const [touched, setTouched] = useState<boolean>(false);
   const searchRef = useRef<HTMLInputElement>(null);
   const telephone = useTelephone({
     initialValue: phoneNumber ? `+${phoneNumber}` : "+420",
   });
   const showError = Boolean(isError) || (touched && !telephone.valid);
+  const effectiveCountry: CountryCode =
+    partialCountry ?? (!countrySelected && telephone.country === "AF" ? "CZ" : telephone.country);
 
   const handleBlur = (): void => {
     setTouched(true);
@@ -43,6 +47,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
 
   const handleCountryChange = (value: CountryCode): void => {
     setCountrySelected(true);
+    setPartialCountry(undefined);
     telephone.onChangeCountry(value);
   };
 
@@ -72,6 +77,10 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     }
 
     telephone.onChange(event);
+
+    const asYouType = new AsYouType();
+    asYouType.input(currentTarget.value);
+    setPartialCountry(asYouType.getCountry() as CountryCode | undefined);
   };
 
   const popupRender = (menu: React.ReactNode): React.ReactElement => (
@@ -120,14 +129,14 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
           onSearch: setSearchValue,
           searchValue,
         }}
-        value={!countrySelected && telephone.country === "AF" ? "CZ" : telephone.country}
+        value={effectiveCountry}
       />
 
       <input
         autoComplete="new-password"
         className={inputClass[showError ? "error" : "default"]}
         enterKeyHint="done"
-        maxLength={telephone.country === "CZ" ? 16 : 100}
+        maxLength={effectiveCountry === "CZ" ? 16 : 100}
         name="phone"
         onBlur={handleBlur}
         onChange={handlePhoneChange}
