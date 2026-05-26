@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Select from "@rc-component/select";
-import { AsYouType, getCountryCallingCode, getExampleNumber } from "libphonenumber-js";
+import { AsYouType, getCountryCallingCode, getExampleNumber, type Examples } from "libphonenumber-js";
 import examplesJson from "libphonenumber-js/examples.mobile.json";
 import { countries, useTelephone, type CountryCode } from "use-telephone";
 
@@ -22,7 +22,7 @@ import {
 import type { TOptionData } from "./Option";
 import type { TProps } from "./Phone.types";
 
-const examples = examplesJson as unknown as Record<string, { nationalNumber: string }>;
+const examples = examplesJson as unknown as Examples;
 
 const getFormatPlaceholder = (country: CountryCode): string => {
   const example = getExampleNumber(country, examples);
