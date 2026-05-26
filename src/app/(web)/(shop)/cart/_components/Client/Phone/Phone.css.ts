@@ -20,6 +20,7 @@ export const labelClass = css({
 
 export const labelImageClass = css({
   display: "block",
+  transform: "translateY(1px)",
   width: "100%",
 });
 

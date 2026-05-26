@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Select from "@rc-component/select";
-import { AsYouType } from "libphonenumber-js";
+import { AsYouType, getCountryCallingCode, getExampleNumber, type Examples } from "libphonenumber-js";
+import examplesJson from "libphonenumber-js/examples.mobile.json";
 import { countries, useTelephone, type CountryCode } from "use-telephone";
 
 import { setCartError, updatePhone } from "@/app/(web)/_actions";
@@ -20,6 +21,17 @@ import {
 
 import type { TOptionData } from "./Option";
 import type { TProps } from "./Phone.types";
+
+const examples = examplesJson as unknown as Examples;
+
+const getFormatPlaceholder = (country: CountryCode): string => {
+  const example = getExampleNumber(country, examples);
+  const prefix = `+${getCountryCallingCode(country)}`;
+
+  if (!example) return prefix;
+
+  return prefix + example.formatInternational().slice(prefix.length).replace(/\d/g, "X");
+};
 
 const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
   const [searchValue, setSearchValue] = useState<string>("");
@@ -141,7 +153,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         name="phone"
         onBlur={handleBlur}
         onChange={handlePhoneChange}
-        placeholder="Vyplňte telefonní číslo"
+        placeholder={getFormatPlaceholder(effectiveCountry)}
         spellCheck="false"
         type="tel"
         value={telephone.value}
