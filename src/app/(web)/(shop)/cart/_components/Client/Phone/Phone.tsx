@@ -22,7 +22,7 @@ import {
 import type { TOptionData } from "./Option";
 import type { TProps } from "./Phone.types";
 
-const examples = examplesJson as Record<string, { nationalNumber: string }>;
+const examples = examplesJson as unknown as Record<string, { nationalNumber: string }>;
 
 const getFormatPlaceholder = (country: CountryCode): string => {
   const example = getExampleNumber(country, examples);
