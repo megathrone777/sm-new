@@ -149,7 +149,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
         autoComplete="new-password"
         className={inputClass[showError ? "error" : "default"]}
         enterKeyHint="done"
-        maxLength={effectiveCountry === "CZ" ? 16 : 100}
+        maxLength={getFormatPlaceholder(effectiveCountry).length}
         name="phone"
         onBlur={handleBlur}
         onChange={handlePhoneChange}
