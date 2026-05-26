@@ -79,6 +79,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     telephone.onChange(event);
 
     const asYouType = new AsYouType();
+
     asYouType.input(currentTarget.value);
     setPartialCountry(asYouType.getCountry() as CountryCode | undefined);
   };
