@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 type AnyFn<TArgs extends unknown[]> = (...args: TArgs) => Promise<void> | void;
 
@@ -12,18 +12,15 @@ const useDebouncedCallback = <TArgs extends unknown[]>(
 
   callbackRef.current = callback;
 
-  const debouncedCallback = useCallback(
-    (...args: TArgs) => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+  const debouncedCallback = (...args: TArgs): void => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
 
-      timeoutRef.current = setTimeout((): void => {
-        callbackRef.current(...args);
-      }, delay);
-    },
-    [delay],
-  );
+    timeoutRef.current = setTimeout((): void => {
+      callbackRef.current(...args);
+    }, delay);
+  };
 
   useEffect(() => {
     return (): void => {

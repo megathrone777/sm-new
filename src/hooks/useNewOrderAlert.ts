@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 type TWebkitWindow = Window &
   typeof globalThis & {
@@ -14,7 +14,7 @@ const TONE_GAP = 0.3;
 const useNewOrderAlert = (): { notify: (id: number) => void; test: () => void } => {
   const ctxRef = useRef<AudioContext | null>(null);
 
-  const playBeep = useCallback((): void => {
+  const playBeep = (): void => {
     const ctx = ctxRef.current;
 
     if (!ctx || ctx.state !== "running") return;
@@ -35,29 +35,26 @@ const useNewOrderAlert = (): { notify: (id: number) => void; test: () => void } 
       oscillator.start(start);
       oscillator.stop(start + TONE_DURATION);
     }
-  }, []);
+  };
 
-  const notify = useCallback(
-    (id: number): void => {
-      if (typeof window === "undefined") return;
+  const notify = (id: number): void => {
+    if (typeof window === "undefined") return;
 
-      if ("Notification" in window && Notification.permission === "granted") {
-        const notification = new Notification(`Новый заказ №${id}`, {
-          body: "Новый заказ",
-          requireInteraction: false,
-          tag: `order-${id}`,
-        });
+    if ("Notification" in window && Notification.permission === "granted") {
+      const notification = new Notification(`Новый заказ №${id}`, {
+        body: "Новый заказ",
+        requireInteraction: false,
+        tag: `order-${id}`,
+      });
 
-        notification.onclick = (): void => {
-          window.focus();
-          notification.close();
-        };
-      }
+      notification.onclick = (): void => {
+        window.focus();
+        notification.close();
+      };
+    }
 
-      playBeep();
-    },
-    [playBeep],
-  );
+    playBeep();
+  };
 
   useEffect((): undefined | VoidFunction => {
     if (typeof window === "undefined") return;

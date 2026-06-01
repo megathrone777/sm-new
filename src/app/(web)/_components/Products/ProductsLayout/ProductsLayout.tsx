@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
@@ -19,20 +19,19 @@ const ProductsLayout: React.FC<TProps> = ({ categories, renderedProducts, showAl
   const pathname = usePathname();
   const [categoryId, setCategoryId] = useState<number>(() => (showAll ? 0 : -1));
 
-  const handleCategoryClick = useCallback(
-    ({ currentTarget }: React.SyntheticEvent<HTMLButtonElement>): void => {
-      const currentId = +currentTarget.value;
-      const newCategoryId: number = categoryId === currentId ? -1 : currentId;
-      const section = document.getElementById("products-section");
+  const handleCategoryClick = ({
+    currentTarget,
+  }: React.SyntheticEvent<HTMLButtonElement>): void => {
+    const currentId = +currentTarget.value;
+    const newCategoryId: number = categoryId === currentId ? -1 : currentId;
+    const section = document.getElementById("products-section");
 
-      if (section && section.getBoundingClientRect().top > 0) {
-        section.scrollIntoView({ behavior: "smooth" });
-      }
+    if (section && section.getBoundingClientRect().top > 0) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
 
-      setCategoryId(newCategoryId);
-    },
-    [categoryId],
-  );
+    setCategoryId(newCategoryId);
+  };
 
   const activeCategory = categories.find(({ id }: TProductCategory): boolean => id === categoryId);
   const hasActiveCategory = categoryId !== -1;

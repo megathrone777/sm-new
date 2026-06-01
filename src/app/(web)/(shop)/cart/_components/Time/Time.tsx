@@ -1,5 +1,5 @@
 "use client";
-import React, { startTransition, useMemo } from "react";
+import React, { startTransition } from "react";
 
 import { updateDeliveryTime } from "@/app/(web)/_actions";
 import { Icon, Selectbox } from "@/ui";
@@ -80,7 +80,7 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
 
   const resetLabel = deliveryType === "delivery" ? "Doručit teď" : "Vyzvednout teď";
 
-  const options = useMemo((): TSelectOption[] => {
+  const getOptions = (): TSelectOption[] => {
     const today = WEEKDAY_LOOKUP[new Date().getDay()] ?? "monday";
     const daySchedule = schedule[today as TWeekDay];
     const slots = generateOptions(daySchedule).map<TSelectOption>((slot: string) => ({
@@ -89,9 +89,9 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
     }));
 
     return [{ label: resetLabel, value: "" }, ...slots];
-  }, [resetLabel, schedule]);
+  };
 
-  if (options.length > 1) {
+  if (getOptions().length > 1) {
     return (
       <div className={wrapperClass}>
         <label
@@ -107,10 +107,10 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
         </label>
 
         <Selectbox
-          {...{ options }}
           defaultValue={time.value ?? ""}
           id="time"
           onChange={handleChange}
+          options={getOptions()}
           placeholder={getLabel()}
         />
       </div>

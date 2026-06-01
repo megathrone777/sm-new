@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Marker, type LngLatLike } from "react-map-gl/maplibre";
 
 import { getCouriers } from "@/app/(auth)/(orders)/_actions";
@@ -40,7 +40,24 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
     },
   });
 
-  useEffect(() => {
+  const getPositions = (): [number, number][] => {
+    const deliveryPositions = orders
+      .map(toDeliveryOrder)
+      .filter(
+        (order): order is NonNullable<ReturnType<typeof toDeliveryOrder>> =>
+          order !== null && isPaymentVisible(order),
+      )
+      .map<[number, number]>(({ position }) => position);
+
+    const courierPositions = couriers.map(({ latitude, longitude }): [number, number] => [
+      latitude,
+      longitude,
+    ]);
+
+    return [[kitchenCoords.lat, kitchenCoords.lon], ...deliveryPositions, ...courierPositions];
+  };
+
+  useEffect((): VoidFunction => {
     let active = true;
 
     const fetchCouriers = async (): Promise<void> => {
@@ -58,26 +75,9 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
     };
   }, []);
 
-  const positions = useMemo<[number, number][]>((): [number, number][] => {
-    const deliveryPositions = orders
-      .map(toDeliveryOrder)
-      .filter(
-        (order): order is NonNullable<ReturnType<typeof toDeliveryOrder>> =>
-          order !== null && isPaymentVisible(order),
-      )
-      .map<[number, number]>(({ position }) => position);
-
-    const courierPositions = couriers.map(({ latitude, longitude }): [number, number] => [
-      latitude,
-      longitude,
-    ]);
-
-    return [[kitchenCoords.lat, kitchenCoords.lon], ...deliveryPositions, ...courierPositions];
-  }, [orders, couriers]);
-
   return (
     <>
-      <FitBounds {...{ positions }} />
+      <FitBounds positions={getPositions()} />
 
       {couriers.map<React.ReactElement>(
         ({ id, latitude, longitude, name }: TCourier, index: number) => (

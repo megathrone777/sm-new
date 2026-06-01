@@ -26,6 +26,7 @@ const config: NextConfig = {
   outputFileTracingIncludes: {
     "**/*": ["./src/services/emailSender/template/**/*.pug"],
   },
+  reactCompiler: true,
   reactStrictMode: false,
   redirects: async () => [
     {
