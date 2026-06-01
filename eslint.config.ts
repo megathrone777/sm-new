@@ -230,7 +230,6 @@ const config = defineConfig({
         ],
       },
     ],
-
     "perfectionist/sort-union-types": "error",
     "prefer-const": "error",
     quotes: "error",
