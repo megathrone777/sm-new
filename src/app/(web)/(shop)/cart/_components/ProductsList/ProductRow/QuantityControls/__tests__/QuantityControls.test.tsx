@@ -4,7 +4,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 jest.mock("@/app/(web)/_actions", () => ({
-  updateQuantity: jest.fn<() => Promise<void>>().mockResolvedValue(undefined),
+  updateQuantity: jest.fn().mockResolvedValue(undefined),
 }));
 
 jest.mock("@/ui", () => ({

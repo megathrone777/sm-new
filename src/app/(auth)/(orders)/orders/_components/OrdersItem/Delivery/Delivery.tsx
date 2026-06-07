@@ -40,7 +40,7 @@ const Delivery: React.FC<TProps> = ({
         <span
           className={valueClass}
           data-value={name}
-          onClick={handleCopyClick}
+          onClick={void handleCopyClick}
         >
           {name}
         </span>
@@ -50,7 +50,7 @@ const Delivery: React.FC<TProps> = ({
         <span
           className={`${valueClass} normal`}
           data-value={email}
-          onClick={handleCopyClick}
+          onClick={void handleCopyClick}
         >
           {email}
         </span>
@@ -61,7 +61,7 @@ const Delivery: React.FC<TProps> = ({
           <span
             className={valueClass}
             data-value={deliveryAddress}
-            onClick={handleCopyClick}
+            onClick={void handleCopyClick}
           >
             {deliveryAddress} {deliveryAddressDistrict}
             <a

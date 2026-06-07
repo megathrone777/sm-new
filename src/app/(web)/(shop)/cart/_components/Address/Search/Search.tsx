@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   getAddressSuggestions,
@@ -27,8 +27,14 @@ import type { TProps } from "./Search.types";
 const Search: React.FC<TProps> = ({ addressError, delivery }) => {
   const { t } = useTranslation();
   const [inputValue, setInputValue] = useState<string>(delivery.address);
+  const [prevAddress, setPrevAddress] = useState<string>(delivery.address);
   const [suggestions, setSuggestions] = useState<TAddressSuggestion[]>([]);
   const [isLocating, setIsLocating] = useState<boolean>(false);
+
+  if (delivery.address !== prevAddress) {
+    setPrevAddress(delivery.address);
+    setInputValue(delivery.address);
+  }
 
   const fetchSuggestions = useDebouncedCallback(async (query: string): Promise<void> => {
     const results = await getAddressSuggestions(query);
@@ -74,14 +80,14 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
     setIsLocating(true);
 
     navigator.geolocation.getCurrentPosition(
-      async ({ coords }): Promise<void> => {
-        const result = await reverseGeocodeAddress(coords.latitude, coords.longitude);
+      ({ coords }): void => {
+        void (async (): Promise<void> => {
+          const result = await reverseGeocodeAddress(coords.latitude, coords.longitude);
 
-        if (result) {
-          await handleAddressSelect(result);
-        }
+          if (result) await handleAddressSelect(result);
 
-        setIsLocating(false);
+          setIsLocating(false);
+        })();
       },
       (): void => {
         setIsLocating(false);
@@ -89,10 +95,6 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
       { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 },
     );
   };
-
-  useEffect((): void => {
-    setInputValue(delivery.address);
-  }, [delivery.address]);
 
   return (
     <div className={wrapperClass}>
@@ -134,7 +136,7 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
                 className={suggestionsItemClass}
                 key={`${name}-${location}`}
                 onClick={(): void => {
-                  handleAddressSelect({ location, name, position });
+                  void handleAddressSelect({ location, name, position });
                 }}
               >
                 {name}
@@ -147,7 +149,7 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
       {delivery.address.length > 0 && inputValue.length > 0 && (
         <button
           className={resetButtonClass}
-          onClick={handleInputReset}
+          onClick={(): void => { void handleInputReset(); }}
           type="button"
         >
           <Icon id="close" />

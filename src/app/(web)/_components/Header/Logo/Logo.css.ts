@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   alignContent: "stretch",
   display: "grid",
   minHeight: "100%",
@@ -21,7 +21,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const linkClass = css({
+export const linkClass = style({
   cursor: "pointer",
   display: "block",
   height: "100%",
@@ -32,7 +32,7 @@ export const linkClass = css({
   },
 });
 
-export const imageClass = css({
+export const imageClass = style({
   height: "auto",
   width: "100%",
 });

@@ -98,7 +98,12 @@ const Hero: React.FC = async () => {
               dangerouslySetInnerHTML={{ __html: description }}
             />
 
-            <Button href={buttonLink}>{buttonTitle}</Button>
+            <Button
+              href={buttonLink}
+              withTransition
+            >
+              {buttonTitle}
+            </Button>
           </div>
         </Container>
       </div>

@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const mapClass = css(({ colors }) => ({
+export const mapClass = style(({ colors }) => ({
   borderTop: `4px solid ${colors.red}`,
   display: "block",
   height: 450,

@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ colors }) => ({
+export const wrapperClass = style(({ colors }) => ({
   alignContent: "center",
   alignItems: "center",
   backgroundColor: colors.black,
@@ -14,7 +14,7 @@ export const wrapperClass = css(({ colors }) => ({
   zIndex: 105,
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   alignContent: "center",
   alignItems: "center",
   columnGap: 30,
@@ -23,22 +23,22 @@ export const layoutClass = css({
   justifyContent: "end",
 });
 
-export const logoLinkClass = css({
+export const logoLinkClass = style({
   display: "block",
   height: "90%",
   overflow: "hidden",
 });
 
-export const imageClass = css({
+export const imageClass = style({
   display: "block",
   height: "100%",
 });
 
-export const buttonClass = css({
+export const buttonClass = style({
   boxShadow: "none",
 });
 
-export const buttonLabelClass = css(({ devices }) => ({
+export const buttonLabelClass = style(({ devices }) => ({
   display: "none",
 
   "@media": {
@@ -48,7 +48,7 @@ export const buttonLabelClass = css(({ devices }) => ({
   },
 }));
 
-export const buttonIconClass = css(({ devices }) => ({
+export const buttonIconClass = style(({ devices }) => ({
   display: "inline-block",
   height: 20,
 

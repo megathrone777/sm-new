@@ -1,20 +1,20 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   alignItems: "center",
   display: "flex",
   justifyContent: "space-between",
   marginBottom: 15,
 });
 
-export const contentClass = css({
+export const contentClass = style({
   alignItems: "center",
   columnGap: 10,
   display: "flex",
   justifyContent: "flex-end",
 });
 
-export const titleClass = css(({ colors }) => ({
+export const titleClass = style(({ colors }) => ({
   color: "white",
   fontSize: 19,
 
@@ -24,7 +24,7 @@ export const titleClass = css(({ colors }) => ({
   },
 }));
 
-export const deleteButtonClass = css({
+export const deleteButtonClass = style({
   appearance: "none",
   background: "transparent",
   border: "none",

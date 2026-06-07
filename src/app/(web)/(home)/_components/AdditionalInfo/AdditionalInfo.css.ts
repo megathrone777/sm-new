@@ -1,8 +1,8 @@
 import { calc } from "@vanilla-extract/css-utils";
 
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   backgroundPosition: "center center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
@@ -16,12 +16,12 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   margin: "0 auto 40px",
   maxWidth: 1200,
 });
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   color: "white",
   fontSize: 30,
   fontWeight: fonts.bold,
@@ -40,7 +40,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const descriptionClass = css(({ devices, fonts }) => ({
+export const descriptionClass = style(({ devices, fonts }) => ({
   color: "white",
   fontFamily: "inherit",
   fontSize: 21,
@@ -55,7 +55,7 @@ export const descriptionClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   display: "flex",
   flexDirection: "column",
   paddingInline: 20,
@@ -73,7 +73,7 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const itemClass = css(({ colors, devices, fonts }) => ({
+export const itemClass = style(({ colors, devices, fonts }) => ({
   marginBottom: 40,
   maxWidth: "100%",
   position: "relative",
@@ -114,7 +114,7 @@ export const itemClass = css(({ colors, devices, fonts }) => ({
   },
 }));
 
-export const itemTitleClass = css(({ devices, fonts }) => ({
+export const itemTitleClass = style(({ devices, fonts }) => ({
   color: "white",
   fontSize: 24,
   fontWeight: fonts.bold,
@@ -133,7 +133,7 @@ export const itemTitleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const itemTextClass = css(({ colors }) => ({
+export const itemTextClass = style(({ colors }) => ({
   color: colors.grayLighter,
   fontFamily: "inherit",
   fontSize: 18,

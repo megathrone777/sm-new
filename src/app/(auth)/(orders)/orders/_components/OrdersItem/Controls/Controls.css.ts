@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const buttonClass = css(({ colors }) => ({
+export const buttonClass = style(({ colors }) => ({
   appearance: "none",
   backgroundColor: colors.greenLighter,
   border: "none",
@@ -15,7 +15,7 @@ export const buttonClass = css(({ colors }) => ({
     "&.done": { backgroundColor: "gray" },
     "&.new": { backgroundColor: "red" },
     "&.ready": { backgroundColor: colors.greenLighter },
-    "&.started": { backgroundColor: "#3b82f6" },
+    "&.started": { backgroundColor: colors.blue },
     "&.took": { backgroundColor: colors.yellow },
   },
   textTransform: "uppercase",
@@ -27,17 +27,16 @@ export const buttonClass = css(({ colors }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   columnGap: 15,
   display: "flex",
   marginBottom: 15,
-
   selectors: {
     "&.no-button": { justifyContent: "flex-end" },
   },
 });
 
-export const statusClass = css(({ colors }) => ({
+export const statusClass = style(({ colors }) => ({
   alignItems: "center",
   borderRadius: 4,
   display: "flex",

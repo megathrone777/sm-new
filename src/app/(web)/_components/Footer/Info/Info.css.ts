@@ -1,10 +1,10 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   marginBottom: 25,
 });
 
-export const contactListClass = css(({ devices }) => ({
+export const contactListClass = style(({ devices }) => ({
   columnGap: 15,
   display: "grid",
   gridAutoFlow: "column",
@@ -17,7 +17,7 @@ export const contactListClass = css(({ devices }) => ({
   },
 }));
 
-export const contactItemClass = cssVariant(
+export const contactItemClass = styleVariants(
   {
     instagram: {
       backgroundPositionY: 0,
@@ -60,7 +60,7 @@ export const contactItemClass = cssVariant(
   ],
 );
 
-export const contactLinkClass = css(({ devices }) => ({
+export const contactLinkClass = style(({ devices }) => ({
   color: "white",
   display: "block",
   height: "100%",
@@ -76,12 +76,12 @@ export const contactLinkClass = css(({ devices }) => ({
   },
 }));
 
-export const itemClass = css({
+export const itemClass = style({
   marginBottom: 17,
   textAlign: "center",
 });
 
-export const linkClass = css(({ devices }) => ({
+export const linkClass = style(({ devices }) => ({
   color: "white",
   display: "inline-block",
 
@@ -94,7 +94,7 @@ export const linkClass = css(({ devices }) => ({
   },
 }));
 
-export const emailClass = css(({ devices }) => ({
+export const emailClass = style(({ devices }) => ({
   color: "white",
   display: "inline-block",
   fontSize: 14,
@@ -110,12 +110,12 @@ export const emailClass = css(({ devices }) => ({
   },
 }));
 
-export const textClass = css({
+export const textClass = style({
   color: "white",
   fontSize: 14,
   marginBottom: 8,
 });
 
-export const infoClass = css({
+export const infoClass = style({
   paddingTop: 17,
 });

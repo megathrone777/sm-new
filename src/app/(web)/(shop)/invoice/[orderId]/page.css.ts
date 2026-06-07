@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const pageClass = css(({ fonts }) => ({
+export const pageClass = style(({ fonts }) => ({
   backgroundColor: "white",
   color: "black",
   fontSize: 15,
@@ -10,7 +10,7 @@ export const pageClass = css(({ fonts }) => ({
   paddingInline: 40,
 }));
 
-export const printBarClass = css({
+export const printBarClass = style({
   alignItems: "center",
   display: "flex",
   gap: 10,
@@ -24,42 +24,42 @@ export const printBarClass = css({
   },
 });
 
-export const headerClass = css({
+export const headerClass = style({
   alignItems: "flex-start",
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   marginBottom: 24,
 });
 
-export const invoiceTitleClass = css({
+export const invoiceTitleClass = style({
   fontSize: 16,
   fontWeight: "bold",
   marginBottom: 4,
   textAlign: "right",
 });
 
-export const invoiceSubtitleClass = css({
-  color: "#555",
+export const invoiceSubtitleClass = style(({ colors }) => ({
+  color: colors.grayDarkest,
   fontSize: 11,
   textAlign: "right",
-});
+}));
 
-export const labelClass = css({
+export const labelClass = style({
   fontWeight: "bold",
   marginBottom: 6,
 });
 
-export const partyGridClass = css({
+export const partyGridClass = style({
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
   marginBottom: 24,
 });
 
-export const partyClass = css({
+export const partyClass = style({
   lineHeight: 1.7,
 });
 
-export const metaGridClass = css({
+export const metaGridClass = style({
   borderBottom: "1px solid #ddd",
   borderTop: "1px solid #ddd",
   display: "grid",
@@ -68,72 +68,72 @@ export const metaGridClass = css({
   paddingBlock: 10,
 });
 
-export const metaKeyClass = css({
-  color: "#555",
+export const metaKeyClass = style(({ colors }) => ({
+  color: colors.grayDarkest,
   display: "inline-block",
   fontStyle: "italic",
   marginRight: 4,
   minWidth: 140,
-});
+}));
 
-export const tableClass = css({
+export const tableClass = style({
   borderCollapse: "collapse",
   marginBottom: 24,
   width: "100%",
 });
 
-export const theadClass = css({
-  backgroundColor: "#f5f5f5",
+export const theadClass = style(({ colors }) => ({
+  backgroundColor: colors.whiteLighter,
   borderBottom: "2px solid #333",
-});
+}));
 
-export const thClass = css({
+export const thClass = style({
   fontSize: 11,
   padding: "6px 8px",
   textAlign: "left",
   whiteSpace: "nowrap",
 });
 
-export const thRightClass = css({
+export const thRightClass = style({
   fontSize: 11,
   padding: "6px 8px",
   textAlign: "right",
   whiteSpace: "nowrap",
 });
 
-export const tdClass = css({
+export const tdClass = style({
   borderBottom: "1px solid #eee",
   padding: "6px 8px",
   verticalAlign: "top",
 });
 
-export const tdRightClass = css({
+export const tdRightClass = style({
   borderBottom: "1px solid #eee",
   padding: "6px 8px",
   textAlign: "right",
   verticalAlign: "top",
 });
 
-export const totalRowClass = css({
+export const totalRowClass = style({
   borderTop: "2px solid #333",
 });
 
-export const totalLabelClass = css({
+export const totalLabelClass = style({
   fontWeight: "bold",
   padding: "8px",
   textAlign: "right",
 });
 
-export const totalAmountClass = css({
+export const totalAmountClass = style({
   fontSize: 15,
   fontWeight: "bold",
   padding: "8px",
   textAlign: "right",
 });
 
-export const footerClass = css({
-  color: "#777",
+export const footerClass = style(({ colors }) => ({
+  color: colors.grayDarkest,
   fontSize: 10,
   marginTop: 40,
   textAlign: "center",
-});
+}));

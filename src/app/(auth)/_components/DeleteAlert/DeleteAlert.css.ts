@@ -1,16 +1,16 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style(({ colors }) => ({
   alignItems: "center",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  backgroundColor: rgba(colors.black, 0.5),
   display: "grid",
   inset: 0,
   justifyContent: "center",
   position: "fixed",
   zIndex: 101,
-});
+}));
 
-export const confirmClass = css(({ colors }) => ({
+export const confirmClass = style(({ colors }) => ({
   backgroundColor: colors.white,
   borderRadius: 8,
   display: "grid",
@@ -20,13 +20,13 @@ export const confirmClass = css(({ colors }) => ({
   width: "100%",
 }));
 
-export const confirmTextClass = css(({ fonts }) => ({
+export const confirmTextClass = style(({ fonts }) => ({
   fontSize: 16,
   fontWeight: fonts.bold,
   textAlign: "center",
 }));
 
-export const confirmActionsClass = css({
+export const confirmActionsClass = style({
   display: "flex",
   gap: 8,
   justifyContent: "center",

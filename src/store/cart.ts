@@ -95,9 +95,7 @@ const cart = {
     const { additionals, cutlery, delivery, products, promo, time, tips, ...cartRest } =
       data as unknown as TCart & { delivery: TDelivery & { time?: TSelectOption } };
     const legacyDeliveryTime = (delivery as { time?: TSelectOption }).time;
-    const { time: _legacyTime, ...deliveryWithoutTime } = delivery as TDelivery & {
-      time?: TSelectOption;
-    };
+    const { time: _legacyTime, ...deliveryWithoutTime } = delivery;
     const resolvedTime: TSelectOption = time ??
       legacyDeliveryTime ?? { label: "Doručit teď", value: null };
     const { cutleryPrice } = await shop.getSettings();
@@ -110,7 +108,7 @@ const cart = {
       ...deliveryWithoutTime,
       conditions: delivery.conditions,
       type: delivery.type,
-    } as TDelivery);
+    });
 
     const subtotal: number =
       productsPrice +

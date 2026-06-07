@@ -98,17 +98,18 @@ const makeOrder = (overrides: Partial<TOrder> = {}): TOrder => ({
 
 beforeEach(() => {
   jest.clearAllMocks();
-  jest.mocked(store.cart.getOrCreateSessionId).mockResolvedValue("session-abc" as never);
-  jest.mocked(store.orders.getById).mockResolvedValue(makeOrder() as never);
+  jest.mocked(store.cart.getOrCreateSessionId).mockResolvedValue("session-abc");
+  jest.mocked(store.orders.getById).mockResolvedValue(makeOrder());
+
   jest.mocked(store.products.getAllRaw).mockResolvedValue({
     "product-a": makeProduct(),
-  } as never);
+  });
 });
 
 describe("repeatOrder", () => {
   describe("authorization", () => {
     it("returns an error when there is no session", async () => {
-      jest.mocked(store.cart.getOrCreateSessionId).mockResolvedValue(null as never);
+      jest.mocked(store.cart.getOrCreateSessionId).mockResolvedValue("");
 
       const result = await repeatOrder(42);
 
@@ -119,7 +120,7 @@ describe("repeatOrder", () => {
 
   describe("order validation", () => {
     it("returns an error when the order does not exist", async () => {
-      jest.mocked(store.orders.getById).mockResolvedValue(null as never);
+      jest.mocked(store.orders.getById).mockResolvedValue(null);
 
       const result = await repeatOrder(999);
 
@@ -128,7 +129,7 @@ describe("repeatOrder", () => {
     });
 
     it("returns an error when the order has no products", async () => {
-      jest.mocked(store.orders.getById).mockResolvedValue(makeOrder({ products: [] }) as never);
+      jest.mocked(store.orders.getById).mockResolvedValue(makeOrder({ products: [] }));
 
       const result = await repeatOrder(42);
 
@@ -139,7 +140,7 @@ describe("repeatOrder", () => {
     it("returns an error when a product is no longer available", async () => {
       jest.mocked(store.products.getAllRaw).mockResolvedValue({
         "product-a": makeProduct({ isAvailable: false }),
-      } as never);
+      });
 
       const result = await repeatOrder(42);
 
@@ -149,7 +150,7 @@ describe("repeatOrder", () => {
     });
 
     it("returns an error when a product has been removed from the menu", async () => {
-      jest.mocked(store.products.getAllRaw).mockResolvedValue({} as never);
+      jest.mocked(store.products.getAllRaw).mockResolvedValue({});
 
       const result = await repeatOrder(42);
 
@@ -179,7 +180,7 @@ describe("repeatOrder", () => {
     it("recalculates totalPrice using current product price", async () => {
       jest.mocked(store.products.getAllRaw).mockResolvedValue({
         "product-a": makeProduct({ price: 250 }),
-      } as never);
+      });
 
       await repeatOrder(42);
 
@@ -202,7 +203,7 @@ describe("repeatOrder", () => {
       jest.mocked(store.orders.getById).mockResolvedValue(
         makeOrder({
           products: [makeOrderProduct({ modifiers: [modifier], quantity: 1, totalPrice: 230 })],
-        }) as never,
+        }),
       );
 
       await repeatOrder(42);

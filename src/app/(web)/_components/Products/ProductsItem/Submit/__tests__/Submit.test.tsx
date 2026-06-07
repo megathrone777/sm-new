@@ -109,6 +109,7 @@ describe("Submit (products list add-to-cart)", () => {
 
       await act(async () => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(validateNewProduct).toHaveBeenCalledWith(
@@ -121,6 +122,7 @@ describe("Submit (products list add-to-cart)", () => {
 
       await act(async () => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(toast).toHaveBeenCalledWith("Přidáno", { type: "success" });
@@ -129,11 +131,11 @@ describe("Submit (products list add-to-cart)", () => {
 
     it("shows an error toast but does NOT call addToCart when validation fails", async () => {
       jest.mocked(validateNewProduct).mockResolvedValue({ message: "Chyba", type: "error" });
-
       render(<Submit {...baseProduct} />);
 
       await act(async () => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(toast).toHaveBeenCalledWith("Chyba", { type: "error" });
@@ -143,12 +145,13 @@ describe("Submit (products list add-to-cart)", () => {
     it("dispatches the shop-closed event and skips the toast when shop is closed", async () => {
       jest
         .mocked(validateNewProduct)
-        .mockResolvedValue({ message: SHOP_CLOSED_MESSAGE as string, type: "error" });
+        .mockResolvedValue({ message: SHOP_CLOSED_MESSAGE, type: "error" });
 
       render(<Submit {...baseProduct} />);
 
       await act(async () => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(dispatchShopClosed).toHaveBeenCalled();

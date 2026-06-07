@@ -19,7 +19,7 @@ const FormLayout: React.FC<TProps> = ({ children, errors, gridTemplateAreas }) =
   const [, action] = useActionState(validateAndSubmitCart, null);
 
   const handleFormBlur = ({ currentTarget }: React.FocusEvent<HTMLFormElement>): void => {
-    saveCartFields(new FormData(currentTarget));
+    void saveCartFields(new FormData(currentTarget));
   };
 
   const handleFormChange = ({
@@ -29,13 +29,13 @@ const FormLayout: React.FC<TProps> = ({ children, errors, gridTemplateAreas }) =
     const input = target as HTMLInputElement;
 
     if (input.name === "deliveryType") {
-      updateDeliveryType(new FormData(currentTarget));
+      void updateDeliveryType(new FormData(currentTarget));
 
       return;
     }
 
     if (input.name === "payment") {
-      updatePaymentType(new FormData(currentTarget));
+      void updatePaymentType(new FormData(currentTarget));
     }
   };
 

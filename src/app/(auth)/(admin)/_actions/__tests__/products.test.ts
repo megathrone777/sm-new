@@ -87,9 +87,9 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.products.set).mockResolvedValue(undefined as never);
+  jest.mocked(store.products.set).mockResolvedValue(undefined);
   jest.mocked(store.products.getAll).mockResolvedValue([] as never);
-  jest.mocked(store.products.getBySlug).mockResolvedValue(makeProduct() as never);
+  jest.mocked(store.products.getBySlug).mockResolvedValue(makeProduct());
   jest.mocked(store.modifiers.getAll).mockResolvedValue([] as never);
   jest.mocked(store.categories.getAll).mockResolvedValue([makeCategory()] as never);
 });
@@ -97,7 +97,7 @@ beforeEach(() => {
 describe("createProduct", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createProduct(null, makeFormData());
 
@@ -214,7 +214,7 @@ describe("updateProduct", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateProduct(null, fd());
 
@@ -224,7 +224,7 @@ describe("updateProduct", () => {
 
   describe("validation", () => {
     it("returns error when product slug is not found", async () => {
-      jest.mocked(store.products.getBySlug).mockResolvedValue(null as never);
+      jest.mocked(store.products.getBySlug).mockResolvedValue(null);
 
       const result = await updateProduct(null, fd({ slug: "ghost-product" }));
 
@@ -259,7 +259,7 @@ describe("updateProduct", () => {
       jest
         .mocked(store.products.getBySlug)
         .mockResolvedValue(
-          makeProduct({ imageUrl: "https://blob.vercel-storage.com/old.jpg" }) as never,
+          makeProduct({ imageUrl: "https://blob.vercel-storage.com/old.jpg" }),
         );
 
       await updateProduct(null, fd());

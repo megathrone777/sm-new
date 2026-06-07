@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   backgroundImage: "url('/images/products_bg.jpg')",
   backgroundSize: "50% auto",
   borderTop: `3px solid ${colors.red}`,
@@ -16,7 +16,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const titleClass = css(({ devices }) => ({
+export const titleClass = style(({ devices }) => ({
   fontSize: 28,
   fontWeight: "700",
   letterSpacing: 1,
@@ -30,7 +30,7 @@ export const titleClass = css(({ devices }) => ({
   },
 }));
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   justifyContent: "stretch",
@@ -55,56 +55,49 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const itemClass = css(({ devices }) => ({
+export const itemClass = style(({ colors }) => ({
   backgroundColor: "white",
   borderRadius: 15,
-  boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
+  boxShadow: `0 0 10px 0 ${rgba(colors.black, 0.1)}`,
   maxWidth: 380,
   paddingBlock: "35px 30px",
   width: "100%",
-
-  "@media": {
-    [devices.tablet]: {
-      // maxWidth: "none",
-      // width: "auto",
-    },
-  },
 }));
 
-export const textClass = css({
+export const textClass = style({
   fontWeight: "500",
   marginBottom: 15,
   textAlign: "center",
 });
 
-export const countClass = css({
+export const countClass = style({
   fontWeight: "500",
   marginBottom: 5,
   textAlign: "center",
 });
 
-export const linkClass = css({
-  color: "#da2629",
+export const linkClass = style(({ colors }) => ({
+  color: colors.red,
   fontSize: 18,
   fontWeight: "500",
 
   ":hover": {
     textDecoration: "underline",
   },
-});
+}));
 
-export const buttonsClass = css({
+export const buttonsClass = style({
   display: "flex",
   justifyContent: "center",
 });
 
-export const imageClass = css({
+export const imageClass = style({
   marginBottom: 10,
   marginInline: "auto",
   maxHeight: 100,
 });
 
-export const starsHelperClass = css({
+export const starsHelperClass = style({
   backgroundImage: "url('/images/rating_img.jpg')",
   backgroundPositionX: "center",
   backgroundRepeat: "no-repeat",

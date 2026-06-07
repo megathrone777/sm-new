@@ -1,13 +1,13 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   height: 96,
   marginBottom: 50,
   marginInline: "auto",
   width: 98,
 });
 
-export const linkClass = css({
+export const linkClass = style({
   cursor: "pointer",
   display: "block",
   height: "100%",
@@ -18,7 +18,7 @@ export const linkClass = css({
   },
 });
 
-export const imageClass = css({
+export const imageClass = style({
   height: "auto",
   width: "100%",
 });

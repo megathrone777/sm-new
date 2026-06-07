@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ colors }) => ({
+export const wrapperClass = style(({ colors }) => ({
   alignContent: "center",
   alignItems: "center",
   borderBottom: `2px solid ${colors.red}`,
@@ -13,12 +13,12 @@ export const wrapperClass = css(({ colors }) => ({
   position: "relative",
 }));
 
-export const inputWrapperClass = css({
+export const inputWrapperClass = style({
   position: "relative",
   zIndex: 11,
 });
 
-export const inputClass = cssVariant(
+export const inputClass = styleVariants(
   ({ colors }) => ({
     default: {
       color: colors.black,
@@ -81,7 +81,7 @@ export const inputClass = cssVariant(
   ],
 );
 
-export const placeholderClass = css(({ colors, fonts }) => ({
+export const placeholderClass = style(({ colors, fonts }) => ({
   color: colors.gray,
   fontFamily: "inherit",
   fontSize: 16,
@@ -93,7 +93,7 @@ export const placeholderClass = css(({ colors, fonts }) => ({
   position: "absolute",
 }));
 
-export const errorIconClass = css(({ colors }) => ({
+export const errorIconClass = style(({ colors }) => ({
   color: colors.red,
   display: "block",
   height: 20,
@@ -106,75 +106,3 @@ export const errorIconClass = css(({ colors }) => ({
   },
   width: 20,
 }));
-
-// export const popupClass = css(({ colors, fonts }) => ({
-//   ".rc-select-item-empty": {
-//     fontSize: "15px",
-//     fontWeight: fonts.medium,
-//     paddingBlock: "4px",
-//     textAlign: "center",
-//   },
-
-//   ".rc-select-item-option": {
-//     alignItems: "center",
-//     cursor: "pointer",
-//     display: "grid",
-//     fontSize: "15px",
-//     fontWeight: fonts.bold,
-//     gridAutoFlow: "column",
-//     justifySelf: "start",
-//     lineHeight: "38px",
-//     overflow: "hidden",
-//     paddingBlock: 0,
-//     position: "relative",
-//     userSelect: "none",
-//     whiteSpace: "nowrap",
-//     width: "100%",
-
-//     "&.rc-select-item-option-selected": {
-//       backgroundColor: "rgba(0, 0, 0, .1)",
-//     },
-
-//     ":hover": {
-//       backgroundColor: "rgba(0, 0, 0, .1)",
-//     },
-//   },
-
-//   ".rc-select-item-option-content": {
-//     paddingLeft: "8px",
-
-//     ":hover": {
-//       backgroundColor: "transparent",
-//     },
-//   },
-
-//   ".rc-select-item-option .rc-select-item-option-state": {
-//     alignItems: "center",
-//     display: "grid",
-//     justifyContent: "center",
-//     pointerEvents: "none",
-//     position: "absolute",
-//     right: "16px",
-//     top: "50%",
-//     transform: "translateY(-50%)",
-//   },
-
-//   ".rc-select-selection-item-remove": {
-//     cursor: "pointer",
-//     height: "18px",
-//     width: "18px",
-//   },
-
-//   backgroundColor: "white",
-//   border: `2px solid ${colors.red}`,
-//   borderRadius: "6px",
-//   minWidth: "280px",
-//   overflow: "hidden",
-//   position: "absolute",
-//   width: "280px",
-//   zIndex: 100,
-
-//   "&.rc-select-dropdown-hidden": {
-//     opacity: 0,
-//   },
-// }));

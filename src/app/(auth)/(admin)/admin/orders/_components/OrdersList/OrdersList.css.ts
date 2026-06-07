@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const headerClass = css(({ fonts }) => ({
+export const headerClass = style(({ fonts }) => ({
   display: "grid",
   fontWeight: fonts.bold,
   gridAutoFlow: "column",
@@ -10,12 +10,12 @@ export const headerClass = css(({ fonts }) => ({
   paddingLeft: 10,
 }));
 
-export const listClass = css({
+export const listClass = style({
   display: "grid",
   gridAutoFlow: "row",
 });
 
-export const itemClass = css(({ colors }) => ({
+export const itemClass = style(({ colors }) => ({
   alignItems: "center",
   borderBottom: `2px solid ${colors.grayLighter}`,
   columnGap: 5,
@@ -26,7 +26,7 @@ export const itemClass = css(({ colors }) => ({
   paddingRight: 7,
 }));
 
-export const linkClass = css(({ colors, fonts }) => ({
+export const linkClass = style(({ colors, fonts }) => ({
   alignItems: "center",
   color: colors.black,
   display: "grid",
@@ -39,6 +39,6 @@ export const linkClass = css(({ colors, fonts }) => ({
   paddingLeft: 10,
 
   ":hover": {
-    backgroundColor: "rgba(0, 0, 0, .1)",
+    backgroundColor: rgba(colors.black, 0.1),
   },
 }));

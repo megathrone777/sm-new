@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   backgroundColor: "white",
   borderRight: `1px solid ${colors.grayDarkest}`,
   bottom: 0,
@@ -30,7 +30,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const openClass = css(({ devices }) => ({
+export const openClass = style(({ devices }) => ({
   transform: "translateX(0)",
 
   "@media": {
@@ -40,11 +40,11 @@ export const openClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   position: "relative",
 });
 
-export const itemClass = css(({ colors }) => ({
+export const itemClass = style(({ colors }) => ({
   borderBottom: `2px solid ${colors.grayDarkest}`,
 
   ":last-of-type": {
@@ -52,7 +52,7 @@ export const itemClass = css(({ colors }) => ({
   },
 }));
 
-export const linkClass = cssVariant(
+export const linkClass = styleVariants(
   ({ colors }) => ({
     default: colors.black,
     isActive: colors.red,
@@ -76,7 +76,7 @@ export const linkClass = cssVariant(
   ],
 );
 
-export const dividerClass = css(({ colors }) => ({
+export const dividerClass = style(({ colors }) => ({
   backgroundColor: colors.red,
   border: "none",
   display: "block",

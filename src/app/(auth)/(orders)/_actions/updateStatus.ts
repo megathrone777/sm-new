@@ -16,7 +16,7 @@ const updateStatus = async (id: TOrder["id"], status: TOrderStatus): Promise<voi
   await store.orders.update(id, { status });
   revalidatePath("/orders");
   after(async (): Promise<void> => {
-    realtime.emit("orderStatusChanged", { id, status, updatedAt: Date.now() });
+    void realtime.emit("orderStatusChanged", { id, status, updatedAt: Date.now() });
     await sendOrderStatusSms(order, status);
   });
 };

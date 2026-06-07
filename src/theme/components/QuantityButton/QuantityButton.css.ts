@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const buttonClass = css({
+export const buttonClass = style({
   alignItems: "center",
   background: "none",
   border: "2px solid currentColor",
@@ -19,6 +19,6 @@ export const buttonClass = css({
   },
 });
 
-export const iconClass = css({
+export const iconClass = style({
   width: 14,
 });

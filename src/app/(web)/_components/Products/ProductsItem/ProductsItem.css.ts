@@ -1,10 +1,10 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css(({ animations, devices, easing }) => ({
+export const wrapperClass = style(({ animations, colors, devices, easing }) => ({
   animation: `${animations.fadeIn} .35s ${easing} forwards`,
   backgroundColor: "white",
   borderRadius: 15,
-  boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
+  boxShadow: `0 0 10px 0 ${rgba(colors.black, 0.5)}`,
   display: "grid",
   gridAutoFlow: "row",
   overflow: "hidden",
@@ -23,7 +23,7 @@ export const wrapperClass = css(({ animations, devices, easing }) => ({
   },
 }));
 
-export const linkClass = css(({ colors, devices }) => ({
+export const linkClass = style(({ colors, devices }) => ({
   color: colors.black,
   display: "grid",
   gridAutoFlow: "row",
@@ -43,7 +43,7 @@ export const linkClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const imageHolderClass = css(({ devices }) => ({
+export const imageHolderClass = style(({ devices }) => ({
   borderRadius: "15px 15px 0 0",
   height: 180,
   overflow: "hidden",
@@ -71,7 +71,7 @@ export const imageHolderClass = css(({ devices }) => ({
   },
 }));
 
-export const imageClass = css(({ easing }) => ({
+export const imageClass = style(({ easing }) => ({
   objectFit: "cover",
   selectors: {
     [`${imageHolderClass}:hover > &`]: {
@@ -81,7 +81,7 @@ export const imageClass = css(({ easing }) => ({
   transition: `transform .5s ${easing}`,
 }));
 
-export const contentClass = css(({ devices }) => ({
+export const contentClass = style(({ devices }) => ({
   minHeight: 140,
   padding: "9px 6px 20px",
 
@@ -100,7 +100,7 @@ export const contentClass = css(({ devices }) => ({
   },
 }));
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   fontSize: 20,
   fontWeight: fonts.bold,
   marginBottom: 9,
@@ -120,7 +120,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const textClass = css(({ colors, devices }) => ({
+export const textClass = style(({ colors, devices }) => ({
   color: colors.gray,
   fontSize: 14,
   marginBottom: 3,
@@ -146,7 +146,7 @@ export const textClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const actionsClass = css(({ devices }) => ({
+export const actionsClass = style(({ devices }) => ({
   alignContent: "stretch",
   alignItems: "center",
   display: "grid",
@@ -174,7 +174,7 @@ export const actionsClass = css(({ devices }) => ({
   },
 }));
 
-export const priceClass = css(({ devices, fonts }) => ({
+export const priceClass = style(({ devices, fonts }) => ({
   fontSize: 22,
   fontWeight: fonts.medium,
   whiteSpace: "nowrap",
@@ -186,7 +186,7 @@ export const priceClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const placeholderClass = css(({ colors, devices }) => ({
+export const placeholderClass = style(({ colors, devices }) => ({
   color: colors.red,
   fontSize: 14,
   paddingRight: 10,

@@ -2,7 +2,7 @@ import React from "react";
 import { notFound, redirect } from "next/navigation";
 
 import { markOrderCancelled, markOrderPaid } from "@/app/(web)/_actions";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Button, Container } from "@/ui";
 
@@ -17,7 +17,6 @@ import {
 
 const Page: React.FC<PageProps<"/payment-gateway/[id]">> = async ({ params }) => {
   const { id } = await params;
-  const { t } = useTranslation();
   const order = await store.orders.getById(+id);
 
   if (!order) return notFound();
@@ -31,7 +30,7 @@ const Page: React.FC<PageProps<"/payment-gateway/[id]">> = async ({ params }) =>
           <h2 className={titleClass}>Payment gateway</h2>
 
           <p className={summaryClass}>
-            #{id} — {order.totalPrice} {t<string>("currency")}
+            #{id} — {order.totalPrice} {getTranslation<string>("currency")}
           </p>
 
           <p className={hintClass}>

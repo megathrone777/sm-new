@@ -41,13 +41,13 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.shop.setSettings).mockResolvedValue(undefined as never);
+  jest.mocked(store.shop.setSettings).mockResolvedValue(undefined);
 });
 
 describe("updateSettings", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateSettings(null, makeFormData());
 
@@ -102,7 +102,7 @@ describe("updateSettings", () => {
       await updateSettings(null, makeFormData({ cutleryPrice: "12.5" }));
 
       const [patch] = jest.mocked(store.shop.setSettings).mock.calls[0] as [
-        Partial<TShopSettings>,
+        Partial<TShopSettings>
       ];
 
       expect(patch.cutleryPrice).toBe(12.5);
@@ -115,7 +115,7 @@ describe("updateSettings", () => {
       await updateSettings(null, formData);
 
       const [patch] = jest.mocked(store.shop.setSettings).mock.calls[0] as [
-        Partial<TShopSettings>,
+        Partial<TShopSettings>
       ];
 
       expect(patch.isAvailable).toBe(true);
@@ -125,7 +125,7 @@ describe("updateSettings", () => {
       await updateSettings(null, makeFormData());
 
       const [patch] = jest.mocked(store.shop.setSettings).mock.calls[0] as [
-        Partial<TShopSettings>,
+        Partial<TShopSettings>
       ];
 
       expect(patch.isAvailable).toBe(false);

@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   alignItems: "center",
   columnGap: 6,
   display: "grid",
@@ -23,7 +23,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const nameClass = css(({ devices, fonts }) => ({
+export const nameClass = style(({ devices, fonts }) => ({
   fontSize: 14,
   fontWeight: fonts.bold,
 
@@ -39,7 +39,7 @@ export const nameClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const priceClass = css(({ devices, fonts }) => ({
+export const priceClass = style(({ devices, fonts }) => ({
   fontSize: 16,
   fontWeight: fonts.bold,
   textAlign: "center",

@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   marginBottom: 14,
 
   "@media": {
@@ -14,7 +14,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   alignItems: "center",
   display: "grid",
   gridAutoFlow: "row",
@@ -33,7 +33,7 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const linkClass = cssVariant(
+export const linkClass = styleVariants(
   ({ colors }) => ({
     active: colors.red,
     default: "white",

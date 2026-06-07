@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   height: 100,
   insetInline: 0,
   position: "absolute",
@@ -14,7 +14,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   alignItems: "start",
   display: "grid",
   gridAutoFlow: "column",

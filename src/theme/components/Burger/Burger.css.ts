@@ -1,6 +1,6 @@
-import { cssVariant } from "@/theme";
+import { styleVariants } from "@/theme";
 
-export const buttonClass = cssVariant(
+export const buttonClass = styleVariants(
   {
     default: "rotate(0deg)",
     isOpened: "rotate(-45deg)",
@@ -25,7 +25,7 @@ export const buttonClass = cssVariant(
   ],
 );
 
-export const lineClass = cssVariant(
+export const lineClass = styleVariants(
   {
     left: {
       alignSelf: "auto",

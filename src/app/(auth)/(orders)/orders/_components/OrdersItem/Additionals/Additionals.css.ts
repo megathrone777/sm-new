@@ -1,14 +1,14 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   marginBottom: 15,
 });
 
-export const listClass = css({
+export const listClass = style({
   marginBlock: 0,
 });
 
-export const itemClass = css({
+export const itemClass = style({
   display: "block",
   fontSize: 15,
   marginBottom: 5,

@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   display: "grid",
   gridAutoFlow: "row",
   marginBottom: 8,
@@ -8,13 +8,13 @@ export const listClass = css({
   rowGap: 8,
 });
 
-export const titleClass = css(({ fonts }) => ({
+export const titleClass = style(({ fonts }) => ({
   fontSize: 17,
   fontWeight: fonts.demi,
   marginBottom: 7,
 }));
 
-export const modifierClass = css(({ fonts }) => ({
+export const modifierClass = style(({ fonts }) => ({
   fontSize: 16,
   fontWeight: fonts.medium,
   lineHeight: "1.2",
@@ -26,7 +26,7 @@ export const modifierClass = css(({ fonts }) => ({
   },
 }));
 
-export const subModifierClass = css(({ fonts }) => ({
+export const subModifierClass = style(({ fonts }) => ({
   display: "block",
   fontSize: 15,
   fontWeight: fonts.normal,
@@ -39,7 +39,7 @@ export const subModifierClass = css(({ fonts }) => ({
   },
 }));
 
-export const quantityClass = css({
+export const quantityClass = style({
   display: "inline-block",
   paddingLeft: 5,
 });

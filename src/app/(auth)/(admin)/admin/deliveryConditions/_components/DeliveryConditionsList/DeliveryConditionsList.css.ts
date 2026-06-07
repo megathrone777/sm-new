@@ -1,18 +1,18 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   display: "grid",
   gridAutoFlow: "row",
   marginBottom: 30,
   rowGap: 16,
 });
 
-export const itemClass = css({
+export const itemClass = style({
   borderBottom: "1px solid #eee",
   paddingBottom: 12,
 });
 
-export const rowClass = css({
+export const rowClass = style({
   alignItems: "end",
   columnGap: 10,
   display: "grid",
@@ -20,7 +20,7 @@ export const rowClass = css({
   gridTemplateColumns: "1fr auto",
 });
 
-export const editFormClass = css({
+export const editFormClass = style({
   alignItems: "end",
   columnGap: 10,
   display: "grid",
@@ -28,7 +28,7 @@ export const editFormClass = css({
   gridTemplateColumns: "1.5fr 1fr 1fr 1fr 1fr 1.5fr",
 });
 
-export const linkClass = css({
+export const linkClass = style({
   display: "inline-block",
   height: 38,
 });

@@ -48,14 +48,14 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.modifiers.set).mockResolvedValue(undefined as never);
+  jest.mocked(store.modifiers.set).mockResolvedValue(undefined);
   jest.mocked(redis.pipeline).mockReturnValue(makePipeline() as never);
 });
 
 describe("createModifier", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createModifier(null, makeFormData());
 
@@ -164,7 +164,7 @@ describe("updateModifier", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateModifier(null, formData());
 

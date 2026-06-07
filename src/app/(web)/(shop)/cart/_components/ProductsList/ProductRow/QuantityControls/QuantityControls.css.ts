@@ -1,12 +1,12 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const priceClass = css(({ fonts }) => ({
+export const priceClass = style(({ fonts }) => ({
   fontSize: 20,
   fontWeight: fonts.bold,
   whiteSpace: "nowrap",
 }));
 
-export const removeButtonClass = css(({ colors, devices, fonts }) => ({
+export const removeButtonClass = style(({ colors, devices, fonts }) => ({
   background: "none",
   border: "none",
   color: colors.red,
@@ -26,20 +26,20 @@ export const removeButtonClass = css(({ colors, devices, fonts }) => ({
   },
 }));
 
-export const quantityClass = css({
+export const quantityClass = style({
   alignItems: "center",
   columnGap: 20,
   display: "grid",
   gridAutoFlow: "column",
 });
 
-export const quantityAmountClass = css(({ fonts }) => ({
+export const quantityAmountClass = style(({ fonts }) => ({
   fontSize: 18,
   fontWeight: fonts.bold,
   userSelect: "none",
 }));
 
-export const optionsClass = css(({ devices }) => ({
+export const optionsClass = style(({ devices }) => ({
   textAlign: "center",
 
   "@media": {

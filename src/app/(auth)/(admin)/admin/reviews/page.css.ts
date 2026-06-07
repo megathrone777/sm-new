@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const layoutClass = css({
+export const layoutClass = style({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 40,

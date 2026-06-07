@@ -1,7 +1,7 @@
 import { keyframes } from "@vanilla-extract/css";
 import { calc } from "@vanilla-extract/css-utils";
 
-import { css, cssVariant, globalStyle } from "@/theme";
+import { globalStyle, rgba, style, styleVariants } from "@/theme";
 
 const slideInUp = keyframes({
   "0%": { opacity: 0, transform: "translateY(100%)" },
@@ -13,7 +13,7 @@ const slideOutDown = keyframes({
   "100%": { opacity: 0, transform: "translateY(100%)" },
 });
 
-export const wrapperClass = css(({ devices, fonts }) => ({
+export const wrapperClass = style(({ devices, fonts }) => ({
   selectors: {
     "&.Toastify__toast-container": {
       alignContent: "end",
@@ -55,7 +55,7 @@ export const wrapperClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const closeButtonClass = css(({ devices }) => ({
+export const closeButtonClass = style(({ devices }) => ({
   appearance: "none",
   backgroundColor: "transparent",
   border: "none",
@@ -73,7 +73,7 @@ export const closeButtonClass = css(({ devices }) => ({
   },
 }));
 
-export const iconClass = cssVariant(
+export const iconClass = styleVariants(
   ({ colors }) => ({
     error: {
       backgroundColor: "white",
@@ -98,13 +98,13 @@ export const iconClass = cssVariant(
   ],
 );
 
-globalStyle(`${wrapperClass} > .Toastify__toast`, ({ devices, easing, fonts }) => ({
+globalStyle(`${wrapperClass} > .Toastify__toast`, ({ colors, devices, easing, fonts }) => ({
   alignItems: "center",
   animationDuration: "500ms",
   animationFillMode: "forwards",
   animationTimingFunction: easing,
   borderRadius: 3,
-  boxShadow: "0 3px 6px 0 rgba(0, 0, 0, 0.16)",
+  boxShadow: `0 3px 6px 0 ${rgba(colors.black, 0.16)}`,
   display: "grid",
   fontFamily: "inherit",
   fontSize: 16,

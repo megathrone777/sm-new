@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = cssVariant(
+export const wrapperClass = styleVariants(
   {
     "1": "repeat(1, 1fr)",
     "2": "repeat(2, 1fr)",
@@ -17,9 +17,9 @@ export const wrapperClass = cssVariant(
   ],
 );
 
-export const layoutClass = css({});
+export const layoutClass = style({});
 
-export const subModifiersClass = css(({ easing }) => ({
+export const subModifiersClass = style(({ easing }) => ({
   display: "grid",
   gridTemplateRows: "0fr",
   selectors: {
@@ -30,22 +30,22 @@ export const subModifiersClass = css(({ easing }) => ({
   transition: `grid-template-rows .25s ${easing}`,
 }));
 
-export const subModifiersLayoutClass = css({
+export const subModifiersLayoutClass = style({
   overflow: "hidden",
 });
 
-export const subListClass = css({
+export const subListClass = style({
   display: "grid",
   gridAutoFlow: "row",
   padding: "10px 0 10px 20px",
   rowGap: 10,
 });
 
-export const priceHolderClass = css({
+export const priceHolderClass = style({
   whiteSpace: "nowrap",
 });
 
-export const priceClass = css(({ colors }) => ({
+export const priceClass = style(({ colors }) => ({
   color: colors.red,
   whiteSpace: "nowrap",
 }));

@@ -44,7 +44,7 @@ const PromocodesList: React.FC = async () => {
               <span className={activeBadgeClass}>Active</span>
             ) : isScheduled ? (
               <span className={pendingBadgeClass}>
-                Scheduled: {new Date(promo.activatedAt!).toLocaleString()}
+                Scheduled: {new Date(promo.activatedAt).toLocaleString()}
               </span>
             ) : (
               <span className={inactiveBadgeClass}>Inactive</span>

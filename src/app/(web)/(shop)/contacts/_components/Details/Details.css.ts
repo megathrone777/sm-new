@@ -1,12 +1,12 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css(({ colors }) => ({
+export const wrapperClass = style(({ colors }) => ({
   backgroundColor: colors.whiteLighter,
   paddingBottom: 20,
   paddingTop: 40,
 }));
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   fontSize: 24,
   fontWeight: fonts.medium,
   marginBottom: 15,
@@ -20,7 +20,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   display: "grid",
   gap: 20,
   gridTemplateColumns: "1fr",
@@ -37,12 +37,12 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const buttonClass = css(({ colors, devices, easing, fonts }) => ({
+export const buttonClass = style(({ colors, devices, easing, fonts }) => ({
   alignItems: "center",
   backgroundColor: colors.red,
   border: "none",
   borderRadius: 5,
-  boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
+  boxShadow: `0 0 10px 0 ${rgba(colors.black, 0.5)}`,
   color: "white",
   display: "inline-grid",
   fontFamily: "inherit",
@@ -64,7 +64,7 @@ export const buttonClass = css(({ colors, devices, easing, fonts }) => ({
   },
 
   ":hover": {
-    boxShadow: "0 0 14px 0 rgba(218, 38, 40, 0.75)",
+    boxShadow: `0 0 14px 0 ${rgba(colors.red, 0.75)}`,
   },
 
   "@media": {
@@ -83,7 +83,7 @@ export const buttonClass = css(({ colors, devices, easing, fonts }) => ({
   },
 }));
 
-export const colClass = css(({ devices }) => ({
+export const colClass = style(({ devices }) => ({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -97,7 +97,7 @@ export const colClass = css(({ devices }) => ({
   },
 }));
 
-export const imageColClass = css(({ devices }) => ({
+export const imageColClass = style(({ devices }) => ({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -117,7 +117,7 @@ export const imageColClass = css(({ devices }) => ({
   },
 }));
 
-export const instagramColClass = css(({ devices }) => ({
+export const instagramColClass = style(({ devices }) => ({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -132,7 +132,7 @@ export const instagramColClass = css(({ devices }) => ({
   },
 }));
 
-export const scheduleClass = css({
+export const scheduleClass = style({
   fontSize: 20,
   lineHeight: "29px",
   marginBottom: 15,
@@ -140,7 +140,7 @@ export const scheduleClass = css({
   position: "relative",
 });
 
-export const scheduleIconClass = css({
+export const scheduleIconClass = style({
   height: 24,
   left: 3,
   maxWidth: 24,
@@ -148,7 +148,7 @@ export const scheduleIconClass = css({
   top: 3,
 });
 
-export const iconClass = css({
+export const iconClass = style({
   color: "black",
   display: "inline-flex",
   height: 27,
@@ -157,7 +157,7 @@ export const iconClass = css({
   verticalAlign: -7,
 });
 
-export const addressClass = css(({ devices }) => ({
+export const addressClass = style(({ devices }) => ({
   fontSize: 20,
   lineHeight: "27px",
   marginBottom: 15,
@@ -170,7 +170,7 @@ export const addressClass = css(({ devices }) => ({
   },
 }));
 
-export const addressLinkClass = css({
+export const addressLinkClass = style({
   color: "black",
   textDecoration: "none",
 
@@ -179,11 +179,11 @@ export const addressLinkClass = css({
   },
 });
 
-export const phoneClass = css({
+export const phoneClass = style({
   marginBottom: 15,
 });
 
-export const phoneLinkClass = css({
+export const phoneLinkClass = style({
   color: "black",
   display: "inline-block",
   fontSize: 20,
@@ -194,7 +194,7 @@ export const phoneLinkClass = css({
   },
 });
 
-export const emailClass = css({
+export const emailClass = style({
   color: "black",
   display: "inline-block",
   fontSize: 20,
@@ -206,13 +206,13 @@ export const emailClass = css({
   },
 });
 
-export const linksClass = css({
+export const linksClass = style({
   marginBottom: 25,
   minHeight: 40,
   mixBlendMode: "difference",
 });
 
-export const secondaryTitleClass = css(({ devices, fonts }) => ({
+export const secondaryTitleClass = style(({ devices, fonts }) => ({
   fontSize: 20,
   fontWeight: fonts.medium,
   marginBottom: 12,
@@ -225,7 +225,7 @@ export const secondaryTitleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const companyLineClass = css({
+export const companyLineClass = style({
   fontSize: 17,
   marginBottom: 10,
   selectors: {
@@ -235,20 +235,20 @@ export const companyLineClass = css({
   },
 });
 
-export const imageHolderClass = css({
+export const imageHolderClass = style({
   height: 450,
   position: "relative",
   textAlign: "center",
 });
 
-export const imageClass = css({
+export const imageClass = style({
   height: "100%",
   minWidth: 225,
   mixBlendMode: "multiply",
   width: "auto",
 });
 
-export const instagramTitleClass = css(({ fonts }) => ({
+export const instagramTitleClass = style(({ fonts }) => ({
   fontSize: 18,
   fontWeight: fonts.bold,
   textWrap: "balance",

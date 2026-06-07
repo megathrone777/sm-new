@@ -1,9 +1,11 @@
 import nextJest from "next/jest.js";
+
 import type { Config } from "jest";
 
 const createJestConfig = nextJest({ dir: "./" });
 
 const config: Config = {
+  detectOpenHandles: true,
   setupFiles: ["<rootDir>/jest.polyfills.ts"],
   setupFilesAfterEnv: ["<rootDir>/jest.setup.ts"],
   testEnvironment: "jest-environment-jsdom",
@@ -16,4 +18,4 @@ const config: Config = {
   transformIgnorePatterns: ["node_modules/(?!(uncrypto|@upstash/realtime|@upstash/redis)/)"],
 };
 
-module.exports = createJestConfig(config);
+export default createJestConfig(config);

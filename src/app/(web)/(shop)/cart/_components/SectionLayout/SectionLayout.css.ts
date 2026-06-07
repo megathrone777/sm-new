@@ -1,11 +1,11 @@
 import { createVar, fallbackVar } from "@vanilla-extract/css";
 
-import { css } from "@/theme";
+import { style } from "@/theme";
 
 export const gridAreaVar = createVar();
 export const orderVar = createVar();
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   order: fallbackVar(orderVar, "0"),
 
   "@media": {
@@ -15,7 +15,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const headerClass = css(({ colors, devices }) => ({
+export const headerClass = style(({ colors, devices }) => ({
   borderBottom: `3px solid ${colors.red}`,
   display: "grid",
   gridAutoFlow: "row",
@@ -32,13 +32,13 @@ export const headerClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const titleClass = css(({ colors, fonts }) => ({
+export const titleClass = style(({ colors, fonts }) => ({
   color: colors.black,
   fontSize: 20,
   fontWeight: fonts.bold,
 }));
 
-export const contentClass = css(({ devices }) => ({
+export const contentClass = style(({ devices }) => ({
   paddingBlock: 10,
   paddingInline: 5,
 

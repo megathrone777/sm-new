@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   alignContent: "start",
   alignItems: "stretch",
   display: "grid",

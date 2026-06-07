@@ -25,7 +25,7 @@ const sessions = {
 
     if (!data) return null;
 
-    return typeof data === "string" ? JSON.parse(data) : data;
+    return typeof data === "string" ? (JSON.parse(data) as TSessionData) : data;
   },
 
   set: async (

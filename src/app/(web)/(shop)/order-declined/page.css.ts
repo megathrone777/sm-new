@@ -1,10 +1,10 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   paddingBlock: 30,
 });
 
-export const layoutClass = css({
+export const layoutClass = style({
   display: "grid",
   gridAutoFlow: "row",
   justifyItems: "center",
@@ -12,7 +12,7 @@ export const layoutClass = css({
   textAlign: "center",
 });
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   fontSize: 24,
   fontWeight: fonts.medium,
   textWrap: "balance",
@@ -24,7 +24,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const imageClass = css({
+export const imageClass = style({
   height: 340,
   width: "auto",
 });

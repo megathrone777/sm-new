@@ -59,9 +59,7 @@ const DetailsForm: React.FC<TProps> = ({
     router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
   };
 
-  const handleFormChange = async ({
-    currentTarget,
-  }: React.SyntheticEvent<HTMLFormElement>): Promise<void> => {
+  const handleFormChange = ({ currentTarget }: React.SyntheticEvent<HTMLFormElement>): void => {
     const formData = new FormData(currentTarget);
     const selectedModifiers = collectSelectedModifiers(formData);
     const newTotalPrice = selectedModifiers.reduce<number>(
@@ -99,7 +97,7 @@ const DetailsForm: React.FC<TProps> = ({
 
       if (type === "success") {
         formRef.current?.reset();
-        addToCart(null, newProduct);
+        void addToCart(null, newProduct);
       }
     });
   };

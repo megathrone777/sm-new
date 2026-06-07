@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const footerClass = css(({ devices }) => ({
+export const footerClass = style(({ devices }) => ({
   alignItems: "center",
   columnGap: 10,
   display: "grid",
@@ -14,7 +14,7 @@ export const footerClass = css(({ devices }) => ({
   },
 }));
 
-export const totalPriceClass = css(({ colors, fonts }) => ({
+export const totalPriceClass = style(({ colors, fonts }) => ({
   color: colors.red,
   fontSize: 22,
   fontWeight: fonts.medium,
@@ -22,7 +22,7 @@ export const totalPriceClass = css(({ colors, fonts }) => ({
   paddingTop: 15,
 }));
 
-export const totalPriceValueClass = css(({ fonts }) => ({
+export const totalPriceValueClass = style(({ fonts }) => ({
   color: "black",
   fontSize: 24,
   fontWeight: fonts.medium,

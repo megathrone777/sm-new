@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   alignItems: "start",
   columnGap: 16,
   display: "grid",
@@ -24,7 +24,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const labelClass = css(({ devices }) => ({
+export const labelClass = style(({ devices }) => ({
   fontSize: 15,
   whiteSpace: "nowrap",
 

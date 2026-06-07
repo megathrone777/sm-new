@@ -26,7 +26,7 @@ const Tips: React.FC<TProps> = ({ tips }) => {
     const formData = new FormData();
 
     formData.set("tips", `${next}`);
-    updateTips(formData);
+    void updateTips(formData);
   };
 
   return (

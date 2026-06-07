@@ -90,13 +90,21 @@ describe("shop helpers", () => {
     it("returns defaults for null input", () => {
       const result = parseScheduleDay(null);
 
-      expect(result).toEqual({ closeTime: "22:00", lastTimeForDelivery: "21:00", openTime: "11:00" });
+      expect(result).toEqual({
+        closeTime: "22:00",
+        lastTimeForDelivery: "21:00",
+        openTime: "11:00",
+      });
     });
 
     it("returns defaults for non-object input", () => {
       const result = parseScheduleDay("invalid");
 
-      expect(result).toEqual({ closeTime: "22:00", lastTimeForDelivery: "21:00", openTime: "11:00" });
+      expect(result).toEqual({
+        closeTime: "22:00",
+        lastTimeForDelivery: "21:00",
+        openTime: "11:00",
+      });
     });
 
     it("returns parsed times from partial input", () => {
@@ -114,7 +122,11 @@ describe("shop helpers", () => {
         openTime: "10:00",
       });
 
-      expect(result).toEqual({ closeTime: "23:00", lastTimeForDelivery: "22:00", openTime: "10:00" });
+      expect(result).toEqual({
+        closeTime: "23:00",
+        lastTimeForDelivery: "22:00",
+        openTime: "10:00",
+      });
     });
   });
 
@@ -122,15 +134,27 @@ describe("shop helpers", () => {
     it("returns default schedule for null input", () => {
       const result = parseSchedule(null);
 
-      for (const day of ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"] as TWeekDay[]) {
-        expect(result[day]).toEqual({ closeTime: "22:00", lastTimeForDelivery: "21:00", openTime: "11:00" });
+      for (const day of [
+        "monday",
+        "tuesday",
+        "wednesday",
+        "thursday",
+        "friday",
+        "saturday",
+        "sunday",
+      ] as TWeekDay[]) {
+        expect(result[day]).toEqual({
+          closeTime: "22:00",
+          lastTimeForDelivery: "21:00",
+          openTime: "11:00",
+        });
       }
     });
 
     it("merges overrides keeping defaults for unset days", () => {
       const result = parseSchedule({
         monday: { openTime: "09:00" },
-      } as unknown as Record<string, unknown>);
+      });
 
       expect(result.monday.openTime).toBe("09:00");
       expect(result.monday.closeTime).toBe("22:00");
@@ -142,7 +166,15 @@ describe("shop helpers", () => {
       const days = Object.keys(result);
 
       expect(days).toHaveLength(7);
-      expect(days.sort()).toEqual(["friday", "monday", "saturday", "sunday", "thursday", "tuesday", "wednesday"]);
+      expect(days.sort()).toEqual([
+        "friday",
+        "monday",
+        "saturday",
+        "sunday",
+        "thursday",
+        "tuesday",
+        "wednesday",
+      ]);
     });
   });
 });

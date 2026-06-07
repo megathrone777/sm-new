@@ -26,9 +26,8 @@ const config: NextConfig = {
   outputFileTracingIncludes: {
     "**/*": ["./src/services/emailSender/template/**/*.pug"],
   },
-  reactCompiler: true,
   reactStrictMode: false,
-  redirects: async () => [
+  redirects: () => [
     {
       destination: "https://:domain/:path*",
       has: [{ type: "host", value: "www\\.(?<domain>.+)" }],

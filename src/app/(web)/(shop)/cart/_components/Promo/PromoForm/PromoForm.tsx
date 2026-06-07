@@ -12,7 +12,7 @@ const PromoForm: React.FC = () => {
     const { message, type } = state;
 
     toast(message, {
-      onClose: type === "error" ? clearPromoError : undefined,
+      onClose: type === "error" ? void clearPromoError : undefined,
       type,
     });
   }, [state]);

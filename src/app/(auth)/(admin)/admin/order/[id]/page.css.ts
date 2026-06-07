@@ -1,13 +1,13 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const formClass = css({
+export const formClass = style({
   alignItems: "start",
   display: "grid",
   gap: 20,
   gridTemplateColumns: "repeat(2, 1fr)",
 });
 
-export const deleteWrapperClass = css({
+export const deleteWrapperClass = style({
   display: "flex",
   justifyContent: "flex-end",
   marginTop: 24,

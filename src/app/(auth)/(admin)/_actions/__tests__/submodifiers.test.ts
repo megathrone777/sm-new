@@ -32,19 +32,19 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.submodifiers.set).mockResolvedValue(undefined as never);
+  jest.mocked(store.submodifiers.set).mockResolvedValue(undefined);
   jest.mocked(store.submodifiers.getAll).mockResolvedValue([] as never);
   jest.mocked(store.submodifiers.getById).mockResolvedValue({
     id: 1,
     sortOrder: 1,
     title: "Extra spicy",
-  } as never);
+  });
 });
 
 describe("createSubmodifier", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createSubmodifier(null, makeFormData());
 
@@ -112,7 +112,7 @@ describe("updateSubmodifier", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateSubmodifier(null, fd());
 
@@ -128,7 +128,7 @@ describe("updateSubmodifier", () => {
     });
 
     it("returns error when submodifier is not found", async () => {
-      jest.mocked(store.submodifiers.getById).mockResolvedValue(null as never);
+      jest.mocked(store.submodifiers.getById).mockResolvedValue(null);
 
       const result = await updateSubmodifier(null, fd({ id: "99" }));
 

@@ -2,17 +2,16 @@ import React from "react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Button, Container, Icon } from "@/ui";
 
-import { Additionals, Products, Progress } from "./_components";
+import { Additionals, Footer, Products, Progress } from "./_components";
 
 import {
   columnClass,
   contentClass,
   descriptionClass,
-  footerClass,
   iconClass,
   imageClass,
   imageHolderClass,
@@ -29,28 +28,8 @@ import {
 } from "./page.css";
 
 const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) => {
-  const { t } = useTranslation();
   const { id } = await params;
   const order = await store.orders.getById(+id);
-
-  // useEffect((): VoidFunction => {
-  //   const fbEventData: TFacebookData = {
-  //     content_ids: items.map(
-  //       (item: {
-  //         product: {
-  //           id: string;
-  //         };
-  //       }) => item.product.id,
-  //     ),
-  //     content_type: "product",
-  //     currency: "CZK",
-  //     value: totalAmountCZK,
-  //   };
-
-  //   if (window.fbq) {
-  //     window.fbq("track", "Purchase", fbEventData);
-  //   }
-  // }, []);
 
   if (order) {
     const {
@@ -86,8 +65,8 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                   className={iconClass}
                   id="exclamation"
                 />
-
-                {t<string>("orderConfirmed")}
+                Vážený zákazníků prosím Vás zkontrolovat že jste správně ukázal Telefoní číslo! Na
+                které dostanete informační SMS o Vaše objednávce.
               </p>
 
               <p className={subitemClass}>
@@ -201,7 +180,7 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                   <span className={labelClass}>Promo:</span>
 
                   <span className={valueClass}>
-                    {promocode} ({promocodeDiscountPrice} {t<string>("currency")})
+                    {promocode} ({promocodeDiscountPrice} {getTranslation<string>("currency")})
                   </span>
                 </p>
               )}
@@ -211,7 +190,7 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                   <span className={labelClass}>Tips:</span>
 
                   <span className={valueClass}>
-                    {tipsPrice} {t<string>("currency")} ({tipsAmount}%)
+                    {tipsPrice} {getTranslation<string>("currency")} ({tipsAmount}%)
                   </span>
                 </p>
               ) : null}
@@ -220,7 +199,7 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                 <span className={labelClass}>Cena:</span>
 
                 <span className={valueClass}>
-                  {totalPrice} {t<string>("currency")}
+                  {totalPrice} {getTranslation<string>("currency")}
                 </span>
               </p>
 
@@ -261,6 +240,7 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
                   <a
                     className={linkClass}
                     href="https://www.instagram.com/sushiman_prague/"
+                    rel="noreferrer noopener"
                     target="_blank"
                   >
                     <img
@@ -274,9 +254,7 @@ const Page: React.FC<PageProps<"/order-confirmed/[id]">> = async ({ params }) =>
             </div>
           </div>
 
-          <div className={footerClass}>
-            <Button href="/">Hlavní stránka</Button>
-          </div>
+          <Footer />
         </Container>
       </div>
     );

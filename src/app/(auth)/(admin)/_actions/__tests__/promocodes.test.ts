@@ -40,16 +40,16 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.promocodes.set).mockResolvedValue(undefined as never);
-  jest.mocked(store.promocodes.update).mockResolvedValue(undefined as never);
-  jest.mocked(store.promocodes.delete).mockResolvedValue(undefined as never);
-  jest.mocked(store.promocodes.getByCode).mockResolvedValue(null as never);
+  jest.mocked(store.promocodes.set).mockResolvedValue(undefined);
+  jest.mocked(store.promocodes.update).mockResolvedValue(undefined);
+  jest.mocked(store.promocodes.delete).mockResolvedValue(undefined);
+  jest.mocked(store.promocodes.getByCode).mockResolvedValue(null);
 });
 
 describe("createPromocode", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createPromocode(null, makeFormData());
 
@@ -139,7 +139,7 @@ describe("updatePromocode", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updatePromocode(null, makeFormData());
 
@@ -161,7 +161,7 @@ describe("updatePromocode", () => {
     });
 
     it("returns error when code is not found", async () => {
-      jest.mocked(store.promocodes.getByCode).mockResolvedValue(null as never);
+      jest.mocked(store.promocodes.getByCode).mockResolvedValue(null);
 
       const result = await updatePromocode(null, makeFormData({ code: "NOTFOUND" }));
 
@@ -217,7 +217,7 @@ describe("activatePromocode", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await activatePromocode(null, makeFormData());
 
@@ -233,7 +233,7 @@ describe("activatePromocode", () => {
     });
 
     it("returns error when code is not found", async () => {
-      jest.mocked(store.promocodes.getByCode).mockResolvedValue(null as never);
+      jest.mocked(store.promocodes.getByCode).mockResolvedValue(null);
 
       const result = await activatePromocode(null, makeFormData({ code: "GHOST" }));
 
@@ -273,7 +273,7 @@ describe("activatePromocode", () => {
 describe("deletePromocode", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await deletePromocode(null, makeFormData());
 

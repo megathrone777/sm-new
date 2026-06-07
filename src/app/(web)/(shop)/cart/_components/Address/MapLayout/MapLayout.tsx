@@ -34,7 +34,7 @@ const MapLayout: React.FC<TProps> = ({ children, delivery: { position, type } })
         initialViewState={
           hasRoute
             ? {
-              bounds: toBounds(position as [number, number][]),
+              bounds: toBounds(position),
               fitBoundsOptions: { maxZoom: 15, padding: 40 },
             }
             : {

@@ -4,7 +4,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { CreateDeliveryCondition, DeliveryConditionsList } from "./_components";
 
-const Page: React.FC = async () => (
+const Page: React.FC = () => (
   <>
     <Header title="Delivery conditions" />
     <CreateDeliveryCondition />

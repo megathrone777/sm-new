@@ -1,6 +1,6 @@
-import { css, globalStyle } from "@/theme";
+import { style, globalStyle } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   backgroundPosition: "center center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
@@ -14,10 +14,12 @@ export const wrapperClass = css(({ colors, devices }) => ({
       minHeight: 400,
       paddingBlock: 50,
     },
+
+    [devices.desktopLg]: {},
   },
 }));
 
-export const titleClass = css(({ devices }) => ({
+export const titleClass = style(({ devices }) => ({
   fontSize: 25,
   fontWeight: "700",
   marginBottom: 10,
@@ -34,7 +36,7 @@ export const titleClass = css(({ devices }) => ({
   },
 }));
 
-export const textClass = css(({ devices }) => ({
+export const textClass = style(({ devices }) => ({
   fontSize: 18,
   letterSpacing: "normal",
   lineHeight: "1.2",

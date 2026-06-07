@@ -2,7 +2,7 @@ import React from "react";
 
 import { updateModifier } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, Header, SubModifiersSelect } from "@/app/(auth)/(admin)/_components";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
@@ -14,7 +14,6 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
     store.modifiers.getById(+id),
     store.submodifiers.getAll(),
   ]);
-  const { t } = useTranslation();
 
   if (!modifier) return <p>Modifier not found</p>;
 
@@ -45,7 +44,7 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
 
         <Input
           defaultValue={modifier.price}
-          label={`Price (${t<string>("currency")})`}
+          label={`Price (${getTranslation<string>("currency")})`}
           name="price"
           type="number"
         />

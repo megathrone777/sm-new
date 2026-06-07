@@ -1,8 +1,7 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const typeClass = css(({ colors }) => ({
-  color: "#3b82f6",
-
+export const typeClass = style(({ colors }) => ({
+  color: colors.blue,
   selectors: {
     "&.pickup": { color: colors.greenLighter },
   },

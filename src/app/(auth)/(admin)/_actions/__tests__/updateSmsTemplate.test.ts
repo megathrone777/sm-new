@@ -41,13 +41,13 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.smsTemplates.set).mockResolvedValue(undefined as never);
+  jest.mocked(store.smsTemplates.set).mockResolvedValue(undefined);
 });
 
 describe("updateSmsTemplate", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateSmsTemplate(null, makeFormData());
 

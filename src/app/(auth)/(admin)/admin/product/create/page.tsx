@@ -8,7 +8,7 @@ import {
   ImageUploader,
   ModifiersSelect,
 } from "@/app/(auth)/(admin)/_components";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
@@ -19,7 +19,6 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
     store.modifiers.getAll(),
     store.categories.getAll(),
   ]);
-  const { t } = useTranslation();
 
   const categoryOptions = categories
     .filter(({ id }: TProductCategory) => id !== 0)
@@ -29,7 +28,7 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
     }));
 
   const modifiersOptions = modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
-    label: `${title}${price !== 0 ? ` +${price} ${t<string>("currency")}` : ""}`,
+    label: `${title}${price !== 0 ? ` +${price} ${getTranslation<string>("currency")}` : ""}`,
     value: `${id}`,
   }));
 
@@ -61,7 +60,7 @@ const Page: React.FC<PageProps<"/admin/product/create">> = async () => {
 
         <Input
           defaultValue="0"
-          label={`Price (${t<string>("currency")})`}
+          label={`Price (${getTranslation<string>("currency")})`}
           name="price"
           type="number"
         />

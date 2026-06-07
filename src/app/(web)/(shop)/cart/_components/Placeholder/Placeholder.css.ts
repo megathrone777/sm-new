@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices, fonts }) => ({
+export const wrapperClass = style(({ devices, fonts }) => ({
   alignItems: "center",
   display: "grid",
   fontSize: 25,
@@ -17,11 +17,11 @@ export const wrapperClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const imageHolderClass = css({
+export const imageHolderClass = style({
   marginInline: "auto",
 });
 
-export const imageClass = css({
+export const imageClass = style({
   height: 400,
   width: "auto",
 });

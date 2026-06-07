@@ -1,8 +1,8 @@
 import { calc } from "@vanilla-extract/css-utils";
 
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   maxWidth: "100%",
   position: "relative",
 
@@ -13,7 +13,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   alignContent: "center",
   alignItems: "center",
   columnGap: 12,
@@ -22,7 +22,7 @@ export const layoutClass = css({
   gridTemplateColumns: "1fr auto",
 });
 
-export const distanceClass = css(({ devices }) => ({
+export const distanceClass = style(({ devices }) => ({
   display: "none",
   left: `${calc("100%").add("20px")}`,
   marginLeft: 10,
@@ -37,24 +37,24 @@ export const distanceClass = css(({ devices }) => ({
   },
 }));
 
-export const resultsClass = css({
+export const resultsClass = style({
   alignItems: "center",
   display: "grid",
   gridAutoFlow: "column",
   width: "100%",
 });
 
-export const deliveryPriceClass = css(({ fonts }) => ({
+export const deliveryPriceClass = style(({ fonts }) => ({
   fontSize: 18,
   fontWeight: fonts.bold,
   marginTop: 25,
 }));
 
-export const deliveryCurrencyClass = css({
+export const deliveryCurrencyClass = style({
   fontSize: 16,
 });
 
-export const deliveryErrorClass = css(({ colors, fonts }) => ({
+export const deliveryErrorClass = style(({ colors, fonts }) => ({
   color: colors.red,
   fontSize: 20,
   fontWeight: fonts.bold,
@@ -62,7 +62,7 @@ export const deliveryErrorClass = css(({ colors, fonts }) => ({
   textAlign: "left",
 }));
 
-export const resetButtonClass = css({
+export const resetButtonClass = style({
   appearance: "none",
   backgroundColor: "transparent",
   border: "none",
@@ -76,7 +76,7 @@ export const resetButtonClass = css({
   width: 25,
 });
 
-export const suggestionsClass = css(({ colors }) => ({
+export const suggestionsClass = style(({ colors }) => ({
   backgroundColor: "white",
   border: `1px solid ${colors.red}`,
   borderRadius: 4,
@@ -88,7 +88,7 @@ export const suggestionsClass = css(({ colors }) => ({
   zIndex: 9,
 }));
 
-export const suggestionsItemClass = css(({ colors }) => ({
+export const suggestionsItemClass = style(({ colors }) => ({
   cursor: "pointer",
   height: 38,
   lineHeight: "38px",

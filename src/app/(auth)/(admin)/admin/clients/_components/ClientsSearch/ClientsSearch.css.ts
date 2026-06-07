@@ -1,19 +1,19 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   display: "grid",
   gridTemplateColumns: "max-content 1px max-content 1px max-content",
   rowGap: 4,
 });
 
-export const itemClass = css({
+export const itemClass = style({
   display: "grid",
   gridColumn: "1 / -1",
   gridTemplateColumns: "subgrid",
   height: 31,
 });
 
-export const linkClass = css(({ colors }) => ({
+export const linkClass = style(({ colors }) => ({
   alignItems: "center",
   borderRadius: 6,
   color: colors.black,
@@ -28,16 +28,16 @@ export const linkClass = css(({ colors }) => ({
   whiteSpace: "nowrap",
 
   ":hover": {
-    backgroundColor: "rgba(0, 0, 0, .05)",
+    backgroundColor: rgba(colors.black, 0.05),
   },
 }));
 
-export const textClass = css({
+export const textClass = style({
   display: "inline-block",
   paddingInline: 6,
 });
 
-export const phoneClass = css(({ fonts }) => ({
+export const phoneClass = style(({ fonts }) => ({
   display: "inline-block",
   fontWeight: fonts.bold,
   paddingInline: 6,

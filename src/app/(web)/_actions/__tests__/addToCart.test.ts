@@ -61,13 +61,13 @@ const makeCartProduct = (overrides: Partial<TCartProduct> = {}): TCartProduct =>
 
 beforeEach(() => {
   jest.clearAllMocks();
-  jest.mocked(store.cart.getOrCreateSessionId).mockResolvedValue("session-abc" as never);
+  jest.mocked(store.cart.getOrCreateSessionId).mockResolvedValue("session-abc");
 });
 
 describe("addToCart", () => {
   describe("when cart is empty", () => {
     it("creates a new cart with the product when no cart exists", async () => {
-      jest.mocked(store.cart.get).mockResolvedValue(null as never);
+      jest.mocked(store.cart.get).mockResolvedValue(null);
       const product = makeCartProduct();
 
       await addToCart(null, product);

@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   alignContent: "center",
   alignItems: "center",
   display: "grid",
@@ -9,12 +9,12 @@ export const listClass = css({
   rowGap: 30,
 });
 
-export const itemClass = css({
+export const itemClass = style({
   borderBottom: "1px solid #eee",
   paddingBottom: 16,
 });
 
-export const rowClass = css({
+export const rowClass = style({
   alignContent: "center",
   alignItems: "center",
   columnGap: 30,
@@ -24,7 +24,7 @@ export const rowClass = css({
   justifyContent: "start",
 });
 
-export const editFormClass = css({
+export const editFormClass = style({
   alignContent: "center",
   alignItems: "center",
   columnGap: 15,
@@ -32,7 +32,7 @@ export const editFormClass = css({
   gridAutoFlow: "column",
 });
 
-export const editFormLayoutClass = css({
+export const editFormLayoutClass = style({
   alignContent: "center",
   alignItems: "center",
   display: "grid",
@@ -40,7 +40,7 @@ export const editFormLayoutClass = css({
   gridAutoFlow: "column",
 });
 
-export const activateFormClass = css({
+export const activateFormClass = style({
   alignItems: "center",
   columnGap: 15,
   display: "grid",
@@ -48,48 +48,48 @@ export const activateFormClass = css({
   gridTemplateColumns: "max-content 1fr",
 });
 
-export const activateFormLayoutClass = css({
+export const activateFormLayoutClass = style({
   alignItems: "center",
   columnGap: 10,
   display: "grid",
   gridAutoFlow: "column",
 });
 
-export const codeClass = css(({ fonts }) => ({
+export const codeClass = style(({ fonts }) => ({
   fontWeight: fonts.bold,
   paddingBottom: 8,
   whiteSpace: "nowrap",
 }));
 
-export const statusClass = css({
+export const statusClass = style({
   alignSelf: "end",
   fontSize: 12,
   paddingBottom: 10,
   whiteSpace: "nowrap",
 });
 
-export const activeBadgeClass = css({
-  backgroundColor: "#dcfce7",
+export const activeBadgeClass = style(({ colors }) => ({
+  backgroundColor: colors.greenLightest,
   borderRadius: 4,
-  color: "#166534",
+  color: colors.greenDarker,
   padding: "2px 6px",
-});
+}));
 
-export const pendingBadgeClass = css({
-  backgroundColor: "#fef9c3",
+export const pendingBadgeClass = style(({ colors }) => ({
+  backgroundColor: colors.yellowLightest,
   borderRadius: 4,
-  color: "#854d0e",
+  color: colors.orangeDarkest,
   padding: "2px 6px",
-});
+}));
 
-export const inactiveBadgeClass = css({
-  backgroundColor: "#fee2e2",
+export const inactiveBadgeClass = style(({ colors }) => ({
+  backgroundColor: colors.redLightest,
   borderRadius: 4,
-  color: "#991b1b",
+  color: colors.redDarkest,
   padding: "2px 6px",
-});
+}));
 
-export const linkClass = css({
+export const linkClass = style({
   display: "inline-block",
   height: 38,
 });

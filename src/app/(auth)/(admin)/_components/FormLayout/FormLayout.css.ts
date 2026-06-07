@@ -1,17 +1,17 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   display: "grid",
   gap: 20,
 });
 
-export const contentClass = css({
+export const contentClass = style({
   alignItems: "start",
   display: "grid",
   gap: 24,
 });
 
-export const footerClass = css({
+export const footerClass = style({
   display: "grid",
   justifyContent: "start",
 });

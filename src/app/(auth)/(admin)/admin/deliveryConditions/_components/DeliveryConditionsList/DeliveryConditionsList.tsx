@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import { deleteDeliveryCondition, updateDeliveryCondition } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, ListLayout } from "@/app/(auth)/(admin)/_components";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
@@ -16,7 +16,6 @@ import {
 } from "./DeliveryConditionsList.css";
 
 const DeliveryConditionsList: React.FC = async () => {
-  const { t } = useTranslation();
   const conditions = await store.deliveryConditions.getAll();
 
   return (
@@ -74,14 +73,14 @@ const DeliveryConditionsList: React.FC = async () => {
 
                     <Input
                       defaultValue={price}
-                      label={`Price (${t<string>("currency")})`}
+                      label={`Price (${getTranslation<string>("currency")})`}
                       name="price"
                       type="number"
                     />
 
                     <Input
                       defaultValue={minimumOrderPrice}
-                      label={`Min order (${t<string>("currency")})`}
+                      label={`Min order (${getTranslation<string>("currency")})`}
                       name="minimumOrderPrice"
                       type="number"
                     />

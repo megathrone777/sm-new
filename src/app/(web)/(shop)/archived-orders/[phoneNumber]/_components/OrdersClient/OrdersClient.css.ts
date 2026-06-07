@@ -1,16 +1,16 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const controlsClass = css({
+export const controlsClass = style({
   marginBottom: 16,
 });
 
-export const listClass = css(({ colors }) => ({
+export const listClass = style(({ colors }) => ({
   border: `1px solid ${colors.white}`,
   borderRadius: 10,
   overflow: "hidden",
 }));
 
-export const rowClass = css(({ colors, devices }) => ({
+export const rowClass = style(({ colors, devices }) => ({
   alignItems: "center",
   borderBottom: `1px solid ${colors.white}`,
   columnGap: 12,
@@ -40,14 +40,14 @@ export const rowClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const dateClass = css(({ colors, fonts }) => ({
+export const dateClass = style(({ colors, fonts }) => ({
   color: colors.gray,
   fontSize: 15,
   fontWeight: fonts.medium,
   gridArea: "date",
 }));
 
-export const orderIdClass = css(({ devices, fonts }) => ({
+export const orderIdClass = style(({ devices, fonts }) => ({
   alignItems: "center",
   display: "flex",
   fontSize: 15,
@@ -62,7 +62,7 @@ export const orderIdClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const copyButtonClass = css(({ colors, easing, fonts }) => ({
+export const copyButtonClass = style(({ colors, easing, fonts }) => ({
   alignItems: "center",
   background: "none",
   border: "none",
@@ -81,14 +81,14 @@ export const copyButtonClass = css(({ colors, easing, fonts }) => ({
   },
 }));
 
-export const priceClass = css(({ colors, fonts }) => ({
+export const priceClass = style(({ colors, fonts }) => ({
   color: colors.red,
   fontSize: 17,
   fontWeight: fonts.demi,
   gridArea: "price",
 }));
 
-export const statusClass = cssVariant(
+export const statusClass = styleVariants(
   ({ colors }) => ({
     cancelled: {
       backgroundColor: `${colors.red}1a`,
@@ -116,7 +116,7 @@ export const statusClass = cssVariant(
   ],
 );
 
-export const invoiceAreaClass = css({
+export const invoiceAreaClass = style({
   alignItems: "center",
   display: "flex",
   flexWrap: "wrap",
@@ -124,7 +124,7 @@ export const invoiceAreaClass = css({
   gridArea: "invoice",
 });
 
-export const invoiceLinkClass = css(({ colors, fonts }) => ({
+export const invoiceLinkClass = style(({ colors, fonts }) => ({
   alignItems: "center",
   color: colors.red,
   columnGap: 4,
@@ -139,12 +139,12 @@ export const invoiceLinkClass = css(({ colors, fonts }) => ({
   },
 }));
 
-export const iconClass = css({
+export const iconClass = style({
   display: "inline-block",
   height: 20,
 });
 
-export const actionsClass = css(({ devices }) => ({
+export const actionsClass = style(({ devices }) => ({
   display: "flex",
   gap: 6,
   gridArea: "actions",
@@ -156,14 +156,14 @@ export const actionsClass = css(({ devices }) => ({
   },
 }));
 
-export const repeatClass = css({
+export const repeatClass = style({
   alignItems: "center",
   columnGap: 6,
   display: "inline-grid",
   gridAutoFlow: "column",
 });
 
-export const imagesClass = css(({ devices }) => ({
+export const imagesClass = style(({ devices }) => ({
   alignItems: "center",
   display: "flex",
   gap: 4,
@@ -177,7 +177,7 @@ export const imagesClass = css(({ devices }) => ({
   },
 }));
 
-export const imageWrapperClass = css({
+export const imageWrapperClass = style({
   borderRadius: 6,
   flexShrink: 0,
   height: 60,
@@ -186,11 +186,11 @@ export const imageWrapperClass = css({
   width: 44,
 });
 
-export const imageClass = css({
+export const imageClass = style({
   objectFit: "cover",
 });
 
-export const moreImagesClass = css(({ colors, fonts }) => ({
+export const moreImagesClass = style(({ colors, fonts }) => ({
   alignItems: "center",
   backgroundColor: colors.white,
   borderRadius: 6,

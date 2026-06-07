@@ -60,7 +60,7 @@ const useNewOrderAlert = (): { notify: (id: number) => void; test: () => void } 
     if (typeof window === "undefined") return;
 
     if ("Notification" in window && Notification.permission === "default") {
-      Notification.requestPermission();
+      void Notification.requestPermission();
     }
 
     const unlock = (): void => {
@@ -72,7 +72,7 @@ const useNewOrderAlert = (): { notify: (id: number) => void; test: () => void } 
       }
 
       if (ctxRef.current.state === "suspended") {
-        ctxRef.current.resume();
+        void ctxRef.current.resume();
       }
     };
 

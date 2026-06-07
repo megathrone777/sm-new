@@ -33,20 +33,21 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.additionals.create).mockResolvedValue(undefined as never);
+  jest.mocked(store.additionals.create).mockResolvedValue(undefined);
   jest.mocked(store.additionals.getAll).mockResolvedValue([] as never);
+
   jest.mocked(store.additionals.getById).mockResolvedValue({
     id: 1,
     price: 30,
     sortOrder: 1,
     title: "Ginger",
-  } as never);
+  });
 });
 
 describe("createAdditional", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createAdditional(null, makeFormData());
 
@@ -111,7 +112,7 @@ describe("updateAdditional", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateAdditional(null, fd());
 
@@ -121,7 +122,7 @@ describe("updateAdditional", () => {
 
   describe("validation", () => {
     it("throws when additional is not found", async () => {
-      jest.mocked(store.additionals.getById).mockResolvedValue(null as never);
+      jest.mocked(store.additionals.getById).mockResolvedValue(null);
 
       await expect(updateAdditional(null, fd({ id: "99" }))).rejects.toThrow(
         "Additional 99 not found",

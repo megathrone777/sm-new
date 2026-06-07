@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   justifyContent: "end",
@@ -14,7 +14,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const priceClass = css(({ fonts }) => ({
+export const priceClass = style(({ fonts }) => ({
   fontSize: 20,
   fontWeight: fonts.bold,
 }));

@@ -4,7 +4,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { CreateModifier, ModifiersList, ModifiersSearch } from "./_components";
 
-const Page: React.FC<PageProps<"/admin/modifiers">> = async () => (
+const Page: React.FC<PageProps<"/admin/modifiers">> = () => (
   <>
     <Header title="Modifiers">
       <ModifiersSearch />

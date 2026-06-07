@@ -28,7 +28,7 @@ const Page: React.FC<PageProps<"/login">> = async () => {
           <h1 className={titleClass}>Administrator</h1>
 
           <Form
-            action={login}
+            action={(formData) => void login(formData)}
             className={formClass}
           >
             <Input

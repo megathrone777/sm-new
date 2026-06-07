@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
@@ -9,13 +9,13 @@ export const wrapperClass = css({
   rowGap: 30,
 });
 
-export const titleClass = css(({ fonts }) => ({
+export const titleClass = style(({ fonts }) => ({
   color: "wheat",
   fontSize: 32,
   fontWeight: fonts.normal,
 }));
 
-export const imageClass = css({
+export const imageClass = style({
   height: 300,
   width: "auto",
 });

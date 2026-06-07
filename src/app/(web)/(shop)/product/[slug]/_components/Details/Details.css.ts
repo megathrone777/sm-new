@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   backgroundImage: "url('/images/products_bg.jpg')",
   backgroundSize: "33.3333% auto",
   borderBottom: `4px solid ${colors.red}`,
@@ -16,7 +16,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   alignItems: "start",
   display: "grid",
   gridAutoFlow: "row",
@@ -34,21 +34,21 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const modifiersHeadingClass = css({
+export const modifiersHeadingClass = style({
   marginBottom: 15,
 });
 
-export const modifiersTitleClass = css(({ fonts }) => ({
+export const modifiersTitleClass = style(({ fonts }) => ({
   color: "black",
   fontSize: 17,
   fontWeight: fonts.medium,
   marginRight: 10,
 }));
 
-export const imageHolderClass = css(({ devices }) => ({
-  backgroundColor: "#1a1a1a",
+export const imageHolderClass = style(({ colors, devices }) => ({
+  backgroundColor: colors.black,
   borderRadius: 15,
-  boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
+  boxShadow: `0 0 10px 0 ${rgba(colors.black, 0.5)}`,
   overflow: "hidden",
   position: "relative",
 
@@ -63,18 +63,18 @@ export const imageHolderClass = css(({ devices }) => ({
   },
 }));
 
-export const imageClass = css({
+export const imageClass = style({
   height: "auto",
   objectFit: "cover",
   verticalAlign: "middle",
   width: "100%",
 });
 
-export const contentClass = css({
+export const contentClass = style({
   marginBottom: 40,
 });
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   fontSize: 36,
   fontWeight: fonts.medium,
   marginBottom: 10,
@@ -87,26 +87,26 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const itemClass = css({
+export const itemClass = style({
   marginBottom: 15,
   maxWidth: 450,
 });
 
-export const itemPriceClass = css(({ colors, fonts }) => ({
+export const itemPriceClass = style(({ colors, fonts }) => ({
   color: colors.red,
   fontSize: 20,
   fontWeight: fonts.medium,
   marginBottom: 20,
 }));
 
-export const itemTitleClass = css(({ fonts }) => ({
+export const itemTitleClass = style(({ fonts }) => ({
   color: "black",
   fontSize: 17,
   fontWeight: fonts.medium,
   marginRight: 10,
 }));
 
-export const placeholderClass = css(({ colors }) => ({
+export const placeholderClass = style(({ colors }) => ({
   color: colors.red,
   fontSize: 20,
 }));

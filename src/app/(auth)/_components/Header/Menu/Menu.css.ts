@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   alignItems: "center",
   columnGap: 30,
   display: "grid",
@@ -13,7 +13,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const linkClass = cssVariant(
+export const linkClass = styleVariants(
   ({ colors }) => ({
     active: {
       color: colors.red,
@@ -50,6 +50,6 @@ export const linkClass = cssVariant(
   ],
 );
 
-export const iconClass = css({
+export const iconClass = style({
   height: 18,
 });

@@ -3,7 +3,7 @@ import { act, renderHook } from "@testing-library/react";
 
 import { useDebouncedCallback } from "../useDebouncedCallback";
 
-type AnyFn<TArgs extends unknown[]> = (...args: TArgs) => void;
+type TCallbackFn<TArgs extends unknown[]> = (...args: TArgs) => Promise<void> | void;
 
 describe("useDebouncedCallback", () => {
   beforeEach(() => {
@@ -15,7 +15,7 @@ describe("useDebouncedCallback", () => {
   });
 
   it("calls the callback after the specified delay", () => {
-    const callback = jest.fn() as unknown as AnyFn<[string, string]>;
+    const callback = jest.fn() as unknown as TCallbackFn<[string, string]>;
 
     const { result } = renderHook(() => useDebouncedCallback(callback, 500));
 
@@ -34,7 +34,7 @@ describe("useDebouncedCallback", () => {
   });
 
   it("debounces multiple rapid calls", () => {
-    const callback = jest.fn() as unknown as AnyFn<[string]>;
+    const callback = jest.fn() as unknown as TCallbackFn<[string]>;
 
     const { result } = renderHook(() => useDebouncedCallback(callback, 300));
 
@@ -69,9 +69,9 @@ describe("useDebouncedCallback", () => {
   });
 
   it("uses the latest callback reference for each call", () => {
-    const callback1 = jest.fn() as unknown as AnyFn<[string]>;
+    const callback1 = jest.fn() as unknown as TCallbackFn<[string]>;
     const { rerender, result } = renderHook(
-      ({ cb }: { cb: AnyFn<[string]> }) => useDebouncedCallback(cb, 100),
+      ({ cb }: { cb: TCallbackFn<[string]> }) => useDebouncedCallback(cb, 100),
       { initialProps: { cb: callback1 } },
     );
 
@@ -79,7 +79,7 @@ describe("useDebouncedCallback", () => {
       result.current("from-cb1");
     });
 
-    const callback2 = jest.fn() as unknown as AnyFn<[string]>;
+    const callback2 = jest.fn() as unknown as TCallbackFn<[string]>;
 
     rerender({ cb: callback2 });
 
@@ -93,7 +93,7 @@ describe("useDebouncedCallback", () => {
   });
 
   it("calls with default 300ms delay when none specified", () => {
-    const callback = jest.fn() as unknown as AnyFn<[string]>;
+    const callback = jest.fn() as unknown as TCallbackFn<[string]>;
 
     const { result } = renderHook(() => useDebouncedCallback(callback));
 
@@ -111,7 +111,7 @@ describe("useDebouncedCallback", () => {
   });
 
   it("cleans up the timeout on unmount", () => {
-    const callback = jest.fn() as unknown as AnyFn<[string]>;
+    const callback = jest.fn() as unknown as TCallbackFn<[string]>;
 
     const { result, unmount } = renderHook(() => useDebouncedCallback(callback, 100));
 

@@ -64,7 +64,7 @@ const Reviews: React.FC = async () => {
         <div className={buttonsClass}>
           <Button
             href="/menu"
-            type="button"
+            withTransition
           >
             Objednat
           </Button>

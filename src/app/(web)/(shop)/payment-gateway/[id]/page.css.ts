@@ -1,10 +1,10 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   paddingBlock: 60,
 });
 
-export const layoutClass = css(({ colors }) => ({
+export const layoutClass = style(({ colors }) => ({
   border: `2px dashed ${colors.red}`,
   borderRadius: 12,
   display: "grid",
@@ -15,22 +15,22 @@ export const layoutClass = css(({ colors }) => ({
   textAlign: "center",
 }));
 
-export const titleClass = css(({ fonts }) => ({
+export const titleClass = style(({ fonts }) => ({
   fontSize: 24,
   fontWeight: fonts.bold,
 }));
 
-export const summaryClass = css(({ fonts }) => ({
+export const summaryClass = style(({ fonts }) => ({
   fontSize: 18,
   fontWeight: fonts.medium,
 }));
 
-export const hintClass = css(({ colors }) => ({
+export const hintClass = style(({ colors }) => ({
   color: colors.grayDarker,
   fontSize: 14,
 }));
 
-export const buttonsClass = css({
+export const buttonsClass = style({
   display: "grid",
   gap: 12,
 });

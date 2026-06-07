@@ -1,10 +1,10 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   paddingBlock: 24,
 });
 
-export const headerClass = css({
+export const headerClass = style({
   alignItems: "center",
   columnGap: 16,
   display: "grid",
@@ -13,31 +13,31 @@ export const headerClass = css({
   marginBottom: 24,
 });
 
-export const spinnerClass = css({
+export const spinnerClass = style({
   height: "100%",
   minWidth: 40,
 });
 
-export const titleClass = css(({ fonts }) => ({
+export const titleClass = style(({ fonts }) => ({
   fontSize: 20,
   fontWeight: fonts.bold,
 }));
 
-export const actionsClass = css({
+export const actionsClass = style({
   alignItems: "center",
   columnGap: 12,
   display: "grid",
   gridAutoFlow: "column",
 });
 
-export const gridWrapperClass = css(({ colors }) => ({
+export const gridWrapperClass = style(({ colors }) => ({
   backgroundColor: colors.whiteLighter,
   borderRadius: 8,
   padding: 16,
   width: "100%",
 }));
 
-export const blockClass = css(({ colors, fonts }) => ({
+export const blockClass = style(({ colors, fonts }) => ({
   alignItems: "center",
   backgroundColor: "white",
   border: `3px solid ${colors.red}`,
@@ -55,13 +55,13 @@ export const blockClass = css(({ colors, fonts }) => ({
   userSelect: "none",
 }));
 
-export const blockLabelClass = css(({ colors, fonts }) => ({
+export const blockLabelClass = style(({ colors, fonts }) => ({
   color: colors.black,
   fontSize: 17,
   fontWeight: fonts.bold,
 }));
 
-export const hintClass = css(({ colors }) => ({
+export const hintClass = style(({ colors }) => ({
   color: colors.gray,
   fontSize: 15,
   marginTop: 12,

@@ -84,8 +84,8 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 
 beforeEach(() => {
   jest.clearAllMocks();
-  jest.mocked(store.cart.getSessionId).mockResolvedValue("session-abc" as never);
-  jest.mocked(store.cart.get).mockResolvedValue(makeCart() as never);
+  jest.mocked(store.cart.getSessionId).mockResolvedValue("session-abc");
+  jest.mocked(store.cart.get).mockResolvedValue(makeCart());
 
   jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
     {
@@ -103,14 +103,14 @@ beforeEach(() => {
     existingOrderIds: [],
     id: "42",
   } as never);
-  jest.mocked(store.orders.registerNewOrder).mockResolvedValue(undefined as never);
+  jest.mocked(store.orders.registerNewOrder).mockResolvedValue(undefined);
 });
 
 describe("validateAndSubmitCart", () => {
   describe("when cart is missing", () => {
     it("returns null immediately without creating an order", async () => {
-      jest.mocked(store.cart.getSessionId).mockResolvedValue(null as never);
-      jest.mocked(store.cart.get).mockResolvedValue(null as never);
+      jest.mocked(store.cart.getSessionId).mockResolvedValue(null);
+      jest.mocked(store.cart.get).mockResolvedValue(null);
 
       const result = await validateAndSubmitCart(null, makeFormData());
 
@@ -123,7 +123,7 @@ describe("validateAndSubmitCart", () => {
     it("fails with a cutlery error when cutlery quantity is 0", async () => {
       jest
         .mocked(store.cart.get)
-        .mockResolvedValue(makeCart({ cutlery: { quantity: 0, totalPrice: 0 } }) as never);
+        .mockResolvedValue(makeCart({ cutlery: { quantity: 0, totalPrice: 0 } }));
 
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:/cart");
       expect(saveCart).toHaveBeenCalledWith(
@@ -186,7 +186,7 @@ describe("validateAndSubmitCart", () => {
             title: "",
             type: "delivery",
           },
-        }) as never,
+        }),
       );
 
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:/cart");
@@ -199,7 +199,7 @@ describe("validateAndSubmitCart", () => {
     });
 
     it("fails with a delivery error when total price is below the zone minimum", async () => {
-      jest.mocked(store.cart.get).mockResolvedValue(makeCart({ totalPrice: 100 }) as never);
+      jest.mocked(store.cart.get).mockResolvedValue(makeCart({ totalPrice: 100 }));
 
       jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
         {
@@ -211,7 +211,7 @@ describe("validateAndSubmitCart", () => {
           text: "Minimum order 500 Kč",
           title: "",
         },
-      ] as never);
+      ]);
 
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:/cart");
       expect(saveCart).toHaveBeenCalledWith(
@@ -233,7 +233,7 @@ describe("validateAndSubmitCart", () => {
             title: "",
             type: "delivery",
           },
-        }) as never,
+        }),
       );
 
       jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
@@ -246,7 +246,7 @@ describe("validateAndSubmitCart", () => {
           text: "",
           title: "",
         },
-      ] as never);
+      ]);
 
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:/cart");
       expect(saveCart).toHaveBeenCalledWith(
@@ -280,7 +280,7 @@ describe("validateAndSubmitCart", () => {
     it("redirects to /payment-gateway/{id} for card payment", async () => {
       jest
         .mocked(store.cart.get)
-        .mockResolvedValue(makeCart({ payment: { change: null, type: "card" } }) as never);
+        .mockResolvedValue(makeCart({ payment: { change: null, type: "card" } }));
 
       await expect(validateAndSubmitCart(null, makeFormData({ payment: "card" }))).rejects.toThrow(
         "REDIRECT:/payment-gateway/42",

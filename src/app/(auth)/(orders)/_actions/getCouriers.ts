@@ -1,5 +1,3 @@
-"use server";
-
 // interface TGpsWoxDevice {
 //   id: number;
 //   lat: null | number;
@@ -11,7 +9,7 @@
 //   items: TGpsWoxDevice[];
 // }
 
-const getCouriers = async (): Promise<TCourier[]> => {
+const getCouriers = (): TCourier[] => {
   // const params = new URLSearchParams({
   //   lang: "en",
   //   user_api_hash: process.env.GPS_WOX_API_HASH,

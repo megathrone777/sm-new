@@ -1,16 +1,16 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   marginBottom: 8,
   paddingLeft: 10,
 });
 
-export const itemClass = css({
+export const itemClass = style({
   fontSize: 16,
   marginBottom: 5,
 });
 
-export const quantityClass = css({
+export const quantityClass = style({
   display: "inline-block",
   paddingLeft: 5,
 });

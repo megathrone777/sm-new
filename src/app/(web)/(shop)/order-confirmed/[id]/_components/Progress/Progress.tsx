@@ -49,10 +49,15 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
   const deliveryLng = parts[1];
   const hasDelivery =
     deliveryLat != null && deliveryLng != null && !isNaN(deliveryLat) && !isNaN(deliveryLng);
+  const effectiveCourierPosition = status === "took" ? courierPosition : null;
   const isNearby =
-    courierPosition && hasDelivery
-      ? haversine(courierPosition.latitude, courierPosition.longitude, deliveryLat!, deliveryLng!) <
-        proximityMeters
+    effectiveCourierPosition && hasDelivery
+      ? haversine(
+        effectiveCourierPosition.latitude,
+        effectiveCourierPosition.longitude,
+        deliveryLat,
+        deliveryLng,
+      ) < proximityMeters
       : false;
   const label = isNearby
     ? "Kurýr již přijíždí, buďte připraveni"
@@ -64,12 +69,12 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
   const initialBounds: [[number, number], [number, number]] | undefined = hasDelivery
     ? [
         [
-          Math.min(kitchenCoords.lon, deliveryLng!) - 0.005,
-          Math.min(kitchenCoords.lat, deliveryLat!) - 0.005,
+          Math.min(kitchenCoords.lon, deliveryLng) - 0.005,
+          Math.min(kitchenCoords.lat, deliveryLat) - 0.005,
         ],
         [
-          Math.max(kitchenCoords.lon, deliveryLng!) + 0.005,
-          Math.max(kitchenCoords.lat, deliveryLat!) + 0.005,
+          Math.max(kitchenCoords.lon, deliveryLng) + 0.005,
+          Math.max(kitchenCoords.lat, deliveryLat) + 0.005,
         ],
       ]
     : undefined;
@@ -84,12 +89,8 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
     },
   });
 
-  useEffect((): (() => void) | void => {
-    if (status !== "took") {
-      setCourierPosition(null);
-
-      return;
-    }
+  useEffect(() => {
+    if (status !== "took") return;
 
     let active = true;
 
@@ -101,8 +102,8 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
       }
     };
 
-    poll();
-    const interval = setInterval(poll, pollIntervalMs);
+    void poll();
+    const interval = setInterval(() => void poll(), pollIntervalMs);
 
     return (): void => {
       active = false;
@@ -111,14 +112,14 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
   }, [status, courier]);
 
   useEffect((): void => {
-    if (!mapRef.current || !courierPosition) return;
-    const { latitude, longitude } = courierPosition;
+    if (!mapRef.current || !effectiveCourierPosition) return;
+    const { latitude, longitude } = effectiveCourierPosition;
 
     mapRef.current.flyTo({
       center: [longitude, latitude],
       zoom: 15,
     });
-  }, [courierPosition]);
+  }, [effectiveCourierPosition]);
 
   if (status === "placed") return null;
 
@@ -139,12 +140,12 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
           ref={mapRef}
           style={{ height: "100%", width: "100%" }}
         >
-          {status === "took" && courierPosition && (
+          {effectiveCourierPosition && (
             <Marker
               anchor="center"
               className={courierMarkerClass}
-              latitude={courierPosition.latitude}
-              longitude={courierPosition.longitude}
+              latitude={effectiveCourierPosition.latitude}
+              longitude={effectiveCourierPosition.longitude}
             >
               <Icon id="car" />
             </Marker>
@@ -154,8 +155,8 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
             <Marker
               anchor="center"
               className={markerClass}
-              latitude={deliveryLat!}
-              longitude={deliveryLng!}
+              latitude={deliveryLat}
+              longitude={deliveryLng}
             >
               <Icon id="address" />
             </Marker>

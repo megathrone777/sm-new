@@ -36,7 +36,7 @@ const Submit: React.FC<TProps> = (product) => {
       toast(message, { type });
 
       if (type === "success") {
-        addToCart(null, newProduct);
+        void addToCart(null, newProduct);
       }
     });
   };

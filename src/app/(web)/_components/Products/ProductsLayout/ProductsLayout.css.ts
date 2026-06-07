@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { rgba, style, styleVariants } from "@/theme";
 
-export const titleClass = cssVariant(
+export const titleClass = styleVariants(
   ({ devices }) => ({
     default: {
       fontSize: 25,
@@ -22,6 +22,7 @@ export const titleClass = cssVariant(
       },
     },
   }),
+
   (size, { fonts }) => [
     {
       fontWeight: fonts.bold,
@@ -31,7 +32,7 @@ export const titleClass = cssVariant(
   ],
 );
 
-export const tabsListClass = cssVariant(
+export const tabsListClass = styleVariants(
   ({ devices }) => ({
     collapsed: {
       gap: 10,
@@ -59,6 +60,7 @@ export const tabsListClass = cssVariant(
       },
     },
   }),
+
   (variant) => [
     {
       display: "grid",
@@ -67,7 +69,7 @@ export const tabsListClass = cssVariant(
   ],
 );
 
-export const tabClass = cssVariant(
+export const tabClass = styleVariants(
   ({ devices }) => ({
     active: {
       height: 55,
@@ -79,6 +81,7 @@ export const tabClass = cssVariant(
         },
       },
     },
+
     collapsed: {
       height: 55,
       opacity: 0.7,
@@ -89,6 +92,7 @@ export const tabClass = cssVariant(
         },
       },
     },
+
     default: {
       height: 65,
       opacity: 1,
@@ -104,10 +108,11 @@ export const tabClass = cssVariant(
       },
     },
   }),
-  (variant, { devices, easing }) => [
+
+  (variant, { colors, devices, easing }) => [
     {
       borderRadius: 10,
-      boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
+      boxShadow: `0 0 10px 0 ${rgba(colors.black, 0.5)}`,
       transitionDuration: ".35s",
       transitionProperty: "height, opacity",
       transitionTimingFunction: easing,
@@ -122,7 +127,7 @@ export const tabClass = cssVariant(
   ],
 );
 
-export const tabButtonClass = css(({ devices }) => ({
+export const tabButtonClass = style(({ devices }) => ({
   border: "none",
   borderRadius: 10,
   display: "block",
@@ -138,7 +143,7 @@ export const tabButtonClass = css(({ devices }) => ({
   },
 }));
 
-export const tabImageClass = css(({ easing }) => ({
+export const tabImageClass = style(({ easing }) => ({
   objectFit: "cover",
   selectors: {
     [`${tabButtonClass}:hover > &`]: {
@@ -148,7 +153,7 @@ export const tabImageClass = css(({ easing }) => ({
   transition: `transform .5s ${easing}`,
 }));
 
-export const tabLabelClass = css(({ devices, fonts }) => ({
+export const tabLabelClass = style(({ devices, fonts }) => ({
   color: "white",
   display: "block",
   fontSize: 18,
@@ -186,7 +191,7 @@ export const tabLabelClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 10,

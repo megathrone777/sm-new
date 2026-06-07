@@ -1,10 +1,10 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   marginBottom: 15,
 });
 
-export const itemClass = css({
+export const itemClass = style({
   color: "white",
   fontSize: 18,
   marginBottom: 10,
@@ -12,13 +12,13 @@ export const itemClass = css({
   ":last-of-type": { marginBottom: 0 },
 });
 
-export const subListClass = css({
+export const subListClass = style({
   marginBottom: 5,
 
   ":last-of-type": { marginBottom: 0 },
 });
 
-export const subItemClass = css({
+export const subItemClass = style({
   fontSize: 16,
   marginBottom: 7,
 
@@ -32,7 +32,7 @@ export const subItemClass = css({
   ":last-of-type": { marginBottom: 0 },
 });
 
-export const subItem2Class = css({
+export const subItem2Class = style({
   display: "block",
   fontSize: 15,
   marginBottom: 5,

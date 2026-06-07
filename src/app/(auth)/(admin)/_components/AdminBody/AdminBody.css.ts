@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   alignContent: "start",
   display: "grid",
   gridTemplateColumns: "1fr",
@@ -19,12 +19,12 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const contentClass = css({
+export const contentClass = style({
   paddingBottom: 20,
   position: "relative",
 });
 
-export const burgerWrapperClass = css(({ colors, devices }) => ({
+export const burgerWrapperClass = style(({ colors, devices }) => ({
   alignItems: "center",
   backgroundColor: colors.black,
   borderRadius: 8,
@@ -45,9 +45,9 @@ export const burgerWrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const overlayClass = css({
-  backgroundColor: "rgba(0, 0, 0, .45)",
+export const overlayClass = style(({ colors }) => ({
+  backgroundColor: rgba(colors.black, 0.45),
   inset: 0,
   position: "fixed",
   zIndex: 101,
-});
+}));

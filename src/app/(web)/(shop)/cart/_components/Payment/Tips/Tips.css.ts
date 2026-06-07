@@ -1,11 +1,11 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   marginInline: -5,
   paddingBlock: 20,
 });
 
-export const titleClass = css(({ colors, fonts }) => ({
+export const titleClass = style(({ colors, fonts }) => ({
   borderBottom: `3px solid ${colors.red}`,
   fontSize: 20,
   fontWeight: fonts.bold,
@@ -14,14 +14,14 @@ export const titleClass = css(({ colors, fonts }) => ({
   width: "100%",
 }));
 
-export const descriptionClass = css({
+export const descriptionClass = style({
   fontSize: 16,
   marginBottom: 5,
   padding: "10px 5px",
   width: "100%",
 });
 
-export const rowClass = css({
+export const rowClass = style({
   columnGap: 30,
   display: "grid",
   gridAutoFlow: "column",

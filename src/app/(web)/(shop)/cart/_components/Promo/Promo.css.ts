@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const layoutClass = css({
+export const layoutClass = style({
   alignContent: "start",
   alignItems: "start",
   border: "none",
@@ -18,7 +18,7 @@ export const layoutClass = css({
   },
 });
 
-export const loadingWrapperClass = css({
+export const loadingWrapperClass = style({
   height: 25,
   position: "absolute",
   top: "50%",
@@ -26,7 +26,7 @@ export const loadingWrapperClass = css({
   width: 25,
 });
 
-export const successLayoutClass = css({
+export const successLayoutClass = style({
   backgroundColor: "green",
   borderRadius: "50%",
   color: "white",
@@ -40,7 +40,7 @@ export const successLayoutClass = css({
   width: 25,
 });
 
-export const resetButtonClass = css(({ colors }) => ({
+export const resetButtonClass = style(({ colors }) => ({
   backgroundColor: "transparent",
   border: "none",
   bottom: 6,
@@ -57,17 +57,17 @@ export const resetButtonClass = css(({ colors }) => ({
   },
 }));
 
-export const submitClass = css({
+export const submitClass = style({
   height: "100%",
   minWidth: 25,
   position: "relative",
 });
 
-export const buttonClass = css(({ colors, fonts }) => ({
+export const buttonClass = style(({ colors, fonts }) => ({
   backgroundColor: colors.red,
   border: "none",
   borderRadius: 5,
-  boxShadow: "0 0 8px 0 rgba(0, 0, 0, .3)",
+  boxShadow: `0 0 8px 0 ${rgba(colors.black, 0.3)}`,
   color: "white",
   cursor: "pointer",
   display: "inline-block",
@@ -80,9 +80,9 @@ export const buttonClass = css(({ colors, fonts }) => ({
   padding: "0 10px",
   textAlign: "center",
   textDecoration: "none",
-  transition: ".2s ease-in",
+  transition: "box-shadow .2s ease-in",
 
   ":hover": {
-    boxShadow: "0 0 12px 0 rgba(218, 38, 40, 0.4)",
+    boxShadow: `0 0 12px 0 ${rgba(colors.red, 0.4)}`,
   },
 }));

@@ -1,6 +1,6 @@
-import { css, globalStyle } from "@/theme";
+import { style, globalStyle } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "auto 100%",
@@ -14,13 +14,13 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const imageClass = css({
+export const imageClass = style({
   height: "auto",
   objectFit: "cover",
   width: "100%",
 });
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   marginInline: "auto",
   maxWidth: 1200,
 
@@ -31,7 +31,7 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   alignContent: "stretch",
   alignItems: "flex-start",
   display: "flex",
@@ -49,7 +49,7 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const itemClass = css({
+export const itemClass = style({
   display: "flex",
   flexDirection: "column",
   justifyContent: "flex-end",
@@ -82,7 +82,7 @@ globalStyle(`.${itemClass}:last-of-type`, ({ devices }) => ({
   },
 }));
 
-export const itemImageHolderClass = css(({ devices }) => ({
+export const itemImageHolderClass = style(({ devices }) => ({
   height: "auto",
   marginBottom: 20,
   marginInline: "auto",
@@ -110,7 +110,7 @@ globalStyle(`.${itemClass}:first-of-type .${itemImageHolderClass}`, ({ devices }
   },
 }));
 
-export const itemImageClass = css(({ devices }) => ({
+export const itemImageClass = style(({ devices }) => ({
   display: "block",
   height: "auto",
   width: "100%",
@@ -123,7 +123,7 @@ export const itemImageClass = css(({ devices }) => ({
   },
 }));
 
-export const itemDescriptionClass = css(({ devices, fonts }) => ({
+export const itemDescriptionClass = style(({ devices, fonts }) => ({
   color: "white",
   fontSize: 18,
   fontWeight: fonts.medium,
@@ -157,13 +157,13 @@ globalStyle(`.${itemDescriptionClass} ul li::before`, {
   marginRight: 5,
 });
 
-globalStyle(`.${itemDescriptionClass} > span`, ({ devices }) => ({
-  color: "#ffcc00",
+globalStyle(`.${itemDescriptionClass} > span`, ({ colors, devices }) => ({
+  color: colors.yellowLighter,
   display: "block",
   fontSize: 46,
   fontWeight: 700,
   textAlign: "center",
-  textShadow: "0 0 15px #ffcc00",
+  textShadow: `0 0 15px ${colors.yellowLighter}`,
   top: 175,
   whiteSpace: "nowrap",
 

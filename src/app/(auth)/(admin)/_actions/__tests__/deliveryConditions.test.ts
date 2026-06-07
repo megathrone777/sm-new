@@ -47,14 +47,14 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.deliveryConditions.set).mockResolvedValue(undefined as never);
+  jest.mocked(store.deliveryConditions.set).mockResolvedValue(undefined);
   jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([] as never);
 });
 
 describe("createDeliveryCondition", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createDeliveryCondition(null, makeFormData());
 

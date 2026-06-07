@@ -1,8 +1,8 @@
 import { calc } from "@vanilla-extract/css-utils";
 
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   alignContent: "end",
   bottom: 0,
   display: "grid",
@@ -11,7 +11,7 @@ export const wrapperClass = css({
   zIndex: 201,
 });
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   alignContent: "end",
   display: "grid",
   gridAutoFlow: "row",
@@ -47,12 +47,12 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const buttonClass = css(({ colors, easing }) => ({
+export const buttonClass = style(({ colors, easing }) => ({
   alignItems: "center",
   backgroundColor: colors.white,
   border: "none",
   borderRadius: 4,
-  boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
+  boxShadow: `0 0 10px 0 ${rgba(colors.black, 0.5)}`,
   color: "black",
   display: "grid",
   height: 45,
@@ -69,7 +69,7 @@ export const buttonClass = css(({ colors, easing }) => ({
   },
 }));
 
-export const iconClass = css({
+export const iconClass = style({
   display: "block",
   width: 33,
 });

@@ -64,7 +64,7 @@ describe("promocodes helpers", () => {
 
     it("handles missing optional fields with defaults", () => {
       const promocode: Omit<TPromoCode, "orderIds"> = {
-        activatedAt: "" as TPromoCode["activatedAt"],
+        activatedAt: "",
         appliedCount: 0,
         code: "TEST",
         discount: 20,
@@ -72,7 +72,7 @@ describe("promocodes helpers", () => {
         isActive: false,
         isLimitedBySchedule: false,
         type: "oneTime",
-        usability: "" as TPromoCode["usability"],
+        usability: "",
       };
 
       const result = serializeFields(promocode);

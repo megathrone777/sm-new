@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "column",
   justifyContent: "center",
@@ -18,7 +18,7 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const itemClass = cssVariant(
+export const itemClass = styleVariants(
   ({ devices }) => ({
     instagram: {},
 
@@ -89,7 +89,7 @@ export const itemClass = cssVariant(
   ],
 );
 
-export const linkClass = css({
+export const linkClass = style({
   display: "block",
   height: "100%",
   overflow: "hidden",

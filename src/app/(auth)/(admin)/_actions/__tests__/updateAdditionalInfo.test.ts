@@ -37,13 +37,13 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.additionalInfo.set).mockResolvedValue(undefined as never);
+  jest.mocked(store.additionalInfo.set).mockResolvedValue(undefined);
 });
 
 describe("updateAdditionalInfo", () => {
   describe("auth", () => {
     it("returns error and does not save when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateAdditionalInfo(null, makeFormData());
 
@@ -85,7 +85,7 @@ describe("updateAdditionalInfo", () => {
       );
 
       const [patch] = jest.mocked(store.additionalInfo.set).mock.calls[0] as [
-        Partial<TAdditionalInfo>,
+        Partial<TAdditionalInfo>
       ];
 
       expect(patch.title).toBe("Info");
@@ -97,7 +97,7 @@ describe("updateAdditionalInfo", () => {
       await updateAdditionalInfo(null, makeFormData({ col2Title: "   " }));
 
       const [patch] = jest.mocked(store.additionalInfo.set).mock.calls[0] as [
-        Partial<TAdditionalInfo>,
+        Partial<TAdditionalInfo>
       ];
 
       expect(patch.col2Title).toBe("");

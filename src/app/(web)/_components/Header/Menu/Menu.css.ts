@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   "@media": {
     [devices.desktop]: {
       height: 125,
@@ -8,7 +8,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = cssVariant(
+export const layoutClass = styleVariants(
   ({ devices }) => ({
     closed: {
       opacity: 0,
@@ -63,7 +63,7 @@ export const layoutClass = cssVariant(
   ],
 );
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   alignItems: "center",
   display: "grid",
   rowGap: 15,
@@ -82,7 +82,7 @@ export const listClass = css(({ devices }) => ({
   },
 }));
 
-export const linkClass = cssVariant(
+export const linkClass = styleVariants(
   ({ colors }) => ({
     active: colors.red,
     default: "white",
@@ -111,7 +111,7 @@ export const linkClass = cssVariant(
   ],
 );
 
-export const contactClass = css(({ devices }) => ({
+export const contactClass = style(({ devices }) => ({
   "@media": {
     [devices.desktop]: {
       gridColumn: 2,
@@ -119,7 +119,7 @@ export const contactClass = css(({ devices }) => ({
   },
 }));
 
-export const contactLinkClass = css(({ colors, devices, fonts }) => ({
+export const contactLinkClass = style(({ colors, devices, fonts }) => ({
   color: colors.red,
   fontSize: 28,
   fontWeight: fonts.medium,
@@ -153,7 +153,7 @@ export const contactLinkClass = css(({ colors, devices, fonts }) => ({
   },
 }));
 
-export const burgerClass = css(({ devices }) => ({
+export const burgerClass = style(({ devices }) => ({
   position: "relative",
   zIndex: 100,
 

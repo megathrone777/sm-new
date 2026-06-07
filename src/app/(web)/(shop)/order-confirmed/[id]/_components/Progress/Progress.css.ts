@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   paddingTop: 10,
@@ -15,13 +15,13 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const labelClass = css(({ colors, fonts }) => ({
+export const labelClass = style(({ colors, fonts }) => ({
   color: colors.greenLighter,
   fontSize: 18,
   fontWeight: fonts.demi,
 }));
 
-export const mapClass = cssVariant(
+export const mapClass = styleVariants(
   {
     active: {
       filter: "none",
@@ -44,13 +44,13 @@ export const mapClass = cssVariant(
   ],
 );
 
-export const markerClass = css(({ colors }) => ({
+export const markerClass = style(({ colors }) => ({
   background: "none",
   color: colors.amber,
   width: 17,
 }));
 
-export const courierMarkerClass = css(({ colors }) => ({
+export const courierMarkerClass = style(({ colors }) => ({
   background: "none",
   color: colors.amber,
   height: 30,

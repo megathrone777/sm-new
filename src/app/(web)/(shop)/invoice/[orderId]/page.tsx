@@ -1,8 +1,9 @@
 import React from "react";
 import { notFound } from "next/navigation";
 
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
+import { vars } from "@/theme";
 import { Container } from "@/ui";
 
 import { PrintBar, PrintTrigger } from "./_components";
@@ -44,7 +45,6 @@ const formatDate = (iso: string): string =>
   }).format(new Date(iso));
 
 const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
-  const { t } = useTranslation();
   const { orderId } = await params;
   const [order, settings] = await Promise.all([
     store.orders.getById(+orderId),
@@ -78,6 +78,7 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
         <div className={headerClass}>
           <div>
             <div className={labelClass}>{settings?.businessName ?? "Sushi-man"}</div>
+
             {settings?.address && <div>{settings.address}</div>}
             {settings?.companyDetails && <div>{settings.companyDetails}</div>}
             {settings?.phone && <div>Tel: {settings.phone}</div>}
@@ -93,6 +94,7 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
         <div className={partyGridClass}>
           <div>
             <div className={labelClass}>Prodávající:</div>
+
             <div className={partyClass}>
               <div>{settings?.businessName ?? "Sushi-man"}</div>
               {settings?.address && <div>{settings.address}</div>}
@@ -101,6 +103,7 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
 
           <div>
             <div className={labelClass}>Kupující:</div>
+
             <div className={partyClass}>
               <div>{clientName}</div>
               {deliveryType === "delivery" && deliveryAddress && <div>{deliveryAddress}</div>}
@@ -116,10 +119,12 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
               <span className={metaKeyClass}>Daňový doklad:</span>
               Faktura
             </div>
+
             <div>
               <span className={metaKeyClass}>Datum vystavení:</span>
               {dateStr}
             </div>
+
             <div>
               <span className={metaKeyClass}>Datum splatnosti:</span>
               {dateStr}
@@ -131,6 +136,7 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
               <span className={metaKeyClass}>Způsob úhrady:</span>
               {PAYMENT_LABELS[paymentType]}
             </div>
+
             <div>
               <span className={metaKeyClass}>Způsob doručení:</span>
               {deliveryType === "pickup" ? "Vyzvednutí" : "Kurýr"}
@@ -157,7 +163,7 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
                   {p.modifiers.map((m) => (
                     <div
                       key={m.id}
-                      style={{ color: "#777", fontSize: 10 }}
+                      style={{ color: vars.colors.grayDarkest, fontSize: 10 }}
                     >
                       + {m.title}
                       {m.subModifier ? ` – ${m.subModifier.title}` : ""}
@@ -168,29 +174,31 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
                 <td className={tdRightClass}>{p.quantity}</td>
 
                 <td className={tdRightClass}>
-                  {(p.totalPrice / p.quantity).toFixed(0)} {t<string>("currency")}
+                  {(p.totalPrice / p.quantity).toFixed(0)} {getTranslation<string>("currency")}
                 </td>
 
                 <td className={tdRightClass}>
-                  {p.totalPrice} {t<string>("currency")}
+                  {p.totalPrice} {getTranslation<string>("currency")}
                 </td>
               </tr>
             ))}
 
-            {additionals.map<React.ReactElement>((a) => (
-              <tr key={`additional-${a.id}`}>
-                <td className={tdClass}>{a.title}</td>
-                <td className={tdRightClass}>{a.quantity}</td>
+            {additionals.map<React.ReactElement>(
+              ({ id, price, quantity, title, totalPrice }: TOrderAdditional) => (
+                <tr key={`additional-${id}`}>
+                  <td className={tdClass}>{title}</td>
+                  <td className={tdRightClass}>{quantity}</td>
 
-                <td className={tdRightClass}>
-                  {a.price} {t<string>("currency")}
-                </td>
+                  <td className={tdRightClass}>
+                    {price} {getTranslation<string>("currency")}
+                  </td>
 
-                <td className={tdRightClass}>
-                  {a.totalPrice} {t<string>("currency")}
-                </td>
-              </tr>
-            ))}
+                  <td className={tdRightClass}>
+                    {totalPrice} {getTranslation<string>("currency")}
+                  </td>
+                </tr>
+              ),
+            )}
 
             {deliveryPrice > 0 && (
               <tr>
@@ -198,11 +206,11 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
                 <td className={tdRightClass}>1</td>
 
                 <td className={tdRightClass}>
-                  {deliveryPrice} {t<string>("currency")}
+                  {deliveryPrice} {getTranslation<string>("currency")}
                 </td>
 
                 <td className={tdRightClass}>
-                  {deliveryPrice} {t<string>("currency")}
+                  {deliveryPrice} {getTranslation<string>("currency")}
                 </td>
               </tr>
             )}
@@ -216,7 +224,7 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
               </td>
 
               <td className={totalAmountClass}>
-                {totalPrice} {t<string>("currency")}
+                {totalPrice} {getTranslation<string>("currency")}
               </td>
             </tr>
           </tbody>

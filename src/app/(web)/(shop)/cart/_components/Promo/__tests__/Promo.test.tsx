@@ -45,7 +45,7 @@ import { Promo } from "../Promo";
 
 const defaultProps = {
   addressError: undefined,
-  delivery: { address: "Karlova 15", type: "delivery" as TDeliveryType } as TDelivery,
+  delivery: { address: "Karlova 15", type: "delivery" } as TDelivery,
   phoneError: undefined,
   phoneNumber: "420737123456",
   promo: { code: "", discount: 0 },
@@ -95,7 +95,7 @@ describe("Promo", () => {
           delivery={
             {
               address: "",
-              type: "delivery" as TDeliveryType,
+              type: "delivery",
             } as TDelivery
           }
         />,
@@ -122,7 +122,7 @@ describe("Promo", () => {
           delivery={
             {
               address: "",
-              type: "pickup" as TDeliveryType,
+              type: "pickup",
             } as TDelivery
           }
         />,

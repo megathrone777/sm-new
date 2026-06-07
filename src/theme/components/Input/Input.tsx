@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useState } from "react";
+import React, { useId, useState } from "react";
 
 import { Icon } from "@/ui";
 
@@ -15,7 +15,7 @@ import {
 
 import type { TProps } from "./Input.types";
 
-const CYRILLIC_REGEX = /[Ѐ-ӿԀ-ԯⷠ-ⷿꙀ-ꚟ]/;
+const cyrillicRegex = /[Ѐ-ӿԀ-ԯⷠ-ⷿꙀ-ꚟ]/;
 
 const Input: React.FC<TProps> = ({
   iconId,
@@ -29,6 +29,12 @@ const Input: React.FC<TProps> = ({
 }) => {
   const inputId = useId();
   const [showError, setShowError] = useState<boolean>(Boolean(isError));
+  const [prevIsError, setPrevIsError] = useState(isError);
+
+  if (prevIsError !== isError) {
+    setPrevIsError(isError);
+    setShowError(Boolean(isError));
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>): void => {
     const { currentTarget } = event;
@@ -44,7 +50,7 @@ const Input: React.FC<TProps> = ({
     if (restrictCyrillic) {
       const { data } = event.nativeEvent;
 
-      if (data && CYRILLIC_REGEX.test(data)) {
+      if (data && cyrillicRegex.test(data)) {
         event.preventDefault();
 
         return;
@@ -53,10 +59,6 @@ const Input: React.FC<TProps> = ({
 
     onBeforeInput?.(event);
   };
-
-  useEffect((): void => {
-    setShowError(Boolean(isError));
-  }, [isError]);
 
   return (
     <div className={wrapperClass}>

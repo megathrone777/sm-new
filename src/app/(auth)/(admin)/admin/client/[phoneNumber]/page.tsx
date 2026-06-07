@@ -4,7 +4,7 @@ import Link from "next/link";
 import { deleteClient } from "@/app/(auth)/(admin)/_actions";
 import { Header } from "@/app/(auth)/(admin)/_components";
 import { DeleteAlert } from "@/app/(auth)/_components";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Button, Input } from "@/ui";
 
@@ -18,7 +18,6 @@ const Page: React.FC<PageProps<"/admin/client/[phoneNumber]">> = async ({
   const { deleteId, deleteTitle } = await searchParams;
   const orders = await store.orders.getByPhone(phoneNumber);
   const client = await store.clients.getByPhone(phoneNumber);
-  const { t } = useTranslation();
 
   if (!client) {
     return <Header title="Client not found." />;
@@ -66,7 +65,7 @@ const Page: React.FC<PageProps<"/admin/client/[phoneNumber]">> = async ({
                     href={`/admin/order/${id}`}
                   >
                     <span className={idClass}>#{id}</span> {status}, {totalPrice}{" "}
-                    {t<string>("currency")}, {new Date(createdAt).toLocaleDateString()}
+                    {getTranslation<string>("currency")}, {new Date(createdAt).toLocaleDateString()}
                   </Link>
                 </p>
               ))}

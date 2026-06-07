@@ -8,7 +8,7 @@ import {
   ImageUploader,
 } from "@/app/(auth)/(admin)/_components";
 import { FormLayout } from "@/app/(auth)/(admin)/_components";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
@@ -21,7 +21,6 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
     store.modifiers.getAll(),
     store.categories.getAll(),
   ]);
-  const { t } = useTranslation();
 
   if (!product) return <Header title="Product not found" />;
 
@@ -78,7 +77,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
 
         <Input
           defaultValue={product.price}
-          label={`Price (${t<string>("currency")})`}
+          label={`Price (${getTranslation<string>("currency")})`}
           name="price"
           type="number"
         />
@@ -135,7 +134,7 @@ const Page: React.FC<PageProps<"/admin/product/[slug]">> = async ({ params }) =>
         <ModifiersSelect
           defaultValue={assignedModifierIds}
           options={modifiers.map<TSelectOption>(({ id, price, title }: TModifier) => ({
-            label: `${title}${price !== 0 ? ` +${price} ${t<string>("currency")}` : ""}`,
+            label: `${title}${price !== 0 ? ` +${price} ${getTranslation<string>("currency")}` : ""}`,
             value: `${id}`,
           }))}
         />

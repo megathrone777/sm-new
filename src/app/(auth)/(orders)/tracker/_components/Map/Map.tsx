@@ -9,7 +9,7 @@ import { Icon } from "@/ui";
 import { DeliveryMarkers, isPaymentVisible, toDeliveryOrder } from "./DeliveryMarkers";
 import { FitBounds } from "./FitBounds";
 
-import { markerClass } from "./Map.css";
+import { markerClass, markerIconClass } from "./Map.css";
 
 import type { TProps } from "./Map.types";
 
@@ -20,7 +20,7 @@ const kitchenCoords: LngLatLike = {
 const pollIntervalMs: number = 10000;
 
 const Map: React.FC<TProps> = ({ initialOrders }) => {
-  const [couriers, setCouriers] = useState<TCourier[]>([]);
+  const [couriers, setCouriers] = useState<TCourier[]>(() => getCouriers());
   const [orders, setOrders] = useState<TOrder[]>(initialOrders);
 
   useRealtime({
@@ -59,15 +59,11 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
 
   useEffect((): VoidFunction => {
     let active = true;
-
-    const fetchCouriers = async (): Promise<void> => {
-      const data = await getCouriers();
+    const interval = setInterval((): void => {
+      const data = getCouriers();
 
       if (active) setCouriers(data);
-    };
-
-    fetchCouriers();
-    const interval = setInterval(fetchCouriers, pollIntervalMs);
+    }, pollIntervalMs);
 
     return (): void => {
       active = false;
@@ -87,15 +83,8 @@ const Map: React.FC<TProps> = ({ initialOrders }) => {
             anchor="center"
           >
             <svg
+              className={markerIconClass}
               height={30}
-              style={{
-                color: "#ffd43b",
-                fill: "none",
-                stroke: "currentColor",
-                strokeLinecap: "round",
-                strokeLinejoin: "round",
-                strokeWidth: 2,
-              }}
               viewBox="0 0 24 24"
               width={30}
               xmlns="http://www.w3.org/2000/svg"

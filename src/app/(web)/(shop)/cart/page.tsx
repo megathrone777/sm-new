@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 
 import { Products } from "@/app/(web)/_components";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Container } from "@/ui";
 import { isShopOpened } from "@/utils";
@@ -41,7 +41,6 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
   const mobileOrder = calculateMobileOrder(mobileLayout);
   const { isAvailable, schedule } = settings;
   const shopIsOpen = isShopOpened(schedule, isAvailable);
-  const { t } = useTranslation();
 
   const renderCart = (): null | React.ReactElement => {
     if (!shopIsOpen) return <Placeholder />;
@@ -71,14 +70,14 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
             {...{ categoryDiscount }}
             initialProducts={products}
             placeholder={<Placeholder />}
-            productsTitle={t<string>("order")}
+            productsTitle={getTranslation<string>("order")}
             queue={<Queue />}
           >
             <FormLayout {...{ errors, gridTemplateAreas }}>
               <SectionLayout
                 gridArea="delivery"
                 order={mobileOrder.delivery}
-                title={t<string>("delivery")}
+                title={getTranslation<string>("delivery")}
               >
                 <Delivery
                   {...{ totalPrice }}
@@ -112,7 +111,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <SectionLayout
                 gridArea="cutlery"
                 order={mobileOrder.cutlery}
-                title={t<string>("cutleryQuantity")}
+                title={getTranslation<string>("cutleryQuantity")}
               >
                 <Cutlery
                   {...cutlery}
@@ -123,7 +122,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <SectionLayout
                 gridArea="additionals"
                 order={mobileOrder.additionals}
-                title={t<string>("addMore")}
+                title={getTranslation<string>("addMore")}
               >
                 <Additionals {...{ additionals, cartAdditionals }} />
               </SectionLayout>
@@ -131,7 +130,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <SectionLayout
                 gridArea="note"
                 order={mobileOrder.note}
-                title={t<string>("note")}
+                title={getTranslation<string>("note")}
               >
                 <Note defaultValue={note} />
               </SectionLayout>
@@ -139,7 +138,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <SectionLayout
                 gridArea="promo"
                 order={mobileOrder.promo}
-                title={t<string>("promoTitle")}
+                title={getTranslation<string>("promoTitle")}
               >
                 <Promo
                   {...{ delivery, promo }}
@@ -153,7 +152,7 @@ const Page: React.FC<PageProps<"/cart">> = async () => {
               <SectionLayout
                 gridArea="payment"
                 order={mobileOrder.payment}
-                title={t<string>("paymentMethods")}
+                title={getTranslation<string>("paymentMethods")}
               >
                 <Payment
                   {...{ payment, tips, totalPrice }}

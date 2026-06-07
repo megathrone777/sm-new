@@ -52,7 +52,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
 
   const handleBlur = (): void => {
     setTouched(true);
-    setCartError("phone", telephone.valid ? "" : "Neplatné telefonní číslo");
+    void setCartError("phone", telephone.valid ? "" : "Neplatné telefonní číslo");
   };
 
   const handleCountryChange = (countryCode: CountryCode): void => {
@@ -73,7 +73,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     const asYouType = new AsYouType();
 
     asYouType.input(currentTarget.value);
-    setPartialCountry(asYouType.getCountry() as CountryCode | undefined);
+    setPartialCountry(asYouType.getCountry());
   };
 
   const placeholder = getFormatPlaceholder(effectiveCountry);
@@ -82,7 +82,7 @@ const Phone: React.FC<TProps> = ({ isError, phoneNumber }) => {
     if (!telephone.valid || !telephone.parsed) return;
     const { number } = telephone.parsed;
 
-    updatePhone(number);
+    void updatePhone(number);
   }, [telephone.valid]);
 
   useLayoutEffect((): void => {

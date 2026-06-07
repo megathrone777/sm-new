@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   display: "grid",
   gridAutoFlow: "row",
   marginLeft: "auto",

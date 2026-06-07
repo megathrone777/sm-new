@@ -56,7 +56,7 @@ const CartGrid: React.FC<TProps> = ({
   onSave,
   title,
 }) => {
-  const [layout, setLayout] = useState<Layout>(toLayoutItems(initialLayout));
+  const [layout, setLayout] = useState<Layout>(() => toLayoutItems(initialLayout));
   const [isLoading, startTransition] = useTransition();
   const { containerRef, mounted, width } = useContainerWidth();
   const savedLayoutRef = useRef<Layout>(toLayoutItems(initialLayout));

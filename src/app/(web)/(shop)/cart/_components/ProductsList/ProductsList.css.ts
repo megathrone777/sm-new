@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   minHeight: 232,
@@ -14,7 +14,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const discountClass = css(({ devices, fonts }) => ({
+export const discountClass = style(({ devices, fonts }) => ({
   fontWeight: fonts.medium,
   marginBottom: 15,
   textAlign: "right",
@@ -26,7 +26,7 @@ export const discountClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const labelClass = css(({ colors, fonts }) => ({
+export const labelClass = style(({ colors, fonts }) => ({
   color: colors.red,
   fontWeight: fonts.bold,
 }));

@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   alignItems: "start",
   columnGap: 5,
   display: "grid",
@@ -14,7 +14,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = cssVariant(
+export const layoutClass = styleVariants(
   {
     normal: {
       height: 25,
@@ -43,7 +43,7 @@ export const layoutClass = cssVariant(
   ],
 );
 
-export const inputClass = css({
+export const inputClass = style({
   cursor: "pointer",
   display: "block",
   height: "100%",
@@ -55,7 +55,7 @@ export const inputClass = css({
   zIndex: 2,
 });
 
-export const iconClass = cssVariant(
+export const iconClass = styleVariants(
   ({ devices }) => ({
     normal: {
       height: 13,
@@ -85,7 +85,7 @@ export const iconClass = cssVariant(
   ],
 );
 
-export const labelClass = cssVariant(
+export const labelClass = styleVariants(
   ({ fonts }) => ({
     bold: {
       fontWeight: fonts.bold,
@@ -112,7 +112,7 @@ export const labelClass = cssVariant(
   ],
 );
 
-export const hintClass = css(({ colors, fonts }) => ({
+export const hintClass = style(({ colors, fonts }) => ({
   color: colors.red,
   display: "inline-block",
   fontWeight: fonts.bold,

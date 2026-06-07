@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState, useEffect, useState } from "react";
+import React, { useActionState, useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import Form from "next/form";
 
@@ -17,7 +17,16 @@ const FormLayout: React.FC<TProps> = ({
   resetOnSuccess = true,
 }) => {
   const [state, action, pending] = useActionState(formAction, null);
-  const [submitKey, setSubmitKey] = useState(0);
+  const prevStateRef = useRef<TActionResult>(state);
+  const submitKeyRef = useRef<number>(0);
+
+  if (state !== prevStateRef.current) {
+    if (state?.type === "success" && resetOnSuccess) {
+      submitKeyRef.current += 1;
+    }
+
+    prevStateRef.current = state;
+  }
 
   useEffect((): void => {
     if (!state) return;
@@ -25,9 +34,6 @@ const FormLayout: React.FC<TProps> = ({
 
     if (type === "success") {
       (document.activeElement as HTMLElement)?.blur();
-      if (resetOnSuccess) {
-        setSubmitKey((prevKey: number): number => prevKey + 1);
-      }
     }
 
     toast(message, { type });
@@ -41,7 +47,7 @@ const FormLayout: React.FC<TProps> = ({
     >
       <div
         className={`${contentClass}${layoutClassName ? ` ${layoutClassName}` : ""}`}
-        key={submitKey}
+        key={submitKeyRef.current}
       >
         {children}
       </div>

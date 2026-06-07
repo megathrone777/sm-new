@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { Dialog, Icon } from "@/ui";
@@ -19,16 +19,23 @@ const Controls: React.FC<TProps> = ({
   title,
 }) => {
   const pathname = usePathname();
-  const [userDialogOpened, toggleUserDialogOpened] = useState<boolean>(false);
-  const [closedDialogOpened, toggleClosedDialogOpened] = useState<boolean>(() => !isOpened);
-  const [showScroller, toggleScroller] = useState<boolean>(false);
+  const [userDialogOpened, setUserDialogOpened] = useState<boolean>(false);
+  const [closedDialogOpened, setClosedDialogOpened] = useState<boolean>(() => !isOpened);
+  const [showScroller, setShowScroller] = useState<boolean>(false);
+  const [prevPathname, setPrevPathname] = useState<string>(pathname);
+  const isMountedRef = useRef(false);
+
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setShowScroller(false);
+  }
 
   const handleUserDialogToggle = (): void => {
-    toggleUserDialogOpened((prev: boolean): boolean => !prev);
+    setUserDialogOpened((prevOpened: boolean): boolean => !prevOpened);
   };
 
   const handleClosedDialogClose = (): void => {
-    toggleClosedDialogOpened(false);
+    setClosedDialogOpened(false);
   };
 
   const handleScrollTop = (): void => {
@@ -38,18 +45,26 @@ const Controls: React.FC<TProps> = ({
     });
   };
 
-  useEffect((): void | VoidFunction => {
-    const heroSection = document.getElementById("hero-section");
-
-    if (!heroSection) {
-      toggleScroller(false);
+  useEffect((): void => {
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
 
       return;
     }
 
+    if (!location.hash) {
+      document.documentElement.scrollTo(0, 0);
+    }
+  }, [pathname]);
+
+  useEffect((): void | VoidFunction => {
+    const heroSection = document.getElementById("hero-section");
+
+    if (!heroSection) return;
+
     const scrollObserver = new IntersectionObserver(([entry]): void => {
       if (entry) {
-        toggleScroller(!entry.isIntersecting);
+        setShowScroller(!entry.isIntersecting);
       }
     });
 
@@ -62,7 +77,7 @@ const Controls: React.FC<TProps> = ({
 
   useEffect((): VoidFunction => {
     const onShopClosed = (): void => {
-      toggleClosedDialogOpened(true);
+      setClosedDialogOpened(true);
     };
 
     window.addEventListener(SHOP_CLOSED_EVENT, onShopClosed);

@@ -1,13 +1,13 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   alignItems: "start",
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 15,
 });
 
-export const layoutClass = cssVariant(
+export const layoutClass = styleVariants(
   ({ colors }) => ({
     default: {
       color: colors.black,
@@ -35,7 +35,7 @@ export const layoutClass = cssVariant(
   ],
 );
 
-export const nameClass = css(({ fonts }) => ({
+export const nameClass = style(({ fonts }) => ({
   alignItems: "center",
   color: "inherit",
   columnGap: 10,
@@ -46,27 +46,27 @@ export const nameClass = css(({ fonts }) => ({
   minWidth: 105,
 }));
 
-export const priceClass = css(({ fonts }) => ({
+export const priceClass = style(({ fonts }) => ({
   color: "inherit",
   fontSize: 18,
   fontWeight: fonts.bold,
 }));
 
-export const quantityClass = css({
+export const quantityClass = style({
   alignItems: "center",
   display: "grid",
   gridAutoFlow: "column",
   justifyContent: "start",
 });
 
-export const quantityAmountClass = css(({ fonts }) => ({
+export const quantityAmountClass = style(({ fonts }) => ({
   fontSize: 18,
   fontWeight: fonts.bold,
   textAlign: "center",
   width: 50,
 }));
 
-export const errorIconClass = css({
+export const errorIconClass = style({
   display: "inline-block",
   height: 20,
   selectors: {

@@ -1,6 +1,6 @@
 import { keyframes } from "@vanilla-extract/css";
 
-import { cssVariant } from "@/theme";
+import { styleVariants } from "@/theme";
 
 const spin = keyframes({
   "0%": {
@@ -12,7 +12,7 @@ const spin = keyframes({
   },
 });
 
-export const wrapperClass = cssVariant(
+export const wrapperClass = styleVariants(
   {
     normal: {
       borderWidth: 8,
@@ -25,6 +25,7 @@ export const wrapperClass = cssVariant(
       width: 22,
     },
   },
+
   (template) => [
     {
       animationDuration: ".5s",

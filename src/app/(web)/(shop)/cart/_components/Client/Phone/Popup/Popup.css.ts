@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { rgba, style, styleVariants } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   alignItems: "center",
   display: "grid",
   height: "100%",
@@ -8,7 +8,7 @@ export const wrapperClass = css({
   width: 30,
 });
 
-export const popupClass = cssVariant(
+export const popupClass = styleVariants(
   {
     closed: {
       opacity: 0,
@@ -47,14 +47,14 @@ export const popupClass = cssVariant(
   ],
 );
 
-export const listClass = css({
+export const listClass = style({
   borderBottomLeftRadius: 6,
   borderBottomRightRadius: 6,
   maxHeight: 200,
   overflowY: "auto",
 });
 
-export const optionClass = css(({ fonts }) => ({
+export const optionClass = style(({ colors, fonts }) => ({
   alignItems: "center",
   background: "none",
   border: "none",
@@ -74,20 +74,20 @@ export const optionClass = css(({ fonts }) => ({
   },
 
   ":hover": {
-    backgroundColor: "rgba(0, 0, 0, .1)",
+    backgroundColor: rgba(colors.black, 0.1),
   },
 }));
 
-export const optionImageClass = css({
+export const optionImageClass = style({
   height: 14,
   width: 20,
 });
 
-export const optionCodeClass = css(({ colors }) => ({
+export const optionCodeClass = style(({ colors }) => ({
   color: colors.gray,
 }));
 
-export const triggerClass = css({
+export const triggerClass = style({
   alignItems: "center",
   background: "none",
   border: "none",
@@ -100,17 +100,17 @@ export const triggerClass = css({
   },
 });
 
-export const imageClass = css({
+export const imageClass = style({
   display: "block",
   width: 21,
 });
 
-export const searchWrapperClass = css(({ colors }) => ({
+export const searchWrapperClass = style(({ colors }) => ({
   borderBottom: `2px solid ${colors.red}`,
   height: 35,
 }));
 
-export const searchInputClass = css(({ fonts }) => ({
+export const searchInputClass = style(({ fonts }) => ({
   background: "none",
   border: "none",
   borderRadius: 4,

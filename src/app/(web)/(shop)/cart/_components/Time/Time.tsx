@@ -74,7 +74,7 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
     formData.set("time", value);
 
     startTransition((): void => {
-      updateDeliveryTime(formData);
+      void updateDeliveryTime(formData);
     });
   };
 
@@ -82,7 +82,7 @@ const Time: React.FC<TProps> = ({ deliveryType, schedule, time }) => {
 
   const getOptions = (): TSelectOption[] => {
     const today = WEEKDAY_LOOKUP[new Date().getDay()] ?? "monday";
-    const daySchedule = schedule[today as TWeekDay];
+    const daySchedule = schedule[today];
     const slots = generateOptions(daySchedule).map<TSelectOption>((slot: string) => ({
       label: slot,
       value: slot,

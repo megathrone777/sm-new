@@ -1,12 +1,12 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   marginTop: 10,
   paddingBottom: 5,
   position: "relative",
 });
 
-export const iconClass = css(({ colors }) => ({
+export const iconClass = style(({ colors }) => ({
   color: colors.red,
   display: "block",
   height: 34,
@@ -16,7 +16,7 @@ export const iconClass = css(({ colors }) => ({
   width: 30,
 }));
 
-export const textareaClass = css(({ colors, devices, fonts }) => ({
+export const textareaClass = style(({ colors, devices, fonts }) => ({
   border: "none",
   borderBottom: `2px solid ${colors.red}`,
   borderRadius: 0,

@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   alignContent: "center",
   alignItems: "center",
   backgroundColor: "white",
@@ -27,7 +27,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   fontSize: 22,
   fontWeight: fonts.bold,
 
@@ -39,7 +39,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   alignContent: "center",
   alignItems: "center",
   columnGap: 20,

@@ -1,13 +1,13 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   display: "grid",
   gridAutoFlow: "row",
   position: "relative",
   rowGap: 4,
 });
 
-export const layoutClass = css(({ colors, fonts }) => ({
+export const layoutClass = style(({ colors, fonts }) => ({
   ".rc-select-content": {
     display: "grid",
     gap: "4px",
@@ -56,7 +56,7 @@ export const layoutClass = css(({ colors, fonts }) => ({
   zIndex: 11,
 }));
 
-export const labelClass = css(({ fonts }) => ({
+export const labelClass = style(({ fonts }) => ({
   cursor: "pointer",
   fontWeight: fonts.bold,
   justifySelf: "start",
@@ -64,12 +64,12 @@ export const labelClass = css(({ fonts }) => ({
   userSelect: "none",
 }));
 
-export const optionClass = css({
+export const optionClass = style({
   paddingBlock: 0,
   paddingRight: 8,
 });
 
-export const tagClass = css(({ fonts }) => ({
+export const tagClass = style(({ fonts }) => ({
   alignItems: "center",
   backgroundColor: "rgb(214, 216, 215)",
   borderRadius: 10,
@@ -82,7 +82,7 @@ export const tagClass = css(({ fonts }) => ({
   paddingInline: 6,
 }));
 
-export const closeButtonClass = css({
+export const closeButtonClass = style({
   alignItems: "center",
   backgroundColor: "transparent",
   border: "none",
@@ -106,13 +106,13 @@ export const closeButtonClass = css({
   },
 });
 
-export const iconClass = css(({ colors }) => ({
+export const iconClass = style(({ colors }) => ({
   color: colors.red,
   height: 15,
   width: 15,
 }));
 
-export const suffixClass = css(({ colors, easing }) => ({
+export const suffixClass = style(({ colors, easing }) => ({
   color: colors.red,
   cursor: "pointer",
   height: 21,
@@ -130,12 +130,12 @@ export const suffixClass = css(({ colors, easing }) => ({
   width: 21,
 }));
 
-export const searchWrapperClass = css(({ colors }) => ({
+export const searchWrapperClass = style(({ colors }) => ({
   borderBottom: `2px solid ${colors.red}`,
   height: 35,
 }));
 
-export const searchInputClass = css(({ fonts }) => ({
+export const searchInputClass = style(({ fonts }) => ({
   background: "none",
   border: "none",
   borderRadius: 4,
@@ -153,7 +153,7 @@ export const searchInputClass = css(({ fonts }) => ({
   },
 }));
 
-export const popupClass = css(({ animations, colors, easing, fonts }) => ({
+export const popupClass = style(({ animations, colors, easing, fonts }) => ({
   ".rc-select-item-empty": {
     fontSize: "15px",
     fontWeight: fonts.medium,
@@ -180,11 +180,11 @@ export const popupClass = css(({ animations, colors, easing, fonts }) => ({
     width: "100%",
 
     "&.rc-select-item-option-selected": {
-      backgroundColor: "rgba(0, 0, 0, .1)",
+      backgroundColor: rgba(colors.black, 0.1),
     },
 
     ":hover": {
-      backgroundColor: "rgba(0, 0, 0, .1)",
+      backgroundColor: rgba(colors.black, 0.1),
     },
   },
 

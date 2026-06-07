@@ -1,21 +1,21 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   position: "relative",
 });
 
-export const spinnerClass = css({
+export const spinnerClass = style({
   position: "absolute",
   right: 0,
   top: "50%",
   transform: "translateY(-50%)",
 });
 
-export const resultsClass = css(({ animations, easing }) => ({
+export const resultsClass = style(({ animations, colors, easing }) => ({
   animation: `${animations.fadeInUp} .35s ${easing} forwards`,
   backgroundColor: "white",
   borderRadius: "0 0 6px 6px",
-  boxShadow: "0 2px 5px rgba(0, 0, 0, .5)",
+  boxShadow: `0 2px 5px ${rgba(colors.black, 0.5)}`,
   opacity: 0,
   overflow: "hidden",
   padding: 5,

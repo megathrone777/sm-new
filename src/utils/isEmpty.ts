@@ -1,4 +1,4 @@
-const isEmpty = (value: unknown | unknown[]): boolean => {
+const isEmpty = (value: unknown): boolean => {
   if (Array.isArray(value)) {
     return value.every((item) => item == null);
   }

@@ -1,11 +1,11 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ colors }) => ({
+export const wrapperClass = style(({ colors }) => ({
   borderBottom: `4px solid ${colors.red}`,
   position: "relative",
 }));
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   alignContent: "stretch",
   display: "grid",
   minHeight: 280,
@@ -31,7 +31,7 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const pictureClass = css({
+export const pictureClass = style({
   bottom: 0,
   display: "block",
   left: 0,
@@ -40,14 +40,14 @@ export const pictureClass = css({
   top: 0,
 });
 
-export const bgImageClass = css({
+export const bgImageClass = style({
   height: "100%",
   objectFit: "cover",
   objectPosition: "center top",
   width: "100%",
 });
 
-export const contentClass = css(({ devices }) => ({
+export const contentClass = style(({ devices }) => ({
   alignContent: "start",
   display: "grid",
   gridAutoFlow: "row",
@@ -73,7 +73,7 @@ export const contentClass = css(({ devices }) => ({
   },
 }));
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   color: "white",
   fontSize: 20,
   fontWeight: fonts.bold,
@@ -96,7 +96,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const textClass = css(({ devices }) => ({
+export const textClass = style(({ devices }) => ({
   color: "white",
   fontSize: 16,
   fontStyle: "italic",

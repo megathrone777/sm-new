@@ -1,13 +1,13 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const layoutClass = css({
+export const layoutClass = style({
   alignItems: "start",
   display: "grid",
   gridAutoFlow: "row",
   paddingTop: 5,
 });
 
-export const rowClass = css({
+export const rowClass = style({
   marginBottom: 15,
 
   ":last-of-type": {
@@ -15,13 +15,13 @@ export const rowClass = css({
   },
 });
 
-export const labelHolderClass = css({
+export const labelHolderClass = style({
   display: "grid",
   gridAutoFlow: "column",
   justifyContent: "start",
 });
 
-export const labelImageClass = css(({ devices }) => ({
+export const labelImageClass = style(({ devices }) => ({
   display: "inline-block",
   height: 25,
   marginRight: 2,
@@ -35,7 +35,7 @@ export const labelImageClass = css(({ devices }) => ({
   },
 }));
 
-export const agreeClass = css({
+export const agreeClass = style({
   alignItems: "center",
   display: "grid",
   gridAutoFlow: "column",
@@ -43,7 +43,7 @@ export const agreeClass = css({
   position: "relative",
 });
 
-export const agreeLabelClass = css(({ fonts }) => ({
+export const agreeLabelClass = style(({ fonts }) => ({
   display: "block",
   fontSize: 14,
   fontWeight: fonts.normal,
@@ -51,7 +51,7 @@ export const agreeLabelClass = css(({ fonts }) => ({
   transform: "translateY(3px)",
 }));
 
-export const agreeLinkClass = css({
+export const agreeLinkClass = style({
   color: "inherit",
   textDecoration: "underline",
 
@@ -60,7 +60,7 @@ export const agreeLinkClass = css({
   },
 });
 
-export const changeClass = css(({ devices }) => ({
+export const changeClass = style(({ devices }) => ({
   columnGap: 16,
   display: "grid",
   gridAutoFlow: "column",

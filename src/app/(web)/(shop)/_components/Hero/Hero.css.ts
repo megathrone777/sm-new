@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   alignContent: "stretch",
   backgroundPosition: "right top",
   backgroundRepeat: "no-repeat",
@@ -34,7 +34,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const contentClass = css(({ devices }) => ({
+export const contentClass = style(({ devices }) => ({
   alignContent: "start",
   display: "grid",
   gridAutoFlow: "row",
@@ -60,7 +60,7 @@ export const contentClass = css(({ devices }) => ({
   },
 }));
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   color: "white",
   fontSize: 20,
   fontWeight: fonts.bold,
@@ -83,7 +83,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const textClass = css(({ devices }) => ({
+export const textClass = style(({ devices }) => ({
   color: "white",
   display: "none",
   fontSize: 16,

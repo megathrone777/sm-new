@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   backgroundPosition: "center center",
   backgroundRepeat: "no-repeat",
   backgroundSize: "cover",
@@ -13,14 +13,14 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
 });
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   color: "white",
   fontSize: 26,
   fontWeight: fonts.medium,
@@ -34,7 +34,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const timeClass = css(({ fonts }) => ({
+export const timeClass = style(({ fonts }) => ({
   color: "white",
   fontSize: 20,
   fontWeight: fonts.medium,
@@ -43,12 +43,12 @@ export const timeClass = css(({ fonts }) => ({
   textAlign: "center",
 }));
 
-export const contactsClass = css({
+export const contactsClass = style({
   minHeight: 60,
   paddingBottom: 10,
 });
 
-export const statusClass = css(({ colors, devices, fonts }) => ({
+export const statusClass = style(({ colors, devices, fonts }) => ({
   color: colors.red,
   fontSize: 20,
   fontWeight: fonts.medium,
@@ -66,6 +66,6 @@ export const statusClass = css(({ colors, devices, fonts }) => ({
   },
 }));
 
-export const statusOnlineClass = css({
+export const statusOnlineClass = style({
   color: "green",
 });

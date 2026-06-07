@@ -1,6 +1,6 @@
 import React from "react";
+import { Link } from "next-view-transitions";
 import Image from "next/image";
-import Link from "next/link";
 
 import { wrapperClass, imageClass, linkClass } from "./Logo.css";
 

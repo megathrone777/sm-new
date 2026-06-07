@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   padding: "20px 8px 30px",
 
   "@media": {
@@ -10,7 +10,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   alignItems: "start",
   display: "grid",
   gridAutoFlow: "row",
@@ -27,7 +27,7 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const contentClass = css(({ devices }) => ({
+export const contentClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   marginBottom: 15,
@@ -64,7 +64,7 @@ export const contentClass = css(({ devices }) => ({
   textAlign: "left",
 }));
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   fontSize: 24,
   fontWeight: fonts.medium,
   lineHeight: 1.2,
@@ -80,12 +80,12 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const subtitleClass = css({
+export const subtitleClass = style({
   textWrap: "balance",
   wordBreak: "break-word",
 });
 
-export const imageHolderClass = css({
+export const imageHolderClass = style({
   height: "auto",
   marginInline: "auto",
   maxWidth: 260,
@@ -94,22 +94,18 @@ export const imageHolderClass = css({
   width: "100%",
 });
 
-export const linkClass = css({
+export const linkClass = style({
   display: "block",
   height: "100%",
 });
 
-export const imageClass = css({
+export const imageClass = style({
   height: "100%",
   marginInline: "auto",
   width: "auto",
 });
 
-export const footerClass = css({
-  textAlign: "center",
-});
-
-export const itemClass = css({
+export const itemClass = style({
   alignItems: "start",
   columnGap: 6,
   display: "inline-grid",
@@ -118,7 +114,7 @@ export const itemClass = css({
   marginBottom: 10,
 });
 
-export const itemLinkClass = css(({ colors, easing }) => ({
+export const itemLinkClass = style(({ colors, easing }) => ({
   color: colors.black,
   transition: `color .25s ${easing}`,
 
@@ -127,12 +123,12 @@ export const itemLinkClass = css(({ colors, easing }) => ({
   },
 }));
 
-export const labelClass = css(({ fonts }) => ({
+export const labelClass = style(({ fonts }) => ({
   fontWeight: fonts.demi,
   lineHeight: "26px",
 }));
 
-export const valueClass = css(({ devices, fonts }) => ({
+export const valueClass = style(({ devices, fonts }) => ({
   fontWeight: fonts.normal,
 
   "@media": {
@@ -142,7 +138,7 @@ export const valueClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const descriptionClass = css(({ devices }) => ({
+export const descriptionClass = style(({ devices }) => ({
   fontSize: 17,
   marginBottom: 15,
   maxWidth: 500,
@@ -160,7 +156,7 @@ export const descriptionClass = css(({ devices }) => ({
   },
 }));
 
-export const iconClass = css({
+export const iconClass = style({
   color: "lightgreen",
   display: "inline-block",
   height: 30,
@@ -170,7 +166,7 @@ export const iconClass = css({
   top: -2,
 });
 
-export const subitemClass = css({
+export const subitemClass = style({
   alignItems: "center",
   columnGap: 6,
   display: "inline-grid",
@@ -179,7 +175,7 @@ export const subitemClass = css({
   marginBottom: 10,
 });
 
-export const columnClass = css({
+export const columnClass = style({
   alignItems: "center",
   display: "flex",
   flexDirection: "column",

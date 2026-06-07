@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices, fonts }) => ({
+export const wrapperClass = style(({ devices, fonts }) => ({
   alignItems: "center",
   columnGap: 8,
   display: "grid",
@@ -23,7 +23,7 @@ export const wrapperClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const iconClass = css(({ devices }) => ({
+export const iconClass = style(({ devices }) => ({
   color: "lightgreen",
   display: "block",
   height: 24,
@@ -37,7 +37,7 @@ export const iconClass = css(({ devices }) => ({
   },
 }));
 
-export const amountClass = css(({ colors, fonts }) => ({
+export const amountClass = style(({ colors, fonts }) => ({
   color: colors.red,
   fontWeight: fonts.bold,
   paddingInline: 3,

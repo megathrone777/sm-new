@@ -58,7 +58,9 @@ const Selectbox: React.FC<TProps> = ({
         autoFocus={false}
         className={layoutClass}
         components={{ input: <input readOnly /> }}
-        getPopupContainer={(trigger): HTMLElement => trigger.parentElement ?? document.body}
+        getPopupContainer={(trigger): HTMLElement => {
+          return (trigger as HTMLElement).parentElement ?? document.body;
+        }}
         maxTagTextLength={80}
         menuItemSelectedIcon={
           <Icon

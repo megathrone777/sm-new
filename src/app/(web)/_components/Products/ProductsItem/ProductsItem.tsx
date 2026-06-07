@@ -1,6 +1,6 @@
 import React from "react";
+import { Link } from "next-view-transitions";
 import Image from "next/image";
-import Link from "next/link";
 
 import { useTranslation } from "@/hooks";
 
@@ -29,7 +29,7 @@ const ProductsItem: React.FC<TProps> = (product) => {
     <div className={wrapperClass}>
       <Link
         className={linkClass}
-        href={`/product/${slug}`}
+        href={`product/${slug}` as __next_route_internal_types__.RouteImpl<string>}
       >
         <div className={imageHolderClass}>
           <Image

@@ -59,16 +59,16 @@ const makePipeline = (): {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.categories.set).mockResolvedValue(undefined as never);
+  jest.mocked(store.categories.set).mockResolvedValue(undefined);
   jest.mocked(store.categories.getAll).mockResolvedValue([makeExistingCategory()] as never);
-  jest.mocked(store.categories.getById).mockResolvedValue(makeExistingCategory() as never);
+  jest.mocked(store.categories.getById).mockResolvedValue(makeExistingCategory());
   jest.mocked(redis.pipeline).mockReturnValue(makePipeline() as never);
 });
 
 describe("createCategory", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createCategory(null, makeFormData());
 
@@ -151,7 +151,7 @@ describe("updateCategory", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateCategory(null, fd());
 
@@ -161,7 +161,7 @@ describe("updateCategory", () => {
 
   describe("validation", () => {
     it("returns error when category is not found", async () => {
-      jest.mocked(store.categories.getById).mockResolvedValue(null as never);
+      jest.mocked(store.categories.getById).mockResolvedValue(null);
 
       const result = await updateCategory(null, fd({ id: "99" }));
 

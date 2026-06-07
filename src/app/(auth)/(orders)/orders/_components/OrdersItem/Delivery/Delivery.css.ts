@@ -1,10 +1,10 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wazeClass = css({
+export const wazeClass = style({
   marginLeft: 5,
 });
 
-export const linkClass = css({
+export const linkClass = style({
   color: "inherit",
   textDecoration: "underline",
 });

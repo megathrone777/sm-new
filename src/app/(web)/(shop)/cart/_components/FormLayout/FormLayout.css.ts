@@ -1,10 +1,10 @@
 import { createVar } from "@vanilla-extract/css";
 
-import { css } from "@/theme";
+import { style } from "@/theme";
 
 export const gridTemplateAreasVar = createVar();
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 20,

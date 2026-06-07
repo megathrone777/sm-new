@@ -6,7 +6,7 @@ import { CreateReview, ReviewsList } from "./_components";
 
 import { layoutClass } from "./page.css";
 
-const Page: React.FC = async () => (
+const Page: React.FC = () => (
   <>
     <Header title="Reviews" />
 

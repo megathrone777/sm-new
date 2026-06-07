@@ -8,16 +8,16 @@ import { resultsClass, wrapperClass, spinnerClass } from "./Search.css";
 
 import type { TProps } from "./Search.types";
 
-const Search = <T,>({ children, searchAction }: TProps<T>): React.ReactElement => {
+const Search = <T = unknown>({ children, searchAction }: TProps<T>): React.ReactElement => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [isLoading, toggleLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [results, setResults] = useState<null | T[]>(null);
 
   const getResults = useDebouncedCallback(async (query: string): Promise<void> => {
     const searchResults = await searchAction(query);
 
     setResults(searchResults);
-    toggleLoading(false);
+    setIsLoading(false);
   }, 200);
 
   const handleInputChange = ({ currentTarget }: React.SyntheticEvent<HTMLInputElement>): void => {
@@ -26,7 +26,7 @@ const Search = <T,>({ children, searchAction }: TProps<T>): React.ReactElement =
     setInputValue(value);
 
     if (value.length > 0) {
-      toggleLoading(true);
+      setIsLoading(true);
     } else {
       setResults(null);
     }
@@ -35,7 +35,7 @@ const Search = <T,>({ children, searchAction }: TProps<T>): React.ReactElement =
   const handleInputReset = (): void => {
     setInputValue("");
     setResults(null);
-    toggleLoading(false);
+    setIsLoading(false);
   };
 
   useEffect((): void => {

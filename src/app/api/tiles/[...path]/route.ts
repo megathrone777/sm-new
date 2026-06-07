@@ -21,9 +21,11 @@ export const GET = async (
   const contentType = response.headers.get("Content-Type") ?? "";
 
   if (joined.startsWith("styles/") && contentType.includes("json")) {
-    const style = await response.json();
+    const style = (await response.json()) as {
+      sources: Record<string, unknown>[];
+    };
 
-    for (const source of Object.values(style.sources ?? {}) as Record<string, unknown>[]) {
+    for (const source of Object.values(style.sources ?? {})) {
       if (typeof source.url === "string" && source.url.startsWith(TILE_BASE)) {
         source.url = source.url.replace(TILE_BASE, "/api/tiles");
       }

@@ -1,12 +1,12 @@
-import { css, globalStyle } from "@/theme";
+import { style, globalStyle } from "@/theme";
 
-export const wrapperClass = css(({ colors }) => ({
+export const wrapperClass = style(({ colors }) => ({
   borderTop: `10px solid ${colors.red}`,
   paddingBlock: 40,
   textAlign: "justify",
 }));
 
-export const layoutClass = css({});
+export const layoutClass = style({});
 
 globalStyle(`${layoutClass} h2`, ({ fonts }) => ({
   fontSize: 22,

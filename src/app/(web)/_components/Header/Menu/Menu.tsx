@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useState } from "react";
+import { Link } from "next-view-transitions";
 import { usePathname, useRouter } from "next/navigation";
 
 import { Burger } from "@/ui";
@@ -20,11 +20,21 @@ import type { TProps } from "./Menu.types";
 const Menu: React.FC<TProps> = ({ items, phone }) => {
   const pathname = usePathname();
   const router = useRouter();
-  const [isOpened, toggleOpened] = useState<boolean>(false);
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
+
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
+
+    if (isOpened) {
+      setIsOpened(false);
+      document.body.removeAttribute("style");
+    }
+  }
 
   const checkMenu = (): void => {
     if (isOpened) {
-      toggleOpened(false);
+      setIsOpened(false);
       document.body.removeAttribute("style");
     }
   };
@@ -34,9 +44,7 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
     const { hash } = currentTarget;
 
     checkMenu();
-
     if (!hash) return;
-
     event.preventDefault();
 
     if (pathname === "/") {
@@ -54,7 +62,7 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
   };
 
   const handleMenuToggle = (): void => {
-    toggleOpened(!isOpened);
+    setIsOpened(!isOpened);
 
     if (isOpened) {
       document.body.removeAttribute("style");
@@ -69,10 +77,6 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
   const handleLinkNavigate = (): void => {
     checkMenu();
   };
-
-  useEffect((): void => {
-    checkMenu();
-  }, [pathname]);
 
   return (
     <div className={wrapperClass}>

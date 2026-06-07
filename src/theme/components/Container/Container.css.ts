@@ -1,6 +1,6 @@
-import { cssVariant } from "@/theme";
+import { styleVariants } from "@/theme";
 
-export const wrapperClass = cssVariant(
+export const wrapperClass = styleVariants(
   ({ devices }) => ({
     default: {
       paddingInline: 10,

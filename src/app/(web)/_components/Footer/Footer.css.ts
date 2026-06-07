@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   backgroundColor: colors.black,
   borderTop: `4px solid ${colors.red}`,
   paddingTop: 20,
@@ -17,13 +17,13 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   display: "block",
   paddingBottom: 6,
   textAlign: "center",
 });
 
-export const copyClass = css(({ colors, devices }) => ({
+export const copyClass = style(({ colors, devices }) => ({
   borderTop: `1px solid ${colors.whiteDarker}`,
   fontSize: 19,
   paddingBlock: 15,
@@ -36,7 +36,7 @@ export const copyClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const copyTextClass = css({
+export const copyTextClass = style({
   color: "white",
   fontSize: 12,
 });

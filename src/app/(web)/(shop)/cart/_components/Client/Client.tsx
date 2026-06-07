@@ -44,7 +44,7 @@ const Client: React.FC<TProps> = ({ children, email, errors, name, phoneNumber }
         name: message,
       }),
     );
-    setCartError("name", message ?? "");
+    void setCartError("name", message ?? "");
   };
 
   const handleEmailBlur = ({ currentTarget }: React.FocusEvent<HTMLInputElement>): void => {
@@ -56,7 +56,7 @@ const Client: React.FC<TProps> = ({ children, email, errors, name, phoneNumber }
         email: message,
       }),
     );
-    setCartError("email", message ?? "");
+    void setCartError("email", message ?? "");
   };
 
   const nameError = errors.name ?? localErrors.name;

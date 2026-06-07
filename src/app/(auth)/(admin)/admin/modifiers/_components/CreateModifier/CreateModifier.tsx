@@ -2,7 +2,7 @@ import React from "react";
 
 import { createModifier } from "@/app/(auth)/(admin)/_actions";
 import { FormLayout, SubModifiersSelect } from "@/app/(auth)/(admin)/_components";
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 import { Checkbox, Input } from "@/ui";
 
@@ -10,7 +10,6 @@ import { wrapperClass } from "./CreateModifier.css";
 
 const CreateModifier: React.FC = async () => {
   const submodifiers = await store.submodifiers.getAll();
-  const { t } = useTranslation();
 
   return (
     <FormLayout
@@ -26,7 +25,7 @@ const CreateModifier: React.FC = async () => {
 
       <Input
         defaultValue="0"
-        label={`Price (${t<string>("currency")})`}
+        label={`Price (${getTranslation<string>("currency")})`}
         name="price"
         type="number"
       />

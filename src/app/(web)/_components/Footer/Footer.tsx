@@ -10,7 +10,7 @@ import { copyClass, copyTextClass, layoutClass, wrapperClass } from "./Footer.cs
 
 import type { TProps } from "./Footer.types";
 
-const Footer: React.FC<TProps> = async ({
+const Footer: React.FC<TProps> = ({
   address,
   allergenyUrl,
   businessName,

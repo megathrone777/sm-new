@@ -1,6 +1,6 @@
-import { css, globalStyle } from "@/theme";
+import { style, globalStyle } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   borderRadius: 5,
   height: 200,
   minHeight: 200,

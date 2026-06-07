@@ -4,7 +4,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { CreateSubModifier, SubModifiersList } from "./_components";
 
-const Page: React.FC<PageProps<"/admin/submodifiers">> = async () => (
+const Page: React.FC<PageProps<"/admin/submodifiers">> = () => (
   <>
     <Header title="SubModifiers" />
     <CreateSubModifier />

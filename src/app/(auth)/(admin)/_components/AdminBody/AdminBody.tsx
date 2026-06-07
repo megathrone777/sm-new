@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { usePathname } from "next/navigation";
 
 import { Burger } from "@/ui";
@@ -12,15 +12,17 @@ import type { TProps } from "./AdminBody.types";
 
 const AdminBody: React.FC<TProps> = ({ children }) => {
   const pathname = usePathname();
-  const [isOpened, toggleOpened] = useState<boolean>(false);
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [prevPathname, setPrevPathname] = useState<string>(pathname);
+
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setIsOpened(false);
+  }
 
   const handleBurgerClick = (): void => {
-    toggleOpened((prevOpened: boolean): boolean => !prevOpened);
+    setIsOpened((prevOpened: boolean): boolean => !prevOpened);
   };
-
-  useEffect((): void => {
-    toggleOpened(false);
-  }, [pathname]);
 
   return (
     <div className={layoutClass}>
@@ -30,7 +32,7 @@ const AdminBody: React.FC<TProps> = ({ children }) => {
         <div
           className={overlayClass}
           onClick={(): void => {
-            toggleOpened(false);
+            setIsOpened(false);
           }}
         />
       )}

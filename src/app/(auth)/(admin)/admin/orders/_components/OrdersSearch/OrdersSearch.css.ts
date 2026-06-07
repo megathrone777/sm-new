@@ -1,12 +1,12 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const listClass = css({
+export const listClass = style({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 4,
 });
 
-export const infoClass = css({
+export const infoClass = style(({ colors }) => ({
   alignItems: "center",
   borderRadius: 6,
   columnGap: 12,
@@ -17,6 +17,6 @@ export const infoClass = css({
   padding: 6,
 
   ":hover": {
-    backgroundColor: "rgba(0, 0, 0, .05)",
+    backgroundColor: rgba(colors.black, 0.05),
   },
-});
+}));

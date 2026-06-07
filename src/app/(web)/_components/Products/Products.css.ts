@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { style, styleVariants } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   backgroundImage: "url('/images/products_bg.jpg')",
   backgroundSize: "33.3333% auto",
   minHeight: 615,
@@ -18,7 +18,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 12,
@@ -30,7 +30,7 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const titleClass = cssVariant(
+export const titleClass = styleVariants(
   ({ devices }) => ({
     isNormal: {
       fontSize: 25,

@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ colors }) => ({
+export const wrapperClass = style(({ colors }) => ({
   backgroundColor: colors.grayDarker,
   border: "4px solid white",
   borderRadius: 10,
@@ -14,13 +14,13 @@ export const wrapperClass = css(({ colors }) => ({
     "&.new.time": { borderColor: "darkviolet" },
     "&.placed, &.done": { borderColor: "gray" },
     "&.ready": { borderColor: colors.greenLighter },
-    "&.started": { borderColor: "#3b82f6" },
+    "&.started": { borderColor: colors.blue },
     "&.took": { borderColor: colors.yellow },
   },
   width: "100%",
 }));
 
-export const noteClass = css({
+export const noteClass = style({
   fontSize: 17,
   lineHeight: 1.3,
   marginBottom: 15,
@@ -28,13 +28,13 @@ export const noteClass = css({
   whiteSpace: "pre-line",
 });
 
-export const contentClass = css({
+export const contentClass = style({
   display: "flex",
   flexDirection: "column",
   flexGrow: 1,
 });
 
-export const itemClass = css({
+export const itemClass = style({
   alignItems: "flex-start",
   display: "flex",
   fontSize: 17,
@@ -44,13 +44,13 @@ export const itemClass = css({
   },
 });
 
-export const labelClass = css({
+export const labelClass = style({
   lineHeight: 1.2,
   marginRight: 4,
   whiteSpace: "nowrap",
 });
 
-export const valueClass = css(({ colors }) => ({
+export const valueClass = style(({ colors }) => ({
   fontSize: 18,
   lineHeight: 1.2,
   overflow: "hidden",

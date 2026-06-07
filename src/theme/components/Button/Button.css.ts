@@ -1,6 +1,6 @@
-import { css, cssVariant } from "@/theme";
+import { rgba, style, styleVariants } from "@/theme";
 
-export const buttonClass = cssVariant(
+export const buttonClass = styleVariants(
   ({ devices }) => ({
     normal: {
       fontSize: 17,
@@ -37,7 +37,7 @@ export const buttonClass = cssVariant(
       backgroundColor: colors.red,
       border: "none",
       borderRadius: 5,
-      boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.5)",
+      boxShadow: `0 0 10px 0 ${rgba(colors.black, 0.5)}`,
       color: "white",
       display: "inline-grid",
       fontFamily: "inherit",
@@ -55,14 +55,14 @@ export const buttonClass = cssVariant(
       },
 
       ":hover": {
-        boxShadow: "0 0 14px 0 rgba(218, 38, 40, 0.75)",
+        boxShadow: `0 0 14px 0 ${rgba(colors.red, 0.75)}`,
       },
     },
     template,
   ],
 );
 
-export const iconClass = css({
+export const iconClass = style({
   color: "white",
   minWidth: 18,
   width: 18,

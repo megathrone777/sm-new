@@ -184,15 +184,16 @@ describe("DetailsForm", () => {
       return form;
     };
 
-    it("calls validateNewProduct when the form is submitted", async () => {
+    it("calls validateNewProduct when the form is submitted", async (): Promise<void> => {
       render(
         <DetailsForm {...baseProduct}>
           <div />
         </DetailsForm>,
       );
 
-      await act(async () => {
+      await act(async (): Promise<void> => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(validateNewProduct).toHaveBeenCalledWith(
@@ -200,7 +201,7 @@ describe("DetailsForm", () => {
       );
     });
 
-    it("shows a success toast and calls addToCart when validation succeeds", async () => {
+    it("shows a success toast and calls addToCart when validation succeeds", async (): Promise<void> => {
       jest
         .mocked(validateNewProduct)
         .mockResolvedValue({ message: "Přidáno do košíku", type: "success" });
@@ -211,15 +212,16 @@ describe("DetailsForm", () => {
         </DetailsForm>,
       );
 
-      await act(async () => {
+      await act(async (): Promise<void> => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(toast).toHaveBeenCalledWith("Přidáno do košíku", { type: "success" });
       expect(addToCart).toHaveBeenCalled();
     });
 
-    it("shows an error toast but does NOT call addToCart when validation fails", async () => {
+    it("shows an error toast but does NOT call addToCart when validation fails", async (): Promise<void> => {
       jest.mocked(validateNewProduct).mockResolvedValue({ message: "Chyba", type: "error" });
 
       render(
@@ -228,18 +230,19 @@ describe("DetailsForm", () => {
         </DetailsForm>,
       );
 
-      await act(async () => {
+      await act(async (): Promise<void> => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(toast).toHaveBeenCalledWith("Chyba", { type: "error" });
       expect(addToCart).not.toHaveBeenCalled();
     });
 
-    it("dispatches the shop-closed event and skips the toast when shop is closed", async () => {
+    it("dispatches the shop-closed event and skips the toast when shop is closed", async (): Promise<void> => {
       jest
         .mocked(validateNewProduct)
-        .mockResolvedValue({ message: SHOP_CLOSED_MESSAGE as string, type: "error" });
+        .mockResolvedValue({ message: SHOP_CLOSED_MESSAGE, type: "error" });
 
       render(
         <DetailsForm {...baseProduct}>
@@ -247,8 +250,9 @@ describe("DetailsForm", () => {
         </DetailsForm>,
       );
 
-      await act(async () => {
+      await act(async (): Promise<void> => {
         submitForm();
+        await Promise.resolve();
       });
 
       expect(dispatchShopClosed).toHaveBeenCalled();

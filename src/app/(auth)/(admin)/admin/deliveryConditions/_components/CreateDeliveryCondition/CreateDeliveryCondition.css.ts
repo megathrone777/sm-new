@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const formClass = css({
+export const formClass = style({
   alignItems: "end",
   columnGap: 10,
   display: "grid",

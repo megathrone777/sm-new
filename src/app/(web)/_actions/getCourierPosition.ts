@@ -13,6 +13,7 @@
 
 const getCourierPosition = async (
   _: string,
+// eslint-disable-next-line @typescript-eslint/require-await
 ): Promise<{ latitude: number; longitude: number } | null> => {
   // const params = new URLSearchParams({
   //   lang: "en",

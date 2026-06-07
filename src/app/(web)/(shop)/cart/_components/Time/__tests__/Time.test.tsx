@@ -22,9 +22,8 @@ jest.mock("@/ui", () => ({
     placeholder?: string;
   }): React.ReactElement => (
     <select
+      {...{ defaultValue, id }}
       aria-label={placeholder}
-      defaultValue={defaultValue}
-      id={id}
       onChange={(e) => onChange(e.target.value)}
     >
       {options.map((opt) => (

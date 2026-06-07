@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useId, useRef, useState, useSyncExternalStore } from "react";
 import { getCountryCallingCode } from "libphonenumber-js";
 import { countries, getCountryFlag, type CountryCode } from "use-telephone";
 
@@ -22,8 +22,12 @@ import type { TOption, TProps } from "./Popup.types";
 const Popup: React.FC<TProps> = ({ countryCode, onCountryChange }) => {
   const inputId = useId();
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setMounted] = useState<boolean>(false);
-  const [isOpened, toggleOpened] = useState<boolean>(false);
+  const isMounted = useSyncExternalStore(
+    (): (() => void) => () => {},
+    () => true,
+    () => false,
+  );
+  const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");
 
   const fitleredOptions: TOption[] = countries
@@ -39,7 +43,7 @@ const Popup: React.FC<TProps> = ({ countryCode, onCountryChange }) => {
 
   const handleOptionClick = ({ currentTarget }: React.SyntheticEvent<HTMLButtonElement>): void => {
     onCountryChange(currentTarget.value as CountryCode);
-    toggleOpened(false);
+    setIsOpened(false);
 
     setTimeout((): void => {
       setSearchValue("");
@@ -47,18 +51,14 @@ const Popup: React.FC<TProps> = ({ countryCode, onCountryChange }) => {
   };
 
   const handleToggleClick = (): void => {
-    toggleOpened(!isOpened);
+    setIsOpened(!isOpened);
   };
 
   useClickOutside(wrapperRef, (): void => {
     if (isOpened) {
-      toggleOpened(false);
+      setIsOpened(false);
     }
   });
-
-  useEffect((): void => {
-    setMounted(true);
-  }, []);
 
   return (
     <div

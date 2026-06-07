@@ -1,17 +1,28 @@
 const colors = {
   amber: "#ffd43b",
   black: "#050404",
+  blue: "#3b82f6",
   gray: "#707171",
   grayDarker: "#767676",
   grayDarkest: "#56585a",
   grayLighter: "#b0b2b1",
+  green: "#21a235",
+  greenDarker: "#166534",
   greenLighter: "#44d18e",
+  greenLightest: "#dcfce7",
+  orangeDarker: "#b38200",
+  orangeDarkest: "#854d0e",
   red: "#da2629",
   redDarker: "#8c171a",
+  redDarkest: "#991b1b",
+  redLightest: "#fee2e2",
   white: "#efefef",
   whiteDarker: "#9ea0a1",
   whiteLighter: "#eaeaed",
+  whiteLightest: "#ffffff",
   yellow: "#f0dc00",
+  yellowLighter: "#ffcc00",
+  yellowLightest: "#fef9c3",
 };
 
 export { colors };

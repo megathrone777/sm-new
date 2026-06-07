@@ -1,8 +1,8 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const typeClass = css(({ colors }) => ({
+export const typeClass = style(({ colors }) => ({
   color: colors.greenLighter,
   selectors: {
-    "&.cash": { color: "#3b82f6" },
+    "&.cash": { color: colors.blue },
   },
 }));

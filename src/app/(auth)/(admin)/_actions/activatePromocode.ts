@@ -40,7 +40,7 @@ const activatePromocode = async (
 
   const isScheduled = activatedAt && new Date(activatedAt) > new Date();
   const message = isScheduled
-    ? `Promocode ${code} scheduled for ${new Date(activatedAt!).toLocaleString()}`
+    ? `Promocode ${code} scheduled for ${new Date(activatedAt).toLocaleString()}`
     : `Promocode ${code} is now active`;
 
   return { message, type: "success" };

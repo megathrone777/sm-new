@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { rgba, style } from "@/theme";
 
-export const linkClass = css(({ colors, fonts }) => ({
+export const linkClass = style(({ colors, fonts }) => ({
   alignItems: "center",
   borderRadius: 6,
   color: colors.black,
@@ -13,17 +13,17 @@ export const linkClass = css(({ colors, fonts }) => ({
   whiteSpace: "nowrap",
 
   ":hover": {
-    backgroundColor: "rgba(0, 0, 0, .1)",
+    backgroundColor: rgba(colors.black, 0.1),
   },
 }));
 
-export const imageClass = css({
+export const imageClass = style({
   height: "100%",
   objectFit: "cover",
   width: "100%",
 });
 
-export const imageHolderClass = css({
+export const imageHolderClass = style({
   borderRadius: "50%",
   height: 35,
   overflow: "hidden",
@@ -31,7 +31,7 @@ export const imageHolderClass = css({
   width: 35,
 });
 
-export const listClass = css({
+export const listClass = style({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 4,

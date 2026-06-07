@@ -2,15 +2,17 @@
 import React from "react";
 import { Marker } from "react-map-gl/maplibre";
 
+import { vars } from "@/theme";
+
 import type { TDeliveryOrder, TProps } from "./DeliveryMarkers.types";
 
 const STATUS_COLORS: Record<TOrderStatus, string> = {
   done: "gray",
   new: "red",
   placed: "gray",
-  ready: "#21a235",
-  started: "#3f5cc7",
-  took: "#edaa1a",
+  ready: vars.colors.green,
+  started: vars.colors.blue,
+  took: vars.colors.yellow,
 };
 
 export const toDeliveryOrder = (order: TOrder): null | TDeliveryOrder => {
@@ -42,37 +44,38 @@ const DeliveryMarkers: React.FC<TProps> = ({ orders }) => (
         (order: null | TDeliveryOrder): order is TDeliveryOrder =>
           order !== null && isPaymentVisible(order),
       )
-      .map(({ deliveryTime, id, position: [latitude, longitude], status }: TDeliveryOrder) => {
-        const markerBg =
-          status === "new" && deliveryTime ? "darkviolet" : STATUS_COLORS[status];
+      .map<React.ReactElement>(
+        ({ deliveryTime, id, position: [latitude, longitude], status }: TDeliveryOrder) => {
+          const markerBg = status === "new" && deliveryTime ? "darkviolet" : STATUS_COLORS[status];
 
-        return (
-          <Marker
-            anchor="center"
-            key={`${id}-delivery-marker`}
-            latitude={latitude}
-            longitude={longitude}
-          >
-            <i
-              style={{
-                backgroundColor: markerBg,
-                borderRadius: "50%",
-                color: "white",
-                display: "inline-block",
-                fontSize: 17,
-                fontStyle: "normal",
-                fontWeight: "bold",
-                height: 25,
-                lineHeight: "25px",
-                paddingInline: 6,
-                textAlign: "center",
-              }}
+          return (
+            <Marker
+              anchor="center"
+              key={`${id}-delivery-marker`}
+              latitude={latitude}
+              longitude={longitude}
             >
-              {id}
-            </i>
-          </Marker>
-        );
-      })}
+              <i
+                style={{
+                  backgroundColor: markerBg,
+                  borderRadius: "50%",
+                  color: "white",
+                  display: "inline-block",
+                  fontSize: 17,
+                  fontStyle: "normal",
+                  fontWeight: "bold",
+                  height: 25,
+                  lineHeight: "25px",
+                  paddingInline: 6,
+                  textAlign: "center",
+                }}
+              >
+                {id}
+              </i>
+            </Marker>
+          );
+        },
+      )}
   </>
 );
 

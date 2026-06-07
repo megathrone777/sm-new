@@ -1,10 +1,10 @@
-import { css, cssVariant } from "@/theme";
+import { rgba, style, styleVariants } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   display: "grid",
 });
 
-export const layoutClass = cssVariant(
+export const layoutClass = styleVariants(
   ({ devices }) => ({
     default: {
       height: 36,
@@ -34,7 +34,7 @@ export const layoutClass = cssVariant(
   ],
 );
 
-export const labelClass = css(({ fonts }) => ({
+export const labelClass = style(({ fonts }) => ({
   cursor: "pointer",
   fontWeight: fonts.bold,
   justifySelf: "start",
@@ -42,7 +42,7 @@ export const labelClass = css(({ fonts }) => ({
   userSelect: "none",
 }));
 
-export const inputClass = cssVariant(
+export const inputClass = styleVariants(
   ({ colors, devices }) => ({
     default: {
       color: "black",
@@ -91,7 +91,7 @@ export const inputClass = cssVariant(
       },
 
       "::placeholder": {
-        color: "rgba(255, 255, 255, .5)",
+        color: rgba(colors.whiteLightest, 0.5),
       },
 
       "@media": {
@@ -136,7 +136,7 @@ export const inputClass = cssVariant(
   ],
 );
 
-export const iconHolderClass = css({
+export const iconHolderClass = style({
   alignItems: "center",
   display: "grid",
   justifyContent: "center",
@@ -144,13 +144,13 @@ export const iconHolderClass = css({
   width: 30,
 });
 
-export const iconClass = css(({ colors }) => ({
+export const iconClass = style(({ colors }) => ({
   color: colors.red,
   minWidth: 18,
   width: 18,
 }));
 
-export const errorIconClass = css(({ colors }) => ({
+export const errorIconClass = style(({ colors }) => ({
   color: colors.red,
   display: "block",
   height: 20,

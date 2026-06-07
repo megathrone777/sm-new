@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   minHeight: 400,
   paddingBlock: "20px 60px",
 
@@ -11,7 +11,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const titleClass = css(({ devices, fonts }) => ({
+export const titleClass = style(({ devices, fonts }) => ({
   fontSize: 22,
   fontWeight: fonts.bold,
   marginBottom: 16,
@@ -23,7 +23,7 @@ export const titleClass = css(({ devices, fonts }) => ({
   },
 }));
 
-export const emptyClass = css(({ colors }) => ({
+export const emptyClass = style(({ colors }) => ({
   color: colors.gray,
   marginTop: 24,
 }));

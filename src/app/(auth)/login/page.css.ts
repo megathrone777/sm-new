@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ colors, devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   backgroundColor: colors.black,
   color: "white",
   height: "100%",
@@ -12,7 +12,7 @@ export const wrapperClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const titleClass = css(({ devices }) => ({
+export const titleClass = style(({ devices }) => ({
   fontFamily: "var(--font-akrobat)",
   fontSize: 42,
 
@@ -23,7 +23,7 @@ export const titleClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css(({ devices }) => ({
+export const layoutClass = style(({ devices }) => ({
   alignContent: "center",
   alignItems: "center",
   display: "grid",
@@ -40,7 +40,7 @@ export const layoutClass = css(({ devices }) => ({
   },
 }));
 
-export const imageClass = css(({ devices }) => ({
+export const imageClass = style(({ devices }) => ({
   height: 140,
   width: "auto",
 
@@ -51,7 +51,7 @@ export const imageClass = css(({ devices }) => ({
   },
 }));
 
-export const formClass = css(({ devices }) => ({
+export const formClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 20,

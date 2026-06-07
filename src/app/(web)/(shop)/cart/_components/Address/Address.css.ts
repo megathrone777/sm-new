@@ -1,13 +1,13 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   display: "grid",
   gridAutoFlow: "row",
   paddingTop: 20,
   rowGap: 10,
 });
 
-export const addressClass = css(({ devices }) => ({
+export const addressClass = style(({ devices }) => ({
   "@media": {
     [devices.mobile]: {
       whiteSpace: "nowrap",
@@ -15,11 +15,11 @@ export const addressClass = css(({ devices }) => ({
   },
 }));
 
-export const cityClass = css({
+export const cityClass = style({
   whiteSpace: "nowrap",
 });
 
-export const iconClass = css(({ colors }) => ({
+export const iconClass = style(({ colors }) => ({
   color: colors.red,
   display: "inline-block",
   height: 24,
@@ -28,7 +28,7 @@ export const iconClass = css(({ colors }) => ({
   width: 18,
 }));
 
-export const linkClass = css(({ colors, fonts }) => ({
+export const linkClass = style(({ colors, fonts }) => ({
   color: "black",
   fontSize: 15,
   fontWeight: fonts.medium,

@@ -44,14 +44,14 @@ const makeFormData = (overrides: Record<string, string> = {}): FormData => {
 beforeEach(() => {
   jest.clearAllMocks();
   jest.mocked(store.sessions.get).mockResolvedValue({ role: "admin" } as never);
-  jest.mocked(store.reviews.create).mockResolvedValue(undefined as never);
+  jest.mocked(store.reviews.create).mockResolvedValue(undefined);
   jest.mocked(store.reviews.getAll).mockResolvedValue([makeReview()] as never);
 });
 
 describe("createReview", () => {
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await createReview(null, makeFormData());
 
@@ -125,7 +125,7 @@ describe("updateReview", () => {
 
   describe("auth", () => {
     it("returns error when session is missing", async () => {
-      jest.mocked(store.sessions.get).mockResolvedValue(null as never);
+      jest.mocked(store.sessions.get).mockResolvedValue(null);
 
       const result = await updateReview(null, fd());
 

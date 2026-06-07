@@ -1,7 +1,7 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
-  color: "#555",
+export const wrapperClass = style(({ colors }) => ({
+  color: colors.grayDarkest,
   fontSize: 14,
   marginTop: 8,
-});
+}));

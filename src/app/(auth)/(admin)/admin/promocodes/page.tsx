@@ -4,7 +4,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { CreatePromocode, PromocodesList } from "./_components";
 
-const Page: React.FC = async () => (
+const Page: React.FC = () => (
   <>
     <Header title="Promocodes" />
     <CreatePromocode />

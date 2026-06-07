@@ -4,7 +4,7 @@ import { Header } from "@/app/(auth)/(admin)/_components";
 
 import { OrdersList, OrdersSearch } from "./_components";
 
-const Page: React.FC<PageProps<"/admin/orders">> = async () => (
+const Page: React.FC<PageProps<"/admin/orders">> = () => (
   <>
     <Header title="Orders">
       <OrdersSearch />

@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
 
+import { getTranslation } from "@/dictionaries";
 import { sendOrderEmail, sendOrderCreatedSms } from "@/services";
 import { realtime, store } from "@/store";
 import { isMissedStreetNumber } from "@/utils";
@@ -164,7 +165,9 @@ const validateAndSubmitCart = async (
 
   const orderNote =
     payment.type === "cash" && payment.change
-      ? [note, `Mám v hotovosti ${payment.change} Kč`].filter(Boolean).join("\n")
+      ? [note, `Mám v hotovosti ${payment.change} ${getTranslation<string>("currency")}`]
+          .filter(Boolean)
+          .join("\n")
       : note;
 
   const order: TOrder = {
@@ -237,7 +240,7 @@ const validateAndSubmitCart = async (
   });
   revalidatePath("/", "layout");
   after(async (): Promise<void> => {
-    realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
+    void realtime.emit("newOrder", { createdAt: Date.now(), id, order, updatedAt: Date.now() });
     if (payment.type === "card") return;
     await Promise.allSettled([sendOrderEmail(order), sendOrderCreatedSms(order)]);
   });

@@ -1,8 +1,8 @@
 import { calc } from "@vanilla-extract/css-utils";
 
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   alignContent: "end",
   bottom: 90,
   display: "grid",
@@ -35,7 +35,7 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css(({ colors, devices }) => ({
+export const layoutClass = style(({ colors, devices }) => ({
   alignItems: "stretch",
   backgroundColor: colors.red,
   border: "3px solid white",
@@ -57,7 +57,7 @@ export const layoutClass = css(({ colors, devices }) => ({
   },
 }));
 
-export const linkClass = css({
+export const linkClass = style({
   alignContent: "center",
   alignItems: "center",
   color: "white",
@@ -70,7 +70,7 @@ export const linkClass = css({
   width: "100%",
 });
 
-export const iconClass = css({
+export const iconClass = style({
   display: "block",
   height: 25,
 });

@@ -1,13 +1,12 @@
 import React from "react";
 
-import { useTranslation } from "@/hooks";
+import { getTranslation } from "@/dictionaries";
 import { store } from "@/store";
 
 import { wrapperClass } from "./PromocodeOrders.css";
 
 const PromocodeOrders: React.FC<{ code: string }> = async ({ code }) => {
   const orders = await store.orders.getByPromocode(code);
-  const { t } = useTranslation();
 
   if (!orders.length) return null;
 
@@ -17,7 +16,7 @@ const PromocodeOrders: React.FC<{ code: string }> = async ({ code }) => {
       {orders.map<React.ReactElement>(
         ({ clientPhoneNumber, createdAt, id, totalPrice }: TOrder) => (
           <span key={`promo-order-${id}`}>
-            #{id} ({clientPhoneNumber}, {totalPrice} {t<string>("currency")},{" "}
+            #{id} ({clientPhoneNumber}, {totalPrice} {getTranslation<string>("currency")},{" "}
             {new Date(createdAt).toLocaleDateString()}
             )&nbsp;
           </span>

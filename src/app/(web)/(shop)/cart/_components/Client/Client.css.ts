@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css(({ devices }) => ({
+export const wrapperClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 20,
@@ -12,19 +12,19 @@ export const wrapperClass = css(({ devices }) => ({
   },
 }));
 
-export const layoutClass = css({
+export const layoutClass = style({
   display: "grid",
   gridAutoFlow: "row",
   rowGap: 20,
 });
 
-export const contentClass = css({
+export const contentClass = style({
   alignItems: "center",
   display: "flex",
   gap: 12,
 });
 
-export const phoneWrapperClass = css({
+export const phoneWrapperClass = style({
   flex: 1,
   minWidth: 0,
 });

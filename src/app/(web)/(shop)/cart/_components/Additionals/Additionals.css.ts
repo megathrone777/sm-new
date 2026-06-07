@@ -1,6 +1,6 @@
-import { css } from "@/theme";
+import { style } from "@/theme";
 
-export const wrapperClass = css({
+export const wrapperClass = style({
   display: "grid",
   gridAutoFlow: "row",
   minHeight: 220,
@@ -9,7 +9,7 @@ export const wrapperClass = css({
   textAlign: "left",
 });
 
-export const listClass = css(({ devices }) => ({
+export const listClass = style(({ devices }) => ({
   display: "grid",
   gridAutoFlow: "row",
   maxWidth: 500,
