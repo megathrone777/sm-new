@@ -153,6 +153,7 @@ const config = defineConfig([
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-unsafe-argument": "off",
       "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unnecessary-type-assertion": "off",
 
       "perfectionist/sort-enums": "error",
       "perfectionist/sort-exports": "error",

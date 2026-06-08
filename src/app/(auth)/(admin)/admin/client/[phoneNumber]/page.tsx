@@ -32,12 +32,7 @@ const Page: React.FC<PageProps<"/admin/client/[phoneNumber]">> = async ({
           action={deleteClient}
           deleteId={`${deleteId}`}
           deleteTitle={deleteTitle ? `${deleteTitle}` : null}
-          href={{
-            pathname: "/admin/client/[phoneNumber]",
-            query: {
-              phoneNumber,
-            },
-          }}
+          href={`/admin/client/${phoneNumber}`}
         />
       )}
 

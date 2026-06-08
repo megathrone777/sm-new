@@ -27,7 +27,7 @@ const DeleteAlert: React.FC<TProps> = ({ action, deleteId, deleteTitle, href }) 
     toast(message, { type });
 
     if (type === "success") {
-      router.push(href);
+      router.push(href as `/${string}`);
     }
   }, [state]);
 
@@ -60,7 +60,7 @@ const DeleteAlert: React.FC<TProps> = ({ action, deleteId, deleteTitle, href }) 
           </Form>
 
           <Link
-            {...{ href }}
+            href={href as `/${string}`}
             scroll={false}
           >
             <Button template="small">Cancel</Button>
