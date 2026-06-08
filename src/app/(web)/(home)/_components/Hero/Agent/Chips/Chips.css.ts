@@ -12,24 +12,28 @@ export const wrapperClass = style(({ devices }) => ({
   },
 }));
 
-export const buttonClass = style(({ colors, fonts }) => ({
+export const buttonClass = style(({ colors }) => ({
   alignContent: "center",
   alignItems: "center",
   backgroundColor: rgba(colors.whiteLightest, 0.043),
   border: `1px solid ${rgba(colors.whiteLightest, 0.12)}`,
   borderRadius: 999,
   color: rgba(colors.whiteLightest, 0.84),
-  columnGap: 10,
+  columnGap: 8,
   cursor: "pointer",
   display: "inline-grid",
-  fontSize: 14,
-  fontWeight: fonts.demi,
   gridAutoFlow: "column",
+  gridTemplateColumns: "auto auto",
   height: 38,
   justifyContent: "center",
-  paddingInline: 12,
-  transition: "background-color .2s, border-color .2s",
+  selectors: {
+    "&:hover:active": {
+      transform: "scale(0.98)",
+    },
+  },
+  transition: "background-color .2s, border-color .2s, transform .1s",
   whiteSpace: "nowrap",
+  willChange: "transform",
 
   ":hover": {
     backgroundColor: rgba(colors.whiteLightest, 0.07),
@@ -37,8 +41,21 @@ export const buttonClass = style(({ colors, fonts }) => ({
   },
 }));
 
+export const buttonLabelClass = style(({ fonts }) => ({
+  fontSize: 14,
+  fontWeight: fonts.demi,
+  textAlign: "center",
+}));
+
+export const buttonIconClass = style({
+  display: "inline-grid",
+  placeItems: "center",
+  transform: "translateX(1px)",
+});
+
 export const iconClass = style({
   height: 13,
+  minWidth: 13,
 });
 
 export const diamondClass = style(({ colors }) => ({

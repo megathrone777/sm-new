@@ -10,13 +10,14 @@ jest.mock("@/store", () => ({
     cart: {
       get: jest.fn(),
       getOrCreateSessionId: jest.fn(),
+      lock: jest.fn().mockResolvedValue(true),
       set: jest.fn(),
+      unlock: jest.fn().mockResolvedValue(undefined),
     },
   },
 }));
 
 jest.mock("next/cache", () => ({ revalidatePath: jest.fn() }));
-
 jest.mock("../saveCart", () => ({ saveCart: jest.fn() }));
 
 jest.mock("../validateNewProduct", () => ({

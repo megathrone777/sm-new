@@ -99,8 +99,8 @@ export const iconClass = styleVariants(
 );
 
 globalStyle(`${wrapperClass} > .Toastify__toast`, ({ colors, devices, easing, fonts }) => ({
-  alignItems: "start",
-  animationDuration: "500ms",
+  alignItems: "center",
+  animationDuration: ".5s",
   animationFillMode: "forwards",
   animationTimingFunction: easing,
   borderRadius: 3,
@@ -116,9 +116,8 @@ globalStyle(`${wrapperClass} > .Toastify__toast`, ({ colors, devices, easing, fo
   minHeight: 60,
   minWidth: "fit-content",
   overflow: "hidden",
-  paddingBlock: "20px 12px",
+  paddingBlock: 6,
   pointerEvents: "auto",
-  whiteSpace: "pre-line",
 
   "@media": {
     [devices.mobile]: {

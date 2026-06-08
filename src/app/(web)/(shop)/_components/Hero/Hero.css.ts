@@ -4,7 +4,7 @@ export const wrapperClass = style(({ colors, devices }) => ({
   alignContent: "stretch",
   backgroundPosition: "right top",
   backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
+  backgroundSize: "auto 100%",
   borderBottom: `4px solid ${colors.red}`,
   display: "grid",
   minHeight: 120,
@@ -15,10 +15,12 @@ export const wrapperClass = style(({ colors, devices }) => ({
 
   "@media": {
     [devices.mobile]: {
+      backgroundSize: "100% 100%",
       paddingTop: 130,
     },
 
     [devices.tablet]: {
+      backgroundSize: "cover",
       paddingBottom: 20,
     },
 
@@ -40,7 +42,6 @@ export const contentClass = style(({ devices }) => ({
   gridAutoFlow: "row",
   height: "100%",
   justifyItems: "start",
-  maxWidth: 280,
   paddingLeft: 5,
   rowGap: 15,
 
@@ -62,7 +63,7 @@ export const contentClass = style(({ devices }) => ({
 
 export const titleClass = style(({ devices, fonts }) => ({
   color: "white",
-  fontSize: 20,
+  fontSize: 24,
   fontWeight: fonts.bold,
   lineHeight: "normal",
   textWrap: "balance",
@@ -89,6 +90,7 @@ export const textClass = style(({ devices }) => ({
   fontSize: 16,
   fontStyle: "italic",
   lineHeight: 1.4,
+  textWrap: "balance",
 
   "@media": {
     [devices.tablet]: {

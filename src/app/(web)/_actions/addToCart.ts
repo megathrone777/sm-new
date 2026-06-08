@@ -55,38 +55,52 @@ const addToCart = async (
     };
   }
 
-  const cart = await store.cart.get();
+  const acquired = await store.cart.lock(sessionId);
 
-  if (validationResult.type === "success") {
-    if (!cart) {
-      await saveCart({ ...initialCart, products: [newProduct] });
-    } else {
-      const toComparable = ({
-        modifiersTitle: _,
-        quantity: __,
-        totalPrice: ___,
-        ...rest
-      }: TCartProduct): Omit<TCartProduct, "modifiersTitle" | "quantity" | "totalPrice"> => rest;
+  if (!acquired) {
+    return {
+      message: "Cart is busy, please try again.",
+      type: "error",
+    };
+  }
 
-      const foundIndex: number = cart.products.findIndex((product: TCartProduct): boolean =>
-        isEqual(toComparable(newProduct), toComparable(product)),
-      );
-      const products = [...cart.products];
-      const existing = products[foundIndex];
+  try {
+    const cart = await store.cart.get();
 
-      if (existing) {
-        products[foundIndex] = {
-          ...existing,
-          quantity: existing.quantity + 1,
-          totalPrice: existing.totalPrice + newProduct.totalPrice,
-        };
+    if (validationResult.type === "success") {
+      if (!cart) {
+        await saveCart({ ...initialCart, products: [newProduct] });
       } else {
-        products.push(newProduct);
+        const toComparable = ({
+          modifiersTitle: _modifiersTitle,
+          quantity: _quantity,
+          totalPrice: _totalPrice,
+          ...rest
+        }: TCartProduct): Omit<TCartProduct, "modifiersTitle" | "quantity" | "totalPrice"> => rest;
+
+        const foundIndex: number = cart.products.findIndex((product: TCartProduct): boolean =>
+          isEqual(toComparable(newProduct), toComparable(product)),
+        );
+        const products = [...cart.products];
+        const existing = products[foundIndex];
+
+        if (existing) {
+          products[foundIndex] = {
+            ...existing,
+            quantity: existing.quantity + 1,
+            totalPrice: existing.totalPrice + newProduct.totalPrice,
+          };
+        } else {
+          products.push(newProduct);
+        }
+
+        await saveCart({ products });
       }
 
-      await saveCart({ products });
+      revalidatePath("/", "layout");
     }
-    revalidatePath("/", "layout");
+  } finally {
+    await store.cart.unlock(sessionId);
   }
 
   return validationResult;

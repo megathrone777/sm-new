@@ -2,6 +2,7 @@ import { rgba, style } from "@/theme";
 
 export const wrapperClass = style(({ colors }) => ({
   backgroundColor: colors.whiteLighter,
+  overflow: "hidden",
   paddingBottom: 20,
   paddingTop: 40,
 }));

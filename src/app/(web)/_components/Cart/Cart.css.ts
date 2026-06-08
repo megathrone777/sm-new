@@ -100,9 +100,15 @@ export const amountClass = style(({ devices }) => ({
   },
 }));
 
-export const amountValueClass = style(({ colors, fonts }) => ({
+export const amountValueClass = style(({ colors, devices, fonts }) => ({
   color: colors.black,
-  fontSize: 15,
+  fontSize: 13,
   fontWeight: fonts.bold,
-  lineHeight: "normal",
+  letterSpacing: 0,
+
+  "@media": {
+    [devices.tablet]: {
+      fontSize: 15,
+    },
+  },
 }));

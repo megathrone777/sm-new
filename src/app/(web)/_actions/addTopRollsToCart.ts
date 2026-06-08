@@ -4,7 +4,9 @@ import { store } from "@/store";
 
 const addTopRollsToCart = async (): Promise<TActionResult> => {
   const categories = await store.categories.getAll();
-  const category = categories.find(({ title }): boolean => title.toLowerCase().includes("rol"));
+  const category = categories.find(({ title }: TProductCategory): boolean =>
+    title.toLowerCase().includes("rol"),
+  );
 
   if (!category) {
     return {

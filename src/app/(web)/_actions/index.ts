@@ -1,3 +1,5 @@
+export { addSaladsToCart } from "./addSaladsToCart";
+export { addSpicyToCart } from "./addSpicyToCart";
 export { addToCart } from "./addToCart";
 export { addTopRollsToCart } from "./addTopRollsToCart";
 export { addTopSetsToCart } from "./addTopSetsToCart";
@@ -16,6 +18,7 @@ export { saveCart } from "./saveCart";
 export { saveCartFields } from "./saveCartFields";
 export { selectDeliveryAddress } from "./selectDeliveryAddress";
 export { setCartError } from "./setCartError";
+export { submitAgentForm } from "./submitAgentForm";
 export { updateAdditionalQuantity } from "./updateAdditionalQuantity";
 export { updateCutleryQuantity } from "./updateCutleryQuantity";
 export { updateDeliveryTime } from "./updateDeliveryTime";

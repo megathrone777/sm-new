@@ -11,6 +11,7 @@ globalStyle("html", {
 
 globalStyle("body", {
   fontFamily: "var(--font-avenir)",
+  minWidth: 340,
   MozOsxFontSmoothing: "grayscale",
   WebkitFontSmoothing: "antialiased",
 });

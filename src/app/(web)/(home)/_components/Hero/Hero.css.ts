@@ -1,18 +1,17 @@
 import { style } from "@/theme";
 
-export const wrapperClass = style(({ colors }) => ({
-  borderBottom: `4px solid ${colors.red}`,
-  position: "relative",
-}));
-
-export const layoutClass = style(({ devices }) => ({
+export const wrapperClass = style(({ colors, devices }) => ({
   alignContent: "stretch",
+  backgroundColor: "black",
+  backgroundPositionX: "right -327px",
+  backgroundPositionY: "top",
+  backgroundRepeat: "no-repeat",
+  backgroundSize: "auto 650px",
+  borderBottom: `4px solid ${colors.red}`,
   display: "grid",
   minHeight: 280,
   paddingBottom: 20,
   paddingTop: 120,
-  position: "relative",
-  zIndex: 1,
 
   "@media": {
     [devices.mobile]: {
@@ -20,11 +19,15 @@ export const layoutClass = style(({ devices }) => ({
     },
 
     [devices.desktop]: {
+      backgroundPositionX: "right -205px",
+      backgroundSize: "auto 100%",
       paddingBottom: 30,
       paddingTop: 160,
     },
 
     [devices.desktopLg]: {
+      backgroundPositionX: "right",
+      backgroundSize: "cover",
       minHeight: 900,
       paddingTop: 175,
     },
@@ -45,7 +48,6 @@ export const heroClass = style(({ devices }) => ({
   justifyItems: "start",
   paddingLeft: 5,
   rowGap: 15,
-  textWrap: "balance",
 
   "@media": {
     [devices.tablet]: {
@@ -65,7 +67,7 @@ export const heroClass = style(({ devices }) => ({
 
 export const titleClass = style(({ devices, fonts }) => ({
   color: "white",
-  fontSize: 25,
+  fontSize: 24,
   fontWeight: fonts.bold,
   lineHeight: "normal",
   textWrap: "balance",
@@ -91,6 +93,7 @@ export const textClass = style(({ devices }) => ({
   fontSize: 16,
   fontStyle: "italic",
   lineHeight: 1.4,
+  textWrap: "balance",
 
   "@media": {
     [devices.desktop]: {

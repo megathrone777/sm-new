@@ -1,40 +1,36 @@
 "use client";
-import React, { useActionState, useEffect } from "react";
-import { toast } from "react-toastify";
+import React, { useActionState } from "react";
 import Form from "next/form";
 
-import { Icon } from "@/ui";
+import { submitAgentForm } from "@/app/(web)/_actions";
 
 import { Chips } from "./Chips";
-import { formAction } from "./formAction";
+import { Overlay } from "./Overlay";
 
 import {
-  buttonClass,
   contentClass,
-  dotClass,
-  dotsClass,
   formClass,
-  layoutClass,
-  modelClass,
-  modelIconClass,
-  responseClass,
+  messageClass,
   textareaClass,
   titleClass,
   wrapperClass,
 } from "./Agent.css";
 
 const Agent: React.FC = () => {
-  const [response, action, isPending] = useActionState(formAction, null);
-
-  useEffect(() => {
-    if (response) toast(response.message, { type: response.type });
-  }, [response]);
+  const [state, action, isPending] = useActionState(submitAgentForm, null);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>): void => {
     if ((event.key === "Enter" || event.key === "NumpadEnter") && !event.shiftKey) {
       event.preventDefault();
       event.currentTarget.form?.requestSubmit();
     }
+  };
+
+  const handleSubmit = async ({
+    currentTarget,
+  }: React.SyntheticEvent<HTMLFormElement>): Promise<void> => {
+    await Promise.resolve();
+    void currentTarget.reset();
   };
 
   return (
@@ -45,9 +41,10 @@ const Agent: React.FC = () => {
         {...{ action }}
         autoComplete="off"
         className={formClass}
+        onSubmit={handleSubmit}
       >
         <div className={contentClass}>
-          {response && <p className={responseClass}>{response.message}</p>}
+          {state && <p className={messageClass}>{state.message}</p>}
 
           <textarea
             className={textareaClass}
@@ -57,41 +54,7 @@ const Agent: React.FC = () => {
             spellCheck={false}
           />
 
-          <div className={layoutClass}>
-            {isPending ? (
-              <div className={dotsClass}>
-                <i className={dotClass} />
-
-                <i
-                  className={dotClass}
-                  style={{
-                    animationDelay: ".2s",
-                  }}
-                />
-
-                <i
-                  className={dotClass}
-                  style={{
-                    animationDelay: ".4s",
-                  }}
-                />
-              </div>
-            ) : (
-              <>
-                <p className={modelClass}>
-                  <span className={modelIconClass} />
-                  <span>SushiMan AI</span>
-                </p>
-
-                <button
-                  className={buttonClass}
-                  type="submit"
-                >
-                  <Icon id="arrow" />
-                </button>
-              </>
-            )}
-          </div>
+          <Overlay {...{ isPending }} />
         </div>
 
         <Chips />

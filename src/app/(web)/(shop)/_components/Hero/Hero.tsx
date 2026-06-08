@@ -2,6 +2,7 @@ import React from "react";
 
 import { store } from "@/store";
 import { Container } from "@/ui";
+import { splitText } from "@/utils";
 
 import { contentClass, textClass, titleClass, wrapperClass } from "./Hero.css";
 
@@ -10,6 +11,7 @@ const Hero: React.FC = async () => {
     store.hero.get(),
     store.shop.getSettings(),
   ]);
+  const [titleLine1, titleLine2] = splitText(title, 2);
 
   return (
     <div
@@ -21,7 +23,11 @@ const Hero: React.FC = async () => {
     >
       <Container>
         <div className={contentClass}>
-          <h1 className={titleClass}>{title}</h1>
+          <h1 className={titleClass}>
+            {titleLine1}
+            <br />
+            {titleLine2}
+          </h1>
 
           <p
             className={textClass}
