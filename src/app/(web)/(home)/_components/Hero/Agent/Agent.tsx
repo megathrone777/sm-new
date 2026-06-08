@@ -1,41 +1,98 @@
-import React from "react";
+"use client";
+import React, { useActionState } from "react";
+import Form from "next/form";
 
 import { Icon } from "@/ui";
 
 import { Chips } from "./Chips";
-import { FormLayout } from "./FormLayout";
+import { formAction } from "./formAction";
 
 import {
   buttonClass,
   contentClass,
+  dotClass,
+  dotsClass,
+  formClass,
+  layoutClass,
   modelClass,
   modelIconClass,
+  responseClass,
+  textareaClass,
   titleClass,
   wrapperClass,
 } from "./Agent.css";
 
-const Agent: React.FC = () => (
-  <div className={wrapperClass}>
-    <h2 className={titleClass}>Na co máte chut'?</h2>
+const Agent: React.FC = () => {
+  const [response, action, isPending] = useActionState(formAction, null);
 
-    <div className={contentClass}>
-      <FormLayout>
-        <p className={modelClass}>
-          <span className={modelIconClass} />
-          <span>SushiMan AI</span>
-        </p>
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>): void => {
+    if ((event.key === "Enter" || event.key === "NumpadEnter") && !event.shiftKey) {
+      event.preventDefault();
+      event.currentTarget.form?.requestSubmit();
+    }
+  };
 
-        <button
-          className={buttonClass}
-          type="submit"
-        >
-          <Icon id="arrow" />
-        </button>
-      </FormLayout>
+  return (
+    <div className={wrapperClass}>
+      <h2 className={titleClass}>Na co máte chut'?</h2>
+
+      <Form
+        {...{ action }}
+        autoComplete="off"
+        className={formClass}
+      >
+        <div className={contentClass}>
+          {response && <p className={responseClass}>{response}</p>}
+
+          <textarea
+            className={textareaClass}
+            name="message"
+            onKeyDown={handleKeyDown}
+            placeholder="Napište, na co máte chuť — poradíme a přidáme rovnou do košíku..."
+            spellCheck={false}
+          />
+
+          <div className={layoutClass}>
+            {isPending ? (
+              <div className={dotsClass}>
+                <i className={dotClass} />
+
+                <i
+                  className={dotClass}
+                  style={{
+                    animationDelay: ".2s",
+                  }}
+                />
+
+                <i
+                  className={dotClass}
+                  style={{
+                    animationDelay: ".4s",
+                  }}
+                />
+              </div>
+            ) : (
+              <>
+                <p className={modelClass}>
+                  <span className={modelIconClass} />
+                  <span>SushiMan AI</span>
+                </p>
+
+                <button
+                  className={buttonClass}
+                  type="submit"
+                >
+                  <Icon id="arrow" />
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+
+        <Chips />
+      </Form>
     </div>
-
-    <Chips />
-  </div>
-);
+  );
+};
 
 export { Agent };

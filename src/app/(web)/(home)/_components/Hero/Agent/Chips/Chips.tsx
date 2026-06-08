@@ -1,83 +1,76 @@
-"use client";
-import React, { useState, useTransition } from "react";
+import React, { useTransition } from "react";
+import { toast } from "react-toastify";
 
+import { addTopRollsToCart, addTopSetsToCart } from "@/app/(web)/_actions";
 import { Icon } from "@/ui";
 
-import { addTopRollsToCart, addTopSetsToCart } from "../actions";
-
-import { responseClass } from "../FormLayout/FormLayout.css";
 import { buttonClass, circleClass, diamondClass, iconClass, wrapperClass } from "./Chips.css";
 
 const Chips: React.FC = () => {
   const [isPending, startTransition] = useTransition();
-  const [message, setMessage] = useState<string>("");
 
   const handleTopSets = (): void => {
     startTransition(async () => {
-      const result = await addTopSetsToCart();
+      const { message, type } = await addTopSetsToCart();
 
-      setMessage(result);
+      toast(message, { type });
     });
   };
 
   const handleTopRolls = (): void => {
     startTransition(async () => {
-      const result = await addTopRollsToCart();
+      const { message, type } = await addTopRollsToCart();
 
-      setMessage(result);
+      toast(message, { type });
     });
   };
 
   return (
-    <>
-      {message && <p className={responseClass}>{message}</p>}
+    <div className={wrapperClass}>
+      <button
+        className={buttonClass}
+        disabled={isPending}
+        onClick={handleTopSets}
+        type="button"
+      >
+        <Icon
+          className={iconClass}
+          id="top"
+        />
 
-      <div className={wrapperClass}>
-        <button
-          className={buttonClass}
-          disabled={isPending}
-          onClick={handleTopSets}
-          type="button"
-        >
-          <Icon
-            className={iconClass}
-            id="top"
-          />
+        <span>Přidat TOP sety</span>
+      </button>
 
-          <span>Přidat TOP sety</span>
-        </button>
+      <button
+        className={buttonClass}
+        disabled={isPending}
+        onClick={handleTopRolls}
+        type="button"
+      >
+        <Icon
+          className={iconClass}
+          id="favourites"
+        />
 
-        <button
-          className={buttonClass}
-          disabled={isPending}
-          onClick={handleTopRolls}
-          type="button"
-        >
-          <Icon
-            className={iconClass}
-            id="favourites"
-          />
+        <span>Nejoblíbenější</span>
+      </button>
 
-          <span>Nejoblíbenější</span>
-        </button>
+      <button
+        className={buttonClass}
+        type="button"
+      >
+        <i className={diamondClass} />
+        <span>Pikantní rolky</span>
+      </button>
 
-        <button
-          className={buttonClass}
-          type="button"
-        >
-          <i className={diamondClass} />
-          <span>Pikantní rolky</span>
-        </button>
-
-        <button
-          className={buttonClass}
-          type="button"
-        >
-          <i className={circleClass} />
-          <span>Vegetariánské</span>
-        </button>
-      </div>
-    </>
+      <button
+        className={buttonClass}
+        type="button"
+      >
+        <i className={circleClass} />
+        <span>Vegetariánské</span>
+      </button>
+    </div>
   );
 };
 
