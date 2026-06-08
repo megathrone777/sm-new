@@ -13,8 +13,10 @@ const addTopRollsToCart = async (): Promise<TActionResult> => {
     };
   }
 
-  const topRolls = [...category.products]
-    .filter(({ isAvailable, requiredModifier }: TProduct) => isAvailable && !requiredModifier)
+  const topRolls: TProduct[] = [...category.products]
+    .filter(
+      ({ isAvailable, requiredModifier }: TProduct): boolean => isAvailable && !requiredModifier,
+    )
     .sort((productA: TProduct, productB: TProduct): number => productB.price - productA.price)
     .slice(0, 2);
 

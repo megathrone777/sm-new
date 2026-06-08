@@ -9,6 +9,10 @@ import { buttonClass, circleClass, diamondClass, iconClass, wrapperClass } from 
 const Chips: React.FC = () => {
   const [isPending, startTransition] = useTransition();
 
+  // const handleSpicyRolls = (): void => {
+  //   startTransition(async () => {});
+  // };
+
   const handleTopSets = (): void => {
     startTransition(async () => {
       const { message, type } = await addTopSetsToCart();

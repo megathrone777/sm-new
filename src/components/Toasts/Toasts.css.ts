@@ -99,7 +99,7 @@ export const iconClass = styleVariants(
 );
 
 globalStyle(`${wrapperClass} > .Toastify__toast`, ({ colors, devices, easing, fonts }) => ({
-  alignItems: "center",
+  alignItems: "start",
   animationDuration: "500ms",
   animationFillMode: "forwards",
   animationTimingFunction: easing,
@@ -108,7 +108,7 @@ globalStyle(`${wrapperClass} > .Toastify__toast`, ({ colors, devices, easing, fo
   display: "grid",
   fontFamily: "inherit",
   fontSize: 16,
-  fontWeight: fonts.normal,
+  fontWeight: fonts.medium,
   gridAutoFlow: "column",
   gridTemplateColumns: "auto 1fr auto",
   justifyContent: "start",
@@ -116,8 +116,9 @@ globalStyle(`${wrapperClass} > .Toastify__toast`, ({ colors, devices, easing, fo
   minHeight: 60,
   minWidth: "fit-content",
   overflow: "hidden",
-  paddingBlock: 6,
+  paddingBlock: "20px 12px",
   pointerEvents: "auto",
+  whiteSpace: "pre-line",
 
   "@media": {
     [devices.mobile]: {

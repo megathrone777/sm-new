@@ -13,11 +13,11 @@ const addTopSetsToCart = async (): Promise<TActionResult> => {
     };
   }
 
-  const topSets = [...category.products]
+  const topSets: TProduct[] = [...category.products]
     .filter(
       ({ isAvailable, requiredModifier }: TProduct): boolean => isAvailable && !requiredModifier,
     )
-    .sort((productA: TProduct, productB: TProduct) => productB.price - productA.price)
+    .sort((productA: TProduct, productB: TProduct): number => productB.price - productA.price)
     .slice(0, 2);
 
   if (topSets.length === 0) {
