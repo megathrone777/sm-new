@@ -1,6 +1,7 @@
 const colors = {
   amber: "#ffd43b",
   black: "#050404",
+  blackDarker: "#150e0f",
   blue: "#3b82f6",
   gray: "#707171",
   grayDarker: "#767676",
@@ -15,6 +16,7 @@ const colors = {
   red: "#da2629",
   redDarker: "#8c171a",
   redDarkest: "#991b1b",
+  redLighter: "#e11d26",
   redLightest: "#fee2e2",
   white: "#efefef",
   whiteDarker: "#9ea0a1",

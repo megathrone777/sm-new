@@ -31,31 +31,21 @@ export const layoutClass = style(({ devices }) => ({
   },
 }));
 
-export const pictureClass = style({
-  bottom: 0,
-  display: "block",
-  left: 0,
-  position: "absolute",
-  right: 0,
-  top: 0,
-});
-
-export const bgImageClass = style({
+export const contentClass = style(() => ({
+  display: "grid",
+  gridAutoFlow: "row",
+  gridTemplateRows: "auto 1fr",
   height: "100%",
-  objectFit: "cover",
-  objectPosition: "center top",
-  width: "100%",
-});
+}));
 
-export const contentClass = style(({ devices }) => ({
+export const heroClass = style(({ devices }) => ({
   alignContent: "start",
   display: "grid",
   gridAutoFlow: "row",
-  height: "100%",
   justifyItems: "start",
-  maxWidth: 280,
   paddingLeft: 5,
   rowGap: 15,
+  textWrap: "balance",
 
   "@media": {
     [devices.tablet]: {
@@ -75,7 +65,7 @@ export const contentClass = style(({ devices }) => ({
 
 export const titleClass = style(({ devices, fonts }) => ({
   color: "white",
-  fontSize: 20,
+  fontSize: 25,
   fontWeight: fonts.bold,
   lineHeight: "normal",
   textWrap: "balance",

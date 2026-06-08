@@ -1,15 +1,17 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      AI_GATEWAY_API_KEY: string;
+      ANTHROPIC_API_KEY: string;
 
       BLOB_READ_WRITE_TOKEN: string;
 
       EMAIL_ADDRESS: string;
+
       EMAIL_APP_PASSWORD: string;
       EMAIL_ORDER_CONFIRMATION_ENABLED: string;
-
       MAPY_CZ_API_KEY: string;
+
+      OPENROUTER_API_KEY: string;
 
       PUBLIC_URL: string;
 

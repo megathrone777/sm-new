@@ -13,6 +13,7 @@ export type TIconID =
   | "drag"
   | "email"
   | "exclamation"
+  | "favourites"
   | "globe"
   | "history"
   | "invoice"
@@ -28,6 +29,7 @@ export type TIconID =
   | "repeat"
   | "save"
   | "time"
+  | "top"
   | "trash";
 
 export interface TProps {

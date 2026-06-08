@@ -15,6 +15,7 @@ export const viewBox: Record<TIconID, string> = {
   drag: "0 0 24 24",
   email: "0 0 512 512",
   exclamation: "0 0 512 512",
+  favourites: "0 0 14 14",
   globe: "0 0 512 512",
   history: "0 0 24 24",
   invoice: "0 0 24 24",
@@ -30,5 +31,6 @@ export const viewBox: Record<TIconID, string> = {
   repeat: "0 0 24 24",
   save: "0 0 448 512",
   time: "0 0 512 512",
+  top: "0 0 24 24",
   trash: "0 0 448 512",
 };
