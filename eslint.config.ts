@@ -150,6 +150,8 @@ const config = defineConfig([
         { argsIgnorePattern: "_", varsIgnorePattern: "_" },
       ],
       "@typescript-eslint/restrict-template-expressions": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-argument": "off",
 
       "perfectionist/sort-enums": "error",
       "perfectionist/sort-exports": "error",

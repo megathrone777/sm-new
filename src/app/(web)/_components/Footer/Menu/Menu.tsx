@@ -28,7 +28,7 @@ const Menu: React.FC<TProps> = ({ items }) => {
         });
       }
     } else {
-      router.push(("/" + hash) as TNavItem["href"]);
+      router.push(`/${hash}`);
     }
   };
 

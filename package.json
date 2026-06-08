@@ -62,7 +62,6 @@
   "name": "sushi-man",
   "private": true,
   "scripts": {
-    "ai": "node src/ai/index.ts --env-file=.env -r",
     "build": "jest --ci --runInBand && yarn lint && next build --webpack",
     "dev": "next dev --turbopack",
     "lint": "eslint ./src --config eslint.config.ts --flag unstable_native_nodejs_ts_config",
