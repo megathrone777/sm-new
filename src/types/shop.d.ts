@@ -1,4 +1,6 @@
 declare global {
+  import type { LinkProps } from "next/link";
+
   interface TDeliveryCondition {
     distanceFrom: number;
     distanceTo: number;
@@ -10,7 +12,7 @@ declare global {
   }
 
   interface TNavItem {
-    href: __next_route_internal_types__.RouteImpl<string>;
+    href: LinkProps<string>["href"];
     title: string;
   }
 

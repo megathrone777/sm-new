@@ -57,7 +57,7 @@ const Menu: React.FC<TProps> = ({ items, phone }) => {
         });
       }
     } else {
-      router.push(("/" + hash) as TNavItem["href"]);
+      router.push(`/${hash}`);
     }
   };
 

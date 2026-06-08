@@ -27,11 +27,11 @@ const Page: React.FC = async () => {
               <input
                 name="href"
                 type="hidden"
-                value={item.href}
+                value={item.href as string}
               />
 
               <Input
-                defaultValue={item.href}
+                defaultValue={item.href as string}
                 label="Href"
                 readOnly
                 type="text"

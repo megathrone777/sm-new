@@ -173,7 +173,7 @@ const shop = {
     const navigation: TNavItem[] = DEFAULT_NAV.map(
       (item: TNavItem): TNavItem => ({
         href: item.href,
-        title: navOverrides?.[item.href] ?? item.title,
+        title: navOverrides?.[item.href as string] ?? item.title,
       }),
     );
     const settings: TEditableSettings = {

@@ -1,12 +1,13 @@
 import type { TIconID } from "@/ui";
 
 import type { ButtonHTMLAttributes, DetailedHTMLProps } from "react";
+import type { LinkProps } from "next/link";
 
 export interface TProps extends DetailedHTMLProps<
   ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > {
-  href?: __next_route_internal_types__.RouteImpl<string>;
+  href?: LinkProps<string>["href"];
   iconId?: null | TIconID;
   target?: HTMLAnchorElement["target"];
   template?: "normal" | "small";

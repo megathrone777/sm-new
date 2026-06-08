@@ -13,7 +13,12 @@ const History: React.FC<TProps> = async ({ phoneNumber }) => {
   if (orders && !!orders.length) {
     return (
       <Button
-        href={`/archived-orders/${phoneNumber}` as __next_route_internal_types__.RouteImpl<string>}
+        href={{
+          pathname: "/archived-orders/[phoneNumber]",
+          query: {
+            phoneNumber,
+          },
+        }}
         iconId="history"
         template="small"
         title="Historie objednavek"
