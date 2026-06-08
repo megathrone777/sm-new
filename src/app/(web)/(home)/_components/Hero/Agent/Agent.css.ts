@@ -52,6 +52,7 @@ export const contentClass = style(({ colors, devices }) => ({
   borderRadius: 18,
   boxShadow: `0 26px 64px -30px ${rgba(colors.black, 0.85)}, inset 0 1px 0 ${rgba(colors.whiteLightest, 0.06)}`,
   paddingBottom: 12,
+  transition: "height .1s ease",
   width: "100%",
 
   "@media": {

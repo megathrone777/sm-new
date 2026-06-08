@@ -34,11 +34,18 @@ export const wrapperClass = style(({ colors, devices }) => ({
   },
 }));
 
-export const contentClass = style(() => ({
+export const contentClass = style(({ devices }) => ({
+  alignItems: "start",
   display: "grid",
   gridAutoFlow: "row",
   gridTemplateRows: "auto 1fr",
   height: "100%",
+
+  "@media": {
+    [devices.desktop]: {
+      alignItems: "center",
+    },
+  },
 }));
 
 export const heroClass = style(({ devices }) => ({

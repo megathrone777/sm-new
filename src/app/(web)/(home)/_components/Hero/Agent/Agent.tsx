@@ -1,5 +1,5 @@
 "use client";
-import React, { useActionState } from "react";
+import React, { useActionState, useEffect, useRef } from "react";
 import Form from "next/form";
 
 import { submitAgentForm } from "@/app/(web)/_actions";
@@ -18,6 +18,7 @@ import {
 
 const Agent: React.FC = () => {
   const [state, action, isPending] = useActionState(submitAgentForm, null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>): void => {
     if ((event.key === "Enter" || event.key === "NumpadEnter") && !event.shiftKey) {
@@ -33,8 +34,19 @@ const Agent: React.FC = () => {
     void currentTarget.reset();
   };
 
+  useEffect((): void => {
+    if (!state) return;
+    wrapperRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [state]);
+
   return (
-    <div className={wrapperClass}>
+    <div
+      className={wrapperClass}
+      ref={wrapperRef}
+    >
       <h2 className={titleClass}>Na co máte chut'?</h2>
 
       <Form
@@ -47,6 +59,7 @@ const Agent: React.FC = () => {
           {state && <p className={messageClass}>{state.message}</p>}
 
           <textarea
+            autoFocus={false}
             className={textareaClass}
             name="message"
             onKeyDown={handleKeyDown}
