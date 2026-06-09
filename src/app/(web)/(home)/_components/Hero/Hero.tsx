@@ -1,10 +1,9 @@
 import React from "react";
 
+import { Agent } from "@/app/(web)/_components";
 import { store } from "@/store";
 import { Container } from "@/ui";
 import { splitText } from "@/utils";
-
-import { Agent } from "./Agent";
 
 import { contentClass, heroClass, textClass, titleClass, wrapperClass } from "./Hero.css";
 
@@ -38,7 +37,10 @@ const Hero: React.FC = async () => {
             />
           </div>
 
-          <Agent />
+          <Agent
+            placeholder="Napište, na co máte chuť — poradíme a přidáme rovnou do košíku..."
+            title="Na co máte chut'?"
+          />
         </div>
       </Container>
     </div>

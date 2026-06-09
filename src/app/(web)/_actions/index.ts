@@ -4,6 +4,7 @@ export { addToCart } from "./addToCart";
 export { addTopRollsToCart } from "./addTopRollsToCart";
 export { addTopSetsToCart } from "./addTopSetsToCart";
 export { applyPromocode } from "./applyPromocode";
+export { clearCart } from "./clearCart";
 export { clearPromoError } from "./clearPromoError";
 export { getAddressSuggestions } from "./getAddressSuggestions";
 export { getCourierPosition } from "./getCourierPosition";

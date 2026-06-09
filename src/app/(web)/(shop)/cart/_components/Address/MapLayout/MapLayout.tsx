@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import ReactMap, { type LngLatLike } from "react-map-gl/maplibre";
+import ReactMap from "react-map-gl/maplibre";
 
 import { bbox } from "@/utils";
 
@@ -8,7 +8,7 @@ import { wrapperClass } from "./MapLayout.css";
 
 import type { TProps } from "./MapLayout.types";
 
-const kitchenCoords: LngLatLike = { lat: 50.0861328, lon: 14.4518119 };
+const kitchenCoords: TLatLon = { lat: 50.0861328, lon: 14.4518119 };
 
 const toBounds = (points: [number, number][]): [[number, number], [number, number]] => {
   const bounds = bbox(points);

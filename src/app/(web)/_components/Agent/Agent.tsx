@@ -16,7 +16,9 @@ import {
   wrapperClass,
 } from "./Agent.css";
 
-const Agent: React.FC = () => {
+import type { TProps } from "./Agent.types";
+
+const Agent: React.FC<TProps> = ({ placeholder, showChips = true, title }) => {
   const [state, action, isPending] = useActionState(submitAgentForm, null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -36,6 +38,7 @@ const Agent: React.FC = () => {
 
   useEffect((): void => {
     if (!state) return;
+    if (window.innerWidth > 1024) return;
     wrapperRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "start",
@@ -47,7 +50,7 @@ const Agent: React.FC = () => {
       className={wrapperClass}
       ref={wrapperRef}
     >
-      <h2 className={titleClass}>Na co máte chut'?</h2>
+      <h2 className={titleClass}>{title}</h2>
 
       <Form
         {...{ action }}
@@ -59,18 +62,18 @@ const Agent: React.FC = () => {
           {state && <p className={messageClass}>{state.message}</p>}
 
           <textarea
+            {...{ placeholder }}
             autoFocus={false}
             className={textareaClass}
             name="message"
             onKeyDown={handleKeyDown}
-            placeholder="Napište, na co máte chuť — poradíme a přidáme rovnou do košíku..."
             spellCheck={false}
           />
 
           <Overlay {...{ isPending }} />
         </div>
 
-        <Chips />
+        {showChips && <Chips />}
       </Form>
     </div>
   );

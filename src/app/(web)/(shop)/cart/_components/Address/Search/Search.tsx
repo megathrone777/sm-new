@@ -82,7 +82,10 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
     navigator.geolocation.getCurrentPosition(
       ({ coords }): void => {
         void (async (): Promise<void> => {
-          const result = await reverseGeocodeAddress(coords.latitude, coords.longitude);
+          const result = await reverseGeocodeAddress({
+            lat: coords.latitude,
+            lon: coords.longitude,
+          });
 
           if (result) await handleAddressSelect(result);
 
@@ -149,7 +152,9 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
       {delivery.address.length > 0 && inputValue.length > 0 && (
         <button
           className={resetButtonClass}
-          onClick={(): void => { void handleInputReset(); }}
+          onClick={(): void => {
+            void handleInputReset();
+          }}
           type="button"
         >
           <Icon id="close" />

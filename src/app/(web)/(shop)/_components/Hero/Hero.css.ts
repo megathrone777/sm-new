@@ -2,45 +2,54 @@ import { style } from "@/theme";
 
 export const wrapperClass = style(({ colors, devices }) => ({
   alignContent: "stretch",
-  backgroundPosition: "right top",
+  backgroundPositionX: "right -298px",
+  backgroundPositionY: "top",
   backgroundRepeat: "no-repeat",
   backgroundSize: "auto 100%",
   borderBottom: `4px solid ${colors.red}`,
   display: "grid",
   minHeight: 120,
-  paddingBottom: 15,
-  paddingTop: 120,
-  position: "relative",
-  zIndex: 2,
+  paddingBlock: "120px 20px",
 
   "@media": {
     [devices.mobile]: {
-      backgroundSize: "100% 100%",
       paddingTop: 130,
     },
 
     [devices.tablet]: {
       backgroundSize: "cover",
-      paddingBottom: 20,
     },
 
     [devices.desktop]: {
-      paddingBottom: 25,
-      paddingTop: 160,
+      paddingBlock: "160px 30px",
     },
 
     [devices.desktopLg]: {
-      paddingBottom: 35,
+      backgroundPositionX: "right",
+      backgroundSize: "cover",
       paddingTop: 175,
     },
   },
 }));
 
 export const contentClass = style(({ devices }) => ({
+  alignItems: "start",
+  display: "grid",
+  gridAutoFlow: "row",
+  gridTemplateRows: "auto 1fr",
+  height: "100%",
+
+  "@media": {
+    [devices.desktop]: {
+      alignItems: "center",
+    },
+  },
+}));
+
+export const heroClass = style(({ devices }) => ({
   alignContent: "start",
   display: "grid",
   gridAutoFlow: "row",
-  height: "100%",
   justifyItems: "start",
   paddingLeft: 5,
   rowGap: 15,

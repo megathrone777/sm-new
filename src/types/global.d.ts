@@ -23,6 +23,11 @@ declare global {
     label: string;
     value: null | string;
   }
+
+  interface TLatLon {
+    lat: number;
+    lon: number;
+  }
 }
 
 export {};

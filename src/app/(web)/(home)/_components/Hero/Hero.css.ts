@@ -10,8 +10,7 @@ export const wrapperClass = style(({ colors, devices }) => ({
   borderBottom: `4px solid ${colors.red}`,
   display: "grid",
   minHeight: 280,
-  paddingBottom: 20,
-  paddingTop: 120,
+  paddingBlock: "120px 20px",
 
   "@media": {
     [devices.mobile]: {
@@ -21,8 +20,7 @@ export const wrapperClass = style(({ colors, devices }) => ({
     [devices.desktop]: {
       backgroundPositionX: "right -205px",
       backgroundSize: "auto 100%",
-      paddingBottom: 30,
-      paddingTop: 160,
+      paddingBlock: "160px 30px",
     },
 
     [devices.desktopLg]: {

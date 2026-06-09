@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Marker, type LngLatLike } from "react-map-gl/maplibre";
+import { Marker } from "react-map-gl/maplibre";
 
 import { getCouriers } from "@/app/(auth)/(orders)/_actions";
 import { useRealtime } from "@/hooks";
@@ -13,7 +13,7 @@ import { markerClass, markerIconClass } from "./Map.css";
 
 import type { TProps } from "./Map.types";
 
-const kitchenCoords: LngLatLike = {
+const kitchenCoords: TLatLon = {
   lat: 50.0861328,
   lon: 14.4518119,
 };

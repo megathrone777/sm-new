@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import ReactMap, { Marker, type LngLatLike, type MapRef } from "react-map-gl/maplibre";
+import ReactMap, { Marker, type MapRef } from "react-map-gl/maplibre";
 
 import "maplibre-gl/dist/maplibre-gl.css";
 
@@ -18,7 +18,7 @@ import {
 
 import type { TProps } from "./Progress.types";
 
-const kitchenCoords: LngLatLike = {
+const kitchenCoords: TLatLon = {
   lat: 50.0861328,
   lon: 14.4518119,
 };

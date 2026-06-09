@@ -4,8 +4,8 @@ import { number, object } from "zod";
 import { addToCart } from "@/app/(web)/_actions";
 
 const addProductSchema = object({
-  productId: number().int().describe("ID produktu ze seznamu"),
-  quantity: number().int().min(1).describe("Množství"),
+  productId: number().int().describe("Product ID from the catalog"),
+  quantity: number().int().min(1).describe("Quantity"),
 });
 
 const addProductToCart = (
@@ -18,7 +18,7 @@ const addProductToCart = (
   string
 > =>
   tool({
-    description: "Přidá produkt do košíku podle jeho ID.",
+    description: "Add a product to the cart by its ID.",
     execute: async ({ productId, quantity }) => {
       const product = products.find(({ id }: TProduct): boolean => id === productId);
 

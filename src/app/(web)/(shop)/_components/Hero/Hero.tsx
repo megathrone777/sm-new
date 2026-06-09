@@ -1,10 +1,11 @@
 import React from "react";
 
+import { Agent } from "@/app/(web)/_components";
 import { store } from "@/store";
 import { Container } from "@/ui";
 import { splitText } from "@/utils";
 
-import { contentClass, textClass, titleClass, wrapperClass } from "./Hero.css";
+import { contentClass, heroClass, textClass, titleClass, wrapperClass } from "./Hero.css";
 
 const Hero: React.FC = async () => {
   const [{ description, title }, { heroPagesUrl }] = await Promise.all([
@@ -23,15 +24,23 @@ const Hero: React.FC = async () => {
     >
       <Container>
         <div className={contentClass}>
-          <h1 className={titleClass}>
-            {titleLine1}
-            <br />
-            {titleLine2}
-          </h1>
+          <div className={heroClass}>
+            <h1 className={titleClass}>
+              {titleLine1}
+              <br />
+              {titleLine2}
+            </h1>
 
-          <p
-            className={textClass}
-            dangerouslySetInnerHTML={{ __html: description }}
+            <p
+              className={textClass}
+              dangerouslySetInnerHTML={{ __html: description }}
+            />
+          </div>
+
+          <Agent
+            placeholder="Poraďte se s námi — přidáme, odebereme, doporučíme..."
+            showChips={false}
+            title="Váš sushi průvodce"
           />
         </div>
       </Container>

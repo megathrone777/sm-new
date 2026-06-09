@@ -7,7 +7,8 @@ export const wrapperClass = style(({ devices }) => ({
   gridAutoFlow: "row",
   justifyContent: "stretch",
   justifyItems: "center",
-  padding: "30px 5px 20px",
+  paddingInline: 5,
+  paddingTop: 30,
   rowGap: 12,
 
   "@media": {
@@ -87,6 +88,11 @@ export const textareaClass = style(({ colors, devices }) => ({
   minHeight: 67,
   padding: "17px 14px 8px",
   resize: "none",
+  selectors: {
+    "&:focus::placeholder": {
+      color: "transparent",
+    },
+  },
   width: "100%",
 
   "::placeholder": {

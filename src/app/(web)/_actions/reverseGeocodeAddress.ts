@@ -1,13 +1,9 @@
 "use server";
-
-type TRgeocodeResponse = {
+interface TRgeocodeResponse {
   items: TAddressSuggestion[];
-};
+}
 
-const reverseGeocodeAddress = async (
-  lat: number,
-  lon: number,
-): Promise<null | TAddressSuggestion> => {
+const reverseGeocodeAddress = async ({ lat, lon }: TLatLon): Promise<null | TAddressSuggestion> => {
   const params = new URLSearchParams({
     apikey: process.env.MAPY_CZ_API_KEY ?? "",
     lang: "cs",

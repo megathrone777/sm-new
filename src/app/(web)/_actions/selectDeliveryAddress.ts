@@ -2,14 +2,9 @@
 import { revalidatePath } from "next/cache";
 
 import { store } from "@/store";
+import { kitchenCoords, validateDeliveryAddress } from "@/utils/validateDeliveryAddress";
 
 import { saveCart } from "./saveCart";
-
-import type { LngLatLike } from "react-map-gl/maplibre";
-
-type TMatrixResponse = {
-  matrix: [[{ duration: number; length: number }]];
-};
 
 type TRouteResponse = {
   geometry?: {
@@ -17,11 +12,6 @@ type TRouteResponse = {
       coordinates?: [number, number][];
     };
   };
-};
-
-const kitchenCoords: LngLatLike = {
-  lat: 50.0861328,
-  lon: 14.4518119,
 };
 
 const selectDeliveryAddress = async (
@@ -33,33 +23,24 @@ const selectDeliveryAddress = async (
   if (!cart) return;
 
   const apikey = process.env.MAPY_CZ_API_KEY ?? "";
-  const clientLonLat: [number, number] = [position.lng, position.lat];
-  const deliveryConditions = await store.deliveryConditions.getAll();
-  const matrixUrl = new URL("https://api.mapy.cz/v1/routing/matrix-m");
-
-  matrixUrl.searchParams.set("apikey", apikey);
-  matrixUrl.searchParams.set("lang", "cs");
-  matrixUrl.searchParams.append("starts", `${kitchenCoords.lon},${kitchenCoords.lat}`);
-  matrixUrl.searchParams.append("ends", clientLonLat.join(","));
-  matrixUrl.searchParams.set("routeType", "car_fast_traffic");
+  const pos = { lat: position.lat, lon: position.lng };
 
   const routeUrl = new URL("https://api.mapy.cz/v1/routing/route");
 
   routeUrl.searchParams.set("apikey", apikey);
   routeUrl.searchParams.set("lang", "cs");
   routeUrl.searchParams.set("start", `${kitchenCoords.lon},${kitchenCoords.lat}`);
-  routeUrl.searchParams.set("end", clientLonLat.join(","));
+  routeUrl.searchParams.set("end", `${pos.lon},${pos.lat}`);
   routeUrl.searchParams.set("routeType", "car_fast_traffic");
 
-  const [matrixResponse, routeResponse] = await Promise.all([
-    fetch(matrixUrl.toString()),
+  const [result, routeResponse] = await Promise.all([
+    validateDeliveryAddress(pos),
     fetch(routeUrl.toString()),
   ]);
 
-  if (!matrixResponse.ok) return;
+  if (!result) return;
 
-  const matrixData = (await matrixResponse.json()) as TMatrixResponse;
-  const length = matrixData.matrix?.[0]?.[0]?.length ?? 0;
+  const { length, tier } = result;
 
   const routeData = routeResponse.ok ? ((await routeResponse.json()) as TRouteResponse) : null;
   const routeCoordsLonLat = routeData?.geometry?.geometry?.coordinates ?? [];
@@ -70,10 +51,6 @@ const selectDeliveryAddress = async (
           [kitchenCoords.lat, kitchenCoords.lon],
           [position.lat, position.lng],
         ];
-
-  const tier = deliveryConditions.find(
-    ({ distanceFrom, distanceTo }) => distanceFrom < length && length <= distanceTo,
-  );
 
   const { addressRange: _existing, ...errors } = cart.errors;
   const nextErrors = tier ? errors : { ...errors, addressRange: "Adresa mimo rozsah rozvozu" };
