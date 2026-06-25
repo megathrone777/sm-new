@@ -1,4 +1,3 @@
-import eslintPluginImport from "eslint-plugin-import";
 import eslintPluginPerfectionist from "eslint-plugin-perfectionist";
 import eslintPluginReact from "@eslint-react/eslint-plugin";
 import eslintPluginStylistic from "@stylistic/eslint-plugin";
@@ -27,14 +26,10 @@ const config = defineConfig([
     plugins: {
       "@eslint-react": eslintPluginReact,
       "@stylistic": eslintPluginStylistic,
-      import: eslintPluginImport,
       perfectionist: eslintPluginPerfectionist,
     },
     rules: {
       "func-style": ["error", "expression"],
-      "import/named": "off",
-      "import/newline-after-import": "error",
-      "import/order": "off",
       "newline-after-var": "error",
       "newline-before-return": "error",
       "no-inline-comments": "error",
@@ -74,6 +69,14 @@ const config = defineConfig([
       ],
       "no-trailing-spaces": "error",
       "no-unused-vars": "off",
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "any", prev: "import", next: "import" },
+      ],
+      "prefer-const": "error",
+      quotes: "off",
+      semi: "error",
 
       "@eslint-react/dom-no-missing-button-type": "error",
       "@eslint-react/dom-no-string-style-prop": "error",

@@ -2,5 +2,6 @@
   "js/ts.tsdk.path": "node_modules\\typescript\\lib",
   "eslint.options": {
     "flags": ["unstable_native_nodejs_ts_config"]
-  }
+  },
+  "prettier.configPath": "./prettier.config.ts"
 }

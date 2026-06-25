@@ -29,5 +29,5 @@
     "target": "es2017"
   },
   "include": ["**/*.ts", "**/*.tsx", ".next/dev/types/**/*.ts", ".next/types/**/*.ts"],
-  "exclude": ["build", "node_modules"]
+  "exclude": ["**/node_modules", "build"]
 }
