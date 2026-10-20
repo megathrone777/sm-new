@@ -17,7 +17,7 @@ jest.mock("@/store", () => ({
 jest.mock("next/cache", () => ({ revalidatePath: jest.fn() }));
 
 const makePipeline = (
-  execResult: [unknown, unknown] = [null, null],
+  execResult: [unknown, unknown] = [null, null]
 ): {
   exec: jest.Mock;
   hget: jest.Mock;
@@ -95,7 +95,7 @@ describe("createModifier", () => {
       await createModifier(null, makeFormData({ price: "75", sortOrder: "3" }));
 
       expect(store.modifiers.set).toHaveBeenCalledWith(
-        expect.objectContaining({ price: 75, sortOrder: 3 }),
+        expect.objectContaining({ price: 75, sortOrder: 3 })
       );
     });
 
@@ -106,7 +106,7 @@ describe("createModifier", () => {
       await createModifier(null, formData);
 
       expect(store.modifiers.set).toHaveBeenCalledWith(
-        expect.objectContaining({ requiredSubModifier: true }),
+        expect.objectContaining({ requiredSubModifier: true })
       );
     });
 
@@ -124,7 +124,7 @@ describe("createModifier", () => {
       await createModifier(null, formData);
 
       expect(store.modifiers.set).toHaveBeenCalledWith(
-        expect.objectContaining({ subModifiers: [{ id: 1, title: "Sub A" }] }),
+        expect.objectContaining({ subModifiers: [{ id: 1, title: "Sub A" }] })
       );
     });
 
@@ -188,7 +188,7 @@ describe("updateModifier", () => {
       await updateModifier(null, formData({ price: "60", title: "New sauce" }));
 
       expect(store.modifiers.set).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 5, price: 60, title: "New sauce" }),
+        expect.objectContaining({ id: 5, price: 60, title: "New sauce" })
       );
     });
 

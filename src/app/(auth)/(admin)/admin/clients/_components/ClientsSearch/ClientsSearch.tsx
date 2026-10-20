@@ -28,7 +28,7 @@ const ClientsSearch: React.FC = () => (
                 <span className={textClass}>{email}</span>
               </Link>
             </li>
-          ) : null,
+          ) : null
         )}
       </ul>
     )}

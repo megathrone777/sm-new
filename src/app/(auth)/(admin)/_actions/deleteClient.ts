@@ -15,7 +15,7 @@ const CLIENT_SEARCH_SCHEMA = {
 
 const deleteClient = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 

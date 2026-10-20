@@ -25,7 +25,7 @@ const Modifiers: React.FC<TProps> = ({ modifiers, requiredModifier }) => {
       setCheckedIds(checked ? [id] : []);
     } else {
       setCheckedIds((prevIds: number[]): number[] =>
-        checked ? [...prevIds, id] : prevIds.filter((prevId: number): boolean => prevId !== id),
+        checked ? [...prevIds, id] : prevIds.filter((prevId: number): boolean => prevId !== id)
       );
     }
   };
@@ -83,7 +83,7 @@ const Modifiers: React.FC<TProps> = ({ modifiers, requiredModifier }) => {
                             value={subModifierId}
                           />
                         </li>
-                      ),
+                      )
                     )}
                   </ul>
                 </div>

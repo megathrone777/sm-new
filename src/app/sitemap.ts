@@ -19,7 +19,7 @@ const sitemap = async (): Promise<MetadataRoute.Sitemap> => {
       changeFrequency: "weekly",
       priority: 0.8,
       url: `${publicURL}/product/${slug}`,
-    }),
+    })
   );
   const staticEntries: MetadataRoute.Sitemap = STATIC_PAGES.map((entry) => ({
     ...entry,

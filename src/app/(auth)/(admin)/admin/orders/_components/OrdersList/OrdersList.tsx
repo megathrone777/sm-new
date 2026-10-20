@@ -56,7 +56,7 @@ const OrdersList: React.FC = async () => {
                   />
                 </Link>
               </div>
-            ),
+            )
           )}
         </div>
       )}

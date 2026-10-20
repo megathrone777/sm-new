@@ -105,7 +105,7 @@ const ReviewsList: React.FC = async () => {
                   />
                 </FormLayout>
               </div>
-            ),
+            )
           )}
         </div>
       )}

@@ -28,5 +28,5 @@ export const wrapperClass = styleVariants(
       width: "100%",
     },
     variant,
-  ],
+  ]
 );

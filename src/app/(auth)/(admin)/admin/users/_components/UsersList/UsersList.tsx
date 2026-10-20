@@ -85,7 +85,7 @@ const UsersList: React.FC = async () => {
                   <div style={{ minWidth: 38 }} />
                 )}
               </div>
-            ),
+            )
           )}
         </div>
       )}

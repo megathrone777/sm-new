@@ -12,11 +12,11 @@ const lockKey = (sessionId: string): string => `lock:${sessionId}`;
 
 const getCategoryDiscount = (products: TCartProduct[]): number => {
   const productsWithDiscount: TCartProduct[] = products.filter(
-    ({ isPromotionActive }: TCartProduct): boolean => Boolean(isPromotionActive),
+    ({ isPromotionActive }: TCartProduct): boolean => Boolean(isPromotionActive)
   );
   const productsWithDiscountQuantity: number = productsWithDiscount.reduce<number>(
     (accumulator, { quantity }: TCartProduct): number => accumulator + quantity,
-    0,
+    0
   );
 
   if (productsWithDiscount && !!productsWithDiscount.length && productsWithDiscount[0]) {
@@ -34,12 +34,12 @@ const getCategoryDiscount = (products: TCartProduct[]): number => {
 const getCutleryPrice = (
   products: TCartProduct[],
   cutlery: TCart["cutlery"],
-  cutleryPrice: number,
+  cutleryPrice: number
 ): number => {
   const freeCutleryQuantity: number = products.reduce(
     (accumulator: number, { freeCutleryCount, quantity }: TCartProduct): number =>
       accumulator + freeCutleryCount * quantity,
-    0,
+    0
   );
 
   if (cutlery.quantity > freeCutleryQuantity) {
@@ -52,11 +52,11 @@ const getCutleryPrice = (
 const getProductsPrice = (products: TCartProduct[], additionals: TCartAdditional[]): number => {
   const productsPrice: number = products.reduce<number>(
     (accumulator: number, { totalPrice }: TCartProduct): number => accumulator + totalPrice,
-    0,
+    0
   );
   const additionalsPrice: number = additionals.reduce<number>(
     (accumulator: number, { totalPrice }: TCartAdditional): number => accumulator + totalPrice,
-    0,
+    0
   );
 
   return productsPrice + additionalsPrice;

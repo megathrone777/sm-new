@@ -5,7 +5,7 @@ type TCallbackFn<TArgs extends unknown[]> = (...args: TArgs) => Promise<void> | 
 
 const useDebouncedCallback = <TArgs extends unknown[]>(
   callback: TCallbackFn<TArgs>,
-  delay: number = 300,
+  delay: number = 300
 ): ((...args: TArgs) => void) => {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const callbackRef = useRef<TCallbackFn<TArgs>>(callback);
@@ -22,7 +22,7 @@ const useDebouncedCallback = <TArgs extends unknown[]>(
         void callbackRef.current(...args);
       }, delay);
     },
-    [delay],
+    [delay]
   );
 
   useEffect((): VoidFunction => {

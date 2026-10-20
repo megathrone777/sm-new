@@ -57,7 +57,7 @@ const orders = {
     const orders = await fanOutById(ids);
 
     const active = orders.filter(
-      (order): boolean => order.status !== "done" && order.status !== "placed",
+      (order): boolean => order.status !== "done" && order.status !== "placed"
     );
     const placed = orders.filter((order): boolean => order.status === "placed");
 
@@ -93,7 +93,7 @@ const orders = {
   },
 
   getExistingOrder: async (
-    phoneNumber: string,
+    phoneNumber: string
   ): Promise<{ existingOrderIds: string[]; id: number }> => {
     const [existingOrderIds, id] = await redis
       .pipeline()

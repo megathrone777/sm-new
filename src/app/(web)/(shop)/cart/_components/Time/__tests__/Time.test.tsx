@@ -83,7 +83,7 @@ describe("Time", () => {
           deliveryType="delivery"
           schedule={openSchedule}
           time={{ label: "", value: null }}
-        />,
+        />
       );
 
       expect(screen.getByText("Doručit teď", { selector: "span" })).toBeInTheDocument();
@@ -95,7 +95,7 @@ describe("Time", () => {
           deliveryType="delivery"
           schedule={openSchedule}
           time={{ label: "14:00", value: "14:00" }}
-        />,
+        />
       );
 
       expect(screen.getByText("Doručit v 14:00")).toBeInTheDocument();
@@ -109,7 +109,7 @@ describe("Time", () => {
           deliveryType="pickup"
           schedule={openSchedule}
           time={{ label: "", value: null }}
-        />,
+        />
       );
 
       expect(screen.getByText("Vyzvednout teď", { selector: "span" })).toBeInTheDocument();
@@ -121,7 +121,7 @@ describe("Time", () => {
           deliveryType="pickup"
           schedule={openSchedule}
           time={{ label: "16:30", value: "16:30" }}
-        />,
+        />
       );
 
       expect(screen.getByText("Vyzvednout v 16:30")).toBeInTheDocument();
@@ -135,7 +135,7 @@ describe("Time", () => {
           deliveryType="delivery"
           schedule={openSchedule}
           time={{ label: "", value: null }}
-        />,
+        />
       );
 
       expect(screen.getByRole("combobox")).toBeInTheDocument();
@@ -147,7 +147,7 @@ describe("Time", () => {
           deliveryType="delivery"
           schedule={openSchedule}
           time={{ label: "", value: null }}
-        />,
+        />
       );
 
       const options = screen.getAllByRole("option");
@@ -161,7 +161,7 @@ describe("Time", () => {
           deliveryType="delivery"
           schedule={openSchedule}
           time={{ label: "", value: null }}
-        />,
+        />
       );
 
       expect(screen.getByTestId("icon-time")).toBeInTheDocument();
@@ -173,7 +173,7 @@ describe("Time", () => {
           deliveryType="delivery"
           schedule={openSchedule}
           time={{ label: "", value: null }}
-        />,
+        />
       );
 
       const select = screen.getByRole("combobox");

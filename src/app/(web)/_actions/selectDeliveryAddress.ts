@@ -16,7 +16,7 @@ type TRouteResponse = {
 
 const selectDeliveryAddress = async (
   address: string,
-  position: { lat: number; lng: number },
+  position: { lat: number; lng: number }
 ): Promise<void> => {
   const cart = await store.cart.get();
 

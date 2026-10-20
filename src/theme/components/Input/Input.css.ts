@@ -31,7 +31,7 @@ export const layoutClass = styleVariants(
       justifyContent: "start",
     },
     variant,
-  ],
+  ]
 );
 
 export const labelClass = style(({ fonts }) => ({
@@ -133,7 +133,7 @@ export const inputClass = styleVariants(
       },
     },
     template,
-  ],
+  ]
 );
 
 export const iconHolderClass = style({

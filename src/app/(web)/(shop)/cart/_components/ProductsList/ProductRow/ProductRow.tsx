@@ -65,7 +65,7 @@ const ProductRow: React.FC<TProps> = ({
                   {subModifier && <span className={subModifierClass}>{subModifier.title}</span>}
                 </li>
               </ul>
-            ),
+            )
           )}
       </div>
     </div>

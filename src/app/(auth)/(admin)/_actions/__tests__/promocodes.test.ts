@@ -92,7 +92,7 @@ describe("createPromocode", () => {
       await createPromocode(null, makeFormData());
 
       expect(store.promocodes.set).toHaveBeenCalledWith(
-        expect.objectContaining({ type: "reusable" }),
+        expect.objectContaining({ type: "reusable" })
       );
     });
 
@@ -103,7 +103,7 @@ describe("createPromocode", () => {
       await createPromocode(null, formData);
 
       expect(store.promocodes.set).toHaveBeenCalledWith(
-        expect.objectContaining({ type: "oneTime" }),
+        expect.objectContaining({ type: "oneTime" })
       );
     });
 
@@ -111,7 +111,7 @@ describe("createPromocode", () => {
       await createPromocode(null, makeFormData());
 
       expect(store.promocodes.set).toHaveBeenCalledWith(
-        expect.objectContaining({ appliedCount: 0, orderIds: [] }),
+        expect.objectContaining({ appliedCount: 0, orderIds: [] })
       );
     });
 
@@ -176,7 +176,7 @@ describe("updatePromocode", () => {
 
       expect(store.promocodes.update).toHaveBeenCalledWith(
         "SUMMER20",
-        expect.objectContaining({ isActive: "1" }),
+        expect.objectContaining({ isActive: "1" })
       );
     });
 
@@ -189,7 +189,7 @@ describe("updatePromocode", () => {
 
       expect(store.promocodes.update).toHaveBeenCalledWith(
         "SUMMER20",
-        expect.objectContaining({ isActive: "0" }),
+        expect.objectContaining({ isActive: "0" })
       );
     });
 
@@ -250,7 +250,7 @@ describe("activatePromocode", () => {
       expect(result.message).toContain("is now active");
       expect(store.promocodes.update).toHaveBeenCalledWith(
         "SUMMER20",
-        expect.objectContaining({ isActive: "1" }),
+        expect.objectContaining({ isActive: "1" })
       );
     });
 

@@ -71,7 +71,7 @@ describe("Promo", () => {
         <Promo
           {...defaultProps}
           phoneNumber=""
-        />,
+        />
       );
 
       expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
@@ -82,7 +82,7 @@ describe("Promo", () => {
         <Promo
           {...defaultProps}
           phoneError="Neplatné telefonní číslo"
-        />,
+        />
       );
 
       expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
@@ -98,7 +98,7 @@ describe("Promo", () => {
               type: "delivery",
             } as TDelivery
           }
-        />,
+        />
       );
 
       expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
@@ -109,7 +109,7 @@ describe("Promo", () => {
         <Promo
           {...defaultProps}
           addressError="Adresa mimo dosah"
-        />,
+        />
       );
 
       expect(document.querySelector("fieldset") as HTMLFieldSetElement).toBeDisabled();
@@ -125,7 +125,7 @@ describe("Promo", () => {
               type: "pickup",
             } as TDelivery
           }
-        />,
+        />
       );
 
       expect(document.querySelector("fieldset") as HTMLFieldSetElement).not.toBeDisabled();
@@ -143,7 +143,7 @@ describe("Promo", () => {
         <Promo
           {...defaultProps}
           promo={{ code: "SUMMER20", discount: 50 }}
-        />,
+        />
       );
       expect(screen.queryByRole("button", { name: /použít/i })).not.toBeInTheDocument();
       expect(screen.getByTestId("icon-checkmark")).toBeInTheDocument();
@@ -154,7 +154,7 @@ describe("Promo", () => {
         <Promo
           {...defaultProps}
           promo={{ code: "SUMMER20", discount: 0 }}
-        />,
+        />
       );
       expect(screen.getByTestId("icon-close")).toBeInTheDocument();
     });
@@ -164,7 +164,7 @@ describe("Promo", () => {
         <Promo
           {...defaultProps}
           promo={{ code: "", discount: 0 }}
-        />,
+        />
       );
       expect(screen.queryByTestId("icon-close")).not.toBeInTheDocument();
     });
@@ -179,7 +179,7 @@ describe("Promo", () => {
         <Promo
           {...defaultProps}
           promo={{ code: "SAVE10", discount: 0 }}
-        />,
+        />
       );
       expect(screen.getByTestId("icon-close").closest("button")).toHaveAttribute("type", "submit");
     });

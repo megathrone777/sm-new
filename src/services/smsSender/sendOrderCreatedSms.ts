@@ -5,7 +5,7 @@ import { sendSms } from "./sendSms";
 const interpolate = (template: string, vars: Record<string, string>): string =>
   Object.entries(vars).reduce<string>(
     (text: string, [key, value]: [string, string]): string => text.replaceAll(key, value),
-    template,
+    template
   );
 
 const pickTemplateKey = (order: TOrder): TSmsTemplateKey => {

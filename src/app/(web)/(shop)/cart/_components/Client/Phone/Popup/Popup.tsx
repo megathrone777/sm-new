@@ -25,7 +25,7 @@ const Popup: React.FC<TProps> = ({ countryCode, onCountryChange }) => {
   const isMounted = useSyncExternalStore(
     (): (() => void) => () => {},
     () => true,
-    () => false,
+    () => false
   );
   const [isOpened, setIsOpened] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>("");

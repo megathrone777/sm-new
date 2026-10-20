@@ -9,7 +9,7 @@ const addProductSchema = object({
 });
 
 const addProductToCart = (
-  products: TProduct[],
+  products: TProduct[]
 ): Tool<
   {
     productId: number;

@@ -6,7 +6,7 @@ import { store } from "@/store";
 
 const createCategory = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 

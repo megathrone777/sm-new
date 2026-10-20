@@ -24,7 +24,7 @@ const validateNewProduct = async ({
   if (
     modifiers.some(
       ({ requiredSubModifier, subModifier }: TCartModifier): boolean =>
-        requiredSubModifier && !subModifier,
+        requiredSubModifier && !subModifier
     )
   ) {
     return {

@@ -5,7 +5,7 @@ import { store } from "@/store";
 const addSaladsToCart = async (): Promise<TActionResult> => {
   const categories = await store.categories.getAll();
   const category = categories.find(({ title }: TProductCategory): boolean =>
-    title.toLowerCase().includes("sala"),
+    title.toLowerCase().includes("sala")
   );
 
   if (!category) {
@@ -17,7 +17,7 @@ const addSaladsToCart = async (): Promise<TActionResult> => {
 
   const salads: TProduct[] = [...category.products]
     .filter(
-      ({ isAvailable, requiredModifier }: TProduct): boolean => isAvailable && !requiredModifier,
+      ({ isAvailable, requiredModifier }: TProduct): boolean => isAvailable && !requiredModifier
     )
     .sort((productA: TProduct, productB: TProduct): number => productB.price - productA.price)
     .slice(0, 2);

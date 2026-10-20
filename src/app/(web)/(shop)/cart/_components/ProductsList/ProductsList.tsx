@@ -14,11 +14,11 @@ const ProductsList: React.FC<TProps> = ({ categoryDiscount, onRemove, products }
   const { t } = useTranslation();
 
   const productsWithDiscount: TCartProduct[] = products.filter(
-    ({ isPromotionActive }: TCartProduct): boolean => isPromotionActive,
+    ({ isPromotionActive }: TCartProduct): boolean => isPromotionActive
   );
   const productsWithDiscountQuantity: number = productsWithDiscount.reduce(
     (accumulator: number, { quantity }: TCartProduct): number => accumulator + quantity,
-    0,
+    0
   );
 
   const renderDiscount = (): null | React.ReactElement => {
@@ -61,7 +61,7 @@ const ProductsList: React.FC<TProps> = ({ categoryDiscount, onRemove, products }
             onRemove={(): void => onRemove(index)}
             {...{ id, index, title, ...rest }}
           />
-        ),
+        )
       )}
 
       {renderDiscount()}

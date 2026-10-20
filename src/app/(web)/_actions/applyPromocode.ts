@@ -7,7 +7,7 @@ import { saveCart } from "./saveCart";
 
 const applyPromocode = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const cart = await store.cart.get();
 
@@ -70,9 +70,6 @@ const applyPromocode = async (
       return fail("Promo kód jste již použili");
     }
   }
-
-  // TODO: isLimitedBySchedule check requires a `schedule` field on TPromoCode
-  // (items like { weekDay, timeFrom, timeTo }). Skipping until schedule is modeled.
 
   await saveCart({
     errors,

@@ -32,7 +32,7 @@ const Page: React.FC<PageProps<"/archived-orders/[phoneNumber]">> = async ({ par
         ...p,
         imageUrl: allProducts?.[p.slug]?.imageUrl ?? p.imageUrl,
       })),
-    }),
+    })
   );
 
   return (

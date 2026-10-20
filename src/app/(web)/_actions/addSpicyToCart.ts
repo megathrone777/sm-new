@@ -8,8 +8,8 @@ const addSpicyToCart = async (): Promise<TActionResult> => {
     ({ composition, description }: TProduct): boolean =>
       Boolean(
         composition.toLowerCase().includes("chilli") ||
-        description?.toLowerCase().includes("chilli"),
-      ),
+        description?.toLowerCase().includes("chilli")
+      )
   );
 
   if (spicyProducts.length === 0) {

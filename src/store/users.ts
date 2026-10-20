@@ -21,7 +21,7 @@ const users = {
     if (!users) return [];
 
     return Object.values(users).sort((userA: TUser, userB: TUser): number =>
-      userA.role.localeCompare(userB.role),
+      userA.role.localeCompare(userB.role)
     );
   },
 

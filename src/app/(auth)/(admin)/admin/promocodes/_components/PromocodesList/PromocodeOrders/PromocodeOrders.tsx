@@ -20,7 +20,7 @@ const PromocodeOrders: React.FC<{ code: string }> = async ({ code }) => {
             {new Date(createdAt).toLocaleDateString()}
             )&nbsp;
           </span>
-        ),
+        )
       )}
     </div>
   );

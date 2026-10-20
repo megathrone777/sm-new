@@ -57,7 +57,7 @@ const Reviews: React.FC = async () => {
                   {linkTitle}
                 </a>
               </div>
-            ),
+            )
           )}
         </div>
 

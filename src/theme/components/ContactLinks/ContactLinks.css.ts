@@ -86,7 +86,7 @@ export const itemClass = styleVariants(
       },
     },
     variant,
-  ],
+  ]
 );
 
 export const linkClass = style({

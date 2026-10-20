@@ -9,7 +9,7 @@ import { addProductToCart, checkDeliveryZone, removeAllProductsFromCart } from "
 
 const sendModelMessage = async (
   message: string,
-  history: ModelMessage[] = [],
+  history: ModelMessage[] = []
 ): Promise<TActionResult> => {
   const categories: TProductCategory[] = await store.categories.getAll();
   const products: TProduct[] = categories

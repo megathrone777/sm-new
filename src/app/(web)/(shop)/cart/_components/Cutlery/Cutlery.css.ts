@@ -32,7 +32,7 @@ export const layoutClass = styleVariants(
       justifyContent: "start",
     },
     variant,
-  ],
+  ]
 );
 
 export const nameClass = style(({ fonts }) => ({

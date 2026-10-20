@@ -88,7 +88,7 @@ describe("createAdditional", () => {
       await createAdditional(null, makeFormData({ price: "45", sortOrder: "3" }));
 
       expect(store.additionals.create).toHaveBeenCalledWith(
-        expect.objectContaining({ price: 45, sortOrder: 3 }),
+        expect.objectContaining({ price: 45, sortOrder: 3 })
       );
     });
 
@@ -125,7 +125,7 @@ describe("updateAdditional", () => {
       jest.mocked(store.additionals.getById).mockResolvedValue(null);
 
       await expect(updateAdditional(null, fd({ id: "99" }))).rejects.toThrow(
-        "Additional 99 not found",
+        "Additional 99 not found"
       );
     });
   });
@@ -135,7 +135,7 @@ describe("updateAdditional", () => {
       await updateAdditional(null, fd({ price: "50", title: "Truffle" }));
 
       expect(store.additionals.create).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 1, price: 50, title: "Truffle" }),
+        expect.objectContaining({ id: 1, price: 50, title: "Truffle" })
       );
     });
 

@@ -113,7 +113,7 @@ export const statusClass = styleVariants(
       padding: "2px 8px",
     },
     colorStyle,
-  ],
+  ]
 );
 
 export const invoiceAreaClass = style({

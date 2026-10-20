@@ -33,7 +33,7 @@ const validateDeliveryAddress = async ({
 
   const deliveryConditions = await store.deliveryConditions.getAll();
   const tier = deliveryConditions.find(
-    ({ distanceFrom, distanceTo }) => distanceFrom < length && length <= distanceTo,
+    ({ distanceFrom, distanceTo }) => distanceFrom < length && length <= distanceTo
   );
 
   return { length, tier };

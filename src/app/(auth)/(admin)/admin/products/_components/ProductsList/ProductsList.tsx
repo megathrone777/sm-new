@@ -77,7 +77,7 @@ const ProductsList: React.FC<TProps> = async ({ categoryId }) => {
                   />
                 </Link>
               </div>
-            ),
+            )
           )}
         </div>
       )}

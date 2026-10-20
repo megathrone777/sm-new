@@ -42,7 +42,7 @@ const DeliveryMarkers: React.FC<TProps> = ({ orders }) => (
       .map(toDeliveryOrder)
       .filter(
         (order: null | TDeliveryOrder): order is TDeliveryOrder =>
-          order !== null && isPaymentVisible(order),
+          order !== null && isPaymentVisible(order)
       )
       .map<React.ReactElement>(
         ({ deliveryTime, id, position: [latitude, longitude], status }: TDeliveryOrder) => {
@@ -74,7 +74,7 @@ const DeliveryMarkers: React.FC<TProps> = ({ orders }) => (
               </i>
             </Marker>
           );
-        },
+        }
       )}
   </>
 );

@@ -56,7 +56,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={3}
           totalPrice={280}
-        />,
+        />
       );
 
       expect(screen.getByText("3")).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
-        />,
+        />
       );
 
       expect(screen.getByText(/280/)).toBeInTheDocument();
@@ -82,7 +82,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
-        />,
+        />
       );
 
       expect(screen.getByText(/currency/)).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
-        />,
+        />
       );
 
       expect(screen.getByTestId("btn-decrease")).toBeDisabled();
@@ -110,7 +110,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={2}
           totalPrice={560}
-        />,
+        />
       );
 
       expect(screen.getByTestId("btn-decrease")).toBeEnabled();
@@ -127,7 +127,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
-        />,
+        />
       );
 
       await user.click(screen.getByTestId("btn-increase"));
@@ -144,7 +144,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={3}
           totalPrice={840}
-        />,
+        />
       );
 
       await user.click(screen.getByTestId("btn-decrease"));
@@ -158,7 +158,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={1}
           totalPrice={280}
-        />,
+        />
       );
 
       rerender(
@@ -167,7 +167,7 @@ describe("QuantityControls", () => {
           onRemove={jest.fn()}
           quantity={2}
           totalPrice={560}
-        />,
+        />
       );
 
       expect(screen.getByText("2")).toBeInTheDocument();
@@ -183,7 +183,7 @@ describe("QuantityControls", () => {
           onRemove={onRemove}
           quantity={1}
           totalPrice={280}
-        />,
+        />
       );
 
       await user.click(screen.getByRole("button", { name: /remove/i }));

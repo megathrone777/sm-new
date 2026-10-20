@@ -64,7 +64,7 @@ const DetailsForm: React.FC<TProps> = ({
     const selectedModifiers = collectSelectedModifiers(formData);
     const newTotalPrice = selectedModifiers.reduce<number>(
       (accumulator, modifier) => accumulator + modifier.price,
-      price,
+      price
     );
 
     removeRequiredParam();

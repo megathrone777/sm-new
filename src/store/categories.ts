@@ -29,7 +29,7 @@ const categories = {
           ...products.filter((product: TProduct): boolean => product.categoryId === category.id),
         ];
       },
-      [],
+      []
     );
 
     return sortByOrder(
@@ -44,10 +44,10 @@ const categories = {
         return {
           ...category,
           products: products.filter(
-            (product: TProduct): boolean => product.categoryId === category.id,
+            (product: TProduct): boolean => product.categoryId === category.id
           ),
         };
-      }),
+      })
     );
   },
 

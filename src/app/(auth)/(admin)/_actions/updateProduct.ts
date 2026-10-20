@@ -6,7 +6,7 @@ import { store } from "@/store";
 
 const updateProduct = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<null | TActionResult> => {
   const session = await store.sessions.get();
 

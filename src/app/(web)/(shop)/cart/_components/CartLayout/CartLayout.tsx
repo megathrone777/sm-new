@@ -19,7 +19,7 @@ const CartLayout: React.FC<TProps> = ({
   const [products, removeProduct] = useOptimistic(
     initialProducts,
     (state: TCartProduct[], index: number): TCartProduct[] =>
-      state.filter((_, productIndex: number): boolean => productIndex !== index),
+      state.filter((_, productIndex: number): boolean => productIndex !== index)
   );
 
   const handleRemove = (index: number): void => {

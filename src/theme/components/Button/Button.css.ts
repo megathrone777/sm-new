@@ -59,7 +59,7 @@ export const buttonClass = styleVariants(
       },
     },
     template,
-  ],
+  ]
 );
 
 export const iconClass = style({

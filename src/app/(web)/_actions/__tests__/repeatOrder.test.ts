@@ -173,7 +173,7 @@ describe("repeatOrder", () => {
               totalPrice: 400,
             }),
           ],
-        }),
+        })
       );
     });
 
@@ -187,7 +187,7 @@ describe("repeatOrder", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           products: [expect.objectContaining({ totalPrice: 500 })],
-        }),
+        })
       );
     });
 
@@ -203,7 +203,7 @@ describe("repeatOrder", () => {
       jest.mocked(store.orders.getById).mockResolvedValue(
         makeOrder({
           products: [makeOrderProduct({ modifiers: [modifier], quantity: 1, totalPrice: 230 })],
-        }),
+        })
       );
 
       await repeatOrder(42);
@@ -216,7 +216,7 @@ describe("repeatOrder", () => {
               totalPrice: 230,
             }),
           ],
-        }),
+        })
       );
     });
 
@@ -228,7 +228,7 @@ describe("repeatOrder", () => {
           additionals: [],
           note: "",
           promo: { code: "", discount: 0 },
-        }),
+        })
       );
     });
   });

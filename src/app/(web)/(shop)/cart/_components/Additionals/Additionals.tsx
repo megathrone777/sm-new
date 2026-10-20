@@ -16,18 +16,18 @@ const Additionals: React.FC<TProps> = ({ additionals, cartAdditionals }) => {
   const displayAdditionals: TCartAdditional[] = additionals.map(
     (additional: TAdditional): TCartAdditional => {
       const inCart = cartAdditionals.find(
-        (cartAdditional: TCartAdditional): boolean => cartAdditional.id === additional.id,
+        (cartAdditional: TCartAdditional): boolean => cartAdditional.id === additional.id
       );
 
       return inCart ?? { ...additional, quantity: 0, totalPrice: 0 };
-    },
+    }
   );
 
   const [optimisticAdditionals, optimisticUpdate] = useOptimistic(
     displayAdditionals,
     (
       state: TCartAdditional[],
-      { id, type }: { id: number; type: "decrease" | "increase" },
+      { id, type }: { id: number; type: "decrease" | "increase" }
     ): TCartAdditional[] =>
       state.map(
         (item: TCartAdditional): TCartAdditional =>
@@ -38,8 +38,8 @@ const Additionals: React.FC<TProps> = ({ additionals, cartAdditionals }) => {
                 quantity: type === "increase" ? item.quantity + 1 : Math.max(0, item.quantity - 1),
                 totalPrice:
                   type === "increase" ? item.totalPrice + item.price : item.totalPrice - item.price,
-              },
-      ),
+              }
+      )
   );
 
   const handleUpdate = (id: number, type: "decrease" | "increase"): void => {
@@ -63,7 +63,7 @@ const Additionals: React.FC<TProps> = ({ additionals, cartAdditionals }) => {
                   onUpdate={(type: "decrease" | "increase"): void => handleUpdate(id, type)}
                   {...{ id, ...rest }}
                 />
-              ),
+              )
             )}
           </div>
         </>

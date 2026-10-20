@@ -88,7 +88,7 @@ describe("addToCart", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           products: [expect.objectContaining({ quantity: 2, totalPrice: 400 })],
-        }),
+        })
       );
     });
 
@@ -102,7 +102,7 @@ describe("addToCart", () => {
       await addToCart(null, newProduct);
 
       expect(saveCart).toHaveBeenCalledWith(
-        expect.objectContaining({ products: expect.arrayContaining([existing, newProduct]) }),
+        expect.objectContaining({ products: expect.arrayContaining([existing, newProduct]) })
       );
     });
 
@@ -122,7 +122,7 @@ describe("addToCart", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           products: [expect.objectContaining({ quantity: 2, totalPrice: 400 })],
-        }),
+        })
       );
     });
 
@@ -142,7 +142,7 @@ describe("addToCart", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           products: [expect.objectContaining({ quantity: 2, totalPrice: 400 })],
-        }),
+        })
       );
     });
 

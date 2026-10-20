@@ -29,7 +29,7 @@ export const titleClass = styleVariants(
       paddingInline: 10,
     },
     size,
-  ],
+  ]
 );
 
 export const tabsListClass = styleVariants(
@@ -66,7 +66,7 @@ export const tabsListClass = styleVariants(
       display: "grid",
     },
     variant,
-  ],
+  ]
 );
 
 export const tabClass = styleVariants(
@@ -124,7 +124,7 @@ export const tabClass = styleVariants(
       },
     },
     variant,
-  ],
+  ]
 );
 
 export const tabButtonClass = style(({ devices }) => ({

@@ -60,7 +60,7 @@ export const layoutClass = styleVariants(
       },
     },
     variant,
-  ],
+  ]
 );
 
 export const listClass = style(({ devices }) => ({
@@ -108,7 +108,7 @@ export const linkClass = styleVariants(
       },
     },
     { color },
-  ],
+  ]
 );
 
 export const contactClass = style(({ devices }) => ({

@@ -22,7 +22,7 @@ export const buttonClass = styleVariants(
     {
       transform,
     },
-  ],
+  ]
 );
 
 export const lineClass = styleVariants(
@@ -87,5 +87,5 @@ export const lineClass = styleVariants(
     transformOrigin,
     transition: "transform 330ms cubic-bezier(0.54, -0.81, 0.57, 0.57)",
     width,
-  }),
+  })
 );

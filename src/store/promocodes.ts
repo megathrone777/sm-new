@@ -6,7 +6,7 @@ const hashKey = (code: string): string => `promocode:${code}`;
 const ordersIndex = (code: string): string => `promocode:${code}:orders`;
 
 export const serializeFields = (
-  promocode: Omit<TPromoCode, "orderIds">,
+  promocode: Omit<TPromoCode, "orderIds">
 ): Record<string, number | string> => ({
   activatedAt: promocode.activatedAt ?? "",
   appliedCount: promocode.appliedCount,

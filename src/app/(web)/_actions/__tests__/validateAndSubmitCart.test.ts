@@ -129,48 +129,48 @@ describe("validateAndSubmitCart", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           errors: expect.objectContaining({ cutlery: expect.any(String) }),
-        }),
+        })
       );
       expect(revalidatePath).toHaveBeenCalledWith("/cart");
     });
 
     it("fails with a name error when name field is empty", async () => {
       await expect(validateAndSubmitCart(null, makeFormData({ name: "" }))).rejects.toThrow(
-        "REDIRECT:/cart",
+        "REDIRECT:/cart"
       );
 
       expect(saveCart).toHaveBeenCalledWith(
-        expect.objectContaining({ errors: expect.objectContaining({ name: expect.any(String) }) }),
+        expect.objectContaining({ errors: expect.objectContaining({ name: expect.any(String) }) })
       );
     });
 
     it("fails with an email error when email field is empty", async () => {
       await expect(validateAndSubmitCart(null, makeFormData({ email: "" }))).rejects.toThrow(
-        "REDIRECT:/cart",
+        "REDIRECT:/cart"
       );
 
       expect(saveCart).toHaveBeenCalledWith(
-        expect.objectContaining({ errors: expect.objectContaining({ email: expect.any(String) }) }),
+        expect.objectContaining({ errors: expect.objectContaining({ email: expect.any(String) }) })
       );
     });
 
     it("fails with an email error when email format is invalid", async () => {
       await expect(
-        validateAndSubmitCart(null, makeFormData({ email: "not-an-email" })),
+        validateAndSubmitCart(null, makeFormData({ email: "not-an-email" }))
       ).rejects.toThrow("REDIRECT:/cart");
 
       expect(saveCart).toHaveBeenCalledWith(
-        expect.objectContaining({ errors: expect.objectContaining({ email: expect.any(String) }) }),
+        expect.objectContaining({ errors: expect.objectContaining({ email: expect.any(String) }) })
       );
     });
 
     it("fails with a phone error when phone is too short (under 7 digits)", async () => {
       await expect(validateAndSubmitCart(null, makeFormData({ phone: "123" }))).rejects.toThrow(
-        "REDIRECT:/cart",
+        "REDIRECT:/cart"
       );
 
       expect(saveCart).toHaveBeenCalledWith(
-        expect.objectContaining({ errors: expect.objectContaining({ phone: expect.any(String) }) }),
+        expect.objectContaining({ errors: expect.objectContaining({ phone: expect.any(String) }) })
       );
     });
 
@@ -186,7 +186,7 @@ describe("validateAndSubmitCart", () => {
             title: "",
             type: "delivery",
           },
-        }),
+        })
       );
 
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow("REDIRECT:/cart");
@@ -194,7 +194,7 @@ describe("validateAndSubmitCart", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           errors: expect.objectContaining({ addressFormat: expect.any(String) }),
-        }),
+        })
       );
     });
 
@@ -217,7 +217,7 @@ describe("validateAndSubmitCart", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           errors: expect.objectContaining({ delivery: "Minimum order 500 Kč" }),
-        }),
+        })
       );
     });
 
@@ -233,7 +233,7 @@ describe("validateAndSubmitCart", () => {
             title: "",
             type: "delivery",
           },
-        }),
+        })
       );
 
       jest.mocked(store.deliveryConditions.getAll).mockResolvedValue([
@@ -252,13 +252,13 @@ describe("validateAndSubmitCart", () => {
       expect(saveCart).toHaveBeenCalledWith(
         expect.objectContaining({
           errors: expect.objectContaining({ addressRange: expect.any(String) }),
-        }),
+        })
       );
     });
 
     it("does NOT save errors and does NOT redirect to /cart when all fields are valid", async () => {
       await expect(validateAndSubmitCart(null, makeFormData())).rejects.toThrow(
-        "REDIRECT:/order-confirmed/42",
+        "REDIRECT:/order-confirmed/42"
       );
 
       expect(saveCart).toHaveBeenCalledWith(expect.objectContaining({ errors: {} }));
@@ -273,7 +273,7 @@ describe("validateAndSubmitCart", () => {
 
     it("redirects to /order-confirmed/{id} for cash payment", async () => {
       await expect(validateAndSubmitCart(null, makeFormData({ payment: "cash" }))).rejects.toThrow(
-        "REDIRECT:/order-confirmed/42",
+        "REDIRECT:/order-confirmed/42"
       );
     });
 
@@ -283,13 +283,13 @@ describe("validateAndSubmitCart", () => {
         .mockResolvedValue(makeCart({ payment: { change: null, type: "card" } }));
 
       await expect(validateAndSubmitCart(null, makeFormData({ payment: "card" }))).rejects.toThrow(
-        "REDIRECT:/payment-gateway/42",
+        "REDIRECT:/payment-gateway/42"
       );
     });
 
     it("puts the correct client name and email from FormData into the order", async () => {
       await expect(
-        validateAndSubmitCart(null, makeFormData({ email: "petr@test.cz", name: "Petr Dvořák" })),
+        validateAndSubmitCart(null, makeFormData({ email: "petr@test.cz", name: "Petr Dvořák" }))
       ).rejects.toThrow("REDIRECT:");
 
       const [order] = jest.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];
@@ -310,8 +310,8 @@ describe("validateAndSubmitCart", () => {
       await expect(
         validateAndSubmitCart(
           null,
-          makeFormData({ change: "2000", note: "Extra sauce please", payment: "cash" }),
-        ),
+          makeFormData({ change: "2000", note: "Extra sauce please", payment: "cash" })
+        )
       ).rejects.toThrow("REDIRECT:");
 
       const [order] = jest.mocked(store.orders.registerNewOrder).mock.calls[0] as [TOrder, string];

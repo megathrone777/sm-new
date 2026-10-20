@@ -81,7 +81,7 @@ describe("updateAdditionalInfo", () => {
     it("trims leading and trailing whitespace from every field", async () => {
       await updateAdditionalInfo(
         null,
-        makeFormData({ col1Text: "  text  ", col1Title: " Title ", title: "  Info  " }),
+        makeFormData({ col1Text: "  text  ", col1Title: " Title ", title: "  Info  " })
       );
 
       const [patch] = jest.mocked(store.additionalInfo.set).mock.calls[0] as [

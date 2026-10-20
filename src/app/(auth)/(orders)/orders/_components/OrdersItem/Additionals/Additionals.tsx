@@ -15,7 +15,7 @@ const Additionals: React.FC<TProps> = ({ items, orderId }) => (
           >
             {title} {quantity > 1 ? `x${quantity}` : ""}
           </li>
-        ),
+        )
       )}
     </ul>
   </div>

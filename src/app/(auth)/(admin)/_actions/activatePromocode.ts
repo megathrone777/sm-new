@@ -10,7 +10,7 @@ import { store } from "@/store";
  */
 const activatePromocode = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 

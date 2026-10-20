@@ -14,7 +14,7 @@ export const wrapperClass = styleVariants(
     {
       gridTemplateColumns,
     },
-  ],
+  ]
 );
 
 export const layoutClass = style({});

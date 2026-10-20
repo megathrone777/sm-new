@@ -125,7 +125,7 @@ describe("Client", () => {
       <Client
         {...defaultProps}
         errors={{ name: "Vyplňte jméno" }}
-      />,
+      />
     );
     expect(screen.getByTestId("input-name")).toHaveAttribute("data-error", "true");
   });
@@ -135,7 +135,7 @@ describe("Client", () => {
       <Client
         {...defaultProps}
         errors={{ email: "Neplatný e-mail" }}
-      />,
+      />
     );
     expect(screen.getByTestId("input-email")).toHaveAttribute("data-error", "true");
   });

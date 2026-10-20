@@ -78,7 +78,7 @@ export const inputClass = styleVariants(
       },
     },
     template,
-  ],
+  ]
 );
 
 export const placeholderClass = style(({ colors, fonts }) => ({

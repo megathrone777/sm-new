@@ -98,7 +98,7 @@ describe("DetailsForm", () => {
       render(
         <DetailsForm {...baseProduct}>
           <div />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       expect(screen.getByRole("button", { name: /addToCart/i })).toBeInTheDocument();
@@ -108,7 +108,7 @@ describe("DetailsForm", () => {
       render(
         <DetailsForm {...baseProduct}>
           <div />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       const hidden = document.querySelector<HTMLInputElement>("input[name='totalPrice']")!;
@@ -123,7 +123,7 @@ describe("DetailsForm", () => {
           modifiers={[]}
         >
           <div />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       expect(screen.queryByText(/currency/)).not.toBeInTheDocument();
@@ -140,7 +140,7 @@ describe("DetailsForm", () => {
           modifiers={modifiers}
         >
           <div data-testid="modifier-children" />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       expect(screen.getByText(/currency/)).toBeInTheDocument();
@@ -162,7 +162,7 @@ describe("DetailsForm", () => {
             type="checkbox"
             value={10}
           />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       const form = document.querySelector("form")!;
@@ -188,7 +188,7 @@ describe("DetailsForm", () => {
       render(
         <DetailsForm {...baseProduct}>
           <div />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       await act(async (): Promise<void> => {
@@ -197,7 +197,7 @@ describe("DetailsForm", () => {
       });
 
       expect(validateNewProduct).toHaveBeenCalledWith(
-        expect.objectContaining({ price: 150, quantity: 1 }),
+        expect.objectContaining({ price: 150, quantity: 1 })
       );
     });
 
@@ -209,7 +209,7 @@ describe("DetailsForm", () => {
       render(
         <DetailsForm {...baseProduct}>
           <div />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       await act(async (): Promise<void> => {
@@ -227,7 +227,7 @@ describe("DetailsForm", () => {
       render(
         <DetailsForm {...baseProduct}>
           <div />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       await act(async (): Promise<void> => {
@@ -247,7 +247,7 @@ describe("DetailsForm", () => {
       render(
         <DetailsForm {...baseProduct}>
           <div />
-        </DetailsForm>,
+        </DetailsForm>
       );
 
       await act(async (): Promise<void> => {

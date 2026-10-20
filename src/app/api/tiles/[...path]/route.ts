@@ -4,7 +4,7 @@ const TILE_BASE = "https://tiles.openfreemap.org";
 
 export const GET = async (
   _: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> },
+  { params }: { params: Promise<{ path: string[] }> }
 ): Promise<NextResponse> => {
   const { path } = await params;
   const joined = path.join("/");
@@ -32,7 +32,7 @@ export const GET = async (
 
       if (Array.isArray(source.tiles)) {
         source.tiles = (source.tiles as string[]).map((t) =>
-          t.startsWith(TILE_BASE) ? t.replace(TILE_BASE, "/api/tiles") : t,
+          t.startsWith(TILE_BASE) ? t.replace(TILE_BASE, "/api/tiles") : t
         );
       }
     }

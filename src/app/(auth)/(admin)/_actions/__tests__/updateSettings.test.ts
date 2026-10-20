@@ -94,7 +94,7 @@ describe("updateSettings", () => {
           cutleryPrice: 15,
           email: "info@sushiman.cz",
           title: "Rozvážíme",
-        }),
+        })
       );
     });
 

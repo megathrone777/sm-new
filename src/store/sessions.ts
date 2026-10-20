@@ -31,7 +31,7 @@ const sessions = {
   set: async (
     sessionId: string,
     data: TSessionData,
-    ttlSeconds: number = DEFAULT_TTL_SECONDS,
+    ttlSeconds: number = DEFAULT_TTL_SECONDS
   ): Promise<void> => {
     await redis.set(key(sessionId), JSON.stringify(data), { ex: ttlSeconds });
   },

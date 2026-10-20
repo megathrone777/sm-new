@@ -8,7 +8,7 @@ const TIME_REGEX = /^\d{2}:\d{2}$/;
 
 const updateScheduleDay = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 

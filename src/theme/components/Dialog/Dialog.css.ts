@@ -33,7 +33,7 @@ export const overlayClass = styleVariants(
       width: "100%",
     },
     state,
-  ],
+  ]
 );
 
 export const layoutClass = style(({ devices }) => ({
@@ -126,5 +126,5 @@ export const statusClass = styleVariants(
       },
     },
     status,
-  ],
+  ]
 );

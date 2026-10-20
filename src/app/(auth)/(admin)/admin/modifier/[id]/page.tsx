@@ -18,7 +18,7 @@ const Page: React.FC<PageProps<"/admin/modifier/[id]">> = async ({ params }) => 
   if (!modifier) return <p>Modifier not found</p>;
 
   const assignedIds = (modifier.subModifiers ?? []).map<string>(
-    ({ id: submodifierId }) => `${submodifierId}`,
+    ({ id: submodifierId }) => `${submodifierId}`
   );
 
   return (

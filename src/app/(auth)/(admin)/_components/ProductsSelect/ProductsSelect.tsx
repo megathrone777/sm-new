@@ -18,7 +18,7 @@ const ProductsSelect: React.FC<TProps> = ({ defaultValue, options }) => {
             type="hidden"
             value={slug}
           />
-        ),
+        )
       )}
 
       <Selectbox

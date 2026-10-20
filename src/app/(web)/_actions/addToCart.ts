@@ -43,7 +43,7 @@ const initialCart: TCart = {
 
 const addToCart = async (
   _state: null | TActionResult,
-  newProduct: TCartProduct,
+  newProduct: TCartProduct
 ): Promise<TActionResult> => {
   const validationResult = await validateNewProduct(newProduct);
   const sessionId = await store.cart.getOrCreateSessionId();
@@ -79,7 +79,7 @@ const addToCart = async (
         }: TCartProduct): Omit<TCartProduct, "modifiersTitle" | "quantity" | "totalPrice"> => rest;
 
         const foundIndex: number = cart.products.findIndex((product: TCartProduct): boolean =>
-          isEqual(toComparable(newProduct), toComparable(product)),
+          isEqual(toComparable(newProduct), toComparable(product))
         );
         const products = [...cart.products];
         const existing = products[foundIndex];

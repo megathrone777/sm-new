@@ -6,7 +6,7 @@ import { store } from "@/store";
 
 const deleteReview = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 
@@ -22,7 +22,7 @@ const deleteReview = async (
 
   if (review) {
     const blobUrls = [review.imageUrl].filter((url) =>
-      url.includes("blob.vercel-storage.com"),
+      url.includes("blob.vercel-storage.com")
     );
 
     await Promise.all(blobUrls.map((url) => del(url).catch((): void => {})));

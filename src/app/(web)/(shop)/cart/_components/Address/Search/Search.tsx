@@ -95,7 +95,7 @@ const Search: React.FC<TProps> = ({ addressError, delivery }) => {
       (): void => {
         setIsLocating(false);
       },
-      { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 },
+      { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
     );
   };
 

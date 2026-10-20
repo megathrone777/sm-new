@@ -8,13 +8,7 @@ import { getCourierPosition } from "@/app/(web)/_actions";
 import { useRealtime } from "@/hooks";
 import { Icon } from "@/ui";
 
-import {
-  courierMarkerClass,
-  labelClass,
-  mapClass,
-  markerClass,
-  wrapperClass,
-} from "./Progress.css";
+import { courierMarkerClass, labelClass, mapClass, wrapperClass } from "./Progress.css";
 
 import type { TProps } from "./Progress.types";
 
@@ -56,7 +50,7 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
         effectiveCourierPosition.latitude,
         effectiveCourierPosition.longitude,
         deliveryLat,
-        deliveryLng,
+        deliveryLng
       ) < proximityMeters
       : false;
   const label = isNearby
@@ -90,26 +84,34 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
   });
 
   useEffect(() => {
-    if (status !== "took") return;
+    setCourierPosition(null);
+
+    if (status !== "took" || !courier) return;
 
     let active = true;
+    let timeout: ReturnType<typeof setTimeout>;
 
     const poll = async (): Promise<void> => {
-      const position = await getCourierPosition(courier);
+      try {
+        const position = await getCourierPosition(orderId);
 
-      if (active && position) {
-        setCourierPosition(position);
+        if (active && position) {
+          setCourierPosition(position);
+        }
+      } catch (error) {
+        console.error("Courier position poll failed", error);
       }
+
+      if (active) timeout = setTimeout(() => void poll(), pollIntervalMs);
     };
 
     void poll();
-    const interval = setInterval(() => void poll(), pollIntervalMs);
 
     return (): void => {
       active = false;
-      clearInterval(interval);
+      clearTimeout(timeout);
     };
-  }, [status, courier]);
+  }, [status, courier, orderId]);
 
   useEffect((): void => {
     if (!mapRef.current || !effectiveCourierPosition) return;
@@ -148,17 +150,6 @@ const Progress: React.FC<TProps> = ({ courier, deliveryCoordinates, initialStatu
               longitude={effectiveCourierPosition.longitude}
             >
               <Icon id="car" />
-            </Marker>
-          )}
-
-          {status === "took" && hasDelivery && (
-            <Marker
-              anchor="center"
-              className={markerClass}
-              latitude={deliveryLat}
-              longitude={deliveryLng}
-            >
-              <Icon id="address" />
             </Marker>
           )}
         </ReactMap>

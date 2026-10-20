@@ -12,5 +12,5 @@ export type GlobalStyleArg = ((themeVars: ThemeVars) => GlobalStyleRule) | Globa
 
 export type StyleVariants = <Map extends Record<string, ComplexStyleRule | string>>(
   variantMap: ((themeVars: ThemeVars) => Map) | Map,
-  mapFn: (value: Map[keyof Map], themeVars: ThemeVars) => ComplexStyleRule,
+  mapFn: (value: Map[keyof Map], themeVars: ThemeVars) => ComplexStyleRule
 ) => Record<keyof Map, string>;

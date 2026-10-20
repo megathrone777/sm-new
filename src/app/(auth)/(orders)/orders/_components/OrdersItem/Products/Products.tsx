@@ -24,7 +24,7 @@ const Products: React.FC<TProps> = ({ products }) => (
 
                   {subModifier && <span className={subItem2Class}>{subModifier.title}</span>}
                 </li>
-              ),
+              )
             )}
           </ul>
         )}

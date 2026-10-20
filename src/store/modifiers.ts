@@ -25,16 +25,17 @@ const modifiers = {
   },
 
   set: async (modifier: TModifier): Promise<void> => {
+    const { id, price, title } = modifier;
     const searchEntry: TModifierSearchEntry = {
-      id: modifier.id,
-      price: modifier.price,
-      title: modifier.title,
+      id,
+      price,
+      title,
     };
 
     await redis
       .pipeline()
-      .hset(HASH, { [modifier.id]: JSON.stringify(modifier) })
-      .hset(`${SEARCH_PREFIX}${modifier.id}`, searchEntry)
+      .hset(HASH, { [id]: JSON.stringify(modifier) })
+      .hset(`${SEARCH_PREFIX}${id}`, searchEntry)
       .exec();
   },
 };

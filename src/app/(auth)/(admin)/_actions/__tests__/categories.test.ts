@@ -120,7 +120,7 @@ describe("createCategory", () => {
       expect(store.categories.set).toHaveBeenCalledWith(
         expect.objectContaining({
           imageUrl: "https://blob.vercel-storage.com/test-image.jpg",
-        }),
+        })
       );
     });
 
@@ -179,7 +179,7 @@ describe("updateCategory", () => {
 
       expect(pipeline.hset).toHaveBeenCalledWith(
         "categories",
-        expect.objectContaining({ "1": expect.stringContaining("Nigiri") }),
+        expect.objectContaining({ "1": expect.stringContaining("Nigiri") })
       );
       expect(pipeline.exec).toHaveBeenCalled();
     });

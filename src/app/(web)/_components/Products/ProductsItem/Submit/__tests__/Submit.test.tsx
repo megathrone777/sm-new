@@ -113,7 +113,7 @@ describe("Submit (products list add-to-cart)", () => {
       });
 
       expect(validateNewProduct).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 1, price: 200, quantity: 1, totalPrice: 200 }),
+        expect.objectContaining({ id: 1, price: 200, quantity: 1, totalPrice: 200 })
       );
     });
 

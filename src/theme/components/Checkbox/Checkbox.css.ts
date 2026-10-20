@@ -40,7 +40,7 @@ export const layoutClass = styleVariants(
       position: "relative",
     },
     template,
-  ],
+  ]
 );
 
 export const inputClass = style({
@@ -82,7 +82,7 @@ export const iconClass = styleVariants(
       transform: "translateY(1px)",
     },
     template,
-  ],
+  ]
 );
 
 export const labelClass = styleVariants(
@@ -109,7 +109,7 @@ export const labelClass = styleVariants(
       userSelect: "none",
     },
     template,
-  ],
+  ]
 );
 
 export const hintClass = style(({ colors, fonts }) => ({

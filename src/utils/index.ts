@@ -1,11 +1,14 @@
 export { bbox } from "./bbox";
+export { geoDistance } from "./geoDistance";
 export { isEmpty } from "./isEmpty";
 export { isEqual } from "./isEqual";
 export { isMissedStreetNumber } from "./isMissedStreetNumber";
 export { isShopOpened } from "./isShopOpened";
+export { pragueDay } from "./pragueDay";
 export { slugify } from "./slugify";
 export { sortByOrder } from "./sortByOrder";
 export { splitText } from "./splitText";
+export { toCourierStats } from "./toCourierStats";
 export { uuid } from "./uuid";
 export { validateDeliveryAddress } from "./validateDeliveryAddress";
 export { hashPassword, verifyPassword } from "./verifyPassword";

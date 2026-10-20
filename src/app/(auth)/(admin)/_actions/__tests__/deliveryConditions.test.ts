@@ -73,7 +73,7 @@ describe("createDeliveryCondition", () => {
     it("returns error when distanceTo <= distanceFrom", async () => {
       const result = await createDeliveryCondition(
         null,
-        makeFormData({ distanceFrom: "5000", distanceTo: "3000" }),
+        makeFormData({ distanceFrom: "5000", distanceTo: "3000" })
       );
 
       expect(result).toEqual({
@@ -85,7 +85,7 @@ describe("createDeliveryCondition", () => {
     it("returns error when distanceTo equals distanceFrom", async () => {
       const result = await createDeliveryCondition(
         null,
-        makeFormData({ distanceFrom: "3000", distanceTo: "3000" }),
+        makeFormData({ distanceFrom: "3000", distanceTo: "3000" })
       );
 
       expect(result).toEqual({
@@ -101,7 +101,7 @@ describe("createDeliveryCondition", () => {
 
       const result = await createDeliveryCondition(
         null,
-        makeFormData({ distanceFrom: "0", distanceTo: "5000" }),
+        makeFormData({ distanceFrom: "0", distanceTo: "5000" })
       );
 
       expect(result.type).toBe("error");
@@ -113,11 +113,11 @@ describe("createDeliveryCondition", () => {
     it("saves the condition with all numeric fields parsed", async () => {
       await createDeliveryCondition(
         null,
-        makeFormData({ minimumOrderPrice: "300", price: "79" }),
+        makeFormData({ minimumOrderPrice: "300", price: "79" })
       );
 
       expect(store.deliveryConditions.set).toHaveBeenCalledWith(
-        expect.objectContaining({ minimumOrderPrice: 300, price: 79 }),
+        expect.objectContaining({ minimumOrderPrice: 300, price: 79 })
       );
     });
 
@@ -144,7 +144,7 @@ describe("updateDeliveryCondition", () => {
 
   beforeEach(() => {
     jest.mocked(store.deliveryConditions.getAll).mockResolvedValue(
-      [makeCondition()] as never,
+      [makeCondition()] as never
     );
   });
 
@@ -169,7 +169,7 @@ describe("updateDeliveryCondition", () => {
 
       const result = await updateDeliveryCondition(
         null,
-        fd({ distanceFrom: "4000", distanceTo: "9000", id: "1" }),
+        fd({ distanceFrom: "4000", distanceTo: "9000", id: "1" })
       );
 
       expect(result.type).toBe("error");
@@ -178,12 +178,12 @@ describe("updateDeliveryCondition", () => {
 
     it("does not flag overlap with itself", async () => {
       jest.mocked(store.deliveryConditions.getAll).mockResolvedValue(
-        [makeCondition({ distanceFrom: 0, distanceTo: 5000, id: 1 })] as never,
+        [makeCondition({ distanceFrom: 0, distanceTo: 5000, id: 1 })] as never
       );
 
       const result = await updateDeliveryCondition(
         null,
-        fd({ distanceFrom: "0", distanceTo: "5000", id: "1" }),
+        fd({ distanceFrom: "0", distanceTo: "5000", id: "1" })
       );
 
       expect(result.type).toBe("success");
@@ -195,7 +195,7 @@ describe("updateDeliveryCondition", () => {
       await updateDeliveryCondition(null, fd({ price: "59", title: "Zóna 1 updated" }));
 
       expect(store.deliveryConditions.set).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 1, price: 59, title: "Zóna 1 updated" }),
+        expect.objectContaining({ id: 1, price: 59, title: "Zóna 1 updated" })
       );
     });
 

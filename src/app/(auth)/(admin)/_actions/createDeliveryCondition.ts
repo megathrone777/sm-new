@@ -5,7 +5,7 @@ import { store } from "@/store";
 
 const createDeliveryCondition = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 
@@ -30,7 +30,7 @@ const createDeliveryCondition = async (
 
   const existing = await store.deliveryConditions.getAll();
   const overlap = existing.find(
-    (condition) => distanceFrom < condition.distanceTo && distanceTo > condition.distanceFrom,
+    (condition) => distanceFrom < condition.distanceTo && distanceTo > condition.distanceFrom
   );
 
   if (overlap) {

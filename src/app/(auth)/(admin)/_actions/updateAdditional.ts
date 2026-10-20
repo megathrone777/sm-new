@@ -5,7 +5,7 @@ import { store } from "@/store";
 
 const updateAdditional = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 

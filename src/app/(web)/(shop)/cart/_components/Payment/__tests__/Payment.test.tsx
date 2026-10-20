@@ -81,7 +81,7 @@ describe("Payment", () => {
           payment={cardPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByTestId("payment-card")).toBeChecked();
@@ -94,7 +94,7 @@ describe("Payment", () => {
           payment={cashPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByTestId("payment-cash")).toBeChecked();
@@ -107,7 +107,7 @@ describe("Payment", () => {
           payment={cashPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByTestId("payment-card")).not.toBeChecked();
@@ -122,7 +122,7 @@ describe("Payment", () => {
           payment={cardPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByTestId("payment-cardAfterDelivery")).toBeInTheDocument();
@@ -135,7 +135,7 @@ describe("Payment", () => {
           payment={cardPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.queryByTestId("payment-cardAfterDelivery")).not.toBeInTheDocument();
@@ -150,7 +150,7 @@ describe("Payment", () => {
           payment={cashPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByTestId("change-2000")).toBeInTheDocument();
@@ -164,7 +164,7 @@ describe("Payment", () => {
           payment={cardPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.queryByTestId("change-2000")).not.toBeInTheDocument();
@@ -178,7 +178,7 @@ describe("Payment", () => {
           payment={{ change: 2000, type: "cash" }}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByTestId("change-2000")).toBeChecked();
@@ -192,7 +192,7 @@ describe("Payment", () => {
           payment={{ change: 5000, type: "cash" }}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByTestId("change-5000")).toBeChecked();
@@ -208,7 +208,7 @@ describe("Payment", () => {
           payment={cashPayment}
           tips={defaultTips}
           totalPrice={300}
-        />,
+        />
       );
 
       expect(screen.getByRole("link", { name: /obchodními podmínkami/i })).toBeInTheDocument();

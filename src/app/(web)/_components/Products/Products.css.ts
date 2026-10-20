@@ -67,5 +67,5 @@ export const titleClass = styleVariants(
       fontWeight: fonts.bold,
     },
     size,
-  ],
+  ]
 );

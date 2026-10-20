@@ -26,7 +26,7 @@ describe("DeliveryOptions", () => {
         address=""
         onUpdate={jest.fn()}
         type="delivery"
-      />,
+      />
     );
 
     expect(screen.getByPlaceholderText("Zadejte adresu")).toBeInTheDocument();
@@ -38,7 +38,7 @@ describe("DeliveryOptions", () => {
         address=""
         onUpdate={jest.fn()}
         type="pickup"
-      />,
+      />
     );
 
     expect(screen.queryByPlaceholderText("Zadejte adresu")).not.toBeInTheDocument();
@@ -52,7 +52,7 @@ describe("DeliveryOptions", () => {
         address=""
         onUpdate={onUpdate}
         type="delivery"
-      />,
+      />
     );
 
     fireEvent.change(screen.getByTestId("delivery-input"), { target: { value: "Main St 123" } });

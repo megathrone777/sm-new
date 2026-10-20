@@ -73,7 +73,7 @@ export const linkClass = styleVariants(
     {
       color,
     },
-  ],
+  ]
 );
 
 export const dividerClass = style(({ colors }) => ({

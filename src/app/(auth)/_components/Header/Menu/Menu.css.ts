@@ -47,7 +47,7 @@ export const linkClass = styleVariants(
       },
     },
     state,
-  ],
+  ]
 );
 
 export const iconClass = style({

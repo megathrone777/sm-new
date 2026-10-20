@@ -72,7 +72,7 @@ describe("useDebouncedCallback", () => {
     const callback1 = jest.fn() as unknown as TCallbackFn<[string]>;
     const { rerender, result } = renderHook(
       ({ cb }: { cb: TCallbackFn<[string]> }) => useDebouncedCallback(cb, 100),
-      { initialProps: { cb: callback1 } },
+      { initialProps: { cb: callback1 } }
     );
 
     act(() => {

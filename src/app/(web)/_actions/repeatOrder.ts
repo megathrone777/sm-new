@@ -19,7 +19,7 @@ const repeatOrder = async (orderId: number): Promise<TActionResult> => {
   if (!order.products.length) return { message: "Objednávka neobsahuje produkty", type: "error" };
 
   const unavailableOrders = order.products.filter(
-    ({ slug }: TOrderProduct) => !allProducts?.[slug]?.isAvailable,
+    ({ slug }: TOrderProduct) => !allProducts?.[slug]?.isAvailable
   );
 
   if (unavailableOrders.length > 0) {

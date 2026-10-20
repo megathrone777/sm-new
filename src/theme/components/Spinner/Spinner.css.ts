@@ -36,5 +36,5 @@ export const wrapperClass = styleVariants(
       borderStyle: "solid",
     },
     template,
-  ],
+  ]
 );

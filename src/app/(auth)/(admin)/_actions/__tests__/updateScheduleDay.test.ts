@@ -74,7 +74,7 @@ describe("updateScheduleDay", () => {
     it("returns error when openTime >= closeTime", async () => {
       const result = await updateScheduleDay(
         null,
-        makeFormData({ closeTime: "11:00", openTime: "22:00" }),
+        makeFormData({ closeTime: "11:00", openTime: "22:00" })
       );
 
       expect(result).toEqual({ message: "Open time must be before close time", type: "error" });
@@ -83,7 +83,7 @@ describe("updateScheduleDay", () => {
     it("returns error when openTime equals closeTime", async () => {
       const result = await updateScheduleDay(
         null,
-        makeFormData({ closeTime: "11:00", openTime: "11:00" }),
+        makeFormData({ closeTime: "11:00", openTime: "11:00" })
       );
 
       expect(result).toEqual({ message: "Open time must be before close time", type: "error" });
@@ -92,7 +92,7 @@ describe("updateScheduleDay", () => {
     it("returns error when lastTimeForDelivery is after closeTime", async () => {
       const result = await updateScheduleDay(
         null,
-        makeFormData({ closeTime: "22:00", lastTimeForDelivery: "23:00" }),
+        makeFormData({ closeTime: "22:00", lastTimeForDelivery: "23:00" })
       );
 
       expect(result).toEqual({
@@ -116,7 +116,7 @@ describe("updateScheduleDay", () => {
     it("accepts lastTimeForDelivery equal to closeTime", async () => {
       const result = await updateScheduleDay(
         null,
-        makeFormData({ closeTime: "22:00", lastTimeForDelivery: "22:00" }),
+        makeFormData({ closeTime: "22:00", lastTimeForDelivery: "22:00" })
       );
 
       expect(result.type).toBe("success");

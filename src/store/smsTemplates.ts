@@ -55,7 +55,7 @@ const smsTemplates = {
         ...accumulator,
         [key]: overrides?.[key] ?? defaultTemplates[key],
       }),
-      {} as TSmsTemplates,
+      {} as TSmsTemplates
     );
   },
 

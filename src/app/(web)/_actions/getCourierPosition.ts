@@ -1,50 +1,24 @@
 "use server";
 
-// interface TGpsWoxDevice {
-//   id: number;
-//   lat: null | number;
-//   lng: null | number;
-//   name: string;
-// }
-
-// interface TGpsWoxGroup {
-//   items: TGpsWoxDevice[];
-// }
+import { store } from "@/store";
+import { redis } from "@/store/redis";
 
 const getCourierPosition = async (
-  _: string,
-// eslint-disable-next-line @typescript-eslint/require-await
+  orderId: number
 ): Promise<{ latitude: number; longitude: number } | null> => {
-  // const params = new URLSearchParams({
-  //   lang: "en",
-  //   user_api_hash: process.env.GPS_WOX_API_HASH!,
-  // });
+  const order = await store.orders.getById(orderId);
 
-  // try {
-  //   const response = await fetch(`${process.env.GPS_WOX_API_URL}/get_devices?${params}`, {
-  //     cache: "no-store",
-  //   });
+  if (!order || order.status !== "took" || order.deliveryType !== "delivery" || !order.courier) {
+    return null;
+  }
 
-  //   if (!response.ok) return null;
+  const courier = await redis.get<TCourierRecord>(`courier:${order.courier}`);
 
-  //   const groups = (await response.json()) as TGpsWoxGroup[];
-  //   const devices = groups
-  //     .flatMap(({ items }) => items ?? [])
-  //     .filter(
-  //       (device: TGpsWoxDevice): device is TGpsWoxDevice & { lat: number; lng: number } =>
-  //         device.lat !== null && device.lng !== null,
-  //     );
-  //   const device = courierName ? devices.find((d) => d.name === courierName) : devices[0];
+  if (!courier || !Number.isFinite(courier.latitude) || !Number.isFinite(courier.longitude)) {
+    return null;
+  }
 
-  //   if (!device) return null;
-  //   const { lat, lng } = device;
-
-  //   return { latitude: lat, longitude: lng };
-  // } catch {
-  //   return null;
-  // }
-
-  return null;
+  return { latitude: courier.latitude, longitude: courier.longitude };
 };
 
 export { getCourierPosition };

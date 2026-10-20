@@ -57,7 +57,7 @@ export const contactItemClass = styleVariants(
       },
     },
     variant,
-  ],
+  ]
 );
 
 export const contactLinkClass = style(({ devices }) => ({

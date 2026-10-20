@@ -20,7 +20,7 @@ const Cart: React.FC = async () => {
     if (cart && !!cart.products.length) {
       return cart.products.reduce(
         (accumulator: number, { quantity }: TCartProduct) => accumulator + quantity,
-        0,
+        0
       );
     }
 

@@ -113,11 +113,11 @@ const DEFAULT_SCHEDULE: TSchedule = WEEK_DAYS.reduce<TSchedule>(
     ...accumulator,
     [day]: DEFAULT_SCHEDULE_DAY,
   }),
-  {} as TSchedule,
+  {} as TSchedule
 );
 
 export const parseSettingsOverrides = (
-  raw: null | Record<string, unknown>,
+  raw: null | Record<string, unknown>
 ): Partial<TEditableSettings> => {
   if (!raw) return {};
   const result: Partial<TEditableSettings> = {};
@@ -158,7 +158,7 @@ export const parseSchedule = (raw: null | Record<string, unknown>): TSchedule =>
       ...accumulator,
       [day]: raw[day] ? parseScheduleDay(raw[day]) : DEFAULT_SCHEDULE_DAY,
     }),
-    {} as TSchedule,
+    {} as TSchedule
   );
 };
 
@@ -174,7 +174,7 @@ const shop = {
       (item: TNavItem): TNavItem => ({
         href: item.href,
         title: navOverrides?.[item.href as string] ?? item.title,
-      }),
+      })
     );
     const settings: TEditableSettings = {
       ...DEFAULT_SETTINGS,

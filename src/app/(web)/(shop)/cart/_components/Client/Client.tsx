@@ -42,7 +42,7 @@ const Client: React.FC<TProps> = ({ children, email, errors, name, phoneNumber }
       (prev: { email?: string; name?: string }): { email?: string; name?: string } => ({
         ...prev,
         name: message,
-      }),
+      })
     );
     void setCartError("name", message ?? "");
   };
@@ -54,7 +54,7 @@ const Client: React.FC<TProps> = ({ children, email, errors, name, phoneNumber }
       (prev: { email?: string; name?: string }): { email?: string; name?: string } => ({
         ...prev,
         email: message,
-      }),
+      })
     );
     void setCartError("email", message ?? "");
   };

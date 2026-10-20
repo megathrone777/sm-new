@@ -7,7 +7,7 @@ import { saveCart } from "./saveCart";
 
 const updateAdditionalQuantity = async (
   id: number,
-  type: "decrease" | "increase",
+  type: "decrease" | "increase"
 ): Promise<void> => {
   const sessionId = await store.cart.getSessionId();
 

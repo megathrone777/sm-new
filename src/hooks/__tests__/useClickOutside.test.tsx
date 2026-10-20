@@ -18,7 +18,7 @@ describe("useClickOutside", () => {
           Inside
         </div>
         <div data-testid="outside">Outside</div>
-      </div>,
+      </div>
     );
 
     renderHook(() => useClickOutside(ref, callback));
@@ -36,7 +36,7 @@ describe("useClickOutside", () => {
         ref={ref}
       >
         Inside
-      </div>,
+      </div>
     );
 
     renderHook(() => useClickOutside(ref, callback));

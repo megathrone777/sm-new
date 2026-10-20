@@ -148,7 +148,7 @@ const Page: React.FC<PageProps<"/admin/order/[id]">> = async ({ params, searchPa
                     <p key={`order-product-item-${id}-${productId}`}>
                       {title} - x{quantity} - {totalPrice}CZK
                     </p>
-                  ),
+                  )
                 )}
               </div>
             )}
@@ -160,7 +160,7 @@ const Page: React.FC<PageProps<"/admin/order/[id]">> = async ({ params, searchPa
                     <p key={`order-additional-item-${id}-${additionalId}`}>
                       {title} - x{quantity} - {totalPrice}CZK
                     </p>
-                  ),
+                  )
                 )}
               </div>
             )}

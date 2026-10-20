@@ -82,7 +82,7 @@ const CategoriesList: React.FC = async () => {
                   </Link>
                 )}
               </div>
-            ),
+            )
           )}
         </div>
       )}

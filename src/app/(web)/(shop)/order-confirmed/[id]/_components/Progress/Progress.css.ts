@@ -41,14 +41,8 @@ export const mapClass = styleVariants(
       width: "100%",
     },
     state,
-  ],
+  ]
 );
-
-export const markerClass = style(({ colors }) => ({
-  background: "none",
-  color: colors.amber,
-  width: 17,
-}));
 
 export const courierMarkerClass = style(({ colors }) => ({
   background: "none",

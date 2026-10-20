@@ -22,7 +22,7 @@ const Cutlery: React.FC<TProps> = ({ isError, quantity: initialQuantity, totalPr
   const [quantity, setQuantity] = useOptimistic(
     initialQuantity,
     (state: number, type: "decrease" | "increase"): number =>
-      type === "increase" ? state + 1 : Math.max(0, state - 1),
+      type === "increase" ? state + 1 : Math.max(0, state - 1)
   );
   const router = useRouter();
   const { t } = useTranslation();

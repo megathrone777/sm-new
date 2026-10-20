@@ -105,7 +105,7 @@ const DeliveryConditionsList: React.FC = async () => {
                   </Link>
                 </div>
               </div>
-            ),
+            )
           )}
         </div>
       )}

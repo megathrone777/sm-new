@@ -197,7 +197,7 @@ const Page: React.FC<PageProps<"/invoice/[orderId]">> = async ({ params }) => {
                     {totalPrice} {getTranslation<string>("currency")}
                   </td>
                 </tr>
-              ),
+              )
             )}
 
             {deliveryPrice > 0 && (

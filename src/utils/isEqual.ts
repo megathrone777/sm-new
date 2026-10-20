@@ -9,7 +9,7 @@ const isEqual = (a: unknown, b: unknown): boolean => {
   if (aKeys.length !== bKeys.length) return false;
 
   return aKeys.every((key: string) =>
-    isEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key]),
+    isEqual((a as Record<string, unknown>)[key], (b as Record<string, unknown>)[key])
   );
 };
 

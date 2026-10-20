@@ -7,7 +7,7 @@ import { VALID_IMAGE_KEYS, type TImageKey } from "@/store/shop";
 
 const updateSettingsImage = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 

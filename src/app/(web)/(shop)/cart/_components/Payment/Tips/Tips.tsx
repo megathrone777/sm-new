@@ -17,7 +17,7 @@ const Tips: React.FC<TProps> = ({ tips }) => {
 
   const handleChange = (
     amount: number,
-    { currentTarget }: React.ChangeEvent<HTMLInputElement>,
+    { currentTarget }: React.ChangeEvent<HTMLInputElement>
   ): void => {
     const next = currentTarget.checked ? amount : 0;
 

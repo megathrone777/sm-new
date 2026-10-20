@@ -46,7 +46,7 @@ const Menu: React.FC<TProps> = ({ items }) => {
                 {title}
               </Link>
             </li>
-          ),
+          )
         )}
       </ul>
     </div>

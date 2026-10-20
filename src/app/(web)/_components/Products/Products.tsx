@@ -16,7 +16,7 @@ const Products: React.FC<TProps> = async ({ showAll, title }) => {
   const renderedProducts = categories.reduce<Record<TProductCategory["id"], React.ReactNode[]>>(
     (
       accumulator,
-      { id, isPromotionActive, products, promotionDiscountAmount, promotionForEveryXProducts },
+      { id, isPromotionActive, products, promotionDiscountAmount, promotionForEveryXProducts }
     ) => ({
       ...accumulator,
       [id]: products.map<React.ReactElement>((product: TProduct) => (
@@ -27,7 +27,7 @@ const Products: React.FC<TProps> = async ({ showAll, title }) => {
         />
       )),
     }),
-    {},
+    {}
   );
 
   return (

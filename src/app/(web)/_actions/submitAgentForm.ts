@@ -9,7 +9,7 @@ interface TAgentState extends TActionResult {
 
 const submitAgentForm = async (
   state: null | TAgentState,
-  formData: FormData,
+  formData: FormData
 ): Promise<null | TAgentState> => {
   const message = `${formData.get("message") || ""}`.trim();
 

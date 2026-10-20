@@ -18,7 +18,7 @@ const getAddressSuggestions = async (query: string): Promise<TAddressSuggestion[
   const data = (await response.json()) as { items: TAddressSuggestion[] };
 
   return (data.items ?? []).filter(({ location }: TAddressSuggestion): boolean =>
-    location.includes(locality),
+    location.includes(locality)
   );
 };
 

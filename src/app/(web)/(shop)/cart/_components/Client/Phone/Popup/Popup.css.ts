@@ -44,7 +44,7 @@ export const popupClass = styleVariants(
       zIndex: 10,
     },
     variant,
-  ],
+  ]
 );
 
 export const listClass = style({

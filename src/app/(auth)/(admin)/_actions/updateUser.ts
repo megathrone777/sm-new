@@ -6,7 +6,7 @@ import { hashPassword } from "@/utils";
 
 const updateUser = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<TActionResult> => {
   const session = await store.sessions.get();
 
@@ -32,7 +32,7 @@ const updateUser = async (
 
   const passwordFields = password
     ? (({ hash, salt }): { passwordHash: string; salt: string } => ({ passwordHash: hash, salt }))(
-        hashPassword(password),
+        hashPassword(password)
       )
     : { passwordHash: prevUser.passwordHash, salt: prevUser.salt };
   const updated: TUser = { ...prevUser, ...passwordFields, login: newLogin, role };

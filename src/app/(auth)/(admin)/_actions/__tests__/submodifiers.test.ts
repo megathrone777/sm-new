@@ -85,7 +85,7 @@ describe("createSubmodifier", () => {
       await createSubmodifier(null, makeFormData({ sortOrder: "5" }));
 
       expect(store.submodifiers.set).toHaveBeenCalledWith(
-        expect.objectContaining({ sortOrder: 5 }),
+        expect.objectContaining({ sortOrder: 5 })
       );
     });
 
@@ -142,7 +142,7 @@ describe("updateSubmodifier", () => {
       await updateSubmodifier(null, fd({ sortOrder: "3", title: "No garlic" }));
 
       expect(store.submodifiers.set).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 1, sortOrder: 3, title: "No garlic" }),
+        expect.objectContaining({ id: 1, sortOrder: 3, title: "No garlic" })
       );
     });
 

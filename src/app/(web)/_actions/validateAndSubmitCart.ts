@@ -12,7 +12,7 @@ import { saveCart } from "./saveCart";
 
 const validateAndSubmitCart = async (
   _state: null | TActionResult,
-  formData: FormData,
+  formData: FormData
 ): Promise<null | TActionResult> => {
   const [cartSessionId, storedCart, deliveryConditions, { lastTimeForPickup }] = await Promise.all([
     store.cart.getSessionId(),
@@ -63,7 +63,7 @@ const validateAndSubmitCart = async (
     return email
       .toLowerCase()
       .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
 
@@ -92,7 +92,7 @@ const validateAndSubmitCart = async (
 
   if (delivery.type === "delivery" && delivery.address && !isMissedStreetNumber(delivery.address)) {
     const relatedConditions = deliveryConditions.find(
-      (item) => item.distanceFrom < delivery.distanceInM && delivery.distanceInM <= item.distanceTo,
+      (item) => item.distanceFrom < delivery.distanceInM && delivery.distanceInM <= item.distanceTo
     );
 
     if (!relatedConditions) {
@@ -147,20 +147,20 @@ const validateAndSubmitCart = async (
   const freeCutleryQuantity = products.reduce<number>(
     (accumulator, { freeCutleryCount, quantity }: TCartProduct) =>
       accumulator + freeCutleryCount * quantity,
-    0,
+    0
   );
   const cutleryCountToPay: number = Math.max(0, cutlery.quantity - freeCutleryQuantity);
   const totalProductsPrice: number = products.reduce<number>(
     (accumulator, { totalPrice }: TCartProduct) => accumulator + totalPrice,
-    0,
+    0
   );
   const totalAdditionalsPrice: number = additionals.reduce<number>(
     (accumulator, { totalPrice }: TCartAdditional) => accumulator + totalPrice,
-    0,
+    0
   );
   const { existingOrderIds, id } = await store.orders.getExistingOrder(client.phoneNumber);
   const orderAdditionals: TOrderAdditional[] = additionals.filter(
-    ({ quantity }: TCartAdditional): boolean => quantity > 0,
+    ({ quantity }: TCartAdditional): boolean => quantity > 0
   );
 
   const orderNote =

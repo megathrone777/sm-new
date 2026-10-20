@@ -95,7 +95,7 @@ export const iconClass = styleVariants(
       width: 18,
     },
     type,
-  ],
+  ]
 );
 
 globalStyle(`${wrapperClass} > .Toastify__toast`, ({ colors, devices, easing, fonts }) => ({

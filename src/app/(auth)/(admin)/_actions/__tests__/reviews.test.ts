@@ -68,7 +68,7 @@ describe("createReview", () => {
 
         expect(result).toEqual({ message: "All fields are required", type: "error" });
         expect(store.reviews.create).not.toHaveBeenCalled();
-      },
+      }
     );
   });
 
@@ -101,7 +101,7 @@ describe("createReview", () => {
       await createReview(null, makeFormData({ count: " 420+ ", text: " pozitivních " }));
 
       expect(store.reviews.create).toHaveBeenCalledWith(
-        expect.objectContaining({ count: "420+", text: "pozitivních" }),
+        expect.objectContaining({ count: "420+", text: "pozitivních" })
       );
     });
 
@@ -140,7 +140,7 @@ describe("updateReview", () => {
         const result = await updateReview(null, fd({ [field]: "" }));
 
         expect(result).toEqual({ message: "All fields are required", type: "error" });
-      },
+      }
     );
 
     it("throws when the review id is not found", async () => {
@@ -160,7 +160,7 @@ describe("updateReview", () => {
           id: 1,
           imageUrl: "",
           text: "nových recenzí",
-        }),
+        })
       );
     });
 

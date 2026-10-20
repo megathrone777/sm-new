@@ -52,7 +52,7 @@ describe("Delivery", () => {
         <Delivery
           totalPrice={300}
           type="delivery"
-        />,
+        />
       );
       expect(screen.getByTestId("radio-delivery")).toBeChecked();
     });
@@ -62,7 +62,7 @@ describe("Delivery", () => {
         <Delivery
           totalPrice={300}
           type="pickup"
-        />,
+        />
       );
       expect(screen.getByTestId("radio-pickup")).toBeChecked();
     });
@@ -72,7 +72,7 @@ describe("Delivery", () => {
         <Delivery
           totalPrice={300}
           type="pickup"
-        />,
+        />
       );
       expect(screen.getByTestId("radio-delivery")).not.toBeChecked();
     });
@@ -84,7 +84,7 @@ describe("Delivery", () => {
         <Delivery
           totalPrice={501}
           type="delivery"
-        />,
+        />
       );
       expect(screen.getByTestId("hint-pickup")).toBeInTheDocument();
     });
@@ -94,7 +94,7 @@ describe("Delivery", () => {
         <Delivery
           totalPrice={500}
           type="delivery"
-        />,
+        />
       );
       expect(screen.queryByTestId("hint-pickup")).not.toBeInTheDocument();
     });
@@ -104,7 +104,7 @@ describe("Delivery", () => {
         <Delivery
           totalPrice={200}
           type="delivery"
-        />,
+        />
       );
       expect(screen.queryByTestId("hint-pickup")).not.toBeInTheDocument();
     });
@@ -116,7 +116,7 @@ describe("Delivery", () => {
         <Delivery
           totalPrice={300}
           type="delivery"
-        />,
+        />
       );
       expect(screen.getByTestId("radio-delivery")).toHaveAttribute("name", "deliveryType");
       expect(screen.getByTestId("radio-pickup")).toHaveAttribute("name", "deliveryType");

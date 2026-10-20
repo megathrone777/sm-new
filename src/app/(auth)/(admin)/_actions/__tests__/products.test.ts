@@ -126,7 +126,7 @@ describe("createProduct", () => {
       await createProduct(null, makeFormData());
 
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 1, sortOrder: 1 }),
+        expect.objectContaining({ id: 1, sortOrder: 1 })
       );
     });
 
@@ -141,7 +141,7 @@ describe("createProduct", () => {
       await createProduct(null, makeFormData({ title: "New Roll" }));
 
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 8, sortOrder: 9 }),
+        expect.objectContaining({ id: 8, sortOrder: 9 })
       );
     });
 
@@ -153,7 +153,7 @@ describe("createProduct", () => {
       await createProduct(null, makeFormData({ title: "Salmon Roll" }));
 
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ slug: "salmon-roll-2" }),
+        expect.objectContaining({ slug: "salmon-roll-2" })
       );
     });
 
@@ -164,7 +164,7 @@ describe("createProduct", () => {
       await createProduct(null, fd);
 
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ isAvailable: true }),
+        expect.objectContaining({ isAvailable: true })
       );
     });
 
@@ -172,7 +172,7 @@ describe("createProduct", () => {
       await createProduct(null, makeFormData());
 
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ isAvailable: false }),
+        expect.objectContaining({ isAvailable: false })
       );
     });
 
@@ -184,7 +184,7 @@ describe("createProduct", () => {
       expect(put).toHaveBeenCalled();
 
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ imageUrl: "https://blob.vercel-storage.com/product.jpg" }),
+        expect.objectContaining({ imageUrl: "https://blob.vercel-storage.com/product.jpg" })
       );
     });
 
@@ -238,7 +238,7 @@ describe("updateProduct", () => {
       await updateProduct(null, fd({ price: "299", title: "Premium Roll" }));
 
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ price: 299, title: "Premium Roll" }),
+        expect.objectContaining({ price: 299, title: "Premium Roll" })
       );
     });
 
@@ -251,7 +251,7 @@ describe("updateProduct", () => {
 
       expect(put).toHaveBeenCalled();
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ imageUrl: "https://blob.vercel-storage.com/product.jpg" }),
+        expect.objectContaining({ imageUrl: "https://blob.vercel-storage.com/product.jpg" })
       );
     });
 
@@ -259,14 +259,14 @@ describe("updateProduct", () => {
       jest
         .mocked(store.products.getBySlug)
         .mockResolvedValue(
-          makeProduct({ imageUrl: "https://blob.vercel-storage.com/old.jpg" }),
+          makeProduct({ imageUrl: "https://blob.vercel-storage.com/old.jpg" })
         );
 
       await updateProduct(null, fd());
 
       expect(put).not.toHaveBeenCalled();
       expect(store.products.set).toHaveBeenCalledWith(
-        expect.objectContaining({ imageUrl: "https://blob.vercel-storage.com/old.jpg" }),
+        expect.objectContaining({ imageUrl: "https://blob.vercel-storage.com/old.jpg" })
       );
     });
 

@@ -27,8 +27,8 @@ const OrdersLayout: React.FC<TProps> = ({ initialOrders, isAdmin, placeholder })
       if (event === "orderStatusChanged") {
         setOrders((prevOrders: TOrder[]): TOrder[] =>
           prevOrders.map<TOrder>((prevOrder: TOrder) =>
-            prevOrder.id === data.id ? { ...prevOrder, status: data.status } : prevOrder,
-          ),
+            prevOrder.id === data.id ? { ...prevOrder, status: data.status } : prevOrder
+          )
         );
       }
     },
@@ -36,7 +36,7 @@ const OrdersLayout: React.FC<TProps> = ({ initialOrders, isAdmin, placeholder })
 
   const handleDelete = (deletedId: number): void => {
     setOrders((prevOrders: TOrder[]): TOrder[] =>
-      prevOrders.filter((prevOrder: TOrder): boolean => prevOrder.id !== deletedId),
+      prevOrders.filter((prevOrder: TOrder): boolean => prevOrder.id !== deletedId)
     );
   };
 

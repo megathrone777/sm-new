@@ -5,6 +5,8 @@ declare global {
 
       BLOB_READ_WRITE_TOKEN: string;
 
+      COURIER_API_SECRET: string;
+
       EMAIL_ADDRESS: string;
 
       EMAIL_APP_PASSWORD: string;

@@ -18,7 +18,7 @@ const ModifiersSelect: React.FC<TProps> = ({ defaultValue, options }) => {
             type="hidden"
             value={id}
           />
-        ),
+        )
       )}
 
       <Selectbox

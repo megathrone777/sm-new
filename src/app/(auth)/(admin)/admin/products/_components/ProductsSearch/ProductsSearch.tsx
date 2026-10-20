@@ -32,7 +32,7 @@ const ProductsSearch: React.FC = () => (
                 <span>{title}</span>
               </Link>
             </li>
-          ),
+          )
         )}
       </ul>
     )}

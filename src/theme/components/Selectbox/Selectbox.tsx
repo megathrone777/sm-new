@@ -34,7 +34,7 @@ const Selectbox: React.FC<TProps> = ({
   const [searchValue, setSearchValue] = useState<string>("");
 
   const handleMouseDown = (
-    event: React.SyntheticEvent<HTMLButtonElement | HTMLInputElement>,
+    event: React.SyntheticEvent<HTMLButtonElement | HTMLInputElement>
   ): void => {
     event.stopPropagation();
   };

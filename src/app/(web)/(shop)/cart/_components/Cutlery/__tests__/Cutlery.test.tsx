@@ -62,7 +62,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={3}
           totalPrice={0}
-        />,
+        />
       );
 
       expect(screen.getByText("3")).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={2}
           totalPrice={30}
-        />,
+        />
       );
 
       expect(screen.getByText(/30/)).toBeInTheDocument();
@@ -86,7 +86,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={2}
           totalPrice={0}
-        />,
+        />
       );
 
       expect(screen.queryByText(/Kč/)).not.toBeInTheDocument();
@@ -98,7 +98,7 @@ describe("Cutlery", () => {
           isError
           quantity={0}
           totalPrice={0}
-        />,
+        />
       );
 
       expect(screen.getByTestId("icon-exclamation")).toBeInTheDocument();
@@ -110,7 +110,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={1}
           totalPrice={0}
-        />,
+        />
       );
 
       expect(screen.queryByTestId("icon-exclamation")).not.toBeInTheDocument();
@@ -124,7 +124,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={0}
           totalPrice={0}
-        />,
+        />
       );
 
       expect(screen.getByTestId("btn-decrease")).toBeDisabled();
@@ -136,7 +136,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={2}
           totalPrice={0}
-        />,
+        />
       );
 
       expect(screen.getByTestId("btn-decrease")).toBeEnabled();
@@ -152,7 +152,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={1}
           totalPrice={0}
-        />,
+        />
       );
 
       await user.click(screen.getByTestId("btn-increase"));
@@ -167,7 +167,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={2}
           totalPrice={0}
-        />,
+        />
       );
 
       await user.click(screen.getByTestId("btn-decrease"));
@@ -180,7 +180,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={1}
           totalPrice={0}
-        />,
+        />
       );
 
       rerender(
@@ -188,7 +188,7 @@ describe("Cutlery", () => {
           isError={false}
           quantity={2}
           totalPrice={0}
-        />,
+        />
       );
 
       expect(screen.getByText("2")).toBeInTheDocument();

@@ -19,7 +19,7 @@ const FitBounds: React.FC<TProps> = ({ positions }) => {
 
     map.fitBounds(
       [[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]],
-      { padding: 40 },
+      { padding: 40 }
     );
   }, [map, positions]);
 
